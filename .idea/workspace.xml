@@ -2,14 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="456471a8-46bd-47c1-a60c-229d3128fe6d" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/php.xml" />
-      <change beforePath="$PROJECT_DIR$/application/admin/controller/Course.php" afterPath="$PROJECT_DIR$/application/admin/controller/Course.php" />
-      <change beforePath="$PROJECT_DIR$/application/admin/controller/Package.php" afterPath="$PROJECT_DIR$/application/admin/controller/Package.php" />
-      <change beforePath="$PROJECT_DIR$/application/admin/view/course/course_basic.html" afterPath="$PROJECT_DIR$/application/admin/view/course/course_basic.html" />
-      <change beforePath="$PROJECT_DIR$/application/admin/view/course/edit_course.html" afterPath="$PROJECT_DIR$/application/admin/view/course/edit_course.html" />
-      <change beforePath="$PROJECT_DIR$/application/admin/view/course/index.html" afterPath="$PROJECT_DIR$/application/admin/view/course/index.html" />
-      <change beforePath="$PROJECT_DIR$/application/admin/view/package/edit_package.html" afterPath="$PROJECT_DIR$/application/admin/view/package/edit_package.html" />
-      <change beforePath="$PROJECT_DIR$/application/admin/view/package/index.html" afterPath="$PROJECT_DIR$/application/admin/view/package/index.html" />
+      <change beforePath="$PROJECT_DIR$/application/admin/view/package/add_package.html" afterPath="$PROJECT_DIR$/application/admin/view/package/add_package.html" />
+      <change beforePath="$PROJECT_DIR$/runtime/log/201803/12.log" afterPath="$PROJECT_DIR$/runtime/log/201803/12.log" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -26,8 +20,8 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/application/admin/view/course/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="252">
-              <caret line="33" column="48" lean-forward="false" selection-start-line="33" selection-start-column="48" selection-end-line="33" selection-end-column="48" />
+            <state relative-caret-position="450">
+              <caret line="39" column="34" lean-forward="true" selection-start-line="34" selection-start-column="28" selection-end-line="39" selection-end-column="34" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#body#0;n#!!top" expanded="true" />
               </folding>
@@ -55,13 +49,26 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="edit_package.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="edit_package.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/application/admin/view/package/edit_package.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="420">
-              <caret line="65" column="59" lean-forward="true" selection-start-line="65" selection-start-column="59" selection-end-line="65" selection-end-column="59" />
+              <caret line="65" column="59" lean-forward="false" selection-start-line="65" selection-start-column="59" selection-end-line="65" selection-end-column="59" />
               <folding>
                 <marker date="1520850498995" expanded="true" signature="6679:6742" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="add_package.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/application/admin/view/package/add_package.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="413">
+              <caret line="60" column="30" lean-forward="false" selection-start-line="60" selection-start-column="30" selection-end-line="60" selection-end-column="30" />
+              <folding>
+                <element signature="n#style#0;n#div#5;n#form#0;n#section#0;n#div#2;n#div#0;n#div#1;n#div#0;n#body#0;n#!!top" expanded="true" />
+                <marker date="1520850909086" expanded="true" signature="6124:6187" ph="..." />
               </folding>
             </state>
           </provider>
@@ -70,8 +77,8 @@
       <file leaf-file-name="edit_course.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/application/admin/view/course/edit_course.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="600">
-              <caret line="74" column="137" lean-forward="false" selection-start-line="74" selection-start-column="137" selection-end-line="74" selection-end-column="137" />
+            <state relative-caret-position="360">
+              <caret line="24" column="53" lean-forward="true" selection-start-line="24" selection-start-column="53" selection-end-line="24" selection-end-column="53" />
               <folding />
             </state>
           </provider>
@@ -97,8 +104,8 @@
       <find>step_change</find>
       <find>layui-btn</find>
       <find>course_state</find>
-      <find>编辑</find>
       <find>package_state</find>
+      <find>编辑</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -115,6 +122,7 @@
         <option value="$PROJECT_DIR$/application/admin/controller/Package.php" />
         <option value="$PROJECT_DIR$/application/admin/view/package/index.html" />
         <option value="$PROJECT_DIR$/application/admin/view/package/edit_package.html" />
+        <option value="$PROJECT_DIR$/application/admin/view/package/add_package.html" />
       </list>
     </option>
   </component>
@@ -250,12 +258,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1520838489393</updated>
-      <workItem from="1520838491659" duration="10683000" />
+      <workItem from="1520838491659" duration="11091000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="10683000" />
+    <option name="totallyTimeSpent" value="11091000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1358" y="-8" width="1936" height="1056" extended-state="6" />
@@ -380,24 +388,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/admin/view/course/edit_course.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="600">
-          <caret line="74" column="137" lean-forward="false" selection-start-line="74" selection-start-column="137" selection-end-line="74" selection-end-column="137" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/admin/view/course/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="33" column="48" lean-forward="false" selection-start-line="33" selection-start-column="48" selection-end-line="33" selection-end-column="48" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#body#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/application/admin/controller/Package.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
@@ -417,9 +407,38 @@
     <entry file="file://$PROJECT_DIR$/application/admin/view/package/edit_package.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="420">
-          <caret line="65" column="59" lean-forward="true" selection-start-line="65" selection-start-column="59" selection-end-line="65" selection-end-column="59" />
+          <caret line="65" column="59" lean-forward="false" selection-start-line="65" selection-start-column="59" selection-end-line="65" selection-end-column="59" />
           <folding>
             <marker date="1520850498995" expanded="true" signature="6679:6742" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/admin/view/course/edit_course.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="24" column="53" lean-forward="true" selection-start-line="24" selection-start-column="53" selection-end-line="24" selection-end-column="53" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/admin/view/course/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="450">
+          <caret line="39" column="34" lean-forward="true" selection-start-line="34" selection-start-column="28" selection-end-line="39" selection-end-column="34" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#body#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/admin/view/package/add_package.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="413">
+          <caret line="60" column="30" lean-forward="false" selection-start-line="60" selection-start-column="30" selection-end-line="60" selection-end-column="30" />
+          <folding>
+            <element signature="n#style#0;n#div#5;n#form#0;n#section#0;n#div#2;n#div#0;n#div#1;n#div#0;n#body#0;n#!!top" expanded="true" />
+            <marker date="1520850909086" expanded="true" signature="6124:6187" ph="..." />
           </folding>
         </state>
       </provider>

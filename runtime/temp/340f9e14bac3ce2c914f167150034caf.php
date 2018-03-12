@@ -1,22 +1,56 @@
-{include file="common/header" /}
+<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:65:"C:\php\zaohui_2.0/application/admin\view\package\add_package.html";i:1520850909;s:59:"C:\php\zaohui_2.0/application/admin\view\common\header.html";i:1519891268;s:58:"C:\php\zaohui_2.0/application/admin\view\common\admin.html";i:1519891268;s:60:"C:\php\zaohui_2.0/application/admin\view\common\version.html";i:1519891268;}*/ ?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>后台管理系统</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <!-- load css -->
+    <link rel="stylesheet" type="text/css" href="/public/jqadmin/css/bootstrap.min.css?v=v3.3.7" media="all">
+    <link rel="stylesheet" type="text/css" href="/public/jqadmin/css/font/iconfont.css?v=1.0.0" media="all">
+    <link rel="stylesheet" type="text/css" href="/public/jqadmin/css/layui.css?v=1.0.9" media="all">
+    <link rel="stylesheet" type="text/css" href="/public/jqadmin/css/main.css?v1.3.1" media="all">
+    <link rel="stylesheet" href="/public/gzadmin/css/all.css">
+    <link rel="stylesheet" href="/public/gzadmin/css/main.css">
+    
+</head>
 <link rel="stylesheet" href="/public/gzadmin/css/custom-template.css">
 <body>
 <div class="article_manage mCustomScrollbar">
 	<div class="right-side-header clearfix">
 	        <span>知识管理</span>
-	        {include file="common/admin" /}
+	        
+
+<div class="user-box">
+  <span class="user-self">
+    <i><?php echo session('rolename'); ?>(<?php echo session('admin_username'); ?>)</i>
+    <img class="img_myself" src="/public/image/logo.png" alt="自身头像">
+  </span>
+  <ul class="user-set-ul">
+   	<li><i class="modal-catch" data-params='{"content":".edit_pswd","act":"<?php echo url("user/edit_password"); ?>", "title":"修改密码","type":"1"}'>修改密码</i></li>
+    <li><a href='<?php echo url("login/loginOut"); ?>'  target="_blank"><i>退出</i></a></li>
+  </ul>
+</div>
+<div class="success_tip displayNone">已完成</div>
+        
    </div>
    <div class="right_side_content">
 	    <div class="add_article_main ">
 	        <div class="breadcrumb">
-	              <a href='{:url("package/index")}'>套餐列表</a>
+	              <a href='<?php echo url("package/index"); ?>'>套餐列表</a>
 	              /
 	              <span>添加套餐</span>
 	         </div>
 	         <div class="add_article_step"></div>
 	        <div class="articleInfo_fill">
 	            <section class="panel panel-padding">
-	                <form id="form1" class="layui-form layui-form-pane" action="{:url('add_package')}">
+	                <form id="form1" class="layui-form layui-form-pane" action="<?php echo url('add_package'); ?>">
 	                    <div class="layui-form-item">
 	                        <label class="layui-form-label">套餐标题*</label>
 	                        <div class="layui-input-block">
@@ -79,9 +113,9 @@
 				<div class="placeholder-box">选择分类</div>
 				<div class="slide-box">
 					<div class="slide-item course-link" data-id="0">全部</div>
-					{volist name="top_pid_arr" id="vo"}
-					<div class="slide-item course-link" data-id="{$vo.id}">{$vo.cate_name}</div>
-					{/volist}
+					<?php if(is_array($top_pid_arr) || $top_pid_arr instanceof \think\Collection || $top_pid_arr instanceof \think\Paginator): $i = 0; $__LIST__ = $top_pid_arr;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>
+					<div class="slide-item course-link" data-id="<?php echo $vo['id']; ?>"><?php echo $vo['cate_name']; ?></div>
+					<?php endforeach; endif; else: echo "" ;endif; ?>
 				</div>
 				<i class="slide-icon"></i>
 			</div>
@@ -107,7 +141,76 @@
 		</div>
 	</div>
 </div>
-{include file="common/version" /}
+<script type="text/javascript" src="/public/jqadmin/js/layui/layui.js"></script>
+<script>
+    layui.config({
+        base: '/public/jqadmin/js/',
+        version: "1.3.1"
+    }).extend({
+        elem: 'jqmodules/elem',
+        tabmenu: 'jqmodules/tabmenu',
+        jqmenu: 'jqmodules/jqmenu',
+        ajax: 'jqmodules/ajax',
+        dtable: 'jqmodules/dtable',
+        jqdate: 'jqmodules/jqdate',
+        modal: 'jqmodules/modal',
+        tags: 'jqmodules/tags',
+        jqform: 'jqmodules/jqform',
+        echarts: 'lib/echarts',
+        webuploader: 'lib/webuploader'
+    })
+</script>
+	<script src="/public/gzadmin/js/jquery-1.11.0.min.js"></script>
+	<script src="/public/gzadmin/js/public_PC.js"></script>
+
+<div class="edit_pswd" style="display: none">
+    <form id="form1" class="layui-form layui-form-pane" action="<?php echo url('user/edit_password'); ?>">
+        <input type="hidden" name="id" value="<?php echo session('admin_uid'); ?>">
+        <div class="layui-form-item">
+            <label class="layui-form-label">原密码</label>
+            <div class="layui-input-inline">
+                <input class="layui-input" type="password" name="passwd" placeholder="密码"  jq-verify="pass" >
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">新密码</label>
+            <div class="layui-input-inline">
+                <input class="layui-input" type="password" name="newpasswd" placeholder="新密码"  jq-verify="pass" >
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">确认密码</label>
+            <div class="layui-input-inline">
+                <input class="layui-input" type="password" name="morepasswd" placeholder="确认密码"  jq-verify="pass" >
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" jq-submit lay-filter="submit">立即提交</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+//点击用户头像显示隐藏菜单
+$(".user-self").click(function(e){
+	e.stopPropagation();
+   var $usersetul = $(this).next(".user-set-ul"),
+       display = $usersetul.css("display");
+   if("none"==display){
+      $usersetul.slideDown();
+   }else{
+      $usersetul.slideUp();
+   }    
+});
+$('body').on('click', function () {
+	if($('.user-set-ul').css('display') == 'block') {
+		$(".user-set-ul").slideUp();
+	}
+})
+</script>
 <script src="/public/gzadmin/js/jquery-1.11.0.min.js"></script>
 <script src="/public/static/js/jquery.paging.js"></script>
 <script>
