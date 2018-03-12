@@ -15,13 +15,13 @@ return [
     // 服务器地址
     'hostname'        => 'localhost',
     // 数据库名
-    'database'        => 'qusukj',
+    'database'        => 'test',
     // 用户名
-    'username'        => 'qusukj_user',
+    'username'        => 'root',
     // 密码
-    'password'        => 'Wq4ej7bJFd',
+    'password'        => 'admin123',
     // 端口
-    'hostport'        => '',
+    'hostport'        => '3306',
     // 连接dsn
     'dsn'             => '',
     // 数据库连接参数
