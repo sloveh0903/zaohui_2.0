@@ -1,0 +1,101 @@
+{include file="common/header" /}
+<body>
+<div class="article_manage">
+    <div class="right-side-header clearfix">
+	        <span>知识管理</span>
+	        {include file="common/admin" /}
+   </div>
+    <div class="right_side_content ">
+    	<div class="add_article_main ">	
+	        {if $type == 'create'}
+	        <div class="breadcrumb">
+	              <a href='{:url("course/index")}'>课程列表</a>
+	              /
+	              <span>添加课程</span>
+	        </div>
+	        <div class="add_article_step">
+	            <div class="step-liucheng">
+	                <ul class="step-liucheng-ul clearFloat">
+	                    <li><i>1</i>添加课程</li>
+	                    <li><i>2</i>添加视频</li>
+	                    <li class="active"><i>3</i>pc介绍</li>
+	                    <li><i>4</i>完成</li>
+	                </ul>
+	            </div>
+	        </div>
+	        {else}
+	        <div class="breadcrumb">
+	              <a href='{:url("course/index")}'>课程列表</a>
+	              /
+	              <span>编辑课程</span>
+	         </div>
+	        <div class="add_article_step">
+	            <ul class="editCourse-nav-ul clearFloat">
+	                <li data-src='{:url("course/edit_course",["cid"=>$cid])}' class="goto"><i data-name="edit_course">课程简介</i></li>
+	                <li class="goto" data-src='{:url("chapter/index",["cid"=>$cid,"type"=>"update"])}'><i data-name="edit_course_video">课程视频</i></li>
+	                <li class="goto active" data-src='{:url("course/introduce",["cid"=>$cid,"type"=>"update"])}'><i data-name="edit_pc_production">pc版介绍</i></li>
+	            </ul>
+	        </div>
+	        {/if}
+	        <div class="operation_div">
+	            <span class="span_add btn goto" data-src='{:url("course/add_intro",["cid"=>$cid,"type"=>$type])}' style="line-height: 31px">添加</span>
+	            <span class="span_delete btn ajax-all" data-name="checkbox" data-params='{"url": "{:url("course/del_Allintro")}","data":"","confirm":"true"}'>删除</span>
+	            <div class="clearfix"></div>
+	        </div>
+	        <div id="list" class="layui-form"></div>
+	        <div class="text-right" id="page"></div>
+	    </div>
+    </div>
+    {if $type == 'create'}
+    <div class="course_right_footer" style="position: fixed;width: 100%;bottom:0;left:0">
+        <form id="form1" class="layui-form layui-form-pane" action="{:url('step_change')}" method='post'>
+            <input type="hidden" name="step" id ="step" value=3>
+            <input type="hidden" name="cid" id ="cid" value={$cid}>
+            <div class="layui-form-item" style="margin-bottom: 0;">
+                <div class="layui-input-block" style="margin-left:0;">
+                    <a href='{:url("course/create")}?cid={$cid}&step=2' style="line-height: 30px;font-size: 14px;color:#00B6F2;margin-right: 20px;">上一步</a>
+                    <button class="layui-btn" jq-submit lay-filter="submit">保存课程</button>
+                    <i style="line-height: 30px;font-size: 14px;color:#00B6F2;margin-left: 20px;">(无PC站点直接保存课程)</i>
+                </div>
+            </div>
+        </form>
+    </div>
+    {/if}
+</div>
+<script id="list-tpl" type="text/html" data-params='{"url":"{:url("course/introduce",["cid"=>$cid])}","pageid":"#page"}'>
+    <table id="example" class="layui-table" lay-skin="line">
+        <thead>
+        <tr>
+            <th style="width: 6%"><input type="checkbox" id="checkall" data-name="checkbox" lay-filter="check" lay-skin="primary"></th>
+            <th>序号</th>
+            <th>名称</th>
+            <th>排序</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{# layui.each(d.list, function(index, item){ }}
+        <tr>
+            <td>
+                <input type="checkbox" name="checkbox" value="{{item.id}}" lay-skin="primary">
+            </td>
+            <td><i title>{{item.id}}</i></td>
+            <td><i title>{{item.title}}</i></td>
+            <td class="icon"><i class="rise ajax" data-params='{"url": "{:url("course/moveIntroduceUpDown")}","data":"id={{ item.id}}&cid={{ item.cid}}&updown=up"}'></i><i class="drop ajax" data-params='{"url": "{:url("course/moveIntroduceUpDown")}","data":"id={{ item.id}}&cid={{ item.cid}}&updown=down"}'></i>
+            </td>
+
+            <td>
+                <i class=" i_edit goto"  data-src='{:url("course/edit_intro")}?id={{ item.id}}&type={$type}&cid={$cid}'>编辑</i>／
+                <i class="i_delete ajax" data-params='{"url": "{:url("course/del_intro")}","data":"id={{ item.id}}","confirm":"true"}'>删除</i>
+            </td>
+        </tr>
+        {{# }); }}
+        </tbody>
+    </table>
+</script>
+{include file="common/version" /}
+<script>
+    layui.use('list');
+</script>
+</body>
+</html>

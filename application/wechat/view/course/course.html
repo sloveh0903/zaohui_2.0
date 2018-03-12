@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>{$cate_name}</title>
+		<link rel="stylesheet" href="/public/mobile/css/mui.min.css" />
+		<link rel="stylesheet" href="/public/mobile/css/globla.css" />
+		<link rel="stylesheet" href="/public/mobile/css/index.css" />
+	</head>
+	<style>
+		.mui-slider .mui-slider-group .mui-slider-item img {
+			float: left;
+		}
+		.course_desc{
+	      	overflow: hidden;
+		    text-overflow: ellipsis;
+		    white-space: nowrap;
+	    }
+	</style>
+	{include file="common/share" /}
+<body>
+<!--下拉刷新容器-->
+<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+    <div class="mui-scroll">
+		<div class="mui-row list-content">
+			<ul class="mui-table-view" id="course">
+
+			</ul>
+		</div>
+    </div>
+</div>
+{include file="common/menu" /}
+<script src="/public/mobile/js/jquery-3.2.1.min.js"></script>
+<script src="/public/mobile/js/mui.min.js"></script>
+<script src="/public/mobile/js/globla.js"></script>
+<script type="text/javascript">
+var page = 1;
+var size = 10;
+var uid = '{$userinfo.uid}'; //用户id
+var pid = '{$pid}';
+$('.mui-table-view li').find('img').eq(0).attr('src', '/public/mobile/img/icon/1a.png');
+$('.mui-table-view li').find('.navcontent').removeClass('NavActive');
+$('.mui-table-view li').find('.navcontent').eq(0).addClass('NavActive');
+  mui.init
+  ({
+    pullRefresh: 
+    {
+      container: '#pullrefresh',
+      // down: {
+      //   callback: pulldownRefresh
+      // },
+      /*up: {
+        contentrefresh: '正在加载...',
+        callback: pullupRefresh
+      }*/
+    }
+  });
+      
+  /*
+   * 下拉刷新具体业务实现
+   */
+  // function pulldownRefresh() 
+  // {
+  //   setTimeout(function() 
+  //   {
+  //     mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
+  //   }, 1500);
+  // }
+      
+  /*
+   * 上拉加载具体业务实现
+   */
+  function pullupRefresh() 
+  {
+    setTimeout(function() {
+     	// mui('#pullrefresh').pullRefresh().endPullupToRefresh((++count > 2)); //参数为true代表没有更多数据了。
+	    page++; //翻下一页
+		data = {
+			page: page,
+			size: size,
+			pid:pid
+		};
+		toList(data); //具体取数据的方法
+    }, 1500);
+  }
+
+  	data = {
+		page: page,
+		size: size,
+		pid:pid
+	};
+	toList(data);
+      
+   function toList(data) {
+				$.ajax({
+					url: host + '/course/base',
+					data: data,
+					type: 'GET', //GET
+					async: true, //或false,是否异步
+					timeout: 5000, //超时时间
+					dataType: 'json', //返回的数据格式：json/xml/html/script/jsonp/text
+					success: function(result, textStatus, jqXHR) {
+						if(result.code == 1) {
+							var is_rebate = result.data.is_rebate;
+							var rebate_status = result.data.rebate_status;
+							var list = "";
+
+                            //是否推广员
+
+							if(is_rebate == '1' && rebate_status == '1'){
+                                $.each(result.data.course,function (z,course) {
+                                    list += '<li data-id="' + course.cid + '">' +
+                                        '<div class="teacher-box"><img src="' + course.face + '" /></div>' +
+                                        '<div class="content">' +
+                                        '<h1>' + course.title + '</h1>' +
+                                        '<span>' + course.desc + '</span>' +
+                                        '<i style="color:#FF2D55">推广佣金:' + course.share_price + '元</i>' +
+                                        '</div>' +
+                                        '<span class="price">￥' + course.price + ' </span>' +
+                                        '</li>';
+                                });
+
+							}else{
+                                $.each(result.data.course,function (z,course) {
+                                    list += '<li data-id="' + course.cid + '">' +
+                                        '<div class="teacher-box"><img src="' + course.face + '" /></div>' +
+                                        '<div class="content">' +
+                                        '<h1>' + course.title + '</h1>' +
+                                        '<span>' + course.desc + '</span>' +
+                                        '<i>' + course.students + '学员</i>' +
+                                        '</div>' +
+                                        '<span class="price">￥' + course.price + ' </span>' +
+                                        '</li>';
+                                });
+
+							}	
+
+							if(result.data.course.length > 0){
+								$("#course").append(list);
+							}else{
+								      mui('#pullrefresh').pullRefresh().endPullupToRefresh(true); //参数为true代表没有更多数据了。
+
+							}
+							var gallery = mui('.mui-slider');
+							gallery.slider({
+								interval: 2000
+							});
+						}
+						mui('#pullrefresh').pullRefresh().endPullupToRefresh();
+					}
+				});
+			}
+
+			mui('#course').on('tap', 'li', function() {
+				var cid = $(this).attr('data-id');
+				url = "{:url('wechat/course/detail')}";
+				window.location.href = url + '?cid=' + cid;
+			});
+			mui('.searchIndex').on('tap', '.seach', function() {
+				url = "{:url('wechat/search/index')}";
+				window.location.href = url;
+			});
+
+			mui(".mui-slider").on('tap', '.mui-slider-item', function(event) {
+				var menu = $(this).attr('data-menu');
+				var id = $(this).attr('data-id');
+				var link = '';
+				switch(menu) {
+					case("teacher"):
+						link = "{:url('wechat/article/teacher')}" + '?tid=' + id;
+						break;
+					case("course"):
+						link = "{:url('wechat/course/detail')}" + '?cid=' + id;
+						break;
+					case("article"):
+						link = "{:url('wechat/article/detail')}" + '?id=' + id;
+						break;
+					case("question"):
+						link = "{:url('wechat/ask/detail')}" + '?id=' + id;
+						break;
+				}
+				window.location.href = link;
+			});   
+      
+  if (mui.os.plus) {
+    mui.plusReady(function() {
+      setTimeout(function() {
+        mui('#pullrefresh').pullRefresh().pullupLoading();
+      }, 1000);
+
+    });
+  } else 
+  { 
+    mui.ready(function() {
+      mui('#pullrefresh').pullRefresh().pullupLoading();
+    });
+  }
+</script>

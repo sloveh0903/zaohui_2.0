@@ -1,0 +1,66 @@
+{include file="common/header" /}
+<body>
+<div class="article_manage">
+    <div class="course_right_top">
+        <div class="tag_group">
+            <p class="title">知识管理</p>
+            {include file="common/admin" /}
+            <div class="clearfix"></div>
+        </div>
+         <div class="system_guanli_div">
+            <p class="p_href_wrap">
+			<i class="goto" data-src='{:url("course/index")}'>课程列表</i> / 
+			<i class="goto" data-src='{:url("course/detail?id=".$cid)}'>课程详情</i> /
+			<i class="goto" data-src='{:url("course/comment?cid=".$cid)}'>学员评价</i>
+			</p>
+         </div>
+        <div class="success_tip displayNone">已完成</div>
+    </div>
+    <div class="course_right_main ">
+        <div class="operation_div">
+            <span class="span_add btn ajax-all" data-name="checkbox" data-params='{"url": "{:url("course/setAudit_comment")}","data":"","confirm":"true"}'>审核</span>
+            <span class="span_delete btn ajax-all" data-name="checkbox" data-params='{"url": "{:url("course/delall_comment")}","data":"","confirm":"true"}'>删除</span>
+            <div class="clearfix"></div>
+        </div>
+        <div id="list" class="layui-form"></div>
+        <div class="text-right" id="page"></div>
+    </div>
+</div>
+<script id="list-tpl" type="text/html" data-params='{"url":"{:url("course/comment",["cid"=>$cid])}","pageid":"#page"}'>
+    <table id="example" class="layui-table" lay-skin="line">
+        <thead>
+        <tr>
+            <th style="width: 6%"><input type="checkbox" id="checkall" data-name="checkbox" lay-filter="check" lay-skin="primary"></th>
+            <th>序号</th>
+            <th>名称</th>
+            <th>评星</th>
+            <th>内容</th>
+            <th>状态</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{# layui.each(d.list, function(index, item){ }}
+        <tr>
+            <td>
+                <input type="checkbox" name="checkbox" value="{{item.id}}" lay-skin="primary">
+            </td>
+            <td><i title>{{item.id}}</i></td>
+             <td>{{ item.nickname}}</td>
+            <td>{{ item.star}}</td>
+            <td>{{ item.content}}</td>
+            <td><input type="checkbox" name="switch" lay-skin="switch" lay-text="" {{#if (item.audit){ }}checked="checked" {{# } }} lay-filter="ajax" data-params='{"url":"{:url("course/comment_state")}","confirm":"true","data":"id={{ item.id}}"}'></td>
+            <td>
+                <i class="i_delete ajax" data-params='{"url": "{:url("course/del_comment")}","data":"id={{ item.id}}","confirm":"true"}'>删除</i>
+            </td>
+        </tr>
+        {{# }); }}
+        </tbody>
+    </table>
+</script>
+{include file="common/version" /}
+<script>
+    layui.use('list');
+</script>
+</body>
+</html>

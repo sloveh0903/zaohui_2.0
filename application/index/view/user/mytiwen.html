@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <title>我的提问</title>
+</head>
+<body class="bg-body-fff">
+      {include file="common/header" /}
+   <div class="personnal-bg-show">
+      <span>
+         <img src="{php}echo session('face'){/php}" >
+         <i>{php}echo session('nickname'){/php}</i>
+      </span>
+   </div>
+   <div class="wenda-info">
+      <div class="wenda-info-title-wrap">
+         <div class="wenda-info-title">
+            <span>我的提问</span>
+         </div>
+      </div>
+      <div class="wenda-info-wrap">
+         <div class="wenda-info-left">
+            <ul class="wenda-info-nav-ul">
+               <li><a href="{:url('/user/message')}">问答消息</a></li>
+               <li><a href="{:url('/user/myanswer')}">我的回答</a></li>
+               <li class="active"><a href="{:url('/user/mytiwen')}">我的提问</a></li>
+           <!--     <li><a href="{:url('/user/set')}">设置</a></li> -->
+            </ul>
+         </div>
+         <div class="wenda-info-right">
+            <ul class="myTiwen-ul">
+               {volist name="ask" id="item"}
+               <li>
+                  {if empty($item['face'])}
+                  <img src="/public/avatar/avatar-mid-img.png" >
+                  {else /}
+                  <img src="{$item['face']}" >
+                  {/if}
+                  <div >
+                     <p><a href="{:url('/question/'.$item.id)}">{$item.title}</a></p>
+                     <span>
+                        <a href="javascript:void(0)">{$item.cate_name}</a>
+                        <time>{php} echo date('Y-m-d H:i:s',$item['create_time']){/php}</time>
+                     </span>
+                  </div>
+               </li>
+               {/volist}
+            </ul>
+            <div class="load-img-871">
+              {$page}
+              <!--  <img src="/public/wenda/images/load_img@2x20.png" alt="加载ing"> -->
+            </div>
+            <div class="wenda-pager-list">
+               <ul class="wenda-pager-ul">
+                   {$page}
+               </ul>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="kaitai-word">
+      <span>{include file="common/copyright" /}</span>
+   </div>
+   <!-- 移动端nav列表start -->
+    {include file="common/mobilenav" /}
+</body>
+</html>

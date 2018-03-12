@@ -1,0 +1,220 @@
+body {
+    background-color: #fff;
+    padding-bottom: .5rem;
+}
+.mui-segmented-control {
+    border: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, .1);
+}
+
+.mui-segmented-control .mui-control-item {
+    height: 0.4rem;
+    line-height: 0.4rem;
+    font-size: .16rem;2
+color: rgba(0, 0, 0, .3);
+    border: 0;
+}
+
+#details {
+    padding: .2rem .15rem 0;
+}
+
+.purchase-btn {
+    width: 100%;
+    height: .5rem;
+    line-height: .5rem;
+    padding: 0;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    background-color: #24B6F7;
+    color: #fff;
+    font-size: .14rem;
+}
+
+.purchase-finished {
+    display: none;
+}
+
+.class-content-upper {
+    height: 1.04rem;
+    border-bottom: 1px solid rgba(0, 0, 0, .08);
+}
+.class-content-upper .class-title {
+    height: 0.25rem;
+    margin: 0;
+    font-size: .18rem;
+    font-weight: 400;
+    color: #000;
+}
+
+.class-content-upper .class-desc {
+    color: rgba(0, 0, 0, .4);
+    font-size:.12rem;
+    height: 0.17rem;
+    line-height: 0.17rem;
+}
+
+.class-content-upper .class-price {
+    display: inline-block;
+    height: .21rem;
+    line-height: .21rem;
+    font-size: .16rem;
+    color: #00B6F2;
+}
+
+.class-content-lower {
+    padding-top: .2rem;
+}
+
+.class-content-lower h4 {
+    font-size: .16rem;
+    font-weight: 400;
+    margin-bottom: .1rem;
+}
+
+.class-content-lower p {
+    font-size: .14rem;
+    line-height: 0.24rem;
+    color: rgba(0, 0, 0, .6);
+    margin-bottom: .34rem;
+}
+
+.class-content-lower .support {
+    font-size: .12rem;
+    color: rgba(0, 0, 0, .2);
+    text-align: center;
+}
+
+#chapters .class-headings {
+    height: 0.5rem;
+    padding: 0 0 0 .15rem;
+    line-height: 0.5rem;
+    font-size: .16rem;
+    color: rgba(0, 0, 0, .8);
+}
+
+.class-items {
+    display: block;
+    height: 0.5rem;
+    padding: .07rem .05rem 0;
+    position: relative;
+}
+
+.class-items .play-icon {
+    width: 0.16rem;
+    height: 0.16rem;
+    position: absolute;
+    left: .1rem;
+    top: .16rem;
+}
+
+.class-items p {
+    padding-left: .4rem;
+}
+
+.class-items .class-title {
+    height: 0.19rem;
+    line-height: 0.19rem;
+    font-size: .14rem;
+    color: rgba(0, 0, 0, .6);
+}
+
+.class-items .class-duration {
+    height: 0.16rem;
+    line-height: 0.16rem;
+    font-size: .12rem;
+    color: rgba(0, 0, 0, .3);
+}
+.mask {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,.6);
+    position: absolute;
+    z-index: 999;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    transition: all linear 1s;
+    display: none;
+}
+
+#blur {
+    filter: blur(30px);
+}
+
+.dialog1 {
+    width: 2.8rem;
+    height: 1.6rem;
+    background-color: #fff;
+    position: absolute;
+    left: .48rem;
+    top: 2.42rem;
+    padding: .22rem .2rem 0 .2rem;
+}
+
+.dialog h4 {
+    height: .24rem;
+    line-height: 0.24rem;
+    font-weight: 400;
+    font-size: .18rem;
+    color: rgba(0, 0, 0, .8);
+}
+
+.dialog1 p {
+    height: .48rem;
+    line-height: 0.24rem;
+    font-size: .14rem;
+    margin-bottom: .2rem;
+}
+
+.dialog1 div {
+    text-align: right;
+    padding-right: .04rem;
+}
+
+.dialog1 a {
+    height: 0.19rem;
+    font-size: .14rem;
+    color: #24B6F7;
+    margin-left: .3rem;
+}
+
+.dialog2 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 2.8rem;
+    height: 3.15rem;
+    padding-top: .3rem;
+    background-color: #fff;
+    border-radius: 2px;
+    position: absolute;
+    left: 50%;
+    top: 1.66rem;
+    transform: translateX(-50%);
+}
+
+.dialog2 h4 {
+    margin-bottom: .2rem;
+}
+
+.dialog2 .purchase-ewm {
+    width: 1.2rem;
+    height: 1.2rem;
+    margin-bottom: .2rem;
+}
+
+.dialog2 p {
+    font-size: .14rem;
+}
+
+.dialog2 .cancel {
+    margin-top: .17rem;
+    font-size: .14rem;
+    color: #24B6F7;
+}
+
+
+

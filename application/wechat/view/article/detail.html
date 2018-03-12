@@ -1,0 +1,159 @@
+<?php 
+    $data = $_GET;
+    unset($data['code']);
+    $data['uname'] = $userinfo['uname'];
+    $url_data = '?'.http_build_query($data);
+    $link = 'http://'.$_SERVER['SERVER_NAME'].$_SERVER['REDIRECT_URL'].$url_data;
+    $config = find('Config');
+    $logo = $config['logo'];
+?>
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>文章详情</title>
+		<link rel="stylesheet" href="/public/mobile/css/mui.min.css" />
+		<link rel="stylesheet" href="/public/mobile/css/globla.css" />
+		<link rel="stylesheet" href="/public/mobile/css/read.css" />
+	</head>
+    {include file="common/share" /}
+	<body>
+		<div class="mui-row article-info" contenteditable="true" onfocus="this.blur()">
+		</div>
+		
+		<script type="text/javascript" src="/public/mobile/js/jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="/public/mobile/js/mui.min.js"></script>
+		<script type="text/javascript" src="/public/mobile/js/globla.js"></script>
+		<script>
+            var title = '';
+            var content = '';
+            var logo = '{$logo}';
+            if(logo == ''){
+                logo = '/public/image/logo@1x.png';
+            }
+			var uid = '{$userinfo.uid}';
+			var id = GetQueryString('id');
+            $.ajax({
+                url:host+'article/detail',
+                data:{
+                    id:id,
+					uid:uid
+                },
+                type:'GET', //GET
+                async:true,    //或false,是否异步
+                timeout:5000,    //超时时间
+                dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+                success:function(data,textStatus,jqXHR){
+                    if(data.code==1){
+                        var result = data.data.article;
+                        title = result.title;
+                        content = result.desc;
+                        article = '<h1 class="article-title font-size-20 font-color-10">'+ result.title +'</h1> ' +
+							'<span class="article-time font-color-4 font-size-14">'+ result.create_time +'</span>' +
+							'<p>'+ result.content +'</p>';
+                        $(".article-info").append(article);
+                        if(result.is_follow == 1){
+							className = 'follow';
+						}else{
+                            className = 'gz';
+						}
+//                         teacher = '<div class="mui-col-xs-9 rw-left">' +
+// 							'<img src="'+ result.face +'">' +
+// 							'<h2 class="font-size-16 font-color-8">'+ result.realname +'</h2>' +
+// 							'<span class="font-size-14 font-color-4">'+ result.info +'</span></div> ' +
+// 							'<div class="mui-col-xs-3"><a class="flw_btn '+className+'" data-id="'+ result.uid +'">关注</a></div>';
+//                         $(".rw").append(teacher);
+                    }
+                }
+            });
+            $('.rw').on('click','.flw_btn',function () {
+                var that = $(this);
+                var tid = that.attr('data-id');
+                var url = act = "";
+                if(that.hasClass('follow')){
+                    url = "/follow/del";
+                    act = "del";
+                    that.removeClass('follow');
+                    that.addClass('gz');
+                }else{
+                    url = "/follow/add";
+                    act = "add";
+                    that.removeClass('gz');
+                    that.addClass('follow');
+                }
+                $.ajax({
+                    url:host + url,
+                    data:{
+                        uid:uid,
+                        tid:tid
+                    },
+                    type:'POST', //GET
+                    async:true,    //或false,是否异步
+                    timeout:5000,    //超时时间
+                    dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+                    success:function(data,textStatus,jqXHR){
+                        if(data.code == 1){
+                            if(act == "del"){
+                                mui.toast('取消关注');
+							}else{
+                                mui.toast('关注成功');
+							}
+
+                        }
+                    }
+                });
+            })
+
+            wx.config({
+                debug: false,
+                appId: '<?php echo $signPackage["appId"];?>',
+                timestamp: '<?php echo $signPackage["timestamp"];?>',
+                nonceStr: '<?php echo $signPackage["nonceStr"];?>',
+                signature: '<?php echo $signPackage["signature"];?>',
+                jsApiList: [
+                'onMenuShareTimeline','onMenuShareAppMessage'
+                  // 所有要调用的 API 都要加到这个列表中
+                ]
+             });
+             
+            wx.ready(function(){
+                // config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中。
+                //分享给朋友
+                wx.onMenuShareAppMessage({
+                    title: title, // 分享标题
+                    desc: content, // 分享描述
+                    link: "{$link}", // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                    imgUrl: 'http://'+window.location.host+logo, // 分享图标
+                    type: '', // 分享类型,music、video或link，不填默认为link
+                    dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+                    success: function () { 
+                        // 用户确认分享后执行的回调函数
+                    },
+                    cancel: function () { 
+                        // 用户取消分享后执行的回调函数
+                    }
+                });
+
+                //分享到朋友圈
+                wx.onMenuShareTimeline({
+                    title: title, // 分享标题
+                    link: "{$link}", // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                    imgUrl: 'http://'+window.location.host+logo, // 分享图标
+                    success: function () { 
+                        // 用户确认分享后执行的回调函数
+                    },
+                    cancel: function () { 
+                        // 用户取消分享后执行的回调函数
+                    }
+                });
+            });
+
+            wx.error(function(res){
+                console.log(res)
+                // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
+            });
+		</script>
+	</body>
+
+</html>

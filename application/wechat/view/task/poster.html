@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <title>分享海报</title>
+   <link rel="stylesheet" href="/public/mobile/css/mui.min.css" />
+   <link rel="stylesheet" href="/public/mobile/css/threeLevelMarketing.css">
+</head>
+{include file="common/share" /}
+<body class="bg_FFF">
+      <div class="task-share-poster-up">
+         <div class="task-share-poster-up-wrap">
+            <img src="{$poster}" id="poster">
+         </div>
+         <div class="task-share-poster_tip">长按上图保存图片，分享给朋友</div>
+      </div>
+      <div class="task-share-poster-down">
+         <ul class="task-poster-list-ul">
+            <li data-id='1'>
+               <img src="/public/image/task_s1.png" > 
+            </li>
+            <li data-id='2'>
+               <img src="/public/image/task_s2.png" >
+            </li>
+            <li data-id='3'>
+               <img src="/public/image/task_s3.png" >
+            </li>
+            <li data-id='4'>
+               <img src="/public/image/task_s4.png" >
+            </li>
+         </ul>
+      </div>
+<script src="/public/mobile/js/jquery-3.2.1.min.js"></script>
+<script src="/public/mobile/js/mui.min.js"></script>
+<script src="/public/mobile/js/globla.js"></script>
+<script>
+  var uid = '{$userinfo.uid}'; //用户id
+  $('.task-poster-list-ul li').click(function(){
+      var id = $(this).attr('data-id');
+      $.get(host+"task/poster?id="+id+"&uid="+uid, function(result){
+         if(result.code != 1){
+            mui.alert(result.message);
+            return false;
+         }
+         if(result.code == 1){
+            var rand = parseInt(9999*Math.random());
+            $('#poster').attr('src',result.data+'?rand='+rand);
+         }
+      });
+  })
+</script>    
+</body>
+</html>

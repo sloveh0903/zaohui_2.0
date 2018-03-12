@@ -1,0 +1,28 @@
+<script src="http://static.ojuju.com/assets/C/pc1.0/js/jquery.min.js?v=20170616_18_20_45"></script>
+<script>
+var video_path = "{$path}";
+var id = "{$id}";
+var server = "{$server}"+'course/blob';
+var xhr = new XMLHttpRequest();
+//配置请求方式、请求地址以及是否同步
+xhr.open('GET', video_path, true);
+//设置请求结果类型为blob
+xhr.responseType = 'blob';
+//请求成功回调函数
+xhr.onload = function(e) {
+	if (this.status == 200) {
+		//获取blob对象
+		var blob = this.response;
+		//获取blob对象地址，并把值赋给容器
+		blob_path = URL.createObjectURL(blob);
+		$.post(server,{id:id,path:blob_path},function(result){
+		   window.location.href=server; 
+	    });
+	}else{
+		$.post(server,{id:id,path:video_path},function(result){
+		   window.location.href=server; 
+	    });
+	}
+};
+xhr.send();
+</script>

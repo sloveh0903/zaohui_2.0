@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>我的解答</title>
+		<link rel="stylesheet" href="/public/mobile/css/mui.min.css" />
+		<link rel="stylesheet" href="/public/mobile/css/global.css" />
+		<link rel="stylesheet" href="/public/mobile/css/member.css" />
+		<style type="text/css">
+			html,body{background: #fff;}
+		</style>
+	</head>
+    {include file="common/share" /}
+	<body>
+		<div class="mui-row myquestions-list">
+            <div id="pullrefresh" class="mui-scroll-wrapper">
+                <div class="mui-scroll">
+        			<ul id="answer" class="ask-answer-box">
+					</ul>
+                </div>
+            </div>
+		</div>
+		<script type="text/javascript" src="/public/mobile/js/jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="/public/mobile/js/mui.min.js"></script>
+		<script type="text/javascript" src="/public/mobile/js/globla.js"></script>
+		<script>
+            var uid = '{$userinfo.uid}';
+            var isbind = '{$userinfo.is_bind}';
+            var page = 1;
+            var size = 10;
+            getlist();
+            function getlist(){
+                $.ajax({
+                    url:host+'user/answer',
+                    data:{
+                        uid:uid,
+                        page:page,
+                        size:size
+                    },
+                    type:'GET', //GET
+                    async:true,    //或false,是否异步
+                    timeout:5000,    //超时时间
+                    dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+                    success:function(data,textStatus,jqXHR){
+                        if(data.code==1){
+                        	var list = "";
+                            var result = data.data;
+                            //console.log(result);
+                            $.each(result.list,function(j,item){
+              					if(item.ask_id){
+                                    list += '<li data-id="' + item.ask_id + '">' + '<h1 class="fs-14 fc-4">'+item.ask_title+'</h1>' +
+    									'<span class="fs-16 fc-10">'+item.content+'</span>' +
+    									'</li>';
+                                }
+                            });
+                            if(result.list.length > 0){
+                            	$("#answer").append(list);
+                            }
+                            if(page == 1 && result.list.length == 0){
+                                var empty = '<div class="emptypage-wrapper"><div class="empty-box"> <img class="empty-img" src="/public/mobile/img/icon/wenda-empty.png"> <p class="empty-text">还没有回答过问题</p></div></div>';
+                                $('.mui-row').append(empty);
+                            }
+                        }
+                        mui('#pullrefresh').pullRefresh().endPullupToRefresh();
+                    }
+                });
+            }
+            
+            mui('#answer').on('tap','li',function () {
+                var id = $(this).attr('data-id');
+                url = "{:url('wechat/ask/detail')}";
+                window.location.href = url + '?id=' + id;
+            });
+
+            mui.init({
+                pullRefresh: {
+                    container: '#pullrefresh',
+                    up : {
+                        //height:50,//可选.默认50.触发上拉加载拖动距离
+                        //auto:true,//可选,默认false.自动上拉加载一次
+                        contentrefresh : "",//可选，正在加载状态时，上拉加载控件上显示的标题内容
+                        contentnomore:'',//可选，请求完毕若没有更多数据时显示的提醒内容；
+                        callback :pullupRefresh //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+                    }
+
+                }
+            });
+
+            function pullupRefresh() {
+                console.log('下拉');
+                setTimeout(function() {
+                    page += 1,
+                   getlist();
+                }, 100);
+            }
+
+		</script>
+		<script src="/public/mobile/js/bindmobile.js"></script>
+	</body>
+</html>

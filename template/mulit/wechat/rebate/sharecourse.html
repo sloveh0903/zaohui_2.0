@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html style="background: #fff;">
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <title>分享课程</title>
+   <link rel="stylesheet" href="/public/mobile/css/mui.min.css">
+   <link rel="stylesheet" href="/public/mobile/css/global.css">
+   <link rel="stylesheet" href="/public/mobile/css/threeLevelMarketing.css">
+</head>
+{include file="common/share" /}
+<body style="background: #fff;">
+   <div class="share_course_main">
+      <div class="share_course_content">
+	      <div id="pullrefresh" class="mui-content mui-scroll-wrapper" style="margin-top: 0;">
+		      <div class="mui-scroll" style="padding-bottom: 50px;">
+				<ul class="course-list" style="margin-top: 25px;">
+			    </ul>
+			    <div class="grazy-copyright bottom-fixed ">
+					<i>格子匠 GRAZY.CN 技术支持</i>
+				</div>
+		      </div>
+	      </div>
+      </div>
+      
+   </div>
+   
+</body>
+</html>
+	<script src="/public/mobile/js/jquery-3.2.1.min.js"></script>
+	<script src="/public/mobile/js/mui.min.js"></script>
+	<script src="/public/mobile/js/globla.js"></script>
+	<script type="text/javascript">
+	//var host = 'http://wxc.grazy.com/api/';
+	var page = 1;
+	var size = 10;
+    var uid = '{$userinfo.uid}';
+    var isbind = '{$userinfo.is_bind}';
+	mui.init({
+		pullRefresh: {
+			container: '#pullrefresh',
+			up: {
+				auto: true,
+				//height:50,//可选.默认50.触发上拉加载拖动距离
+				//auto:true,//可选,默认false.自动上拉加载一次
+				contentrefresh: "正在加载...", //可选，正在加载状态时，上拉加载控件上显示的标题内容
+				contentnomore: '没有更多数据了', //可选，请求完毕若没有更多数据时显示的提醒内容；
+				callback: pullupRefresh //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+			}
+		}
+	});
+	function getlist(){
+		$.get(host+"rebate/shareCourse?uid="+uid+"&page="+page+'&size='+size, function(result){
+		var data = result.data.course;
+		var buy = result.data.buy;
+		page++; 
+		if(data.length == 0){
+	    	mui('#pullrefresh').pullRefresh().endPullupToRefresh(true);
+	    }else{
+	    	mui('#pullrefresh').pullRefresh().endPullupToRefresh(false);
+	    }
+		for(var i=0;i<data.length;i++){
+			var uname = '{$uname}';
+			var sharelink = "{:url('wechat/rebate/sharelink')}?cid="+data[i].cid;
+			var shareposter = "{:url('wechat/rebate/shareposter')}?cid="+data[i].cid;
+			if(buy == 1){					
+				var inner = '<li><div class="teacher-box">'+
+		           '<img src="'+data[i].face+'" alt="老师头像"/></div>'+
+		           '<div class="course-content">'+
+		              '<h1>'+data[i].title+'</h1>'+
+		              '<span>分享价：'+data[i].share_price+'元 '+data[i].discount+'折</span>'+
+		              '<i>佣金'+data[i].commission+'% 赚'+data[i].rebate_price+'元</i>'+
+		           '</div>'+
+		           '<div class="share-box">'+
+		              '<img src="/public/mobile/img/icon/share@2x24.png"  alt="分享按钮"class="share-img">'+
+		              '<div class="fs-16 classify-box" style="top:-25px;right:0;">'+
+		                '<div class="classify-name">'+
+		              	  '<i><a href="'+sharelink+'" class="sharelink">链接分享</a></i>'+
+		              	'</div>'+
+		              	'<div class="classify-name">'+
+							'<i><a href="'+shareposter+'"class="shareposter">海报分享</a></i>'+
+						'</div>'+								             
+		              '</div>'+
+		           '</div>'+
+		        '</li>';
+		  }			
+			$('.course-list').append(inner);
+			
+		  };
+
+		})
+	}
+
+	function pullupRefresh() {
+		getlist();
+	}
+	
+	mui(".course-list").on('tap', 'li>div>img', function (event){
+		event.stopPropagation()
+		$(this).siblings('.classify-box').fadeIn();
+		$(this).parents('li').siblings('li').find('.classify-box').fadeOut()
+	})
+
+	//点击区域外弹框消失
+	$(".classify-box").click(function(e) {
+        e ? e.stopPropagation() : event.cancelBubble = true;//取消事件处理
+   });
+    mui('body').on('tap', '#pullrefresh', function (e) {
+    	//console.log(e);
+    	if(e.target.className != 'classify-name') {
+    		$(".classify-box").fadeOut();
+    	}
+    })    
+	mui("body").on('tap', '.sharelink,.shareposter', function (event) {
+		//return false;
+		window.location.href=$(this).attr('href')
+	})
+
+	</script>
+<script src="/public/mobile/js/bindmobile.js"></script>

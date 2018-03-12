@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>后台管理系统</title>
+    <link rel="stylesheet" href="/public/gzadmin/css/jquery.mCustomScrollbar.min.css">
+    <link rel="stylesheet" href="/public/gzadmin/css/all.css">
+</head>
+<body>
+<div class="course">
+    <div class="course_left">
+        <img src="/public/gzadmin/images/grazy_jiang@2x.png" alt="格子匠图片">
+        <div class="up_nav_div">
+            <ul class="up_nav_ul">
+                <li class="leftmenu" data-src='{:url("index/center")}'><a href="javascript:void(0)">概况</a></li>
+                <li class="leftmenu" data-src='{:url("course/index")}'><a href="javascript:void(0)">课程管理</a></li>
+                <li class="active leftmenu" data-src='{:url("member/index")}'><a href="javascript:void(0)">用户管理</a></li>
+                <li class="leftmenu" data-src='{:url("distribution/index")}'><a href="javascript:void(0)">全员分销</a></li>
+                <li class="leftmenu" data-src='{:url("order/index")}'><a href="javascript:void(0)">订单管理</a></li>
+                <li class="leftmenu" data-src='{:url("article/index")}'><a href="javascript:void(0)">文章管理</a></li>
+                <li class="leftmenu" data-src='{:url("user/index")}'><a href="javascript:void(0)">系统配置</a></li>
+                <li class="leftmenu" data-src='{:url("operate/index")}'><a href="javascript:void(0)">微信配置</a></li>
+                <li class="leftmenu" data-src='{:url("recharge/index")}'><a href="javascript:void(0)">我的充值</a></li>
+            </ul>
+        </div>
+        <div class="down_nav_div">
+            <p>©格子匠</p>
+        </div>
+    </div>
+    <div class="course_right">
+        <iframe src="{:url('member/add_teacher')}" frameborder="0" id="iframe" style="height:100%;visibility:inherit; width:100%;z-index:1;"></iframe>
+    </div>
+</div>
+<!-- tr批量删除弹框提示end -->
+<script src="/public/gzadmin/js/jquery-1.11.0.min.js"></script>
+<script src="/public/gzadmin/js/public_PC.js"></script>
+<!-- <script src="/public/gzadmin/js/bootstrap.min.js"></script>
+<script src="/public/gzadmin/js/jquery.mCustomScrollbar.concat.min.js"></script>
+<script src="/public/gzadmin/js/placeholder.js"></script> -->
+<script>
+    $(function(){
+        initHeight();
+    })
+    //浏览器改变触发该事件
+    //初始化height
+    function initHeight(){
+        var window_height =  $(window).height();
+
+        var topHeight = $(".course_right_top").outerHeight();
+        $(".course_left").outerHeight( window_height );
+        $(".course_right").outerHeight( window_height );
+        console.log(window_height)
+    }
+
+</script>
+</body>
+</html>

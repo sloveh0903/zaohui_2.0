@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>问答</title>
+		<link rel="stylesheet" href="/public/mobile/css/mui.min.css"/>
+		<link rel="stylesheet" href="/public/mobile/css/global.css"/>
+		<link rel="stylesheet" href="/public/mobile/css/qna.css"/>
+		<!-- <link rel="stylesheet" href="/public/mobile/js/wsiper/swiper.min.css"/> -->
+		<script src="/public/mobile/js/compatible.js"></script>
+		<script src="/public/mobile/js/jquery-3.2.1.min.js"></script>
+		<script src="/public/mobile/js/mui.min.js"></script>
+		<script type="text/javascript" src="/public/mobile/js/globla.js"></script>
+	</head>
+	{include file="common/share" /}
+	<body>
+		<div class="wrap">
+      <div class="qna-nav">
+        <i class="filter-icon"></i>
+        <p class="catename dan fs-14 fc-6"></p>
+        <i class="quest-btn btn hollow">提问</i>
+      </div>
+      <div id="pullrefresh" class="mui-scroll-wrapper askcontent-wrapper">
+				<div class="mui-scroll">
+					<div class="content-slide ask-content">
+          
+					</div>
+				</div>
+			</div>
+	    {include file="common/menu"/}
+    </div>
+		<div class="dialog">
+      <div class="filter-box mui-scroll-wrapper dialog-scroll-wrapper filter-wrapper" >
+        <div class="filter-head">
+          <h2 class="filter-all fs-16 subfc">浏览全部</h2>
+          <h4 class="fs-18 fc-10">按课程浏览</h4>
+          <i class="cancel"></i>
+        </div>
+        <div class="mui-scroll">
+          <div class="filter-body">
+            <div class="filter-content">
+              {volist name="$topcate_lists" id="topcate"}
+                <div class="filter-item">
+                  <ul class="cate-list">
+                    <li class="catename fc-10 fs-16">{$topcate.cate_name}</li>
+                    {if !empty($topcate.topcourse)}		            
+                      {volist name="topcate['topcourse']" id="topmin"}
+                      <li class="course-title" data-cid="{$topmin.cid}">
+                        <i class="book-icon"></i>
+                        <p class="fs-16">{$topmin.title}</p>
+                      </li>
+                      {/volist}
+                    {/if}
+                  </ul>
+                  {if !empty($topcate['childcate'])} 
+                    {volist name="topcate['childcate']" id="sub"}
+                      <ul class="subcate-list">
+                        <li class="subcate-name fs-16 fc-6">{$sub.cate_name}</li>
+                        {if !empty($sub['courselist'])}
+                          {volist name="sub['courselist']" id="min"}
+                          <li class="course-title fs-16" data-cid="{$min.cid}">
+                            <i class="book-icon"></i>
+                            <p class="fs-16">{$min.title}</p>
+                          </li>
+                          {/volist}
+                        {/if}
+                      </ul>
+                    {/volist}
+                  {/if}
+                </div>
+              {/volist}
+            </div>
+          </div>
+        </div>
+          
+      </div>
+      
+      <div class="add-box mui-scroll-wrapper dialog-scroll-wrapper add-wrapper">
+        <div class="filter-head question-head">
+          <div class="filter-notice">
+            <h4>选择课程</h4>
+            <p>付费课程需购买后提问</p>
+          </div>
+          <i class="cancel" style="background: url(../../../../public/mobile/img/icon/cross.png) no-repeat 48px 29px/16px;"></i>
+        </div>
+        <div class="mui-scroll">
+          <div class="filter-body" style="padding-bottom: 70px;">
+            <div class="filter-content">
+              {volist name="$pay_catelist" id="pay"}
+                <div class="filter-item">
+                  <ul class="cate-list">
+                    <li class="catename fc-10 fs-16">{$pay.toplist.cate_name}</li>
+                    {if !empty($pay['courselist'])}
+                      {volist name="pay['courselist']" id="topmin"}
+                      <li class="course-title" data-cid="{$topmin.cid}">
+                        <i class="book-icon"></i>
+                        <p class="fs-16">{$topmin.title}</p>
+                      </li>
+                      {/volist}
+                    {/if}
+                  </ul>
+                  {if !empty($pay['childlist'])} 
+                    {volist name="pay['childlist']" id="sub"}
+                      <ul class="subcate-list">
+                        <li class="subcate-name fs-16 fc-6">{$sub.cate_name}</li>
+                        {if !empty($sub['courselist'])}
+                          {volist name="sub['courselist']" id="min"}
+                          <li class="course-title fs-16" data-cid="{$min.cid}">
+                            <i class="book-icon"></i>
+                            <p class="fs-16">{$min.title}</p>
+                          </li>
+                          {/volist}
+                        {/if}
+                      </ul>
+                    {/volist}
+                  {/if}
+                </div>
+              {/volist}
+            </div>
+          </div>
+
+        </div>
+        <!-- <div class="filter-content">
+          {volist name="$pay_catelist" id="pay"}
+              <div class="filter-item">
+                <h2 class="toplv-caption">{$pay.toplist.cate_name}</h2>
+                <ul>
+                    {if empty($pay['childlist'])} 
+                      {volist name="pay['courselist']" id="topmin"}
+                      <li class="course-caption" data-cid='{$topmin.cid}'>{$topmin.title}</li>
+                      {/volist}
+                    {else}
+                      {if !empty($pay['courselist'])}
+                        {volist name="pay['courselist']" id="topmin"}
+                      <li class="course-caption" data-cid='{$topmin.cid}'>{$topmin.title}</li>
+                      {/volist}
+                      {/if}
+                      {volist name="pay['childlist']" id="sub"}
+                        <li class="seclv-caption">{$sub.cate_name}</li>
+                        {volist name="sub['courselist']" id="min"}
+                        <li class="course-caption"  data-cid='{$min.cid}'>{$min.title}</li>
+                      {/volist}
+                    {/volist}
+                    {/if}
+                </ul>
+            </div>
+            {/volist}
+        </div> -->
+      </div>
+      <div class="alert-box">
+          <h4>需要购买课程</h4>
+          <p>购买课程学习后即可提问</p>
+          <div class="operation">
+            <i class="cancel">取消</i>
+            <a class="buy" href="{:url('/wechat/index/index')}">购买课程</a>
+          </div>
+      </div>
+	  </div>
+	  <div class="toast-box limit">
+			<div class="toast-main" id="toast-main"></div>
+		</div>
+    <!-- <script type="text/javascript" src="/public/mobile/js/wsiper/idangerous.swiper.min.js"></script> -->
+    <script type="text/javascript">
+    var  msg  = "{$msg}";
+	if(msg){
+		document.getElementById('toast-main').innerHTML=msg;
+		toastBox();
+	}
+			$(function() {
+        $('.filter-box').find('.mui-scroll').css('min-height', $(window).innerHeight() - 155 + 'px');
+        $('.add-box').find('.mui-scroll').css('min-height', $(window).innerHeight() - 155 + 'px');
+				$("#intNav li").click(function() {
+					$(this).addClass("mui-active");
+					$(this).siblings().removeClass("mui-active");
+        });
+        // 弹窗
+        var isBuy = {$is_buy_bool};
+        $('.filter-icon').on('tap', function () {
+            $(this).addClass('focus');
+            $('.wrap').addClass('blur');
+            $('.dialog')
+            .css({'display': 'block'})
+            .find('.filter-box')
+            .show()
+            .siblings()
+            .hide();
+            mui('.filter-wrapper').scroll().scrollTo(0,0,0);
+          });
+        $('.dialog, .cancel').on('tap', function (e) {
+            $('.dialog').hide();
+            $('.wrap')
+            .removeClass('blur')
+          }).children('div').on('tap', function (e) {
+            e.stopPropagation();
+          });
+        $('.quest-btn').on('tap', function (e) {
+        	e.stopPropagation();
+        	setTimeout(function () {
+        		if(isBuy) {
+                $('.wrap')
+                .addClass('blur')
+                .end()
+                .find('.dialog')
+                .css({'display': 'block'})
+                .find('.add-box')
+                .show()
+                .siblings()
+                .hide();
+                mui('.add-wrapper').scroll().scrollTo(0,0,0);
+              } else {
+                $('.wrap')
+                .addClass('blur')
+                .end()
+                .find('.dialog')
+                .css({'display': 'flex'})
+                .find('.alert-box')
+                .css('display', 'flex')
+                .siblings()
+                .hide();
+              }
+        	}, 100);
+        })
+        // 弹窗区域滚动
+        mui('.filter-wrapper').scroll({
+  	        deceleration: 0.005, //flick 减速系数，系数越大，滚动速度越慢，滚动距离越小，默认值0.0006
+            scrollY: true, //是否竖向滚动
+            scrollX: false, //是否横向滚动
+            bounce: true,
+        });
+        mui('.add-wrapper').scroll({
+  	        deceleration: 0.005, //flick 减速系数，系数越大，滚动速度越慢，滚动距离越小，默认值0.0006
+            scrollY: true, //是否竖向滚动
+            scrollX: false, //是否横向滚动
+            bounce: true,
+        });
+        // 弹窗滚动区域高度初始化
+        // $('.dialog .dialog-scroll-wrapper').css('max-height', $(window).innerHeight() - 155);
+      });
+		//选择课程
+		$(".filter-box .filter-all").on("click", function () {
+        var filter_All = true;
+        var url = "{:url('wechat/ask/mulitindex')}?cid=0";
+			  window.location.href=url;
+    });
+		$(".filter-box .course-title").on("click", function () {
+        var filter_All = false;
+			  var that = $(this);  
+        var itemid = that.attr("data-cid");
+        var url = "{:url('wechat/ask/mulitindex')}?cid="+itemid;
+				window.location.href=url;
+    });
+		//提问
+		$(".add-box .course-title").on("click", function () {
+        var that = $(this);
+        var itemid = that.attr("data-cid");
+        var url = "{:url('wechat/ask/mulitanswer')}?cid="+itemid;
+				window.location.href=url;
+    })
+    var page = 1;
+    var size = 10;
+    var cid= {$cid};
+    var uid = '{$userinfo.uid}';
+    var isbind = '{$userinfo.is_bind}';
+    var filter_All = false;
+    $.get(host+"index/index", function(result){
+      if(result.code == 0){
+        alert('获取数据失败');return;
+      }
+      
+      var course = result.data.course;
+      var inner = '';
+      
+      getask(cid,page,size);
+
+    });
+    
+			//获取问答
+			function getask(cid,page,size){
+				
+				$.get(host+"ask/index?cid="+cid+'&uid='+uid+'&page='+page+'&size='+size, function(result){
+					//console.log(111);
+					//console.log(result);
+          $('.qna-nav .catename').text(result.data.catename);
+					var ask = result.data.ask;
+					var inner = '';
+					for(var i=0;i<ask.length;i++){
+						if(ask[i].comments > 0){
+							var answer_innser = '<p class="fs-12 subfc">'+ask[i].comments+'条回答</p>';
+						}else{
+							var answer_innser = '<p class="fs-12 subfc data-id="'+ask[i].id+'">暂无回答</p>';
+						}
+						var img_inner = '<div class="img-displaybox">';
+						var photopath_thumb = ask[i].photopath_thumb;
+						for(var k=0;k<photopath_thumb.length;k++){
+							if(photopath_thumb[k]!='1'){
+								img_inner += '<img src="' + photopath_thumb[k] + '">';	
+							}
+						}
+						img_inner += '</div>';
+						if(ask[i].anonymous == 1){
+							ask[i].face = '/public/image/anonymity.png';
+							ask[i].nickname = '匿名';
+						}
+						//精华
+            var ask_hot =  '';
+            console.log(ask[i]);
+						if(ask[i].hot==1){
+							ask_hot = '<img src="/public/mobile/img/icon/ess.png" alt="ess" class="ess">';
+						}
+						inner += '<div class="qna-box" data-id="' + ask[i].id + '">'+
+                        '<div class="qna-top">'+
+                          '<img src="' + ask[i].face + '" class="hp">' +
+                          '<div class="qna-topright">' + 
+                            '<div class="name fs-14 fc-8">' + ask[i].nickname + ask_hot +'</div>'+
+                            '<div class="qna-infobox">'+ 
+                              '<span class="create-time fs-12 fc-4">'+ ask[i].create_time + '</span>'+
+                              '<span class="catename fs-12 fc-4">' + ask[i].cate_name + '</span>'+ 
+                            '</div>'+
+                          '</div>'+
+                        '</div>'+
+                        '<p class="qna-title fs-18 fc-10">'+ask[i].title+'</p>'+
+                        img_inner + answer_innser +
+                    '</div>';
+					}
+					if(page == 1){
+            if(ask.length == 0){
+              //$('.content-slide').html(nodata);
+              var empty_list = '<div class="emptypage-wrapper"><div class="empty-box"> <img class="empty-img" src="/public/mobile/img/icon/wenda-empty.png"> <p class="empty-text">暂无数据</p></div></div>';
+              $('.wrap').after(empty_list);
+						}else{
+              $('.content-slide').html(inner);
+						}
+						mui('#pullrefresh').pullRefresh().endPulldownToRefresh();
+					}else{
+            $('.content-slide').append(inner);
+						mui('#pullrefresh').pullRefresh().endPullupToRefresh();
+					}
+					// $('.swiper-container').css('overflow','inherit');
+					//$('.swiper-container').append(inner);
+				});
+			}
+			mui.init({
+        pullRefresh: {
+          container: '#pullrefresh',
+          up : {
+            //height:50,//可选.默认50.触发上拉加载拖动距离
+            //auto:true,//可选,默认false.自动上拉加载一次
+            contentrefresh : "",//可选，正在加载状态时，上拉加载控件上显示的标题内容
+            contentnomore:'',//可选，请求完毕若没有更多数据时显示的提醒内容；
+            callback :pullupRefresh //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+          }
+        }
+      });
+			function pullupRefresh() {
+			  console.log('下拉');
+        setTimeout(function() {
+          page++;//翻下一页
+          data={
+            page:page,
+            size:10
+          };
+          getask(cid,page,size);
+        }, 100);
+      }
+			mui('.ask-content').on('tap', '.qna-box', function (event) {
+				var url = "{:url('wechat/ask/detail')}";
+				var id = this.getAttribute("data-id");
+				window.location.href=url+'?id='+id;
+			});
+
+		</script>
+			<script src="/public/mobile/js/bindmobile.js"></script>
+	</body>
+
+</html>

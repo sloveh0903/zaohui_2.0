@@ -1,0 +1,47 @@
+.mcom{
+	padding: 35px 15px;
+	border-bottom: 1px solid #E7E5EA;
+	position: relative;
+}
+.mcom span{
+	position: absolute;
+	right: 15px;
+	top: 35px;
+}
+.mcom-star{
+	float: left;
+}
+.mcom-star i{
+	float: left;
+	margin-right: 10px;
+}
+.icon-star-blue{
+	display: inline-block;
+	background: url(../img/icon/star-blue.png);
+	width: 24px;
+	height: 24px;
+	background-size:100% 100% ;
+}
+.mcom span{
+	float: right;
+	color: #00B6F2;
+	font-size: 14px;
+	line-height: 24px;	
+}
+html{
+	background: #FAFAFA;
+}
+textarea {
+	border: 0;
+	border-radius: 0;
+	font-family: DroidSans, DroidSansFallback, Arial, "Microsoft YaHei";
+	font-size: 16px;
+	height: 120px;
+	float: left;
+	margin-bottom: 0;
+	border-bottom: 1px solid #E7E5EA;
+}
+#star img{
+	width: 24px !important;
+	height: 24px !important;
+}

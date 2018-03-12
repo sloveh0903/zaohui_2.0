@@ -1,0 +1,67 @@
+@charset "utf-8";
+//基本变量存储
+$baseFS: 14px;
+$baseFC: rgba(41, 43, 51, .8);
+$mainTC: #00b6f2;
+$subTC: #6897B1;
+$mobileFont: DroidSans, DroidSansFallback, Arial, "Microsoft YaHei";
+// 基本mixin
+@mixin font-conf ($fontsize, $fontcolor) {
+  font-size: $fontsize;
+  color: $fontcolor;
+}
+@mixin ell () {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+@mixin ell-more ($line) {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: $line;
+  display: moz-box;
+  -moz-line-clamp: $line important;
+  -moz-box-orient: vertical;
+  overflow: hidden;
+}
+@mixin radius ($radius) {
+  border-radius: $radius;
+}
+@mixin font-color ($color) {
+  color: $color;
+}
+@mixin text-color ($alpha) {
+  color: rgba(41, 43, 51, $alpha);
+}
+@mixin icon($size) {
+  display: inline-block;
+  width: $size;
+  height: $size;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+@mixin clearfix () {
+  *zoom:1;
+  &:after {
+    visibility: hidden;  display: block;  font-size: 0;  content: " ";  clear: both;  height: 0;
+  }
+}
+@mixin page_gray {
+  html,body {
+    background-color: #F0F3F5;
+  }
+}
+@mixin page_empty {
+  html,body {
+    background-color: #F7FAFC;
+  }
+}
+@mixin page_white {
+  html,body {
+    background-color: #fff;
+  }
+}
+@mixin bg_fff {
+  background-color: #fff;
+}

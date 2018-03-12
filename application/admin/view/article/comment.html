@@ -1,0 +1,80 @@
+{include file="common/header" /}
+<body>
+<div class="article_manage mCustomScrollbar">
+	<div class="right-side-header clearfix">
+	        <span>文章管理</span>
+	        {include file="common/admin" /}
+   </div>
+    <div class="right_side_content">
+	    <div class="add_article_main ">
+	        <div class="breadcrumb">
+	              <a href='{:url("article/index")}'>文章列表</a>
+	              /
+	              <span>评论</span>
+	         </div>
+	         <div class="add_article_step"></div>
+	        <div class="articleInfo_fill">
+
+		        <div class="operation_div">
+		            <div class="select_search " >
+		                <form class="layui-form" action='{:url("article/comment")}'>
+		                    <!--<input class="keyword" type="text" name="key" placeholder="收索..">-->
+		                    <input type="hidden" name="id" value="{$aid}">
+		                    <input class="search_btn" type="image" src="/public/gzadmin/images/gray_search@2x20.png" lay-submit name="submit" lay-filter="search" align="" >
+		                    <div class="layui-form">
+		                        <div class="layui-inline">
+		                            <select name="type">
+		                                <option value="nickname">昵称</option>
+		                                <option value="comment">内容</option>
+		                            </select>
+		                        </div>
+		                        <div class="layui-inline">
+		                            <div class="layui-input-inline">
+		                                <input class="layui-input" name="key" placeholder="关键字">
+		                            </div>
+		                        </div>
+		                    </div>
+		                </form>
+		            </div>
+		            <div class="clearfix"></div>
+		        </div>
+		        <div id="list" class="layui-form"></div>
+		        <div class="text-right" id="page"></div>
+		     </div>
+		   </div>
+    </div>
+</div>
+<script id="list-tpl" type="text/html" data-params='{"url":"{:url("article/comment",["id"=>$aid])}","pageid":"#page"}'>
+    <table id="example" class="layui-table" lay-skin="line">
+        <thead>
+        <tr>
+            <th>头像/昵称</th>
+            <th style="width: 50%">评论内容</th>
+            <th>点赞</th>
+            <th>评论时间</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{# layui.each(d.list, function(index, item){ }}
+        <tr>
+            <td>
+                <img class="commenter" src="{{ item.user.face}}" alt="{{ item.user.nickname}}">
+                <i class="userNick">{{ item.user.nickname}}</i>
+            </td>
+            <td>{{ item.content}}</td>
+            <td>{{ item.likes}}</td>
+            <td>{{ item.create_time}}</td>
+            <td><i class="i_delete ajax" data-params='{"url": "{:url("article/del_comment")}","confirm":"true","data":"id={{ item.id}}"}'>删除</i></td>
+        </tr>
+        {{# }); }}
+        </tbody>
+
+    </table>
+</script>
+{include file="common/version" /}
+<script>
+    layui.use('list');
+</script>
+</body>
+</html>

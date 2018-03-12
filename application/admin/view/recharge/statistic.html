@@ -1,0 +1,64 @@
+{include file="common/header" /}
+<body>
+<div class="article_manage">
+	<div class="right-side-header clearfix">
+	        <span>我的充值</span>
+	        {include file="common/admin" /}
+   </div>
+   <div class="right_side_content">
+    	<div class="system_guanli_div">
+            <ul class="system_guanli_ul">
+                 <li><a href="javascript:void(0)" class="goto" data-src='{:url("recharge/index")}'>充值</a></li>
+                <li><a href="javascript:void(0)" class="active goto" data-src='{:url("recharge/statistic")}'>流量与存储</a></li>
+            </ul>
+        </div>
+        <div class="success_tip displayNone">已完成</div>
+	    <div class="course_right_main">
+	        <div class="operation_div">
+	            <div class="recharge-header">
+	                <div>
+	                    <span style='width:196px;'>流量已使用：{$flux}GB</span>
+	                    <span style='width:196px;'>空间已使用：{$space}GB</span>
+	                </div>
+	            </div>
+	            <div class="clearfix"></div>
+	        </div>
+	        <div id="list" class="layui-form"></div>
+	        <div class="text-right" id="page"></div>
+	    </div>
+	 </div>
+</div>
+<script id="list-tpl" type="text/html" data-params='{"url":"{:url("recharge/statistic")}","pageid":"#page"}'>
+    <table id="example" class="layui-table" lay-skin="line">
+        <thead>
+        <tr>
+            <th>结算时间</th>
+            <th>类型</th>
+            <th>费用(元)</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{# layui.each(d.list, function(index, item){ }}
+        <tr>
+            <td>{{ item.create_time}}</td>
+            <td>
+                {{#if (item.type == "space"){ }}
+                存储({{ item.total}})
+                {{# }else if (item.type == "flux"){ }}
+                流量({{ item.total}})
+                {{# }else{ }}
+                转码
+                {{# } }}
+            </td>
+            <td>{{ item.money}}</td>
+        </tr>
+        {{# }); }}
+        </tbody>
+    </table>
+</script>
+{include file="common/version" /}
+<script>
+    layui.use('list');
+</script>
+</body>
+</html>

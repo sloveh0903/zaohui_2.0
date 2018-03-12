@@ -1,0 +1,37 @@
+html, body {
+  background-color: #F0F3F5; }
+
+.mui-row::after,
+.mui-row::before {
+  display: none; }
+
+.mcom {
+  padding: 0 15px;
+  background-color: #fff; }
+  .mcom .container {
+    height: 70px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 1px rgba(0, 0, 0, 0.06); }
+  .mcom .icon-star-blue {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-image: url("../img/icon/blue_fullStar.png");
+    margin-right: 10px; }
+
+textarea {
+  border: 0;
+  border-radius: 0;
+  font-family: DroidSans, DroidSansFallback, Arial, "Microsoft YaHei";
+  font-size: 16px;
+  height: 120px;
+  float: left;
+  margin-bottom: 0;
+  border-bottom: 1px solid #E7E5EA; }
+
+/*# sourceMappingURL=my-comment.css.map */

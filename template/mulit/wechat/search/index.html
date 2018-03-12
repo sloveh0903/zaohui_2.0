@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>搜索</title>
+		<link rel="stylesheet" href="/public/mobile/css/mui.min.css" />
+		<link rel="stylesheet" href="/public/mobile/css/global.css" />
+		<link rel="stylesheet" href="/public/mobile/css/search.css" />
+		<script src="/public/mobile/js/compatible.js"></script>
+	</head>
+	{include file="common/share"/}
+	<body>
+		<!-- <div class="clearfix seachOne-seach"> -->
+		<div class="search-box">
+			<input type="text" placeholder="搜索课程与视频" class="search-input"/>
+			<i class="search-blueicon"></i>
+		</div>
+		<div class="seachOne-num font-color-4 hot-search">热门搜索</div>
+		<div class="mui-row seachOne-list">
+			<ul class="keyword">
+
+			</ul>
+		</div>
+		<div class="seachOne-num font-color-4 list">相关课程</div>
+		<div class="mui-row list-content list">
+			<ul class="mui-table-view course-list">
+
+			</ul>
+		</div>
+		<div class="seachTwo-more course-more" style="display: none">
+			<a href="#">查看更多...</a>
+		</div>
+		<div class="seachOne-num font-color-4 list">相关视频</div>
+		<div class="mui-row list-content-one list">
+			<ul class="navigate-ul ">
+				
+			</ul>
+		</div>
+		<div class="seachTwo-more video-more" style="display: none">
+			<a href="#">查看更多...</a>
+		</div>
+		<script type="text/javascript" src="/public/mobile/js/jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="/public/mobile/js/mui.min.js"></script>
+		<script type="text/javascript" src="/public/mobile/js/globla.js"></script>
+		<script>
+		//var host = 'https://api.fuwangdian.com/api/';
+		var uid = '{$userinfo.uid}';
+    	var isbind = '{$userinfo.is_bind}';
+		var search = [];
+		var page = 1;
+		var size = 3;
+		var keyword = '';
+		var course_url = "{:url('wechat/search/course')}";
+		var video_url = "{:url('wechat/search/video')}";
+		$.ajax({
+			url:host+"search/keywords",
+			type:'GET',
+			async:false,
+			success: function(result){
+		      if(result.code == 1){
+		      	search = result.data.search;
+		      	var inner = '';
+		      	for(var i=0;i<search.length;i++){
+		      		inner += '<li>'+search[i].name+'</li>';
+		      	}
+		      	$('.seachOne-list ul').append(inner);
+		      }else{
+		      	mui.alert('数据请求失败');
+		      }
+		    }
+		});
+
+		//点击关键词搜索
+		mui(".mui-row").on('tap', '.seachOne-list li', function (event) {
+			keyword = $(this).html()
+			var data = {
+				'keyword':keyword,
+				'page':page,
+				'size':size,
+			};
+			getlist(data);	
+		})
+
+		//更多课程
+		$('.course-more').click(function(){
+			window.location.href=course_url+'?keyword='+keyword;return;
+		});
+		
+		//更多视频
+		$('.video-more').click(function(){
+			window.location.href=video_url+'?keyword='+keyword;return;
+		});
+
+		//点输入框显示搜索词
+		mui(".mui-row").on('tap', '.seachOne-seach input', function (event) {
+			$('.keyword').show();
+		});
+
+		//点搜索按钮
+		mui(".search-box").on('tap', '.search-blueicon', function (event) {
+		    keyword = $('.search-box input').val();
+			if(keyword != ""){
+        $('.hot-search').hide();
+				var data = {
+					'keyword':keyword,
+					'page':page,
+					'size':size,
+				};
+				getlist(data);
+			}
+		});
+
+		mui(".mui-row").on('tap', '.mui-table-view li,.navigate-ul li', function (event) {
+			var cid = $(this).attr('data-id');
+			var url = "{:url('wechat/course/detail')}";
+			window.location.href=url+'?cid='+cid;
+		});
+		
+		
+		
+		function getlist(data){
+			console.log(data);
+			$.ajax({
+				url:host+"search/index",
+				type:'GET',
+				data:data,
+				async:false,
+				success: function(result){
+				  $('.list').show();
+				  $('.keyword').hide();
+				  console.log(result);
+			      if(result.code == 1){
+					var course = result.data.course;
+					var course_count = course.length;
+					var video= result.data.video; 
+					var video_count = video.length;
+					var course_innser = '';
+					var video_innser = '';
+					
+
+					if(course_count > size){
+						$('.course-more').show();
+					}else{
+						$('.course-more').hide();
+					}
+					if(video_count > size){
+						$('.video-more').show();
+					}else{
+						$('.video-more').hide();
+					}
+					//课程
+					if(course_count>0){
+						for(var i=0;i<course_count;i++){ 
+							course_innser += 
+							'<li data-id="'+course[i].cid+'"><div class="teacher-box">'+
+								'<img src="'+course[i].face+'" /></div>'+
+								'<div class="course-content">'+
+									'<h1>'+course[i].title+'</h1>'+
+									'<span>'+course[i].desc+'</span>'+
+									'<i>'+course[i].study_count+'人在学</i>'+
+								'</div>'+
+								'<span class="course-price">'+
+								'￥'+course[i].price+
+							'</span></li>';
+						}
+					}
+					
+					//视频
+					if(video_count>0){
+						for(var i=0;i<video.length;i++){
+				              video_innser += '<li class="video-li" data-id="'+video[i].cid+'">'+
+				                  '<div class="video-img"><img class="embed play-icon" src="/public/mobile/img/icon/play-iconb.png"/></div>'+
+				                  '<div class="video-content"><h2 class="class-header">'+video[i].title+'</h2>'+
+				                  '</div></li>';
+						}
+					}
+					if(course_count==0 && video_count==0){
+						$('.seachOne-num').eq(1).html('');
+						$('.seachOne-num').eq(2).html('');
+						$('.list-content').hide();
+						$('.hot-search').show().html('没有搜索到相关内容，请尝试不同名称');
+					}else{
+						if(course_count>0){
+							$('.seachOne-num').eq(1).html(course_count+'相关课程');
+						}else{
+							$('.seachOne-num').eq(1).html();
+						}
+						if(video_count>0){
+							$('.seachOne-num').eq(2).html(video_count+'相关视频');
+						}else{
+							$('.seachOne-num').eq(2).html('');
+						}
+						$('.mui-table-view').html(course_innser);
+						$('.navigate-ul').html(video_innser);
+					}
+					
+			      }else{
+			      	mui.alert('数据请求失败');
+			      }
+			    }
+			});
+		}
+
+		</script>
+		<script src="/public/mobile/js/bindmobile.js"></script>
+	</body>
+</html>

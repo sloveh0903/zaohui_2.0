@@ -1,0 +1,51 @@
+{include file="common/header" /}
+<body>
+<div class="container-fluid larry-wrapper">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <section class="panel panel-padding">
+                <form id="form1" class="layui-form layui-form-pane" action='{:url("get_role")}'>
+                    <div class="layui-form-item ">
+                        <div class="layui-form-item permission-list">
+                            <label class="layui-form-label">拥有权限</label>
+                            <div class="layui-input-block">
+                                <ul>
+                                    <input type="hidden" name="id" value="{$id}">
+                                    {foreach name="list" item="list"}
+                                        <li><input type="checkbox" name="status[{$list.id}]" value="{$list.id}" title="{$list.title}" {$list.checked} lay-filter="role" />
+                                        {foreach name="list.child" item="child"}
+                                            <dl><input type="checkbox" name="status[{$child.id}]" value="{$child.id}" title="{$child.title}" {$child.checked} lay-filter="role" />
+                                            {if condition="isset($child.child)"}
+                                            {foreach name="child.child" item="three"}
+                                                <dd><input type="checkbox" name="status[{$three.id}]" value="{$three.id}" title="{$three.title}" {$three.checked} lay-filter="role" /></dd>
+                                            {/foreach}
+                                            {/if}
+                                            </dl>
+                                        {/foreach}
+                                        </li>
+                                    {/foreach}
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <button class="layui-btn" jq-submit jq-filter="submit">立即提交</button>
+                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                        </div>
+                    </div>
+                </form>
+            </section>
+        </div>
+    </div>
+</div>
+</body>
+
+{include file="common/version" /}
+<script>
+    layui.use('role');
+</script>
+
+</html>

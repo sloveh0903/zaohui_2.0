@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <title>账号绑定</title>
+   <link rel="stylesheet" href="/public/mobile/css/mui.min.css">
+   <link rel="stylesheet" href="/public/mobile/css/global.css">
+   <link rel="stylesheet" href="/public/mobile/css/threeLevelMarketing.css">
+</head>
+<body>
+   <ul class="order_list_ul bind_accound_box">
+      {if !empty($user.mobile)}
+      <li class="phoneNumber_yes bind_accound_content mui-row">
+         <span>手机号码</span>
+         <div>
+            <p >
+            	<i>{$user.mobile|substr=0,3}****{$userinfo.mobile|substr=7,4}</i>
+            	<img src="/public/mobile/img/icon/more_vert@2x20.png" >
+            </p>
+            <div class="fs-16 classify-box change-phone"style="top: 25px;">
+				<div class="classify-name cur">
+					<i><a href="{:url('updatePhone')}">更换号码</a></i>
+				</div>
+			</div>
+         </div>
+      </li>
+      {else}
+      <li class="phoneNumber_no bind_accound_content mui-row">
+         <span>手机号码</span>
+         <div>
+            <a href="{:url('member/bindphone')}">去绑定</a>
+         </div>
+      </li>
+      {/if}
+      {if !empty($user.alipay)}
+      <li class="alipay_yes bind_accound_content mui-row ">
+         <span>支付宝</span>
+         <div style="position: relative;">
+            <p>
+            	<i>{$user.alipay}</i>
+            	<img src="/public/mobile/img/icon/more_vert@2x20.png" >
+            </p>
+            <div class="fs-16 classify-box" style="top:-10px;right: 0;">
+				<div class="classify-name cur"data-type='0'>
+					<i><a href="javascript:void(0)"class="a_unbind">解除绑定</a></i>
+				</div>
+				<div class="classify-name"data-type='1'>
+					<i><a href="{:url('updateAlipay')}">修改</a></i>
+				</div>
+			</div>
+         </div>
+      </li>
+      {else}
+      <li class="alipay_no bind_accound_content mui-row ">
+         <span>支付宝</span>
+         <div>
+            <a href="{:url('bind_alipay')}">去绑定</a>
+         </div>
+      </li>
+      {/if}
+   </ul>
+   <div class="grazy-copyright bottom-fixed ">
+		<i>格子匠 GRAZY.CN 技术支持</i>
+	</div>
+	<!--文本提示框-->
+	<div class="toast-box limit">
+		<div class="toast-main" id="toast-main"></div>
+	</div>
+   <!--遮罩层-->
+   <div class="buy-dialog" id="BuyDialog" style="z-index: 999">
+    	<div class="alert-box">
+			<h1 class="fs-20 fc-8">解绑支付宝</h1>
+			<p class="fs-16 fc-6">解除绑定支付宝后余额将无法提现，确认是否解除？</p>
+			<div class="buy-dialog-btn">
+				<a class="Cancel">取消</a>
+				<a id="onBridgeReady" class="onBridgeReady">确定</a>
+			</div>
+		</div>
+	</div>
+   
+<script src="/public/mobile/js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="/public/mobile/js/mui.min.js"></script>
+<script type="text/javascript" src="/public/mobile/js/globla.js"></script>
+<script>
+    var uid = '{$userinfo.uid}';
+    var isbind = '{$userinfo.is_bind}';
+   $(".bind_accound_content>div p").click(function(e){
+   	e.stopPropagation();
+   	$(this).siblings('.classify-box').fadeIn();
+	$(this).parents('li').siblings('li').find('.classify-box').fadeOut()
+   })
+   //点击区域外弹框消失
+   $(".classify-box").click(function(e) {
+        e ? e.stopPropagation() : event.cancelBubble = true;//取消事件处理
+   });
+    $(document).click(function(e){
+    	console.log(e);
+    	if(e.target.className != 'classify-name') {
+    		$(".classify-box").fadeOut();
+    	}
+    })
+   
+   
+   $(".classify-box  a.a_unbind").click(function(){
+      $(".buy-dialog").css('display','flex');
+   })
+   $(".Cancel").click(function(){
+      $(".buy-dialog").hide();
+   });
+   $(".onBridgeReady").click(function () {
+       $(".buy-dialog").hide();
+
+       $.ajax({
+           url:host+'rebate/RelieveAlipay',
+           data:{
+               uid:uid
+           },
+           type:'POST', //GET
+           async:true,    //或false,是否异步
+           timeout:5000,    //超时时间
+           dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+           success:function(data,textStatus,jqXHR){
+               if(data.code==1){
+                   var url = '{:url("bind_alipay")}';
+                   document.getElementById('toast-main').innerHTML='解绑成功';
+	        		toastBox()
+//                 mui.toast();
+                   $(".alipay_yes").find('div').html("<a href='"+url+"'>去绑定</a>");
+               }else{
+                	document.getElementById('toast-main').innerHTML='解绑失败';
+	        		toastBox()
+//                 mui.toast();
+               }
+           }
+       });
+   })
+</script>
+   <script src="/public/mobile/js/bindmobile.js"></script>
+</body>
+</html>

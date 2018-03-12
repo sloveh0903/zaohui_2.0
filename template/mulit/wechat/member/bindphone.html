@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>绑定手机</title>
+		<link rel="stylesheet" href="/public/mobile/css/mui.min.css" />
+		<link rel="stylesheet" href="/public/mobile/css/global.css" />
+		<link rel="stylesheet" href="/public/mobile/css/member.css" />
+	</head>
+    {include file="common/share" /}
+	<body>
+		<div class="mui-row bindFrom">
+			<ul class="order_list_ul">
+				<li>
+					<input type="text" class="phone-num" placeholder="手机号码" />
+					<button class="getCode send">接收验证码</button>
+				</li>
+				<li>
+					<input type="text" class="code" placeholder="验证码" />
+				</li>
+			</ul>
+		</div>
+		<div class="q-btn">
+			<a class="sure">确认</a>
+		</div>
+		<div class="grazy-copyright bottom-fixed ">
+			<i>格子匠 GRAZY.CN 技术支持</i>
+		</div>
+		<div class="toast-box limit">
+		    <div class="toast-main" id="toast-main"></div>
+		  </div>
+		<script type="text/javascript" src="/public/mobile/js/jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="/public/mobile/js/mui.min.js"></script>
+		<script type="text/javascript" src="/public/mobile/js/globla.js"></script>
+		<script type="text/javascript">
+            $(function() {
+                var mobile = '';
+                var uid = '{$userinfo.uid}';
+                var isbind = '{$userinfo.is_bind}';
+                mui('.bindFrom').on('tap','.getCode', function(){
+                    mobile = $('.phone-num').val();
+                    if(!(/^1[34578]\d{9}$/.test(mobile))){
+                        mui.alert('手机号码有误', '提示',function(){
+                            $('.phone-num').val('');
+                        });
+					}else{
+                        settime($(this));
+                        $.ajax({
+                            url:host+'user/sendcode',
+                            data:{
+                                uid:uid,
+                                phone:mobile
+                            },
+                            type:'POST', //GET
+                            async:true,    //或false,是否异步
+                            timeout:5000,    //超时时间
+                            dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+                            success:function(data,textStatus,jqXHR){
+                                if(data.code==1){
+                                    //mui.toast('短信发送成功');
+                                	document.getElementById('toast-main').innerHTML='短信发送成功';
+                                    toastBox();
+                                }
+                            }
+                        });
+					}
+                });
+                mui('.q-btn').on('tap','.sure',function () {
+                    var code = $('.code').val();
+                    if(!(/^\d{4}$/.test(code))){
+                        mui.alert('验证码错误', '提示',function(){
+                            $('.code').val('');
+                        });
+                    }else{
+                        $.ajax({
+                            url:host+'user/checksms',
+                            data:{
+                                uid:uid,
+                                phone:mobile,
+								code:code
+                            },
+                            type:'POST', //GET
+                            async:true,    //或false,是否异步
+                            timeout:5000,    //超时时间
+                            dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+                            success:function(data,textStatus,jqXHR){
+                                if(data.code==1){
+                                    mui.alert('手机绑定成功');
+                                    url = "{:url('wechat/member/index')}";
+                                    window.location.href = url;
+                                }
+                            }
+                        });
+					}
+                });
+                var countdown=60;
+                function settime(obj) {
+                    if (countdown == 0) {
+                        obj.attr("disabled",false);
+                        obj.html("获取验证码");
+                        obj.removeClass('countDown');
+                        obj.addClass('send');
+                        countdown = 60;
+                        return;
+                    } else {
+                        obj.attr("disabled",true);
+                        obj.html("重新发送(" + countdown + ")");
+                        obj.removeClass('send');
+                        obj.addClass('countDown');
+                        countdown--;
+                    }
+                    setTimeout(function() {
+                            settime(obj) }
+					,1000)
+                }
+			})
+		</script>
+		<script src="/public/mobile/js/bindmobile.js"></script>
+	</body>
+
+</html>

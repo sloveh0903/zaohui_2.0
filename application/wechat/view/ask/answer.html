@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>提问</title>
+		<link rel="stylesheet" href="/public/mobile/css/mui.min.css" />
+		<link rel="stylesheet" href="/public/mobile/css/globla.css" />
+		<link rel="stylesheet" href="/public/mobile/css/questions.css" />
+	</head>
+	{include file="common/share" /}
+	<body>
+		<div class="mui-row text-area">
+			<textarea placeholder="问题描述"></textarea>
+    </div>
+    <div class="mui-row operation">
+      <div class="z_photo" id="zfile">
+        <div class="z_file">
+          <input type="file" name="file" id="file" value="" accept="image/*" multiple onchange="imgChange('z_photo','z_file');" />
+        </div>
+      </div>
+      <div class="other">
+        <p>最多上传3张图片</p>
+        <div class="input-box">
+<!--           <input type="checkbox" id="anonymous"> -->
+<!--           <label for="anonymous">匿名</label> -->
+			<label for="anonymous">匿名</label>
+			<input name="checkbox" value="Item 2" type="checkbox" id="checkbox-id">
+        </div>
+      </div>
+    </div>
+	
+		<div class="q-btn">
+			<a>确认</a>
+		</div>
+<!-- 		<div class="mui-row"> -->
+<!-- 			<textarea placeholder="问题描述"></textarea> -->
+<!-- 			<div class="z_photo" id="zfile"> -->
+<!-- 				<div class="z_file"> -->
+<!-- 					<input type="file" name="file" id="file" value="" accept="image/*" multiple onchange="imgChange('z_photo','z_file');" /> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
+<!-- 			<p>最多上传三张图片</p> -->
+<!-- 		</div> -->
+<!-- 		<div class="mui-input-row mui-checkbox mui-left"> -->
+<!-- 			<label class="font-size-14 font-color-8">匿名</label> -->
+<!-- 			<input name="checkbox" value="Item 2" type="checkbox" id="checkbox-id"> -->
+<!-- 		</div> -->
+<!-- 		<div class="q-btn"> -->
+<!-- 			<a>确认</a> -->
+<!-- 		</div> -->
+		<!--遮罩层-->
+		<div class="z_mask">
+			<!--弹出框-->
+			<div class="z_alert">
+				<h1 class="font-size-20 font-color-8">购买</h1>
+				<p>确定要删除这张图片吗？</p>
+				<p>
+					<span class="z_cancel">取消</span>
+					<span class="z_sure">确定</span>
+				</p>
+			</div>
+		</div>
+		
+		<div class="desc-pop">
+			<p>
+				
+			</p>
+		</div>
+		<input type="hidden" id="imgArr" />
+		<script src="/public/mobile/js/jquery-3.2.1.min.js"></script>
+		<script src="/public/mobile/js/mui.min.js"></script>
+		<script src="/public/mobile/js/globla.js"></script>
+		<script type="text/javascript">
+			var cid = GetQueryString('cid');
+			var uid = '{$userinfo.uid}';
+			var token = '{$userinfo.token}';
+			
+			var upload_arr = [];
+			var imgnum = 0;
+			(function(doc, win) {
+				var docEl = doc.documentElement,
+					resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+					recalc = function() {
+						var clientWidth = docEl.clientWidth;
+						if(!clientWidth) return;
+						if(clientWidth >= 640) {
+							docEl.style.fontSize = '100px';
+						} else {
+							docEl.style.fontSize = 100 * (clientWidth / 640) + 'px';
+						}
+					};
+
+				if(!doc.addEventListener) return;
+				win.addEventListener(resizeEvt, recalc, false);
+				doc.addEventListener('DOMContentLoaded', recalc, false);
+			})(document, window);
+
+			function imgChange(obj1, obj2) {
+			console.log(imgnum);
+				if(imgnum >= 2){
+					$('.z_file').css('display','none');
+				}
+				//获取点击的文本框
+				var file = document.getElementById("file");
+				var zfile = document.getElementById("zfile");
+				//存放图片的父级元素
+				var imgContainer = document.getElementsByClassName(obj1)[0];
+				//获取的图片文件
+				var fileList = file.files;
+				
+				//文本框的父级元素
+				var input = document.getElementsByClassName(obj2)[0];
+				var imgArr = [];
+
+				//遍历获取到得图片文件
+				for(var i = 0; i < fileList.length; i++) {
+					var imgUrl = window.URL.createObjectURL(file.files[i]);
+					imgArr.push(imgUrl);
+					var img = document.createElement("img");
+					img.setAttribute("src", imgArr[i]);
+					var imgAdd = document.createElement("div");
+					
+					
+					var reader = new FileReader();  
+					reader.readAsDataURL(file.files[i]);  
+					reader.onload = function(e){ // reader onload start  
+						// ajax 上传图片  
+						//console.log(e.target.result)  
+						 $.post(host+'ask/uploadfile', { img: e.target.result},function(ret){  
+						//console.log(ret);
+							if(ret.img == ""){
+								mui.alert('图片上传失败');return;
+							}else{
+								//console.log(ret.img);
+								upload_arr.push(ret.img);
+								imgAdd.setAttribute("class", "z_addImg");
+								imgAdd.setAttribute("url", imgArr[i]);
+								imgAdd.appendChild(img);
+								zfile.insertBefore(imgAdd, zfile.childNodes[0]);
+								imgnum = imgnum + 1;
+							}
+						},'json'); 
+						
+						
+					}
+
+				};
+
+				imgRemove();
+			};
+
+			function imgRemove() {
+				var imgList = document.getElementsByClassName("z_addImg");
+				var mask = document.getElementsByClassName("z_mask")[0];
+				var cancel = document.getElementsByClassName("z_cancel")[0];
+				var sure = document.getElementsByClassName("z_sure")[0];
+				for(var j = 0; j < imgList.length; j++) {
+					imgList[j].index = j;
+					imgList[j].onclick = function() {
+						var t = this;
+						mask.style.display = "block";
+						cancel.onclick = function() {
+							mask.style.display = "none";
+						};
+						sure.onclick = function() {
+							mask.style.display = "none";
+							t.style.display = "none";
+							upload_arr[j] = '';
+							console.log(imgnum);
+							imgnum = imgnum - 1;
+							console.log(imgnum);
+							if(imgnum < 3){
+								$('.z_file').css('display','block');
+							}
+						};
+						
+
+					}
+				};
+			};
+
+			mui("body").on('tap', '.q-btn', function (event) {
+				var content = $('textarea').val();
+				if(content == ""){
+					//mui.alert('请填写问题描述');return;
+				}
+				if($('#checkbox-id').is(':checked')) { 
+					var anonymous = 1;
+				}else{
+					var anonymous = 0;
+				}
+				
+				//console.log(imgpath);
+				var imgpath = '';
+				for(var i=0;i<upload_arr.length;i++){
+					if(upload_arr[i] != ''){
+						imgpath += upload_arr[i]+',';
+					}
+					
+				}
+				
+				$('.q-btn').hide();
+				$.ajax({
+					url : host+"ask/submit",
+					type : 'post',
+					data : {
+						cid:cid,
+						uid:uid,
+						content:content,
+						title:content,
+						anonymous:anonymous,
+						imgpath:imgpath,
+						token:token
+					},
+					success : function(data){
+						console.log(data)
+						$('.q-btn').show();
+						if(data.code == -1){
+							mui.alert(data.message);
+							//location.reload();
+							var url = "{:url('wechat/ask/index')}";
+							window.location.href=url;
+						}else if(data.code != 1){
+							mui.alert(data.message);
+						}else if(data.code == 1){
+							mui.alert('提交成功');
+							$('textarea').val("");
+							var url = "{:url('wechat/ask/index')}";
+							window.location.href=url;
+						}
+				  　}  
+				})
+				
+			});
+			
+		</script>
+	</body>
+
+</html>

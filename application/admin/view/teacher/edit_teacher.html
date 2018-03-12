@@ -1,0 +1,78 @@
+{include file="common/header" /}
+<link rel="stylesheet" type="text/css" href="/public/jqadmin/css/webuploader.css?v=0.1.5" media="all">
+
+<body>
+<div class="container-fluid larry-wrapper">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <section class="panel panel-padding">
+                <form id="form1" class="layui-form layui-form-pane" action="{:url('edit_teacher')}">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">微信昵称</label>
+                        <div class="layui-input-block">
+                            <input type="hidden" name="uid" value="{$itemInfo.uid}">
+                            <input type="text" name="nickname" required jq-verify="required"  value="{$itemInfo.nickname}" autocomplete="off" class="layui-input ">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">微信头像</label>
+                        <div class="layui-input-block">
+                            <input type="file" name="file" class="layui-upload-file">
+                            <input type="hidden" name="face" value="{$itemInfo.face}" jq-verify="required" jq-error="请上传图片" error-id="img-error">
+                            <p id="img-error" class="error"></p>
+                        </div>
+                        <div class="layui-input-block">
+                            <div class="imgbox">
+                                <img src="{$itemInfo.face}" alt="..." class="img-thumbnail">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-form-item ">
+                        <label class="layui-form-label">老师介绍</label>
+                        <div class="layui-input-block">
+                            <textarea name="info" placeholder="请老师介绍" class="layui-textarea">{$itemInfo.info}</textarea>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">微信号</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="wechat" required jq-verify="required"  value="{$itemInfo.wechat}" autocomplete="off" class="layui-input ">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">手机号</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="mobile" required jq-verify="required"  value="{$itemInfo.mobile}" autocomplete="off" class="layui-input ">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">真实姓名</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="realname" required jq-verify="required"  value="{$itemInfo.realname}" autocomplete="off" class="layui-input ">
+                        </div>
+                    </div>
+                    <div class="layui-form-item" pane>
+                        <label class="layui-form-label">性别</label>
+                        <div class="layui-input-inline">
+                            <input type="radio" name="sex" title="男" value="1" {if condition="$itemInfo['sex'] eq 1"}checked{/if} />
+                            <input type="radio" name="sex" title="女" value="0" {if condition="$itemInfo['sex'] eq 0"}checked{/if} />
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <button class="layui-btn" jq-submit lay-filter="submit">立即提交</button>
+                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                        </div>
+                    </div>
+                </form>
+            </section>
+        </div>
+    </div>
+</div>
+</body>
+{include file="common/version" /}
+<script>
+    layui.use('user');
+</script>
+</html>

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>个人中心</title>
+    <link rel="stylesheet" type="text/css" href="/public/pc/css/all.css">
+    <!--[if lt IE 9]> 您的IE浏览器版本太低，请升级浏览器！<![endif]-->
+</head>
+<body>
+{include file="common/head" /}
+<div class="perfect_personal_info_bg mt70">
+    <div class="w880">
+        <span class="perfect_info_word">修改登录密码</span>
+    </div>
+</div>
+<div class="perfect_personal_info_content">
+    <div class="w880">
+        <div class="perfect_info_group " id="perfect_info_group">
+            <div class="perfect_info_head leftFloat">
+                <img src="{:session('face')}" alt="个人头像">
+            </div>
+            <div class="perfect_info_detail ">
+                <span class="perfect_info_name">{:session('nickname')}</span>
+
+                <div class="mt30">
+                    <input type="tel" name="phone_number" value="{$mobile}" class="phone_number" readonly>
+                    <i class="phone_number_tip" id="_phoneNumber">您的手机号码</i>
+                </div>
+                <div class="mt20">
+                    <input type="button" name="" value="获取验证码" class="input_getValidateCode" id="span_getValidateCode"
+                           onclick="getValidateCode(this)">
+                    <i class="ml150" id="_span_getValidateCode"></i>
+                </div>
+                <div class="mt20">
+                    <input type="type" name="validateCode" class="validateCode" placeholder="验证码" onblur="checkCode()"
+                           id="validateCode">
+                    <i class="ml150" id="_validateCode"></i>
+                </div>
+                <div class="mt20">
+                    <input type="password" name="phone_password" class="phone_password" placeholder="密码"
+                           onblur="validatePhonePassword()" id="passWord">
+                    <i class="phone_password_tip" id="_phonePassword">密码长度需大于6位</i>
+                </div>
+                <a href="javascript:void(0)" class="a_confirm" onclick="return bindphone()">确认</a>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="href_index_div displayNone" id="href_index_div">
+            <i id="href_time">4</i><i>秒后跳转</i>
+            <i class="i_href_index" onclick="window.location.href ='/'">首页</i>
+        </div>
+    </div>
+</div>
+<script src="/public/pc/js/jquery-1.11.0.min.js"></script>
+<script src="/public/jqadmin/js/layui/layui.js"></script>
+<script src="/public/pc/js/public_PC.js"></script>
+<script src="/public/pc/js/placeholder.js"></script>
+
+<script>
+    var codeNumber;
+    var phonePassword;
+    var phoneNumber = "{$mobile}";
+    var validateCode;
+    var layer;
+    layui.use('layer', function(){
+        layer = layui.layer;
+
+    });
+
+    //验证验证码
+    function checkCode() {
+        validateCode = document.getElementById("validateCode").value;
+        var _validateCode = document.getElementById("_validateCode");
+        _validateCode.style.color = "#c25842";
+        if ("" != codeNumber) {
+            // 此处匹配验证码是否一致
+            if (codeNumber != validateCode) {
+                _validateCode.innerHTML = "验证码错误";
+                return false;
+            }
+            _validateCode.innerHTML = "";
+        } else {
+            _validateCode.innerHTML = "请输入验证码";
+            return false;
+        }
+        return true;
+    }
+    //点就按钮获取验证码
+    var countdown = 30;
+    function getValidateCode(_this) {
+        if (phoneNumber) {
+            $.ajax({
+                url: host + 'user/sendcode',
+                data: {
+                    uid: "{:session('uid')}",
+                    phone: phoneNumber,
+                    type: "setpassword"
+                },
+                type: 'POST', //GET
+                async: true,    //或false,是否异步
+                timeout: 5000,    //超时时间
+                dataType: 'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+                success: function (data, textStatus, jqXHR) {
+                    console.log(data);
+                    if (data.code == 1) {
+                        codeNumber = data.data;
+                        settime(_this);
+                        var str = phoneNumber.substr(3, 4);
+                        _span_getValidateCode.innerHTML = "验证码已免费发送到" + phoneNumber.replace(str, "****") + "";
+                    } else {
+                        layer.msg(data.message);
+                    }
+                }
+            });
+        }
+    }
+    function settime(obj) {
+        if (countdown == 0) {
+            obj.removeAttribute("disabled");
+            obj.value = "获取验证码";
+            countdown = 30;
+            return;
+        } else {
+            obj.setAttribute("disabled", true);
+            obj.value = countdown + "再次获取";
+            countdown--;
+        }
+        setTimeout(function () {
+                    settime(obj)
+                }
+                , 1000)
+    }
+
+    //验证密码
+    function validatePhonePassword() {
+        phonePassword = document.getElementById("passWord").value;
+        var _phonePassword = document.getElementById("_phonePassword");
+        _phonePassword.style.color = "#c25842";
+        if ("" != phonePassword) {
+            if (phonePassword.length < 6) {
+                _phonePassword.innerHTML = "密码不足6位";
+                return false;
+            }
+            var reg = /^[\w]{6,16}$/;
+            if (reg.test(phonePassword) == false) {
+                _phonePassword.innerHTML = "请输入正确的密码(6-16位数字，字母组合)";
+                return false;
+            }
+            _phonePassword.innerHTML = "";
+
+        } else {
+            _phonePassword.innerHTML = "请输入密码";
+            return false;
+        }
+        return true;
+    }
+    //延迟跳转链接
+    function delayURL() {
+        var delay = document.getElementById("href_time").innerHTML;
+        var t = setTimeout("delayURL()", 1000);
+        if (delay > 1) {
+            delay--;
+            document.getElementById("href_time").innerHTML = delay;
+        } else {
+            clearTimeout(t);
+            window.location.href = '{:url("/index")}';
+        }
+    }
+    //提交拦截
+    function bindphone() {
+        if (!checkCode()) {
+            return false;
+        }
+        if (!validatePhonePassword()) {
+            return false;
+        }
+        $.ajax({
+            url: host + '/user/setpassword',
+            data: {
+                uid: "{:session('uid')}",
+                mobile: phoneNumber,
+                code: validateCode,
+                password: phonePassword
+            },
+            type: 'POST', //GET
+            async: true,    //或false,是否异步
+            timeout: 5000,    //超时时间
+            dataType: 'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+            success: function (data, textStatus, jqXHR) {
+                if (data.code == 1) {
+                    var perfect_info_group = document.getElementById("perfect_info_group");
+                    var href_index_div = document.getElementById("href_index_div");
+                    perfect_info_group.style.display = "none";
+                    href_index_div.style.display = "block";
+                    //提交数据给后台  已定义好的var  perfectInfoObj = {}  ajax调用
+                    delayURL();
+                    return true;
+                } else {
+                    layer.msg(data.message);
+                    return false;
+                }
+            }
+        });
+
+    }
+
+</script>
+</body>
+</html>

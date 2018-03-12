@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>回复</title>
+		<link rel="stylesheet" href="/public/mobile/css/mui.min.css" />
+		<link rel="stylesheet" href="/public/mobile/css/globla.css" />
+		<link rel="stylesheet" href="/public/mobile/css/questions.css" />
+
+	</head>
+	{include file="common/share" /}
+	<body>
+		<div class="mui-row">
+			<textarea placeholder="回复"></textarea>
+		</div>
+		<div class="q-btn">
+			<a>确认</a>
+		</div>
+	
+		
+		<div class="desc-pop">
+			<p>
+				
+			</p>
+		</div>
+
+		<input type="hidden" id="imgArr" />
+		<script src="/public/mobile/js/jquery-3.2.1.min.js"></script>
+		<script src="/public/mobile/js/mui.min.js"></script>
+		<script src="/public/mobile/js/globla.js"></script>
+		<script type="text/javascript">
+			var id = GetQueryString('id');
+			var pid = GetQueryString('pid');
+			var puid = GetQueryString('puid');
+			var root_id = GetQueryString('root_id');
+			var discuss_id = GetQueryString('discuss_id');
+            var uid = '{$userinfo.uid}';
+            var isbind = '{$userinfo.is_bind}';
+			
+			(function(doc, win) {
+				var docEl = doc.documentElement,
+					resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+					recalc = function() {
+						var clientWidth = docEl.clientWidth;
+						if(!clientWidth) return;
+						if(clientWidth >= 640) {
+							docEl.style.fontSize = '100px';
+						} else {
+							docEl.style.fontSize = 100 * (clientWidth / 640) + 'px';
+						}
+					};
+
+				if(!doc.addEventListener) return;
+				win.addEventListener(resizeEvt, recalc, false);
+				doc.addEventListener('DOMContentLoaded', recalc, false);
+			})(document, window);
+
+			
+
+			mui("body").on('tap', '.q-btn', function (event) {
+				var content = $('textarea').val();
+				if(content == ""){
+					mui.alert('请填写内容');return;
+				}
+				
+				$('.q-btn').hide();
+				var data = {
+					aid:id,
+					pid:pid,
+					puid:puid,
+					anonymous:0,
+					uid:uid,
+					root_id:root_id,
+					content:content,
+				}
+				$.ajax({
+					url : host+"answer/add",
+					type : 'post',
+					data : data,
+					success : function(data){
+						console.log(data)
+						$('.q-btn').show();
+						if(data.code == -1){
+							mui.alert(data.message);
+							location.reload();
+						}else if(data.code != 1){
+							mui.alert(data.message);
+						}else if(data.code == 1){
+							mui.alert('提交成功');
+							$('textarea').val("");
+							if(discuss_id > 0){
+								var url = "{:url('wechat/ask/discuss')}?id="+discuss_id;
+							}else{
+								var url = "{:url('wechat/ask/detail')}?id="+id;
+							}
+							window.location.href=url;
+						}
+				  　}  
+				})
+				
+			});
+			
+		</script>
+		<script src="/public/mobile/js/bindmobile.js"></script>
+	</body>
+
+</html>

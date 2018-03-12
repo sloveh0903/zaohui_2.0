@@ -1,0 +1,394 @@
+@charset "UTF-8";
+
+
+/*阅读文章 start*/
+.read_article_nav {
+  width: 100%;
+  height: 70px;
+  background: #FAFAFA;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.w620 {
+  width: 620px;
+  height: auto;
+  margin: 0 auto;
+}
+
+.read_article_nav_href {
+  width: auto;
+  height: auto;
+  padding: 40px 0 10px 0;
+}
+.read_article_nav_href a {
+  display: inline-block;
+  font-size: 14px;
+  color: #292B33;
+  opacity: 0.4;
+}
+.read_article_nav_href a:hover {
+  border-bottom: 1px solid rgba(41, 43, 51, 0.6);
+}
+
+.read_article_main {
+  width: 100%;
+  height: auto;
+  background: #FFFFFF;
+  padding-bottom: 80px;
+}
+.read_article_main .img620 {
+  width: 620px;
+  height: 413px;
+  border-radius: 1px;
+  vertical-align: middle;
+}
+
+.read_article_teacher {
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.teacher_publish {
+  width: auto;
+  height: auto;
+}
+.teacher_publish img {
+  width: 24px;
+  height: 24px;
+  vertical-align: middle;
+  border-radius: 12px;
+}
+
+img.img_head24 {
+  width: 24px;
+  height: 24px;
+  vertical-align: middle;
+  border-radius: 12px;
+}
+img.img_eye16 {
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
+}
+img.img_comment16 {
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
+  margin-left: 12px;
+}
+
+.teacher_publish i {
+  margin-left: 5px;
+}
+
+.img_eye_comment {
+  cursor: pointer;
+}
+.img_eye_comment i:hover {
+  opacity: 0.6;
+}
+
+.teacherName {
+  cursor: pointer;
+}
+.teacherName:hover {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.6);
+}
+
+.special_text {
+  width: auto;
+  height: auto;
+  background: rgba(61, 80, 153, 0.03);
+  padding: 20px;
+  border-left: 2px solid rgba(61, 80, 153, 0.4);
+}
+
+.read_article_main p {
+  line-height: 28px;
+  color: #292B33;
+}
+
+.special_text p {
+  color: rgba(61, 80, 153, 0.8);
+}
+
+.bd_weixin_popup {
+  height: 305px !important;
+}
+
+.txt_banquan {
+  line-height: 48px;
+}
+
+#share a {
+  width: 36px;
+  height: 36px;
+  padding: 0;
+}
+#share a.bds_weixin {
+  background: url(../images/weixin_gray@2x36.png) center center no-repeat;
+  background-size: 36px 36px;
+}
+#share a.bds_tsina {
+  margin-left: 20px !important;
+  background: url(../images/sina_gray@2x36.png) center center no-repeat;
+  background-size: 36px 36px;
+}
+
+.more_article {
+  padding: 10px 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.more_article_img {
+  width: auto;
+  height: auto;
+}
+.more_article_img img {
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+}
+
+.a_more_article {
+  width: 80px;
+  height: 30px;
+  border-radius: 20px;
+  border: 2px solid #00B6F2;
+  line-height: 28px;
+  background: #FFFFFF;
+  padding: 6px 14px;
+}
+
+.a_more_article:link {
+  color: #00B6F2;
+}
+
+.read_article_comment {
+  width: 100%;
+  height: 100%;
+  background: #FAFAFA;
+  box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.1);
+}
+
+.absolute_div {
+  width: 620px;
+  height: 210px;
+  border-radius: 3px;
+  background: #FFFFFF;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  position: absolute;
+  top: -40px;
+  left: 0;
+  z-index: 1;
+}
+
+.comment_frame_div {
+  width: 620px;
+  height: auto;
+  padding: 20px;
+}
+
+.comment_info {
+  width: 100%;
+  height: 96px;
+  font-size: 14px;
+  color: rgba(41, 43, 51, 0.8);
+  outline: none;
+  resize: none;
+  border: none;
+  overflow: auto;
+}
+
+.div_publish {
+  padding: 20px;
+  text-align: right;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.word_num {
+  display: inline-block;
+  width: 77px;
+  height: 32px;
+  font-size: 14px;
+  color: #292B33;
+  opacity: .2;
+}
+
+.tiwen_group i {
+  font-size: 14px;
+  color: #292B33;
+  opacity: .2;
+}
+
+.a_publish {
+  margin-left: 18px;
+}
+.a_publish img {
+  width: 77px;
+  height: 32px;
+  vertical-align: middle;
+  opacity: 0.4;
+}
+
+.comment_num_div {
+  padding-top: 204px;
+}
+
+.comment_detail {
+  width: auto;
+  height: auto;
+  border-radius: 3px;
+  background: #FFFFFF;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  padding: 0px 20px 20px 20px;
+}
+
+.comment_group {
+  padding-top: 30px;
+  width: 100%;
+  height: auto;
+}
+
+.comment_head {
+  width: auto;
+  height: auto;
+}
+
+.comment_head img {
+  width: 30px;
+  height: 30px;
+  vertical-align: middle;
+  border-radius: 15px;
+}
+
+.repeat_div {
+  width: 532px;
+  height: auto;
+  padding-bottom: 20px;
+}
+
+.repeat_name i {
+  font-size: 13px;
+  color: #292B33;
+  opacity: 0.8;
+}
+
+.before_name {
+  font-weight: bold;
+}
+
+.after_name {
+  font-weight: bold;
+}
+
+.repeat_time {
+  padding-top: 3px;
+  font-size: 13px;
+  opacity: 0.4;
+  color: #292B33;
+}
+
+.comment_content {
+  line-height: 24px;
+  font-size: 14px;
+  color: #292B33;
+  opacity: 0.8;
+  margin-top: 5px;
+}
+
+.img_thumb img {
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
+  margin-right: 5px;
+}
+
+.thumb_num {
+  position: absolute;
+  top: 3px;
+  left: 18px;
+  z-index: 1;
+  font-size: 14px;
+  opacity: 0.4;
+  color: #292B33;
+}
+
+.repeat_word {
+  font-size: 14px;
+  opacity: 0.4;
+  color: #292B33;
+}
+
+.read_article_load {
+  background: #FAFAFA;
+  padding: 40px 0 20px 0;
+}
+
+.repeat_alert {
+  width: 100%;
+  height: 40px;
+  margin-bottom: 20px;
+}
+
+.repeat_alert_img {
+  width: 30px;
+  height: 30px;
+  vertical-align: middle;
+  border-radius: 15px;
+  margin-right: 13px;
+}
+
+.repeat_who_info {
+  width: 480px;
+  height: 40px;
+  outline: none;
+  border-radius: 3px;
+  font-size: 14px;
+  border: 2px solid #EEEEEE;
+  color: rgba(41, 43, 51, 0.4);
+  padding: 0 0 0 15px;
+}
+
+::-webkit-input-placeholder {
+  /* WebKit browsers */
+  color: #292B33;
+  opacity: 0.4;
+}
+
+:-moz-placeholder {
+  /* Mozilla Firefox 4 to 18 */
+  color: #292B33;
+  opacity: 0.4;
+}
+
+::-moz-placeholder {
+  /* Mozilla Firefox 19+ */
+  color: #292B33;
+  opacity: 0.4;
+}
+
+:-ms-input-placeholder {
+  /* Internet Explorer 10+ */
+  color: #292B33;
+  opacity: 0.4;
+}
+
+.a_repeat_user img {
+  width: 40px;
+  height: 40px;
+  vertical-align: top;
+}
+
+.cutline {
+  width: 528px;
+  margin-left: 48px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/*阅读文章 end */
+
+/*# sourceMappingURL=read_article-v72.css.map */

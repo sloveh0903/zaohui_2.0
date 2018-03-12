@@ -1,0 +1,125 @@
+{include file="common/header" /}
+<style>
+    .layui-layer-page .layui-layer-content{
+        overflow: visible !important;
+    }
+</style>
+<body>
+<div class="article_manage mCustomScrollbar">
+	<div class="right-side-header clearfix">
+	        <span>知识管理</span>
+	        {include file="common/admin" /}
+   </div>
+   <div class="right_side_content">
+    	{include file="common/course_bread" /}
+   		<div class="course_right_main ">
+         <div class="operation_div">
+			 <span class="span_add btn modal-catch" data-params='{"content":".add-subcat","act":"{:url("course/add_cate")}", "title":"添加分类","type":"1"}'>添加</span>
+			 <span class="span_delete btn ajax-all" data-name="checkbox" data-params='{"url": "{:url("batch_cate")}","data":"","confirm":"true"}'>删除</span>
+            <div class="clearfix"></div>
+         </div>
+         <div id="list" class="layui-form">
+         </div> 
+		 <div class="text-right" id="page"></div>
+      </div>
+    </div>
+</div>
+<div class="add-subcat">
+    <form id="form1" class="layui-form layui-form-pane" action='{:url("course/add_cate")}'>
+        <div class="layui-form-item">
+            <label class="layui-form-label">分类名称</label>
+            <div class="layui-input-inline">
+                <input type="text" name="cate_name" required jq-verify="required" jq-error="请输入分类名称" placeholder="请输入分类名称" autocomplete="off" class="layui-input ">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">顶级分类</label>
+            <div class="layui-input-inline">
+                <select name="pid" jq-verify="required" jq-error="请输入分类" lay-filter="verify">
+                    <option value="0">默认顶级</option>
+                    {if !empty($topcate_list)}
+                    {foreach name="$topcate_list" item="vo"}
+                    {if $vo.id != 0}
+                    <option value="{$vo.id}">{$vo.cate_name}</option>
+                    {/if}
+                    {/foreach}
+                    {/if}
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-inline">
+                <button class="layui-btn" jq-submit jq-filter="submit">确定</button>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="edit-subcat" style="display: none">
+    <form id="form2" class="layui-form layui-form-pane" action='{:url("course/edit_cate")}'>
+        <div class="layui-form-item">
+            <label class="layui-form-label">分类名称</label>
+            <div class="layui-input-inline">
+                <input type="text" name="cate_name" required jq-verify="required" jq-error="请输入分类名称" placeholder="请输入分类名称" autocomplete="off" class="layui-input ">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-inline">
+                <button class="layui-btn" jq-submit jq-filter="submit">立即提交</button>
+   
+            </div>
+        </div>
+    </form>
+</div>
+<script id="list-tpl" type="text/html" data-params='{"url":"{:url("course/index_cate")}","pageid":"#page"}'>
+    <table id="example" class="layui-table" lay-skin="line">
+        <thead>
+        <tr>
+		     <th style="width: 6%"><input type="checkbox" id="checkall" data-name="checkbox" lay-filter="check" lay-skin="primary"></th>
+             
+			 <th>类名</th>
+			 <th>排序</th>
+             
+			 <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{# layui.each(d.list, function(index, item){ }}
+        <tr>
+			<td>
+                <input type="checkbox" name="checkbox" value="{{ item.id}}" lay-skin="primary">
+            </td>
+             
+			 <td>{{ item.cate_name}}</td>
+			 <td class="icon"><i class="rise ajax"  data-params='{"url": "{:url("course/moveCateUpDown")}","data":"id={{ item.id}}&pid={{ item.pid}}&updown=up"}'></i><i class="drop ajax" data-params='{"url": "{:url("course/moveCateUpDown")}","data":"id={{ item.id}}&pid={{ item.pid}}&updown=down"}'></i></td>
+             
+			 <td>
+			 <i class="modal-catch i_edit" data-params='{"content": ".edit-subcat","act":"{:url("course/edit_cate")}","title":"编辑{{ item.cate_name}}分类","data":"id={{ item.id}}&orderby={{ item.orderby}}&cate_name={{ item.cate_name}}&closed={{ item.closed}}","type":"1"}'>编辑</i>
+			 ／<i class="i_delete ajax" data-params='{"url": "{:url("course/del_cate")}","data":"id={{ item.id}}","confirm":"true"}'>删除</i></td>
+     
+		</tr>
+		{{# layui.each(item.child_list, function(index, item){ }}
+        <tr>
+			<td>
+                <input type="checkbox" name="checkbox" value="{{ item.id}}" lay-skin="primary">
+            </td>
+             
+			 <td>&nbsp;&nbsp;&nbsp;&nbsp;{{ item.cate_name}}</td>
+			 <td class="icon"><i class="rise ajax"  data-params='{"url": "{:url("course/moveCateUpDown")}","data":"id={{ item.id}}&pid={{ item.pid}}&updown=up"}'></i><i class="drop ajax" data-params='{"url": "{:url("course/moveCateUpDown")}","data":"id={{ item.id}}&pid={{ item.pid}}&updown=down"}'></i></td>
+             
+			 <td>
+			 <i class="modal-catch i_edit" data-params='{"content": ".edit-subcat","act":"{:url("course/edit_cate")}","title":"编辑{{ item.cate_name}}分类","data":"id={{ item.id}}&orderby={{ item.orderby}}&cate_name={{ item.cate_name}}&closed={{ item.closed}}","type":"1"}'>编辑</i>
+			 ／<i class="i_delete ajax" data-params='{"url": "{:url("course/del_cate")}","data":"id={{ item.id}}","confirm":"true"}'>删除</i></td>
+     
+		</tr>
+        {{# }); }}
+        {{# }); }}
+        </tbody>
+    </table>
+</script>
+{include file="common/version" /}
+<script>
+    layui.use('list');
+</script>
+
+</body>
+</html>

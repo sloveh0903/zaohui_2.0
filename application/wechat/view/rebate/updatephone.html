@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>修改手机号码</title>
+    <link rel="stylesheet" href="/public/mobile/css/mui.min.css"/>
+    <link rel="stylesheet" href="/public/mobile/css/globla.css"/>
+    <link rel="stylesheet" href="/public/mobile/css/member.css"/>
+    <link rel="stylesheet" href="/public/mobile/css/threeLevelMarketing.css">
+<body class="bg_FAFAFA">
+<div class="update_phone_main checkphone">
+    <div class="first">
+        <div class="mui-row bindFrom">
+            <ul>
+                <li>
+                    <i>发送到{$userinfo.mobile}</i>
+                    <input type="hidden" class="phone-num" value="{$userinfo.mobile}" placeholder="手机号码"/>
+                    <button class="getCode send">获取验证码</button>
+                </li>
+                <li>
+                    <input type="text" class="code" placeholder="验证码"/>
+                </li>
+            </ul>
+        </div>
+        <div class="q-btn">
+            <a class="next">下一步</a>
+        </div>
+    </div>
+    <div class="next" style="display: none">
+        <div class="mui-row bindFrom">
+            <ul>
+                <li>
+                    <input type="text" class="phone-num" value="" placeholder="手机号码"/>
+                    <button class="getCode send">获取验证码</button>
+                </li>
+                <li>
+                    <input type="text" class="code" placeholder="验证码"/>
+                </li>
+            </ul>
+        </div>
+        <div class="q-btn">
+            <a class="sure">确认</a>
+        </div>
+    </div>
+
+</div>
+</body>
+<script type="text/javascript" src="/public/mobile/js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="/public/mobile/js/mui.min.js"></script>
+<script type="text/javascript" src="/public/mobile/js/globla.js"></script>
+<script>
+    $(function() {
+        var mobile = '';
+        var uid = '{$userinfo.uid}';
+        mui('.bindFrom').on('tap','.getCode', function(){
+            mobile = $(this).parent('li').find('input').val();
+            if(!(/^1[34578]\d{9}$/.test(mobile))){
+                mui.alert('手机号码有误', '提示',function(){
+                    $('.phone-num').val('');
+                });
+            }else{
+                settime($(this));
+                $.ajax({
+                    url:host+'user/sendcode',
+                    data:{
+                        uid:uid,
+                        phone:mobile
+                    },
+                    type:'POST', //GET
+                    async:true,    //或false,是否异步
+                    timeout:5000,    //超时时间
+                    dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+                    success:function(data,textStatus,jqXHR){
+                        if(data.code==1){
+                            mui.toast('短信发送成功');
+                        }
+                    }
+                });
+            }
+        });
+        mui('.q-btn').on('tap','.next',function () {
+            var code = $('.first').find('.code').val();
+            var mobile = $('.first').find('.phone-num').val();
+            if(!(/^\d{4}$/.test(code))){
+                mui.alert('验证码错误', '提示',function(){
+                    $('.code').val('');
+                });
+            }else{
+                $.ajax({
+                    url:host+'user/check',
+                    data:{
+                        uid:uid,
+                        phone:mobile,
+                        code:code,
+                        type:'center'
+                    },
+                    type:'POST', //GET
+                    async:true,    //或false,是否异步
+                    timeout:5000,    //超时时间
+                    dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+                    success:function(data,textStatus,jqXHR){
+                        if(data.code==1){
+                            $('.first').hide();
+                            $('.next').show();
+                        }
+                    }
+                });
+            }
+        });
+        mui('.q-btn').on('tap','.sure',function () {
+            var code = $('.next').find('.code').val();
+            var mobile = $('.next').find('.phone-num').val();
+            if(!(mobile)){
+                mui.alert('手机号码不能为空', '提示',function(){
+                });
+                return false;
+            }
+            if(!(/^\d{4}$/.test(code))){
+                mui.alert('验证码不正确', '提示',function(){
+                    $('.code').val('');
+                });
+            }else{
+                $.ajax({
+                    url:host+'user/updatePhone',
+                    data:{
+                        uid:uid,
+                        mobile:mobile,
+                        code:code
+                    },
+                    type:'POST', //GET
+                    async:true,    //或false,是否异步
+                    timeout:5000,    //超时时间
+                    dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+                    success:function(data,textStatus,jqXHR){
+                        if(data.code==1){
+                            mui.toast('支付宝绑定成功');
+                            url = "{:url('wechat/rebate/bind_account')}";
+                            window.location.href = url;
+                        }else{
+                            mui.alert(data.error, '提示',function(){
+                                $('.phone-num').val('');
+                                $('.code').val('');
+                            });
+                        }
+                    }
+                });
+            }
+        });
+        var countdown=60;
+        function settime(obj) {
+            if (countdown == 0) {
+                obj.attr("disabled",false);
+                obj.html("获取验证码");
+                obj.removeClass('countDown');
+                obj.addClass('send');
+                countdown = 60;
+                return;
+            } else {
+                obj.attr("disabled",true);
+                obj.html("重新发送(" + countdown + ")");
+                obj.removeClass('send');
+                obj.addClass('countDown');
+                countdown--;
+            }
+            setTimeout(function() {
+                    settime(obj) }
+                ,1000)
+        }
+    })
+</script>
+</html>

@@ -1,0 +1,201 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <title>首页</title>
+     <style type="text/css">
+   .ask_title{
+      overflow:hidden; 
+      text-overflow:ellipsis;
+      display:-webkit-box; 
+      -webkit-box-orient:vertical;
+      -webkit-line-clamp:3; 
+   }
+   </style>
+</head>
+<body class="bg-body-fff"> 
+  {include file="common/header" /}
+   <!-- 移动端nav列表start -->
+     {include file="common/mobilenav" /}
+   <!-- 指向窗口顶端 -->
+   <div class="link-target" id="link-target" ></div>
+   <a href="#link-target"><img class="img-backTop" src="/public/wenda/images/back_top@2x30.png" ></a>
+   <!-- index-mian -->
+   <div class="wrap-main " style="margin:100px auto 0 ">
+      <div class="wrap-left">
+         <div class="lunbo-img-show">
+            <div class="taobao-lunbo">
+               <div  class="carousel slide" data-ride="carousel" id="carousel-example-generic">
+                  <ol class="carousel-indicators">
+                     <li class="active" data-slide-to="0" data-target="#carousel-example-generic"></li>
+                     <li data-slide-to="1" data-target="#carousel-example-generic"></li>
+                  </ol>
+                  <div role="listbox" class="carousel-inner">
+                     <div class="item active">
+                        <a href="javascript:void(0)"><img src="/public/wenda/images/lunbo_aa@2x.png" alt="First slide"></a>
+                     </div>
+                     <div class="item ">
+                        <a href="javascript:void(0)"><img src="/public/wenda/images/lunbo_aa@2x.png" alt="two slide"></a>
+                     </div>
+                  </div>
+                  <a data-slide="prev" role="button" href="#carousel-example-generic" >
+                   <span class="sr-only">Previous</span>
+                  </a>
+                  <a data-slide="next" role="button" href="#carousel-example-generic" >
+                   <span class="sr-only">Next</span>
+                  </a>
+               </div>
+            </div>
+         </div>
+         
+         <div class="wenti-nav">
+            <ul class="wenti-nav-ul">
+               <li {if $type == 1}class="active" {/if}>
+                  <a href="{:url('/')}">热门</a>
+                  <i></i>
+               </li>
+               <li {if $type != 1}class="active" {/if}>
+                  <a href="{:url('/')}?type=2">最新</a>
+                  <i></i>
+               </li>
+            </ul>
+         </div>
+         <div class="wenti-list mt10">
+            <ul class="wenti-list-ul">
+               {volist name="ask" id="item"}
+               <li>
+                  {if empty($item['face'])}
+                  <img src="/public/avatar/avatar-mid-img.png" >
+                  {else /}
+                  <img src="{$item['face']}" >
+                  {/if}
+                  <div>
+                     <p><a href="{:url('/question/'.$item.id)}" class="ask_title" title="{$item.title}">{$item.title}</a></p>
+                     <span>
+                        <a href="javascript:void(0)">{$item.cate_name}</a>
+                        <i>{$item.views}&nbsp;浏览</i>
+                        <i>{$item.comments}&nbsp;回答</i>
+                        <time>{php} echo date('Y-m-d',$item['create_time']){/php}</time>
+                     </span>
+                  </div>
+               </li>
+              {/volist}
+            </ul>
+         </div>
+         <div class="load-img">
+          {$page}
+          <!--   <img src="/public/wenda/images/load_img@2x20.png" alt="加载ing"> -->
+         </div>
+      </div>
+      <div class="wrap-right">
+         <div class="ad-img">
+            <a href="javascript:void(0)">
+               <img src="/public/wenda/images/public-ewm.png" alt="广告位">
+            </a> 
+            <a href="javascript:void(0)">
+               <img src="/public/wenda/images/makeup@2x.png" alt="广告位">
+            </a> 
+         </div> 
+         <div class="wenti-classify mt30">
+            <span>问题分类</span>
+            <ul class="wenti-classify-ul">
+               {volist name="category" id="item"}
+               <li><a href="{:url('/category/'.$item.id)}">{$item.cate_name}</a></li>
+               {/volist}
+            </ul>
+            <a href="{:url('/publish')}">
+            <div class="tiwen">
+               <span>我要提问</span>
+            </div>
+            </a>
+         </div>
+         <div class="hot-read mt30">
+            <span>热门阅读</span>
+            <ul class="hot-read-ul">
+               <li>
+                  <a href="javascript:void(0)">
+                     <span >
+                        <img src="/public/wenda/images/img_read@2x.png">
+                     </span>
+                     <p class="dot-ellipsis dot-height-40">揭秘电商第一网红张大奕的淘宝店如何用微11111111111</p>
+                  </a>
+               </li>
+               <li>
+                  <a href="javascript:void(0)">
+                     <span >
+                        <img src="/public/wenda/images/img_read@2x.png">
+                     </span>
+                     <p class="dot-ellipsis dot-height-40">揭秘电商第一网红张大奕的淘宝店如何用微</p>
+                  </a>
+               </li>
+            </ul>
+         </div>
+         <div class="newest-article mt30">
+            <p>
+               <span class="title-type">最新文章</span>
+               <a href="taobaoUniversity.html"></a>
+            </p>
+            <ul class="newest-article-ul">
+               <li><a href="javascript:void(0)">双11竟卖出40万个马桶，支付宝还是…</a></li>
+               <li><a href="javascript:void(0)">2016淘宝双十二直播将掀起热潮!</a></li>
+               <li><a href="javascript:void(0)">2016淘宝双十二直播将掀起热潮!</a></li>
+               <li><a href="javascript:void(0)">八旬拾荒老人偷走40件包裹，背后的原因...</a></li>
+               <li><a href="javascript:void(0)">八旬拾荒老人偷走40件包裹，背后的原因...</a></li>
+            </ul>
+         </div>
+         <div class="newest-article recommend-wenda mt30">
+            <span class="title-type">推荐问答</span>
+            <ul class="recommend-wenda-ul">
+               {volist name="recommend_ask" id="hot"}
+               <li>
+                  <a href="{:url('/question/'.$hot.id)}">
+                     <img src="/public/wenda/images/wenda_head@2x20.png">
+                     <i>{$hot.title}…</i>
+                  </a>
+               </li>
+               {/volist}
+            </ul>
+         </div>
+         <div class="about-kaitao">
+            <ul class="kaitao-link-ul">
+               {include file="common/about" /}
+            </ul>
+            <p>{include file="common/copyright" /}</p>
+         </div>
+      </div>
+   </div>
+   <!-- index-footer脚部 -->
+   <div class="index-footer mt50">
+      <div class="youqing-link">
+         <p>友情链接</p>
+         <ul class="youqing-link-ul">
+            <li><a href="javascript:void(0)">汽车报价</a></li>
+            <li><a href="javascript:void(0)">健身吧</a></li>
+            <li><a href="javascript:void(0)">手机靓号网</a></li>
+            <li><a href="javascript:void(0)">蹦蹦网</a></li>
+            <li><a href="javascript:void(0)">淘宝店铺装修</a></li>
+            <li><a href="javascript:void(0)">域名装修</a></li>
+            <li><a href="javascript:void(0)">装修设计</a></li>
+            <li><a href="javascript:void(0)">儿童玩具</a></li>
+            <li><a href="javascript:void(0)">生意地</a></li>
+            <li><a href="javascript:void(0)">淘宝论坛</a></li>
+            <li><a href="javascript:void(0)">网店货源</a></li>
+            <li><a href="javascript:void(0)">淘宝开店指南</a></li>
+            <li><a href="javascript:void(0)">53货源网</a></li>
+            <li><a href="javascript:void(0)">淘宝模板</a></li>
+            <li><a href="javascript:void(0)">淘宝返利网</a></li>
+            <li><a href="javascript:void(0)">享优惠</a></li>
+            <li><a href="javascript:void(0)">淘宝开店流程</a></li>
+            <li><a href="javascript:void(0)">中国鞋网</a></li>
+            <li><a href="javascript:void(0)">免费淘宝模板</a></li>
+            <li><a href="javascript:void(0)">商城系统</a></li>
+            <li><a href="javascript:void(0)">优品惠</a></li>
+         </ul>
+      </div>
+   </div> 
+
+</body>
+</html>

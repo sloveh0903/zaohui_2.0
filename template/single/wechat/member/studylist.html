@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>学习记录</title>
+		<link rel="stylesheet" href="/public/mobile/css/mui.min.css" />
+		<link rel="stylesheet" href="/public/mobile/css/globla.css" />
+		<link rel="stylesheet" href="/public/mobile/css/member.css" />
+        <style type="text/css">
+        #null{margin-left: 25%}
+        </style>
+	</head>
+    {include file="common/share" /}
+	<body>
+		<div class="mui-row timeline">
+			<ul id="studylist">
+			</ul>
+		</div>
+		<a class="btn-c btn-clear" href='{:url("clean_studylist")}'>清除</a>
+		<script type="text/javascript" src="/public/mobile/js/jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="/public/mobile/js/mui.min.js"></script>
+		<script type="text/javascript" src="/public/mobile/js/globla.js"></script>
+		<script>
+            var uid = '{$userinfo.uid}';
+            var isbind = '{$userinfo.is_bind}';
+            $.ajax({
+                url:host+'studyList/recordList',
+                data:{
+                    uid:uid
+                },
+                type:'GET', //GET
+                async:true,    //或false,是否异步
+                timeout:5000,    //超时时间
+                dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+                success:function(data,textStatus,jqXHR){
+                    if(data.code==1){
+                        //console.log(data);
+                        var list = "";
+                        var result = data.data;
+                        if(result.browse_record.length == 0){
+                            var empty = '<div id="null"><img src="/public/mobile/img/icon/null.png"><p class="font-color-8">暂无数据</p> </div>';
+                                $(".mui-row").html(empty);
+                                $('.btn-clear').hide();
+                        }
+                        $.each(result.browse_record,function(i,item){
+                            var courseNow = 0;
+                            var courseNum = Object.getOwnPropertyNames(item).length;  //获取课程数
+                            list += '<li><dl><dd><span class="timeline-time font-size-14 font-color-6">'+ i +'</span>';
+                            $.each(item,function (j,course) {
+                                console.log(course);
+                                list += '<h1 class="timeline-time-t font-color-8 font-size-16">'+ j +'</h1>';
+                                $.each(course,function (z,video) {
+                                    list += '<p><span class="timeline-info font-size-12 font-color-6" data-id="'+ video.cid +'">'+ video.video_title +'</span></p>'
+                                });
+                                if(courseNow == courseNum-1){
+                                    //如果是否到最后一个课程
+                                    list += '</dd>';
+								}else{
+                                    list += '</dd><dd>';
+								}
+                                courseNow++;
+                            });
+                            list += '</dl><i class="timeline-dian"></i></li>';
+                        });
+                        $("#studylist").append(list);
+                    }
+                }
+            });
+            mui('#studylist').on('tap','h1',function () {
+                var cid = $(this).next().find('.timeline-info').attr('data-id');
+                url = "{:url('wechat/course/detail')}";
+                window.location.href = url + '?cid=' + cid;
+            });
+            mui('#studylist').on('tap','.timeline-info',function () {
+                var cid = $(this).attr('data-id');
+                url = "{:url('wechat/course/detail')}";
+                window.location.href = url + '?cid=' + cid;
+            });
+		</script>
+		<script src="/public/mobile/js/bindmobile.js"></script>
+	</body>
+</html>

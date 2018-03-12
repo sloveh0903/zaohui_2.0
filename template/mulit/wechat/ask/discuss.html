@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>问题回复</title>
+		<link rel="stylesheet" href="/public/mobile/css/mui.min.css" />
+		<link rel="stylesheet" href="/public/mobile/css/global.css" />
+		<link rel="stylesheet" href="/public/mobile/css/discuss-detail.css" />
+	</head>
+ 
+	<body>
+    <div id="pullrefresh" class="mui-scroll-wrapper">
+      <div class="mui-scroll">
+        <div class="wrap-box">
+          <div class="upper-box">
+            <div class="answer-item">
+              <div class="img-box">
+                <img src="{$answer.face}" alt="reply-logo" class="reply-logo">
+              </div>
+              <div class="content-box">
+                <div class="con-top">
+                  <div class="info">
+                    <h4 class="fs-14 fc-8">{$answer.nickname}</h4>
+                    <p class="reply-date fs-12 fc-4">{$answer.create_time}</p>
+                  </div>
+                  <div class="favo">
+                    <div class="zan" data-has-like="{$haslike}" data-id="{$id}">
+                      <span class="zan-num fs-12">{$answer.likes}</span>
+                      {if $haslike == '1'}
+                        <i class="icon-zan zan-i" style="display: none;"></i><i class="icon-zaned zan-i"></i>
+                      {else/}
+                        <i class="icon-zan zan-i"></i><i class="icon-zaned zan-i" style="display: none;"></i>
+                      {/if}
+                    </div>
+                  </div>
+                </div>
+                <div class="desc con-bottom" data-id="$id">
+                    <p class="fs-16 fc-10">{$answer.content}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="count-para fs-13 fc-4">
+            {if $answer.comments == 0}
+              暂无回复
+            {else /}
+              {$answer.comments}条回复
+            {/if}
+          </p>
+          <div class="lower-box">
+            
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--  贴底回复按钮 start  -->
+    <div class="fixed-btn bottom-fixed">
+        <i class="reply-btn"></i>
+        <p class="fs-16">回复</p>
+    </div>
+    <!--  贴底回复按钮 end  -->
+		<script type="text/javascript" src="/public/mobile/js/jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="/public/mobile/js/mui.min.js"></script>
+		<script type="text/javascript" src="/public/mobile/js/imgpreview/dialog.min.js"></script>
+		<script type="text/javascript" src="/public/mobile/js/imgpreview/mobile-photo-preview.min.js"></script>
+    <script type="text/javascript" src="/public/mobile/js/globla.js"></script>
+		<script type="text/javascript">
+			$('.preview-list').MobilePhotoPreview({
+				trigger: '.preview',
+			});
+
+			$(function() {
+				$("#buy").click(function() {
+					$("#BuyDialog").addClass("buy-dialog-in");
+					$(".mui-popup-backdrop").show();
+				})
+
+				$("#Cancel,#backdrop").click(function() {
+					$("#BuyDialog").removeClass("buy-dialog-in");
+					$(".mui-popup-backdrop").hide();
+				})
+				
+			})
+			/* 课程购买成功弹窗消失 */
+			$(document).bind("click",function(e){
+            var target = $(e.target),
+                str = ".buy_success_alert",
+                thisParent = target.closest( str );
+            if( !thisParent.is(str)){
+               $(".buy_success_outside").hide();
+            }   
+			}) 
+
+      var is_pay  = {$is_pay};
+      var id = GetQueryString('id');
+      var aid = '{$aid}'
+      var uid = '{$userinfo.uid}'; //用户id
+      var isbind = '{$userinfo.is_bind}';
+      var answer_uid = 0;
+      var answer_id = 0;
+      var page = 1;
+      var size = 2;
+
+      // mui(".answer-box").on('tap', '.reply', function (event) {
+      //   var pid = $(this).attr('data-id');
+      //   var puid = $(this).attr('data-puid');
+      //   if(is_pay==0){
+      //     mui.alert('未购买课程不能回复');
+      //     //location.reload();
+      //   }else{
+      //     var url = "{:url('wechat/ask/reply')}?id="+aid+"&puid="+puid+"&pid="+pid+"&root_id="+id+"&discuss_id="+id;
+      //     window.location.href=url;
+      //   } 
+      // })
+
+     mui("body").on('tap', '.bottom-fixed', function (event) {
+      if(is_pay==0){
+        mui.alert('未购买课程不能回复');
+        //location.reload();
+      }else{
+        var url = "{:url('wechat/ask/reply')}?id="+aid+"&puid=0&pid="+id+"&discuss_id="+id;
+        window.location.href=url;
+      } 
+    })
+
+     //点赞
+    mui("#pullrefresh").on('tap', '.icon-zan', function (event) {
+      var that = this;
+      var itemid = $(that).parent().attr('data-id');
+      var has_likes = $(that).parent().attr('data-has-like'); 
+      var likes = Number($(that).siblings('.zan-num').html());
+      if(has_likes == 0) {
+        $.post(host+"like/add",{uid:uid,itemid:itemid,typeid:2},function(res){ 
+          if(res.code == 1){
+            $(that).parent().find(".icon-zan").css('display','none');
+            $(that).parent().find(".icon-zaned").css('display','');
+            $(that).siblings('.zan-num').html(likes+1);
+          } else {
+            mui.alert('点赞失败');
+          }
+        });
+      }
+    })
+
+    $('.mui-scroll-wrapper').css('z-index','0');
+      mui.init({
+          pullRefresh: {
+              container: '#pullrefresh',
+              up : {
+                  //height:50,//可选.默认50.触发上拉加载拖动距离
+                  //auto:true,//可选,默认false.自动上拉加载一次
+                  contentrefresh : "正在加载...",//可选，正在加载状态时，上拉加载控件上显示的标题内容
+                  contentnomore:'没有更多数据了',//可选，请求完毕若没有更多数据时显示的提醒内容；
+                  callback :pullupRefresh //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+              }
+          }
+      });
+
+      function pullupRefresh() {
+        //console.log('下拉');
+            setTimeout(function() {
+                page++;//翻下一页
+                toList();//具体取数据的方法
+                mui('#pullrefresh').pullRefresh().endPullupToRefresh();
+            }, 100);
+      }
+
+      toList();
+
+      //回复列表
+      function toList(){
+          $.get(host+"answer/indexpc?aid="+aid+"&pid="+id+"&uid="+uid+'&page='+page+'&size='+size, function(result){ 
+          console.log(result);
+          if(result.code == 1){
+             var answer = result.data.answer;
+             var answer_inner = '';
+             if(answer.length == 0){
+               $('.count-para').hide();
+               var emptyStr = '<div class="emptypage-wrapper" style="position: static; margin-top: 200px;"><div class="empty-box"><img src="/public/mobile/img/icon/wenda-empty.png" class="empty-img"/><p class="empty-text">暂无回复</p></div></div>';
+               $('.lower-box').html(emptyStr);
+               //$(emptyStr).appendTo('')
+                return false;
+             }
+             for(var i=0;i<answer.length;i++){
+                  if(answer[i].root_id > 0){
+                      if(answer[i].puid == 0){
+                          answer[i].pnickname = '老师';
+                      }
+                      at = '<p>回复</p>&nbsp;<h4>'+answer[i].pnickname+'</h4>';
+                  }else{
+                      at = '';
+                  }
+                  if(answer[i].uid == 0){
+                      answer[i].nickname = '老师';
+                      answer[i].face = '/public/gzadmin/images/admin_img.png';
+                  }
+                  if(answer[i].has_likes == 1){
+                    var zan = '<i class="icon-zan zan-i" style="display: none;"></i><i class="icon-zaned zan-i"></i>'
+                  } else {
+                    var zan = '<i class="icon-zan zan-i"></i><i class="icon-zaned zan-i" style="display: none;"></i>';
+                  }
+                  answer_inner += '<div class="answer-item">'+
+                                    '<div class="img-box">'+ 
+                                      '<img src="' + answer[i].face + '" alt="reply-logo" class="reply-logo">'+
+                                    '</div>'+
+                                    '<div class="content-box">'+
+                                      '<div class="con-top">'+
+                                        '<div class="info">'+ 
+                                          '<h4 class="fs-14 fc-8">'+answer[i].nickname+'</h4>'+
+                                          '<p class="reply-date fs-12 fc-4">'+answer[i].create_time+'</p>'+
+                                        '</div>'+
+                                        '<div class="favo">'+ 
+                                          '<div class="zan" data-has-like="'+answer[i].has_likes+'" data-id="'+answer[i].id+'">' +
+                                            '<span class="zan-num fs-12">'+answer[i].likes+'</span>' + zan +
+                                          '</div>'+
+                                        '</div>'+
+                                      '</div>'+
+                                      '<div class="desc con-bottom" data-id="'+answer[i].id+'">'+
+                                        '<p class="fs-16 fc-10">'+answer[i].content+'</p>'+
+                                      '</div>'+
+                                    '</div>'+
+                                  '</div>'
+             }
+             if(page == 1){
+                $('.lower-box').html(answer_inner);
+             }else{
+                $('.lower-box').append(answer_inner);
+             }
+          }
+        });
+      }
+
+
+		</script>
+	</body>
+</html>

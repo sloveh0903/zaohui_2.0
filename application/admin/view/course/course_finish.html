@@ -1,0 +1,63 @@
+<div class="right-side-content mt30 ">
+    <div class="stepFinish-header">
+        <img src="/public/static/merch/images/finish_ok@2x30.png">
+        <span>您已成功添加了课程</span>
+    </div>
+    <div class="stepFinish-body mt30">
+        <ul class="addCourse-finish-ul">
+            <li class="clearFloat" data-name="course-addr">
+                <i>课程地址：</i>
+                <div>
+                    <i id="href">{$url}</i><span class="copy-addr">复制</span>
+                    <p>可复制到公众号的自定义菜单栏等位置</p>
+                </div>
+            </li>
+            <li class="clearFloat" data-name="course-cord">
+                <i>课程二维码：</i>
+                <div>
+                    <img src="{$qrcode}">
+                    <span>使用微信扫一扫预览</span>
+                </div>
+            </li>
+        </ul>
+        <div style="clear: both;"></div>
+    </div>
+
+    <div class="stepFinish-footer">
+        <span class="btn-bg-primary course-manage">课程管理</span>
+        <span class="btn-border-primary btn-continue">继续添加课程</span>
+    </div>
+</div>
+</div>
+<!-- <input type="button" id="button" name="button" value="复制" onclick="copyContact()"/>  -->
+<span id="copy"></span>
+</div>
+<script src="/public/static/merch/js/jquery-1.11.0.min.js"></script>
+<script src="/public/static/merch/js/public-child.window.js"></script>
+<script>
+    //课程管理
+    $(".stepFinish-footer>.course-manage").click(function (e) {
+        var src = "{:url('course/index')}";
+        $("#iframe", obj.myParent).attr("src", src);
+    })
+    //继续添加课程
+    $(".stepFinish-footer>.btn-continue").click(function (e) {
+        var src = "{:url('course/create')}";
+        $("#iframe", obj.myParent).attr("src", src);
+    })
+    // 复制课程地址
+    $(".copy-addr").on("click", function () {
+        var str = "课程地址复制成功";
+        isShowOperateTip(str);
+        copyArticle();
+    })
+    function copyArticle(event) {
+        var range = document.createRange();
+        range.selectNode(document.getElementById("href"));
+        var selection = window.getSelection();
+        if (selection.rangeCount > 0) selection.removeAllRanges();
+        selection.addRange(range);
+        document.execCommand('copy');
+    }
+</script>    
+  

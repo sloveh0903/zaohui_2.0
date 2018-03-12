@@ -1,0 +1,43 @@
+{include file="common/header" /}
+<body>
+    <div class="mCoustomScrollbar">
+        <div class="course_right_top">
+            <div class="tag_group">
+               <p>微信配置</p>
+                {include file="common/admin" /}
+               <div class="clearfix"></div>
+            </div>
+            <div class="system_guanli_div">
+                <ul class="system_guanli_ul">
+                    <li><a href="{:url('operate/index')}" class="active">公众号配置</a></li>
+                    <li><a href="{:url('operate/applet')}" >小程序配置</a></li>
+                    <li><a href="{:url('operate/openplatform')}" >开放平台配置</a></li>
+                </ul>
+            </div>
+            <div class="success_tip displayNone">已完成</div>
+        </div>
+        <div class="course_right_main">
+            <div class="tab-box">
+                <ul class="tab-bar">
+                    <a href="{:url('index')}"><li>系统参数</li></a>
+                    <a href="{:url('customMenu')}"><li>自定义菜单</li></a>
+                    <a href="{:url('subscribeReply')}"><li class="check">关注自动回复</li></a>
+                    <a href="{:url('keywordsReply')}"><li class="active">关键字回复</li></a>
+                    <a href="{:url('wechatkeywords/customer')}"><li>微信客服设置</li></a>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="add_article_main ">
+    
+    </div>
+    {include file="common/version" /}
+    <script src="/public/gzadmin/js/jquery-1.11.0.min.js"></script>
+    <script src="/public/gzadmin/js/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="/public/gzadmin/js/placeholder.js"></script>
+    <script src="/public/gzadmin/js/public_PC.js"></script>
+    <script>
+
+    </script>     
+</body>
+</html>

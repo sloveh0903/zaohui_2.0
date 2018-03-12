@@ -1,0 +1,62 @@
+{include file="common/header" /}
+<body>
+<div class="article_manage">
+	<div class="right-side-header clearfix">
+	        <span>全员分销</span>
+	        {include file="common/admin" /}
+   </div>
+   
+    <div class="right_side_content">
+	   	 <div class="system_guanli_div">
+            <ul class="system_guanli_ul">
+                <li><a href="javascript:void(0)" class="goto" data-src='{:url("distribution/index")}'>分销规则</a></li>
+                <li><a href="javascript:void(0)" class="goto" data-src='{:url("distribution/rebater")}'>分销员</a></li>
+                <li><a href="javascript:void(0)" class="goto" data-src='{:url("distribution/rebatelist")}'>分销记录</a></li>
+                <li><a href="javascript:void(0)" class=" goto" data-src='{:url("distribution/withdraw")}'>提现记录</a></li>
+                <li><a href="javascript:void(0)" class=" active  goto" data-src='{:url("poster/index")}'>营销海报</a></li>
+            </ul>
+        </div>
+		<div class="success_tip displayNone">已完成</div>
+	    <div class="course_right_main ">
+	        <div class="layui-form-item" style="margin-top:10px;height: 60px;color: #8282D9; background:rgba(0,182,242,.13);border-radius: 2px;line-height: 60px">
+	            <div style="line-height: 60px;font-size: 16px;padding-left: 20px; width: 94%;float: left">
+	                分享海报模板
+	            </div>
+	            <div style="font-size: 14px;line-height: 60px;">
+	                <a href="/a2.psd" style="color: #8282D9;">去下载</a>
+	            </div>
+	        </div>
+	        <div id="list" class="layui-form"></div>
+	        <div class="text-right" id="page"></div>
+    	</div>
+    </div>
+</div>
+<script id="list-tpl" type="text/html" data-params='{"url":"{:url("poster/index")}","pageid":"#page"}'>
+    <table id="example" class="layui-table" lay-skin="line">
+        <thead>
+        <tr>
+            <th style="width: 40%">课程名称</th>
+            <th style="width: 40%">状态</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{# layui.each(d.list, function(index, item){ }}
+        <tr>
+            <td>{{ item.title}}</td>
+            <td>{{ item.poster_status}}</td>
+            <td>
+                <i class="goto i_edit" data-src='{:url("add_poster")}?cid={{ item.cid }}'>设置海报</i>
+            </td>
+        </tr>
+        {{# }); }}
+        </tbody>
+
+    </table>
+</script>
+{include file="common/version" /}
+<script>
+    layui.use('list');
+</script>
+</body>
+</html>

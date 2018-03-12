@@ -1,0 +1,81 @@
+{include file="common/header" /}
+<body>
+<div class="article_manage mCustomScrollbar">
+    <div class="course_right_top">
+        <div class="tag_group">
+            <p class="title">任务大厅</p>
+            <img src="/public/gzadmin/images/head@2x30.png" alt="自身头像">
+            <i class="phoneNum">15812348289</i>
+            <div class="clearfix"></div>
+        </div>
+        <div class="system_guanli_div">
+            <ul class="system_guanli_ul">
+                <li><a href="javascript:void(0)" class="active goto" data-src='{:url("task/index")}'>基础设置</a></li>
+                <li><a href="javascript:void(0)" class="goto" data-src='{:url("task/rule")}'>拉新奖励</a></li>
+                <li><a href="javascript:void(0)" class="goto" data-src='{:url("task/coinList")}'>奖励发放</a></li>
+            </ul>
+        </div>
+        <div class="success_tip displayNone">已完成</div>
+    </div>
+    <div class="add_article_main ">
+        <div class="articleInfo_fill">
+            {if empty($task)}
+            <section class="panel panel-padding">
+                <form id="form1" class="layui-form layui-form-pane" action="{:url('index')}">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">虚拟币名称</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="title" required jq-verify="required|title" jq-error="请输入标题" placeholder="请输入标题" autocomplete="off" class="layui-input ">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">兑换说明</label>
+                        <div class="layui-input-block">
+                            <textarea name="content" jq-verify="content" id="conntent" style="display:none;"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <button class="layui-btn" jq-submit lay-filter="submit">立即提交</button>
+                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                        </div>
+                    </div>
+                </form>
+            </section>
+            {else}
+            <section class="panel panel-padding">
+                <form id="form1" class="layui-form layui-form-pane" action="{:url('index')}">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">虚拟币名称</label>
+                        <div class="layui-input-block">
+                            <input type="hidden" name="id" value="{$task.id}">
+                            <input type="text" name="title" required value="{$task.title}" jq-verify="required|title" jq-error="请输入虚拟币名称" placeholder="请输入虚拟币名称" autocomplete="off" class="layui-input ">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">兑换说明</label>
+                        <div class="layui-input-block">
+                            <textarea name="content" jq-verify="content" id="conntent" style="display:none;">{$task.content}</textarea>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <button class="layui-btn" jq-submit lay-filter="submit">立即提交</button>
+                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                        </div>
+                    </div>
+                </form>
+            </section>
+            {/if}
+        </div>
+    </div>
+</div>
+
+{include file="common/version" /}
+<script>
+    layui.use('myform');
+</script>
+</body>
+</html>

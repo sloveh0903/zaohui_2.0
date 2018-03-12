@@ -1,0 +1,68 @@
+{php}
+	$controller = request()->controller();
+	$show_switch_arr= db('show_switch')->where(['id'=>1])->find();
+	$is_testitemshop = $show_switch_arr['is_testitemshop'];
+	$is_showask = $show_switch_arr['is_showask'];
+	if(session('uid')){
+	    apipost('statistics/postStaticadd',['uid'=>session('uid'),'terminal'=>2]);
+	}
+	{/php}
+	<div class="mui-row menuNav">
+			<ul class="mui-table-view">
+				<li>
+					<div class="navcontent {if $controller=='Index'} NavActive {/if}">
+						<a href="{:url('/wechat/index/index')}">
+              				<i class="bottom-tab-icon index-icon"></i>
+              				<span>主页</span>
+            			</a>
+					</div>
+				</li>
+				<li>
+					<div class="navcontent {if $controller=='Course'} NavActive {/if}">
+						<a href="{:url('/wechat/course/category')}">
+			              	<i class="bottom-tab-icon course-icon"></i>
+			              	<span>课程</span>
+			            </a>
+					</div>
+				</li>
+				{if $is_testitemshop==1}
+				<li>
+					<div class="navcontent {if $controller=='Testitembank'} NavActive {/if}">
+						<a href="{:url('/wechat/testitembank/index')}">
+                			<i class="bottom-tab-icon quiz-icon"></i>
+              				<span>题库</span>
+            			</a>
+					</div>
+				</li>
+				{/if}
+				{if $is_showask==1}
+				<li>
+					<div class="navcontent {if $controller=='Ask'} NavActive {/if} ">
+						<a href="{:url('/wechat/ask/mulitindex')}">
+              				<i class="bottom-tab-icon discuss-icon"></i>
+              				<span>问答</span>
+            			</a>
+					</div>
+				</li>
+				{/if}
+				<li>
+					<div class="navcontent {if $controller=='Member' || $controller=='Rebate' } NavActive {/if}  ">
+						<a href="{:url('/wechat/member/index')}">
+              				<i class="bottom-tab-icon info-icon"></i>
+              				<span>我的</span>
+            			</a>
+					</div>
+				</li>
+			</ul>
+		</div>
+
+<script>
+$(function () {
+	mui(".mui-table-view").on('tap', '.navcontent a', function (event) {
+		var url = $(this).attr('href');
+		window.location.href=url;
+	});
+});
+
+</script>
+

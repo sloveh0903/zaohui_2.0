@@ -1,0 +1,85 @@
+.mui-navigate-right:after,
+.mui-push-right:after {
+	font-size: 16px;
+	color: #000;
+	
+}
+
+a.mui-navigate-right{
+	height: 50px;
+	line-height: 30px;
+}
+.mui-table-view-cell.mui-active {
+	background: #fff;
+	margin-top: 0 !important;
+}
+
+.mui-collapse-content {
+	padding: 0 !important;
+}
+
+.navigate-ul {
+	margin: 0;
+	padding: 0;
+	
+}
+
+.navigate-ul li {
+	list-style: none;
+	height: 50px;
+	padding: 10px 15px;
+	position: relative;
+	padding-left: 55px;
+	overflow: hidden;
+}
+
+.navigate-ul li embed,
+.navigate-ul-div {
+	float: left;
+}
+
+.navigate-ul li embed {
+	position: absolute;
+	left: 15px;
+	top: 25px;
+}
+
+.navigate-ul li .navigate-ul-div {
+	height: 40px;
+	line-height: 30px;
+	font-size: 16px;	
+	margin-left: -20px;
+	margin-right: 25px;
+	overflow: hidden;
+}
+
+.navigate-ul-div span {
+	height: 40px;
+	line-height: 35px;
+	float: left;
+	width: 100%;
+	color: rgba(0,0,0,.6);
+	
+}
+
+
+.quiz_href{
+	position: absolute;
+	right: 5px;
+	top: 0px;
+	
+}
+.quiz_href a{
+	width: 50px;
+	height: 50px;
+	display:flex;
+	justify-content: center;
+	align-items: center;
+}
+.quiz_href a img{
+	display: block;
+	margin-right: -15px;	
+}
+/*底部版权支持*/
+.grazy-zhichi{display:none;justify-content:center;align-items:center; padding:0px 15px;height: 50px;position: fixed;bottom: 0;width: 100%;border: none;background: transparent;}
+.grazy-zhichi>span{display:none;font-size:11px;color:rgba(41, 43, 51, .2)}

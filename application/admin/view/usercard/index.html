@@ -1,0 +1,203 @@
+{include file="common/header" /}
+<body>
+<div class="article_manage mCustomScrollbar">
+    <div class="right-side-header clearfix">
+	        <span>VIP卡管理</span>
+	        {include file="common/admin" /}
+   </div>
+   <div class="right_side_content">
+
+            <div class="system_guanli_div">
+                <ul class="system_guanli_ul vip-edit-ul">
+                    <li><a href="javascript:void(0)" class="active" data-src="course_list">VIP卡管理</a></li>
+                </ul>
+            </div>
+
+            <p class="vip-slogan">VIP会员可以观看所有课程视频</p>
+            <div class="vip_edit_main">
+                <div class="vip_card_box">
+                    {if $flag['mouth']['msg'] eq 'uncreate'}
+                    <div class="vip_card_add">
+                        <img src="/public/gzadmin/images/add-icon.png" alt="add-icon">
+                        <p class="btn modal-catch" data-params='{"content":".add-subcat","act":"{:url("addCard")}", "title":"添加月卡","type":"1","data":"type=mouth"}'>添加月卡</p>
+                    </div>
+                    {else}
+                    <div class="vip_card_item {if $flag['mouth']['msg'] eq 'closed'}withdrawed{else}grounded{/if}">
+                        <p class="price">￥{$flag['mouth']['price']}</p>
+                        <div class="desc-box">
+                            <p class="name">月卡</p>
+                            <p class="info">一个月内可观看所有课程</p>
+                            <p class="withdraw-info"><span>月卡</span>&nbsp;&nbsp;已下架</p>
+                        </div>
+                        <div class="mask">
+                            <div class="option-box modal-catch i_edit" data-params='{"content": ".edit-subcat","act":"{:url("editCard")}","title":"编辑月卡","data":"id={$flag.mouth.id}&price={$flag.mouth.price}","type":"1"}'>
+                                <i class="editing"></i>
+                                <p>编辑</p>
+                            </div>
+                            {if $flag['mouth']['msg'] eq 'closed'}
+                            <div class="option-box ajax" data-params='{"url": "{:url("setOpen")}","data":"id={$flag.mouth.id}","confirm":"true"}'>
+                                <i class="withdraw"></i>
+                                <p>上架</p>
+                            </div>
+                            {else}
+                            <div class="option-box ajax" data-params='{"url": "{:url("setClosed")}","data":"id={$flag.mouth.id}","confirm":"true"}'>
+                                <i class="withdraw"></i>
+                                <p>下架</p>
+                            </div>
+                            {/if}
+                        </div>
+                    </div>
+                    {/if}
+                </div>
+                <div class="vip_card_box">
+                    {if $flag['season']['msg'] eq 'uncreate'}
+                    <div class="vip_card_add">
+                        <img src="/public/gzadmin/images/add-icon.png" alt="add-icon">
+                        <p class="btn modal-catch" data-params='{"content":".add-subcat","act":"{:url("addCard")}", "title":"添加季卡","type":"1","data":"type=season"}'>添加季卡</p>
+                    </div>
+                    {else}
+                    <div class="vip_card_item {if $flag['season']['msg'] eq 'closed'}withdrawed{else}grounded{/if}">
+                        <p class="price">￥{$flag['season']['price']}</p>
+                        <div class="desc-box">
+                            <p class="name">季卡</p>
+                            <p class="info">三个月内可观看所有课程</p>
+                            <p class="withdraw-info"><span>季卡</span>&nbsp;&nbsp;已下架</p>
+                        </div>
+                        <div class="mask">
+                            <div class="option-box modal-catch i_edit"  data-params='{"content": ".edit-subcat","act":"{:url("editCard")}","title":"编辑季卡","data":"id={$flag.season.id}&price={$flag.season.price}","type":"1"}'>
+                                <i class="editing"></i>
+                                <p>编辑</p>
+                            </div>
+                            {if $flag['season']['msg'] eq 'closed'}
+                            <div class="option-box ajax" data-params='{"url": "{:url("setOpen")}","data":"id={$flag.season.id}","confirm":"true"}'>
+                                <i class="withdraw"></i>
+                                <p>上架</p>
+                            </div>
+                            {else}
+                            <div class="option-box ajax" data-params='{"url": "{:url("setClosed")}","data":"id={$flag.season.id}","confirm":"true"}'>
+                                <i class="withdraw"></i>
+                                <p>下架</p>
+                            </div>
+                            {/if}
+                        </div>
+                    </div>
+                    {/if}
+                </div>
+                <div class="vip_card_box">
+                    {if $flag['year']['msg'] eq 'uncreate'}
+                    <div class="vip_card_add">
+                        <img src="/public/gzadmin/images/add-icon.png" alt="add-icon">
+                        <p class="btn modal-catch" data-params='{"content":".add-subcat","act":"{:url("addCard")}", "title":"添加年卡","type":"1","data":"type=year"}'>添加年卡</p>
+                    </div>
+                    {else}
+                    <div class="vip_card_item {if $flag['year']['msg'] eq 'closed'}withdrawed{else}grounded{/if}">
+                        <p class="price">￥{$flag['year']['price']}</p>
+                        <div class="desc-box">
+                            <p class="name">年卡</p>
+                            <p class="info">一年内可观看所有课程</p>
+                            <p class="withdraw-info"><span>年卡</span>&nbsp;&nbsp;已下架</p>
+                        </div>
+                        <div class="mask">
+                            <div class="option-box modal-catch i_edit" data-params='{"content": ".edit-subcat","act":"{:url("editCard")}","title":"编辑年卡","data":"id={$flag.year.id}&price={$flag.year.price}","type":"1"}'>
+                                <i class="editing"></i>
+                                <p>编辑</p>
+                            </div>
+                            {if $flag['year']['msg'] eq 'closed'}
+                            <div class="option-box ajax" data-params='{"url": "{:url("setOpen")}","data":"id={$flag.year.id}","confirm":"true"}'>
+                                <i class="withdraw"></i>
+                                <p>上架</p>
+                            </div>
+                            {else}
+                            <div class="option-box ajax" data-params='{"url": "{:url("setClosed")}","data":"id={$flag.year.id}","confirm":"true"}'>
+                                <i class="withdraw"></i>
+                                <p>下架</p>
+                            </div>
+                            {/if}
+                        </div>
+                    </div>
+                    {/if}
+                </div>
+                <div class="vip_card_box">
+                    {if $flag['life']['msg'] eq 'uncreate'}
+                    <div class="vip_card_add">
+                        <img src="/public/gzadmin/images/add-icon.png" alt="add-icon">
+                        <p class="btn modal-catch" data-params='{"content":".add-subcat","act":"{:url("addCard")}", "title":"添加终身卡","type":"1","data":"type=life"}'>添加终身卡</p>
+                    </div>
+                    {else}
+                    <div class="vip_card_item {if $flag['life']['msg'] eq 'closed'}withdrawed{else}grounded{/if}">
+                        <p class="price">￥{$flag['life']['price']}</p>
+                        <div class="desc-box">
+                            <p class="name">终身卡</p>
+                            <p class="info">可永久观看所有课程</p>
+                            <p class="withdraw-info"><span>终身卡</span>&nbsp;&nbsp;已下架</p>
+                        </div>
+                        <div class="mask">
+                            <div class="option-box modal-catch i_edit" data-params='{"content": ".edit-subcat","act":"{:url("editCard")}","title":"编辑终身卡","data":"id={$flag.life.id}&price={$flag.life.price}","type":"1"}'>
+                                <i class="editing"></i>
+                                <p>编辑</p>
+                            </div>
+                            {if $flag['life']['msg'] eq 'closed'}
+                            <div class="option-box ajax" data-params='{"url": "{:url("setOpen")}","data":"id={$flag.life.id}","confirm":"true"}'>
+                                <i class="withdraw"></i>
+                                <p>上架</p>
+                            </div>
+                            {else}
+                            <div class="option-box ajax" data-params='{"url": "{:url("setClosed")}","data":"id={$flag.life.id}","confirm":"true"}'>
+                                <i class="withdraw"></i>
+                                <p>下架</p>
+                            </div>
+                            {/if}
+                        </div>
+                    </div>
+                    {/if}
+                </div>
+            </div>
+            <div class="vip_desc_box">
+                <p>会员卡说明 *</p>
+                <form id="form1" class="layui-form layui-form-pane" action='{:url("addExplain")}'>
+                <div class="text-area">
+                    <textarea name="explain" class="layui-textarea" cols="30" rows="10">{$explain}</textarea>
+                    <div class="submit-btn layui-btn" jq-submit jq-filter="submit">立即提交</div>
+                </div>
+                </form>
+            </div>
+	 </div>
+</div>
+<div class="add-subcat">
+    <form id="form1" class="layui-form layui-form-pane" action='{:url("addCard")}'>
+        <div class="layui-form-item">
+            <label class="layui-form-label">价格</label>
+            <div class="layui-input-inline">
+                <input type="hidden" name="type">
+                <input type="text" name="price" required jq-verify="required|price" jq-error="请输入会员卡价格" placeholder="请输入会员卡价格" autocomplete="off" class="layui-input ">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" jq-submit jq-filter="submit">确定</button>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="edit-subcat" style="display: none">
+    <form id="form2" class="layui-form layui-form-pane" action='{:url("editCard")}'>
+        <div class="layui-form-item">
+            <label class="layui-form-label">价格</label>
+            <div class="layui-input-inline">
+                <input type="hidden" name="id">
+                <input type="text" name="price" required jq-verify="required|price" jq-error="请输入会员卡价格" placeholder="请输入会员卡价格" autocomplete="off" class="layui-input ">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" jq-submit jq-filter="submit">确定</button>
+            </div>
+        </div>
+    </form>
+</div>
+{include file="common/version" /}
+<script>
+    layui.use('myform');
+</script>
+</body>
+</html>

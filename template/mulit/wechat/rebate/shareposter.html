@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <title>分享海报</title>
+   <link rel="stylesheet" href="/public/mobile/css/mui.min.css">
+   <link rel="stylesheet" href="/public/mobile/css/threeLevelMarketing.css">
+</head>
+<body style="background-color: #292B33" >
+   <div class="share_poster_main">
+      <div class="share_poster_content">
+         <img src="{$poster_img}" alt="海报">
+      </div>
+      <div class="share_poster_tip" style="position: relative;top:-15px">长按保存图片分享到朋友圈</div>
+   </div>
+<script src="/public/mobile/js/jquery-3.2.1.min.js"></script>
+<script src="/public/mobile/js/mui.min.js"></script>
+<script src="/public/mobile/js/globla.js"></script>
+<script>
+// 通过下面这段JS API隐藏右上角按钮
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady()
+{
+     WeixinJSBridge.call('hideOptionMenu');
+});
+var uid = '{$userinfo.uid}';
+var isbind = '{$userinfo.is_bind}';
+</script>
+   <script src="/public/mobile/js/bindmobile.js"></script>
+</body>
+</html>

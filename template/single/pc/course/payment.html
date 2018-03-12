@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>付款</title>
+    <link rel="stylesheet" href="/public/pc/css/all.css">
+    <link rel="stylesheet" href="/public/pc/css/payment.css">
+    <style>
+        .weixin_pay_outside {
+            display: none;
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 99;
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        .weixin_pay_alert {
+            width: 270px;
+            height: 290px;
+            padding: 0px;
+            background: #FFFFFF;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.05);
+            border-radius: 3px;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            margin-left: -135px;
+            margin-top: -145px;
+            z-index: 100;
+            text-align: center;
+        }
+
+        .closeSpan {
+            width: auto;
+            height: auto;
+            text-align: right;
+            display: block;
+        }
+
+        .closeSpan img {
+            width: 40px;
+            height: 40px;
+            vertical-align: middle;
+            cursor: pointer;
+        }
+
+        .img_close {
+            width: 40px;
+            height: 40px;
+            vertical-align: middle;
+        }
+
+        .shaomiao_QRcord {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            opacity: .8;
+        }
+
+        .spanPay_QRcord {
+            display: block;
+            text-align: center;
+        }
+
+        .spanPay_QRcord img {
+            width: 151px;
+            height: 151px;
+            vertical-align: middle;
+        }
+        p.add_coupon span{margin-right: 4px;font-size: 20px;display: inline-block;line-height: 20px;margin-bottom: 4px;}
+        
+    </style>
+</head>
+<div class="weixin_pay_outside">
+    <div class="weixin_pay_alert">
+         <span class="closeSpan">
+            <img src="/public/pc/images/delete@2x.png" alt="关闭" class="img_close">
+         </span>
+        <span class="shaomiao_QRcord" style="margin-top:-5px"><img src="/public/pc/images/pay30x135@2x.png" height="25px"></span>
+         <span class="spanPay_QRcord">
+            <img src="" alt="微信支付二维码">
+         </span>
+         <span style="font-size: 12px;"><img src="/public/pc/images/sao20x20@2x.png" height="20px" style="position:relative;top:5px">&nbsp;&nbsp;打开微信扫一扫支付</span>
+    </div>
+</div>
+<body>
+{include file="common/head" /}
+<div class="payment_bg">
+    <div class="w740">
+        <span class="payment_word">付款</span>
+    </div>
+</div>
+<div class="payment_content">
+    <div class="w740">
+        <div class="payment_list unpaid mCustomScrollbar">
+            <table class="unpaid_table payment_table">
+                <thead>
+                <tr>
+                    <th class="th_orderid">#</th>
+                    <th class="th_course_name" style="width:600px">课程名称</th>
+                  <!--   <th class="th_orderNum" style="width: 305px">订单号</th> -->
+                    <th class="th_orderPrice">订单金额</th>
+                    <th class="th_orderState">订单状态</th>
+               <!--      <th class="th_opeate">操作</th> -->
+                </tr>
+                </thead>
+                <tbody>
+
+                <tr>
+                    <td>1</td>
+                    <td>{$order.course_name}</td>
+                   <!--  <td>{$order.order_sn}</td> -->
+                    <td>￥{$order.price}</td>
+                    <td>待付款</td>
+    <!--                 <td>
+                        <a href="javascript:void(0)" class="a_payment">付款/</a>
+                        <a href="javascript:void(0)" class="a_contact">联系客服</a>
+                    </td> -->
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+<!--         优惠码 -->
+        <div class="youhui">
+         	<p class="code_name">优惠码</p>
+			<p class="add_coupon"><span>+</span><i>添加</i></p>
+			<div class='youhui_form'>
+				<input type="text" value="输入优惠码" id='coupon_code' onfocus="if(value==defaultValue){ value='';this.style.color='rgba(41, 43, 51, .8)'}" onblur="if(!value){value=defaultValue;this.style.color='rgba(41, 43, 51, .3)'}"/>				
+				<button class="confirm_btn" type="submit" data-o-id='{$order.order_sn}'>确认</button>
+				<button class="cancel_btn" type="reset">取消</button><br><br>
+				<span>优惠码已过期，无法使用！</span>
+			</div>
+			<p class="youhui_content"></p>
+         	<p class="payment_num"><i>实付金额：</i><i class="sub_price">￥{$order.price}</i></p>
+         </div>
+         
+        <!-- <div class="payment_tip"> -->
+<!--         <span class="payment_tip_word">付款后，账号将自动开通课程。</span> -->
+<!--         <span class="payment_num"><i>总金额：</i><i>￥{$order.price}</i></span> -->
+
+        <div class="clearfix"></div>
+        <!-- </div> -->
+        <div class="mt30 textRight">
+             <span class="payment_tip_word">付款后，账号将自动开通课程。</span>
+            <span href="javascript:void(0)" data-status="0" name="btn_order" class="btn_order" data-coupon-code=''>提交订单</span>
+        </div>
+        <div id="navtive" style="display:none;margin:0 auto;width:200px;margin-top:-200px;">
+            <img src="">
+        </div>
+
+    </div>
+</div>
+<script src="/public/pc/js/jquery-1.11.0.min.js"></script>
+<script src="/public/jqadmin/js/layui/layui.js"></script>
+<script src="/public/pc/js/public_PC.js"></script>
+<script>
+$(function(){
+    var price = '{$order.price}';
+	var cid = {$cid};
+	//点击添加按钮优惠表单出现
+	$(".add_coupon").click(function(){
+		$(this).hide()
+		$(".youhui_form").show()
+	})
+	//点击确定
+	$(".confirm_btn").click(function(){
+		var coupon_code = $('#coupon_code').val().trim();
+		var order_id = $(this).attr('data-o-id');
+		$.get(host + "couponcode/check_code?coupon_code=" + coupon_code+'&cid='+cid, function (data) {
+			var message = data.message;
+			if(data.code==1){
+				   var conpon_data = data.data;
+				   $('.btn_order').attr('data-coupon-code',conpon_data.coupon_code);
+				   var tip = conpon_data.tip;
+				   var minus = conpon_data.minus;
+				   var order_price = conpon_data.order_price;
+				   $('.youhui_form').hide();
+				   $('.youhui_content').show();
+				   $('.youhui_content').html(tip+'<span>'+minus+'</span><i class="delete" style="background:url(../../public/images/delete.png) no-repeat center/cover ;"></i>');
+				   $('.sub_price').html(order_price);
+				   
+			}else{
+				$('.youhui_form span').show();
+				$('.youhui_form span').html(message);
+			}
+		});
+	})
+	//点击取消
+	$(".cancel_btn").click(function(){
+		$('.add_coupon').css('display','block');
+		$('.youhui_form').css('display','none');
+		$('#coupon_code').val('');
+	})
+	
+	//点击垃圾筐优惠消失
+	$(".youhui_content").click('.delete',function(){
+        console.log('删除优惠码');
+		$('.btn_order').attr('data-coupon-code','');
+		//$(this).parent().hide()
+		$('.youhui_content').hide();
+		$(".add_coupon").show();
+        $('.sub_price').text('￥'+price);
+	})
+})
+</script>
+<script type="text/javascript">
+    var layer;
+    layui.use('layer', function(){
+        layer = layui.layer;
+    });
+    var uid = "{$uid}";
+    var cid = "{$cid}";
+    var order_sn = "{$order.order_sn}";
+    var title = "{$order.course_name}";
+    $('.btn_order').click(function () {
+        var data_status = $(this).attr('data-status');
+        if(data_status == 1){
+            $(this).text('正在提交');
+            return false;
+        }
+        $(this).attr('data-status',1);
+        var coupon_code  = $(this).attr('data-coupon-code');
+        $.post(host+"order/add",{uid:uid,cid:cid,source:'pc',title:title,coupon_code:coupon_code},function(res){
+            $('.btn_order').attr('data-status',0);
+            $('.btn_order').text('提交订单');
+            if(res.code == 1){
+                if(res.data.pay_status == 1){
+                    var url = "{:url('index/course/course')}";
+                    window.location.href=url+'?cid='+cid;
+                }else{
+                     order_sn = res.data.order_sn
+                     $.get(host + "wxpay/navtive?order_sn=" + order_sn+'&coupon_code='+coupon_code, function (res2) {
+                        if (res2.code == -1) {
+                            layer.msg(res2.message);
+                            return;
+                        }
+                        if (res2.code == 2) {
+                            layer.msg('购买成功');
+                            var url = "{:url('course/course',['cid'=>$cid])}";
+                            window.location.href = url;
+                            return false;
+                        }
+                        if (res2.code == 1) {
+                            //layer.msg(res2.data);
+                            order_sn = res2.data.order_sn;
+                            var wxurl = 'http://paysdk.weixin.qq.com/example/qrcode.php?data=' + res2.data.url;
+                            $('.spanPay_QRcord img').attr('src', wxurl);
+                            $(".weixin_pay_outside").show();
+                            console.log(wxurl);
+                            var t = setInterval(function () {
+                                $.get(host + "order/detail?order_sn=" + order_sn, function (res3) {
+                                    if (res3.code == 1) {
+                                        if (res3.data.pay_status == 1) {
+                                            layer.msg('支付成功');
+                                            var url = "{:url('course/course',['cid'=>$cid])}";
+                                            window.location.href = url;
+                                            return false;
+                                        }
+                                    }
+                                });
+                            }, 3000);
+
+                           //关闭二维码
+                           $(".img_close").click(function () {
+                              clearInterval(t)
+                              $(".weixin_pay_outside").hide();
+                              location.reload();
+                           })
+                        }
+                    });
+                }
+            }
+        });
+    })
+
+   
+</script>
+</body>
+</html>

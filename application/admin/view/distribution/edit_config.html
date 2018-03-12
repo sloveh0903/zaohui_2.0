@@ -1,0 +1,87 @@
+{include file="common/header" /}
+<body>
+<div class="article_manage">
+	<div class="right-side-header clearfix">
+	        <span>营销中心</span>
+	        {include file="common/admin" /}
+   </div>
+   
+   <div class="right_side_content">
+	   	 <div class="system_guanli_div">
+            <ul class="system_guanli_ul">
+                <li><a href="javascript:void(0)" class="active goto" data-src='{:url("distribution/index")}'>分销规则</a></li>
+                <li><a href="javascript:void(0)" class="goto" data-src='{:url("distribution/rebater")}'>分销员</a></li>
+                <li><a href="javascript:void(0)" class="goto" data-src='{:url("distribution/rebatelist")}'>分销记录</a></li>
+                <li><a href="javascript:void(0)" class="goto" data-src='{:url("distribution/withdraw")}'>提现记录</a></li>
+                <li><a href="javascript:void(0)" class="goto" data-src='{:url("poster/index")}'>营销海报</a></li>
+            </ul>
+        </div>
+		<div class="success_tip displayNone">已完成</div>
+	    <div class="course_right_main ">
+	        <section class="panel panel-padding">
+	            <form id="form1" class="layui-form layui-form-pane" action="{:url('index')}">
+	                {if !$poster}
+	                <div class="layui-form-item" style="height: 60px;color: #8282D9; background:rgba(0,182,242,.13);border-radius: 2px;line-height: 60px">
+	                    <div style="line-height: 60px;font-size: 16px;padding-left: 20px; width: 94%;float: left">
+	                        开启营销海报功能 传播效果更佳
+	                    </div>
+	                    <div style="font-size: 14px;line-height: 60px;">
+	                        <span class="goto" data-src='{:url("poster/index")}'>去设置</span>
+	                    </div>
+	                </div>
+	                {/if}
+	                <div class="line"></div>
+	                <div class="layui-form-item ">
+	                    <label class="layui-form-label">直销提成</label>
+	                    <div class="layui-input-inline">
+	                        <input type="hidden" name="id" value="{$config.id}">
+	                        <input type="text" name="first" value="{$config.first}" jq-verify="number" style="width: 80px" autocomplete="off" class="layui-input ">
+	                    </div>
+	                    <label class="layui-form-label"  style="width: auto">%&nbsp;&nbsp;&nbsp;&nbsp;设置为0默认不开启，本规则对所有课程有效，下同&nbsp;&nbsp;&nbsp;&nbsp;</label>
+	                </div>
+	                <div class="layui-form-item ">
+	                    <label class="layui-form-label">上级提成</label>
+	                    <div class="layui-input-inline">
+	                        <input type="text" name="second" value="{$config.second}" jq-verify="number" style="width: 80px" autocomplete="off" class="layui-input ">
+	                    </div>
+	                    <label class="layui-form-label">%</label>
+	                </div>
+	                <div class="layui-form-item ">
+	                    <label class="layui-form-label">上2级提成</label>
+	                    <div class="layui-input-inline">
+	                        <input type="text" name="third" value="{$config.third}" jq-verify="number" style="width: 80px" autocomplete="off" class="layui-input ">
+	                    </div>
+	                    <label class="layui-form-label">%</label>
+	                </div>
+	                <div class="layui-form-item ">
+	                    <label class="layui-form-label">分销折扣</label>
+	                    <div class="layui-input-inline">
+	                        <input type="text" name="discount" value="{$config.discount}"  jq-verify="discount" style="width: 80px" autocomplete="off" class="layui-input ">
+	                    </div>
+	                    <label class="layui-form-label" style="width: auto">折&nbsp;&nbsp;&nbsp;&nbsp;分销员分享的购买链接可以享受的折扣优惠，最多精确1位小数(折扣不大于10，10为不打折)&nbsp;&nbsp;&nbsp;&nbsp;</label>
+	                </div>
+	                <div class="line"></div>
+	                <div class="layui-form-item">
+	                    <label class="layui-form-label">是否开启</label>
+	                    <div class="layui-input-inline">
+	                        <input type="radio" name="status" title="启用" value="1" {if condition="$config['status'] eq 1"}checked{/if} />
+	                        <input type="radio" name="status" title="禁用" value="0" {if condition="$config['status'] eq 0"}checked{/if} />
+	                    </div>
+	                </div>
+	                <div class="layui-form-item">
+	                    <div class="layui-input-block">
+	                        <button class="layui-btn" jq-submit lay-filter="submit">保存</button>
+	                    </div>
+	                </div>
+	            </form>
+	        </section>
+	    </div>
+	 </div>
+</div>
+
+{include file="common/version" /}
+<script>
+    layui.use('course');
+</script>
+</body>
+</html>

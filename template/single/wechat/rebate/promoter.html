@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>推广员</title>
+    <link rel="stylesheet" href="/public/mobile/css/mui.min.css">
+    <link rel="stylesheet" href="/public/mobile/css/threeLevelMarketing.css">
+</head>
+<body class="bg_FAFAFA">
+<div class="promoter_nav">
+    <ul class="allorder_ul">
+        <li><a href="{:url('promoter',['type'=>1])}" {if $type eq 1}class="active"{/if}>下级推广员</a></li>
+        <li><a href="{:url('promoter',['type'=>2])}" {if $type eq 2}class="active"{/if}>下2级推广员</a></li>
+    </ul>
+</div>
+<div id="pullrefresh" class="mui-scroll-wrapper" style="top:53px;">
+    <div class="mui-scroll">
+        <div class="mui-row">
+            <div class="promoter_main">
+                <div class="promoter_content">
+                    <ul class="promoter_list_ul">
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/public/mobile/js/jquery-3.2.1.min.js"></script>
+<script src="/public/mobile/js/mui.min.js"></script>
+<script src="/public/mobile/js/globla.js"></script>
+<script>
+    $(function() {
+        var page = 1;
+        var size = 10;
+        var uid = '{$userinfo.uid}'; //用户id
+        var isbind = '{$userinfo.is_bind}';
+        var type = '{$type}';
+        data = {
+            page:page,
+            uid:uid,
+            size:size,
+            type:type
+        };
+        toList(data,1);
+        mui.init({
+            pullRefresh: {
+                container: '#pullrefresh',
+                up : {
+                    //height:50,//可选.默认50.触发上拉加载拖动距离
+                    //auto:true,//可选,默认false.自动上拉加载一次
+                    contentrefresh : "正在加载...",//可选，正在加载状态时，上拉加载控件上显示的标题内容
+                    contentnomore:'没有更多数据了',//可选，请求完毕若没有更多数据时显示的提醒内容；
+                    callback :pullupRefresh //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+                }
+
+            }
+        });
+        function pullupRefresh() {
+            setTimeout(function() {
+                page++;//翻下一页
+                data={
+                    uid:uid,
+                    page:page,
+                    size:size
+                };
+                toList(data,2);//具体取数据的方法
+            }, 100);
+        }
+
+        function toList(data,type) {
+            $.ajax({
+                url:host + 'rebate/Promoters',
+                data:data,
+                type:'GET', //GET
+                async:true,    //或false,是否异步
+                timeout:5000,    //超时时间
+                dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+                success:function(result,textStatus,jqXHR){
+                    if(result.code==1){
+                        var rebate = result.data.rebate;
+                        var list = "";
+                        $.each(rebate,function(j,item){
+                            list += '<li>' +
+                                '<img src="'+item.face+'">' +
+                                '<p><em>'+item.nickname+'</em>' +
+                                '<span><i>直销订单</i>' +
+                                '<i>'+item.count_order+'个订单/'+item.sum_order_money+'元</i></span> ' +
+                                '<span> <i>贡献佣金</i><i>'+item.sum_money+'元</i> </span>' +
+                                '</p>' +
+                                '</li>';
+                        });
+                        if(type == 1){
+                            mui('#pullrefresh').pullRefresh().refresh(true);
+                            $(".promoter_list_ul").html(list);
+                            mui('#pullrefresh').pullRefresh().endPulldownToRefresh();
+                        }else{
+                            if(result.data.withdraw.length == 0){
+                                mui('#pullrefresh').pullRefresh().endPullupToRefresh(true);
+                                setTimeout(function(){
+                                    mui('#pullrefresh').pullRefresh().disablePullupToRefresh();
+                                }, 1000);
+                            }else{
+                                setTimeout(function(){
+                                    $(".promoter_list_ul").append(list);
+                                }, 1000);
+                                mui('#pullrefresh').pullRefresh().endPullupToRefresh();
+                            }
+                        }
+                        //                            mui('#pullrefresh').pullRefresh().endPullupToRefresh(true);
+                    }
+                    mui('.mui-slider').slider({
+                        interval: 3000
+                    });
+
+                }
+            });
+
+        }
+    });
+</script>
+<script src="/public/mobile/js/bindmobile.js"></script>
+</body>
+</html>

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<title>阅读</title>
+	<link rel="stylesheet" href="/public/mobile/css/mui.min.css" />
+	<link rel="stylesheet" href="/public/mobile/css/globla.css" />
+	<link rel="stylesheet" href="/public/mobile/css/readlist.css" />
+	<style>
+		#pullrefresh{
+			padding: 0 0 50px 0;
+			margin-top: 50px;
+		}
+	</style>
+	<link rel="stylesheet" href="/public/mobile/css/dropload.css">
+</head>
+<body >
+
+<div class="wrap">
+      <div class="QA-nav">
+       <p class="QA-nav-title">{$catname}</p>
+        <i class="QA-nav-filter">筛选</i>
+      </div>
+      
+<!--       <div class="article-box"> -->
+        <div id="pullrefresh" class="mui-scroll-wrapper">
+		<div class="mui-scroll">
+		<div class="article-list">
+		
+		</div>
+<!-- 			<div class="swiper-slide" style="background: #FFF"> -->
+<!-- 				<div class="content-slide"> -->
+<!-- 					<ul class="article-list"> -->
+<!-- 					</ul> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
+
+		</div>
+	</div>
+<!--       </div> -->
+</div>
+     
+<!-- 	<div class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted" style="position: absolute;z-index: 3;"> -->
+<!-- 		<div class="mui-scroll" id="titleContent"> -->
+<!-- 		</div> -->
+<!-- 	</div> -->
+	
+<div class="dialog">
+   
+   <div class="filter-box">
+	        <h4>阅读筛选</h4>
+	        <ul class="filter-list">
+	         <li{if condition=" $cid ==0" } class="filter-items selected" {else} class="filter-items" {/if} data-cid='0'>
+	          		全部
+	          	</li>
+	        	 {volist name="category" id="data"}
+	             <li{if condition=" $cid ==$data.id" } class="filter-items selected" {else} class="filter-items" {/if} data-cid='{$data.id}'>
+	          		{$data.cate_name}
+	          	</li>
+	        	{/volist}
+	        </ul>
+<!-- 	        <div class="tip"> -->
+<!-- 	          <p>付费课程需</p> -->
+<!-- 	          <a class="buy" href="{:url('/wechat/index')}">购买</a> -->
+<!-- 	          <p>后提问</p> -->
+<!-- 	        </div> -->
+	      </div>
+	      
+	      
+ </div>
+    
+{include file="common/menu" /}
+<script type="text/javascript" src="/public/mobile/js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="/public/mobile/js/globla.js"></script>
+<script type="text/javascript" src="/public/mobile/js/mui.min.js"></script>
+<script type="text/javascript">
+      // 弹窗
+      var isBuy = true;
+      $('.QA-nav-filter').on('tap', function () {
+        $(this).addClass('focus');
+        $('.wrap').addClass('blur');
+        $('.dialog')
+        .css('display', 'flex')
+        .find('.filter-box')
+        .css('display', 'flex');
+      });
+      $('.dialog').on('tap', function (e) {
+        $(this).hide();
+        $('.wrap')
+        .removeClass('blur')
+        .end()
+        .find('.QA-nav-filter')
+        .removeClass('focus');
+      }).children('div').on('tap', function (e) {
+        e.stopPropagation();
+      });
+</script>
+
+<script type="text/javascript">
+	$(function() {
+	var page = 1;
+	var cid = {$cid};
+	var size = 10;
+	$('.mui-table-view li').find('img').eq(2).attr('src','/public/mobile/img/icon/3a.png');
+	$('.mui-table-view li').find('.navcontent').removeClass('NavActive');
+	$('.mui-table-view li').find('.navcontent').eq(2).addClass('NavActive');
+	 data = {
+             cid:cid,
+				page:1,
+				size:size
+			};
+     toList(data,1);
+// 	mui("#titleContent").on('tap','a',function(e) {
+// 		cid = $(this).attr('data-id');
+//         data = {
+//             cid:cid,
+//             page:1,
+//             size:size
+//         };
+//         toList(data,1);
+// 		e.preventDefault();
+// 		$("#titleContent .mui-active").removeClass('mui-active');
+// 		$(this).addClass('mui-active');
+// 	});
+
+	mui.init({
+		pullRefresh: {
+			container: '#pullrefresh',
+			up : {
+				//height:50,//可选.默认50.触发上拉加载拖动距离
+				//auto:true,//可选,默认false.自动上拉加载一次
+				contentrefresh : "正在加载...",//可选，正在加载状态时，上拉加载控件上显示的标题内容
+				contentnomore:'没有更多数据了',//可选，请求完毕若没有更多数据时显示的提醒内容；
+				callback :pullupRefresh //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+			}
+
+		}
+	});
+	function pullupRefresh() {
+		setTimeout(function() {
+            page++;//翻下一页
+			data={
+				cid:cid,
+				page:page,
+				size:10
+			};
+			type=2;//代表上拉加载
+			toList(data,type);//具体取数据的方法
+		}, 100);
+	}
+
+	function toList(data,type) {
+		$.ajax({
+			url:host + '/article/index',
+			data:data,
+			type:'GET', //GET
+			async:true,    //或false,是否异步
+			timeout:5000,    //超时时间
+			dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+			success:function(result,textStatus,jqXHR){
+				if(result.code==1){
+					var article = result.data.article;
+					var list = "";
+					$.each(article,function(j,item){
+						var img = '';
+						if(item.banner){
+							img += '<div class="article-img">';
+							img += '<img src="'+ item.banner +'" alt="placeholder"/>';
+							img += '</div>'
+						}
+
+
+						list += '<div class="article-box"><div class="article-content" data-id="' + item.id + '"><h4 class="article-title" >'+
+						item.title+'</h4>'+
+						'<p class="article-desc">'+item.desc+
+						' </p><div class="article-info"><div class="watch"><i class="watch-btn"></i><p class="watch-count">'+item.views+'</p>'
+						+'</div><p class="date">'+item.create_time+'</p>'+
+						'</div></div>'+img+'</div>';
+
+					});
+					
+
+			    
+			    
+					if(type == 1){
+
+						mui('#pullrefresh').pullRefresh().refresh(true);
+						if(list == ""){
+                            $(".article-list").html(nodata);
+						}else{
+                            $(".article-list").html(list);
+                        }
+						mui('#pullrefresh').pullRefresh().endPulldownToRefresh();
+					}else{
+						if(result.data.article.length == 0){
+							mui('#pullrefresh').pullRefresh().endPullupToRefresh(true);
+							setTimeout(function(){
+								mui('#pullrefresh').pullRefresh().disablePullupToRefresh();
+							}, 1000);
+						}else{
+                            setTimeout(function(){
+                                $(".article-list").append(list);
+                            }, 1000);
+							mui('#pullrefresh').pullRefresh().endPullupToRefresh();
+						}
+					}
+//                            mui('#pullrefresh').pullRefresh().endPullupToRefresh(true);
+				}
+				mui('.mui-slider').slider({
+					interval: 3000
+				});
+
+			}
+		});
+
+	}
+	mui('.article-list').on('tap','.article-content', function(){
+	    var id = $(this).attr('data-id');
+        url = "{:url('wechat/article/detail')}";
+        window.location.href = url + '?id=' + id;
+	});
+	mui('.article-list').on('tap','.author', function(){
+		//var tid = $(this).attr('data-id');
+       // url = "{:url('wechat/article/teacher')}";
+       // window.location.href = url + '?tid=' + tid;
+	});
+	//选择分类
+	$(".filter-box .filter-items").on("click", function () {
+		  var that = $(this);
+        var itemid = that.attr("data-cid");
+        var url = "{:url('wechat/article/index')}?cid="+itemid;
+			window.location.href=url;
+  });
+
+});
+</script>
+</body>
+
+</html>

@@ -1,0 +1,73 @@
+{include file="common/header" /}
+<style type="text/css">
+  .copy-link-addr{
+    color:#00b6f2;
+    cursor:pointer
+  }
+</style>
+<body>
+<div class="article_manage">
+    <div class="right-side-header clearfix">
+	        <span>小程序配置</span>
+	        {include file="common/admin" /}
+    </div>
+    
+     <div class="right_side_content">
+	   <div class="system_guanli_div">
+	 		<ul class="system_guanli_ul">
+                <li><a href="{:url('operate/applet')}" class="active"  >小程序配置</a></li>
+                <li><a href="{:url('operate/customer')}" >小程序客服</a></li>
+           </ul>
+		</div>
+		<div class="success_tip displayNone">已完成</div>
+
+	    <div class="add_article_main ">
+	        <div class="articleInfo_fill">
+	            <section class="panel panel-padding">
+	                <form id="form1" class="layui-form layui-form-pane" action="{:url('operate/applet')}">
+	                    <div class="layui-form-item">
+	                        <label class="layui-form-label">appid</label>
+	                        <div class="layui-input-block">
+	                            <input type="text" name="wx_appid"  value="{$config['wx_appid']}" class="layui-input ">
+	                        </div>
+	                    </div>
+	                    <div class="layui-form-item">
+	                        <label class="layui-form-label">secret</label>
+	                        <div class="layui-input-block">
+	                            <input type="text" name="wx_secret" value="{$config['wx_secret']}" class="layui-input "></textarea>
+	                        </div>
+	                    </div>
+	                    <div class="layui-form-item">
+	                        <label class="layui-form-label">商户id</label>
+	                        <div class="layui-input-block">
+	                            <input type="text" name="wx_mchid" value="{$config['wx_mchid']}" class="layui-input "></textarea>
+	                        </div>
+	                    </div>
+	                     <div class="layui-form-item">
+	                        <label class="layui-form-label">支付密钥</label>
+	                        <div class="layui-input-block">
+	                            <input type="text" name="wx_appkey" value="{$config['wx_appkey']}" class="layui-input "></textarea>
+	                        </div>
+	                    </div>
+	                    <div class="layui-form-item">
+	                        <div class="layui-input-block">
+	                            <button class="layui-btn" jq-submit lay-filter="submit">立即提交</button>
+	                        </div>
+	                    </div>
+	                </form>
+	            </section>
+	        </div>
+	      </div>
+    </div>
+  </div>
+    {include file="common/version" /}
+    <script src="/public/gzadmin/js/jquery-1.11.0.min.js"></script>
+    <script src="/public/gzadmin/js/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="/public/gzadmin/js/placeholder.js"></script>
+    <script src="/public/gzadmin/js/public_PC.js"></script>
+    <script src="/public/gzadmin/js/clipboard.min.js"></script>
+    <script>
+        layui.use('course');
+    </script>     
+</body>
+</html>

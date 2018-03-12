@@ -1,0 +1,72 @@
+<div class="userinfo-card">
+  <div class="user-info">
+    <div class="user-imgbox">
+      <img src="{$user.user.face}" class="user-head">
+    </div>
+    <div class="user-namebox">
+      <h4 class="username">{$user.user.nickname}</h4>
+      <p class="study-record">自从{$user.study_begin}学习了{$user.study_day}天</p>
+    </div>
+    <div class="signup-box">
+      <i class="signup-icon"></i>
+      <span>签到</span>
+    </div>
+  </div>
+  <div class="exp-showpanel">
+    <a class="bp-showpanel" href='{:url("bp")}'>
+      <h4 class="count">{$user.user.now_integral}</h4>
+      <p>积分</p>
+    </a>
+    <div class="course-showpanel">
+      <h4 class="count">{$user.study_complete}</h4>
+      <p>完成课程</p>
+    </div>
+    <div class="ranking-showpanel">
+      <h4 class="count">{$user.ranking}</h4>
+      <p>班级排名</p>
+    </div>
+  </div>
+</div>
+<script>
+var uid = '{$uid}';
+//个人中心 签到
+$.ajax({
+        url:host + 'integral/checksign/',
+        data:{
+            uid:uid
+        },
+        type:'GET', //GET
+        async:true,    //或false,是否异步
+        timeout:5000,    //超时时间
+        dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+        success:function(data,textStatus,jqXHR){
+        	console.log(data);
+        	if(data.integral_code==1){
+        		$('.signup-box').html('已签到').addClass('signed');
+        	}else{
+        		$('.signup-box').html('签到').removeClass('signed');
+        	}
+        }
+    })
+$('.signup-box').on('click', function () {
+	signup = 0;
+	$.ajax({
+        url:host + 'integral/sign/',
+        data:{
+            uid:uid,
+            is_json:1
+        },
+        type:'GET', //GET
+        async:true,    //或false,是否异步
+        timeout:5000,    //超时时间
+        dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+        success:function(data,textStatus,jqXHR){
+        	if(data.data.integral_code==1){
+        		var msg = data.data.msg;
+        		layer.msg(msg);
+        		$(this).html('已签到').addClass('signed');
+        	}
+        }
+    })
+})
+</script>

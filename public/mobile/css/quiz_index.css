@@ -1,0 +1,395 @@
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  font-weight: 400;
+}
+
+html, body {
+  background-color: #f7f7f7;
+}
+/*填空题填写开始*/
+.question-box {
+  background-color: #fff;
+  padding: 20px;
+  border-bottom: 1px solid #eeeeee;
+}
+.question-box .question-info {
+  font-size: 14px;
+  color: #00B6F2;
+}
+.question-box .qustion-id {
+  margin-right: 4px;
+}
+
+.question-box img{
+	display: block;
+}
+.question-box .question-desc {
+  font-size: 20px;
+  line-height: 30px;
+  font-family: "PingFang SC semibold";
+  color: #292b33;
+}
+
+.option-box {
+  padding: 20px 20px 50px;
+ /* background-color: #f7f7f7;*/
+ border-top: 1px solid rgba(149, 152, 154, ,05);
+}
+.option-box .option img{
+  display: block;
+  max-width: 100%;
+}
+.option-box ul.answer_box {
+  width: 100%;
+ display: block;
+  
+}
+ul.answer_box li{
+	display: flex;
+	margin-bottom: 20px;
+}
+ul.answer_box li span{
+	display: inline-block;
+	width:20px ;
+	height: 40px;
+	line-height:40px ;
+	margin-right:10px ;
+	font-size: 16px;
+	color: rgba(41, 43, 51, .4)
+}
+ul.answer_box li .input{
+	box-sizing: border-box;
+	padding: 10px;
+	width: 100%; 
+	min-height: 40px;
+	line-height: 40px;
+	background: #ffffff;
+	border: 1px solid #EEEEEE;
+	border-radius: 3px;
+	font-size: 16px;
+	color: #292B33;
+	line-height: 20px;
+	margin-bottom: 0;
+	overflow: hidden;
+}
+ul.answer_box li .input:focus{
+	border: 1px solid #00B6F2;
+}
+
+/*填空题填写结束*/
+
+p {
+	    margin: 0;
+}
+.question-box {
+  background-color: #fff;
+  padding: 20px;
+}
+.question-box .question-info {
+  font-size: 14px;
+  color: #00B6F2;
+}
+.question-box .qustion-id {
+  margin-right: 4px;
+}
+.question-box .question-desc {
+  font-size: 20px;
+  line-height: 30px;
+  font-family: Segoe UI Semibold;
+  color: #292b33;
+}
+
+
+.option-box {
+  padding: 20px 20px 50px;
+  background-color: #f7f7f7;
+}
+.option-box .option {
+  width: 100%;
+  padding: 10px 0;
+  display: flex;
+  align-items: baseline;
+}
+
+.option-box .option .option-letter {
+  font-size: 12px;
+  text-align: center;
+  color: #aaa;
+  font-family: lato, DroidSans, DroidSansFallback, Arial, "Microsoft YaHei";
+  border: 1px solid #ddd;
+  margin-right: 15px;
+}
+.option-box .option.selected .option-letter {
+  background-color: #00B6F2;
+  color: #fff;
+  border: 0;
+}
+.option-box .option.single .option-letter {
+  flex: 0 0 20px;
+  height: 20px;
+  line-height: 18px;
+  border-radius: 50%;
+  margin-top: 4px;
+}
+.option-box .option.single.selected .option-letter {
+  line-height: 20px;
+}
+.option-box .option.single p{
+   line-height: 31px;
+}
+.option-box .option.multi .option-letter {
+  flex: 0 0 18px;
+  height: 18px;
+  line-height: 16px;
+  border-radius: 4px;
+}
+.option-box .option.multi.selected .option-letter {
+  line-height: 18px;
+}
+.option-box .option-desc {
+	font-size: 16px;
+	line-height: 27px;
+	color: rgba(41, 43, 51, .8);
+}
+
+
+.menu {
+  width: 100%;
+  height: 50px;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.08);
+  position: fixed;
+  bottom: 0;
+}
+.menu > div {
+  width: 30%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.menu > .limit > .left-arrow {
+  background-image: url("../img/icon/arrow_left_gray.png");
+}
+.menu > .limit > .right-arrow {
+  background-image: url("../img/icon/arrow_right_gray.png");
+}
+.menu > .limit > p {
+  color: rgba(41, 43, 51, 0.2);
+      margin: 0;
+}
+.menu .prev-btn {
+  padding-right: 16px;
+}
+.menu .next-btn {
+  padding-left: 16px;
+}
+.menu .submit-btn {
+  display: block;
+  width: 72px;
+  height: 32px;
+  font-size: 14px;
+  line-height: 32px;
+  text-align: center;
+  color: #fff;
+  background-color: #00B6F2;
+  border-radius: 16px;
+  margin-right: 15px;
+  display: none;
+}
+.menu .submit-btn.limit {
+  background-color: rgba(41, 43, 51, 0.2);
+}
+.menu .icon {
+  display: block;
+  width: 24px;
+  height: 24px;
+}
+.menu .left-arrow {
+  background: url("../img/icon/arrow_left_blue.png") no-repeat center/cover;
+}
+.menu .right-arrow {
+  background: url("../img/icon/arrow_right_blue.png") no-repeat center/cover;
+}
+.menu p {
+  font-size: 14px;
+  line-height: 20px;
+  color: #00B6F2;
+}
+
+.dialog {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+.dialog.flex-box {
+  display: flex;
+}
+.dialog .confirm-box {
+  width: 280px;
+  height: 181px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 19px 38px rgba(0, 0, 0, 0.5);
+  display: none;
+}
+.dialog .confirm-box h4 {
+  font-size: 20px;
+  line-height: 28px;
+  color: #292B33;
+  margin-bottom: 5px;
+}
+.dialog .confirm-box p {
+  height: 48px;
+  font-size: 16px;
+  line-height: 24px;
+  color: rgba(41, 43, 51, 0.6);
+  margin-bottom: 40px;
+}
+.dialog .confirm-box .operation {
+  display: flex;
+  justify-content: flex-end;
+}
+.dialog .confirm-box .operation i {
+  font-size: 14px;
+  color: #00B6F2;
+}
+.dialog .confirm-box > .unfinished {
+  display: none;
+}
+.dialog .confirm-box .finished .cancel {
+  margin-right: 30px;
+}
+.dialog .result-box {
+  width: 280px;
+  padding: 35px 30px 24px;
+  background-color: #fff;
+  border-radius: 2px;
+}
+.dialog .result-box > img {
+  width: 72px;
+  height: 72px;
+  display: block;
+  margin: 0 auto 25px;
+}
+.dialog .result-box .duration {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 11px;
+}
+.dialog .result-box .duration > span {
+  font-size: 14px;
+  color: #292B33;
+}
+.dialog .result-box .duration > .time {
+  font-family: "PingFang SC semibold";
+}
+.dialog .result-box .result-list {
+  padding: 8px 5px;
+  border-top: 1px solid rgba(41, 43, 51, 0.1);
+  border-bottom: 1px solid rgba(41, 43, 51, 0.1);
+  margin-bottom: 24px;
+}
+.dialog .result-box .result-list > div {
+  display: flex;
+}
+.dialog .result-box .result-list p {
+  flex: 0 0 25%;
+  font-size: 12px;
+  line-height: 20px;
+  text-align: center;
+  color: rgba(41, 43, 51, 0.6);
+}
+.dialog .result-box .result-list .result-list-title > p {
+  font-family: "PingFang SC Medium";
+  color: rgba(41, 43, 51, 0.8);
+}
+.dialog .result-box .btn {
+  display: block;
+  width: 220px;
+  height: 36px;
+  font-size: 14px;
+  line-height: 34px;
+  text-align: center;
+  color: #fff;
+  background-color: #00B6F2;
+  border: 1px solid #00B6F2;
+  border-radius: 25px;
+}
+
+.blur {
+  filter: blur(30px);
+}
+.dialog_prv {
+  position: fixed;
+  z-index: 103;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  align-items: center;
+  justify-content: center;
+  display: none;
+}
+.dialog_prv.flex-box {
+  display: flex;
+}
+.dialog_prv > .alert-box {
+  width: 280px;
+  height: 160px;
+  background-color: #fff;
+  padding: 22px 20px;
+  border-radius: 2px;
+}
+.dialog_prv > .alert-box > h4 {
+  font-size: 18px;
+  line-height: 24px;
+  color: rgba(41, 43, 51, 0.8);
+  margin-bottom: 6px;
+}
+.dialog_prv > .alert-box > p {
+  height: 48px;
+  font-size: 16px;
+  line-height: 24px;
+  color: rgba(41, 43, 51, 0.6);
+  margin-bottom: 20px;
+}
+.dialog_prv > .alert-box > .operation {
+  text-align: right;
+}
+.dialog_prv > .alert-box > .operation > i, .dialog > .alert-box > .operation a {
+  font-size: 14px;
+  line-height: 19px;
+  color: #24B6F7;
+  margin-left: 30px;
+}
+/*# sourceMappingURL=quiz_index-v73.css.map */
+
+.wrapper > .empty-state {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.wrapper > .empty-state > img {
+  display: block;
+  margin: 0 auto;
+  width: 72px;
+  height: 72px;
+}
+.wrapper > .empty-state > p {
+  font-size: 14px;
+  line-height: 23px;
+  color: rgba(41, 43, 51, 0.3);
+}

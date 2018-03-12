@@ -1,0 +1,147 @@
+@charset "UTF-8";
+
+.course-main {
+  margin-top: 110px;
+  display: flex;
+}
+.course-main .left-nav {
+  width: 220px;
+  margin-right: 20px;
+}
+.course-main .left-nav .nav-item:not(:last-child) {
+  margin-bottom: 11px;
+}
+.course-main .left-nav .nav-item:first-child {
+  margin-bottom: 16px;
+}
+.course-main .left-nav .nav-item .catelv1-caption {
+  cursor: default;
+  width: 100%;
+  height: 30px;
+  line-height: 30px;
+  padding-left: 17px;
+  position: relative;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.course-main .left-nav .nav-item .catelv1-caption.slide::after {
+  content: '';
+  display: block;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  right: 4px;
+  top: 4px;
+  background: url("../images/zhedie_down@2x24.png") no-repeat center/cover;
+}
+.course-main .left-nav .nav-item .catelv1-caption.slide.expanded::after {
+  background-image: url("../images/zhedie_up@2x24.png");
+}
+.course-main .left-nav .nav-item .catelv1-caption:hover {
+  color: #00b6f2;
+}
+.course-main .left-nav .nav-item .catelv1-caption.active {
+  background-color: rgba(0, 182, 242, 0.1);
+  border-radius: 15px;
+  color: #00b6f2;
+}
+.course-main .left-nav .nav-item .catelv2-list {
+  display: none;
+  margin-top: 15px;
+  padding-left: 30px;
+}
+.course-main .left-nav .nav-item .catelv2-list .catelv2-item {
+  cursor: default;
+  font-size: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: rgba(41, 43, 51, 0.6);
+}
+.course-main .left-nav .nav-item .catelv2-list .catelv2-item:hover {
+  color: #00b6f2;
+}
+.course-main .left-nav .nav-item .catelv2-list .catelv2-item:not(:last-child) {
+  margin-bottom: 11px;
+}
+.course-main .left-nav .nav-item .catelv2-list .catelv2-item.active {
+  color: #00b6f2;
+}
+.course-main .right-content {
+  flex: 1;
+}
+.course-main .right-content .content-box .course-showbox-item {
+  width: 220px;
+  display: inline-block;
+  margin-right: 16px;
+/*   overflow: hidden; */
+}
+.course-main .right-content .content-box .course-showbox-item {
+  margin-bottom: 30px;
+}
+.course-main .right-content .content-box .course-showbox-item:nth-child(4n) {
+  margin-right: 0;
+}
+.course-main .right-content .content-box .course-showbox-item:hover .course-img {
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.05);
+}
+.course-main .right-content .content-box .course-showbox-item:hover .course-caption {
+  color: #00B6F2;
+}
+.course-main .right-content .content-box .course-showbox-item .course-img {
+  display: block;
+  width: 220px;
+  height: 124px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+.course-main .right-content .content-box .course-showbox-item .course-caption {
+  color: #292b33;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  line-height: 19px;
+}
+.course-main .right-content .content-box .course-showbox-item .course-desc {
+  color: rgba(41, 43, 51, 0.4);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 12px;
+  line-height: 20px;
+}
+.course-main .right-content .content-box .course-showbox-item .course-price {
+  font-size: 12px;
+  line-height: 16px;
+  color: #00B6F2;
+}
+
+.footer {
+  margin: 40px 0 20px;
+}
+.footer p {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+/*# sourceMappingURL=course-v72.css.map */
+/*分页*/
+.jqpage {
+	margin:30px 0 0 0;text-align: center;
+}
+
+.jqpagediv{
+	display: inline-block;
+}
+.jqpage .page_div3 .paging{
+	font-size: 13px; font-family: 微软雅黑; font-weight: 400; height: 32px;
+}
+.nocourse {
+	margin:100px 0 0 0;text-align: center;font-size:12px;color: rgba(41,43,51,.3);
+}
+.nocourse img{
+	height: 72px;width:72px;
+}
+

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>设置</title>
+		<link rel="stylesheet" href="/public/mobile/css/mui.min.css" />
+		<link rel="stylesheet" href="/public/mobile/css/globla.css" />
+		<link rel="stylesheet" href="/public/mobile/css/member.css" />
+		<style>
+		.kefudivbuy-dialog{
+			height: 35%;
+			border-radius: 14px;
+			background-color:white;padding: 5%;align-content: center;
+				    margin-top: 50%;
+				    margin-left: 15%;
+				    width: 70%;
+				    
+		}
+		.kefudivbuy-dialog h1{color:black;font-size:14px;text-align: center;}
+		.kefudivbuy-dialog img{width: 50%;margin-top: 2%;}
+		.kefudivbuy-dialog p{color:black;font-size:8px;    float: right;
+		    width: 100%;
+		    margin-top: 0px;
+		    margin-bottom: 0px;
+		    text-align: left;
+		    line-height: 14px;
+		    padding-left: 20%;}
+		.kefubuy-dialog {
+			position: fixed;
+			z-index: 10000;
+			top: 50%;
+			left: 50%;
+			display: none;
+			overflow: hidden;
+			width: 270px;
+			-webkit-transition-property: -webkit-transform, opacity;
+			transition-property: transform, opacity;
+			-webkit-transform: translate3d(-50%, -50%, 0) scale(1.185);
+			transform: translate3d(-50%, -50%, 0) scale(1.185);
+			text-align: center;
+			opacity: 0;
+			color: #000;
+			border-radius: 3px;
+			background: #fff;
+			padding: 20px;
+			border: 1px solid #95989a;
+		}
+		
+		</style>
+	</head>
+	{include file="common/share" /}
+	<body>
+		<div class="mui-row help-list">
+			<ul class="font-color-8">
+				<li>
+					<span>关于我们</span>
+					<i class="mui-icon mui-icon-forward"></i>
+				</li>
+				<li class="wechat">
+					<span>关注微信</span>
+					<i class="icon-wx"></i>
+				</li>
+				<li class="bindphone">
+					<span>绑定手机</span>
+					<i></i>
+				</li>
+			</ul>
+		</div>
+		<div class="buy-dialog" id="BuyDialog" id="kefu" style="width: 100%;height: 100%;opacity: 0.9;background-color: black;display: none;">
+		  <div class="kefudivbuy-dialog">
+				<h1 style="">关注微信</h1>
+				<img id="wxid"  src=''>
+				<p style="">
+				长按识别二维码添加好友
+				</p>
+			</div>
+			<div class="buy-dialog-btn" style="width: 50%;margin-left: 5%;margin-top: 10%;">
+				<a class="Cancel"><img src="/public/image/wxalertcancel.png" style="width:20%;"></a>
+			</div>
+		</div>
+
+		<script type="text/javascript" src="/public/mobile/js/jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="/public/mobile/js/mui.min.js"></script>
+		<script type="text/javascript" src="/public/mobile/js/globla.js"></script>
+		<script>
+            var uid = '{$userinfo.uid}';
+            $.ajax({
+                url:host + 'user/center/index',
+                data:{
+                    uid:uid
+                },
+                type:'GET', //GET
+                async:true,    //或false,是否异步
+                timeout:5000,    //超时时间
+                dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+                success:function(data,textStatus,jqXHR){
+                    if(data.code==1){
+                        mobile = data.data.user.mobile;
+                        wechat = data.data.config.wechat;
+                       // $('#wxid').html(wechat);
+                       if(wechat==''){
+                    	   wechat ='/public/gzadmin/images/kong-miniprom.png';
+                       }
+                        $('#wxid').attr('src',wechat);
+                        if(mobile){
+                            $('.mui-row li').find('i').eq(2).html(data.data.user.mobile);
+                        }else{
+                            $('.mui-row li').find('i').eq(2).addClass('mui-icon-forward');
+                            $('.mui-row li').find('i').eq(2).addClass('mui-icon');
+						}
+                        //console.log(data);
+                    }
+                }
+            });
+            mui('.help-list').on('tap','.bindphone', function(){
+                var mobile = $(this).find('i').html();
+                if(!mobile){
+                    url = "{:url('wechat/member/bindphone')}";
+                    window.location.href = url;
+				}
+
+            });
+            mui('.help-list').on('tap','.wechat',function () {
+                //$("#BuyDialog").addClass("buy-dialog-in");
+                //$("#BuyDialog").addClass("buy-dialog-in");
+                $("#BuyDialog").show();
+                $(".mui-popup-backdrop").show();
+            });
+            mui('.buy-dialog-btn').on('tap','.Cancel',function () {
+                //$("#BuyDialog").removeClass("buy-dialog-in");
+                $("#BuyDialog").hide();
+                $(".mui-popup-backdrop").hide();
+            });
+		</script>
+	</body>
+
+</html>

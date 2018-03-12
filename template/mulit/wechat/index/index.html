@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>首页</title>
+		<link rel="stylesheet" href="/public/mobile/css/mui.min.css" />
+		<link rel="stylesheet" href="/public/mobile/css/global.css" />
+		<link rel="stylesheet" href="/public/mobile/css/index-v75.css" />
+	</head>
+	<script src="/public/mobile/js/jquery-3.2.1.min.js"></script>
+	<script src="/public/mobile/js/mui.min.js"></script>
+	<script src="/public/mobile/js/globla.js"></script>
+	{include file="common/share" /}
+<body>
+{if $is_follow}
+{if $userinfo.subscribe == 0}
+<div class="concern_top">
+	<i class="top_close"></i>
+	<p class="fs-14">关注公众号便于下次学习</p>
+	<div class="concern btn fs-14">关注</div>
+</div>
+{/if}
+{/if}
+<!--下拉刷新容器-->
+{volist name="list" id="data"}
+  {if $data.type==1}
+  <div class="slider-box">
+    <div class="mui-slider banner-slider">
+      <div class="mui-slider-group mui-slider-loop">
+      <!--支持循环，需要重复图片节点-->
+        <div class="mui-slider-item mui-slider-item-duplicate">
+          <a href="{$data.banner2_link}">
+            <img src="{$data.banner2}" />
+          </a>
+        </div>
+        {volist name="$data.content" id="content"}
+        <div class="mui-slider-item">
+          <a href="{$content.link}"><img src="{$content.img}"/></a>
+        </div>
+        {/volist}
+      <!--支持循环，需要重复图片节点-->
+        <div class="mui-slider-item mui-slider-item-duplicate">
+          <a href="{$data.banner1_link}"><img src="{$data.banner1}"/></a>
+        </div>
+      </div>
+      <div class="mui-slider-indicator">
+        {volist name="$data.content" id="content"}
+        <div class="mui-indicator"></div>
+        {/volist}
+      </div>
+    </div>
+  </div>
+  {/if}
+  {if $data.type==2}
+  <div class="search-box">
+    <a class="search" href="">
+        <span class="search-icon">
+      </span>
+      <span class="search-text">搜索...</span>
+    </a>
+  </div>
+  {/if}
+  {if $data.type==3}
+  <div class="list-content {if $data.content.title} withtitle {/if}">
+    <div class="course-box" {if !$data.content.title} style="display:none;" {/if}>
+      {if $data.content.title}
+      <p>{$data.content.title}</p>
+      {if $data.content.show_more}<a href="/wechat/index/show_more" class="show_more">更多</a>{/if}
+      {/if}
+    </div>
+    <ul class="mui-table-view course-list">
+    {volist name="$data.content.course_list" id="course"}
+      <li data-id='{$course.cid}'>
+        <div class="teacher-box">
+          <img src="{$course.face}" />
+        </div>
+        <div class="course-content">
+          <h1>{$course.title}</h1>
+          <span>{$course.desc}</span>
+          <i>{$course.study_count}人在学</i>
+        </div>
+        <span class="course-price">
+        {if $course.price==0.00}免费{else}￥{$course.price}{/if}
+        </span>
+      </li>
+      {/volist}
+    </ul>
+  </div>
+  {/if}
+  {if $data.type==4}
+  <div class="text-box">{$data.content}</div>
+  {/if}
+  {if $data.type==5}
+  <div class="border-box">
+    {if $data.content=='1'}
+    <div class="border-1px"></div>
+    {else}
+    <div class="border-12px"></div>
+    {/if}
+  </div>
+  {/if}
+      
+  {if $data.type==6}
+    {if $data.package_list}
+      <div class="bundle-box {if $data.content.title} withtitle {/if}">
+        <div class="bundle-title-box" {if !$data.content.title} style="display:none;" {/if}>
+        {if $data.content.title}
+          <p>{$data.content.title}</p>
+          {if $data.content.show_more}<a href="/wechat/bundlelist" class="show_more">更多</a>{/if}
+        {/if}
+        </div>
+        <ul class="bundle-list">
+        {volist name="$data.package_list" id="package_list"}
+          <li data-id="{$package_list.id}">
+            <div class="bundle-showbox">
+            <div class="img1">
+                <img src="{$package_list.banner}" alt="banner2">
+              </div>
+            {volist name="$package_list.banner_color" id="banner"}
+              <div class="img2" style="background:{$banner}">
+              </div>
+            {/volist}
+            </div>
+            <div class="bundle-content">
+              <h1>{$package_list.title}</h1>
+              <i class="bundle-price">¥{$package_list.price}</i>
+            </div>
+          </li>
+        {/volist}
+        </ul>
+      </div>
+    {/if}
+  {/if}
+{/volist}
+<div class="grazy-copyright hastab">
+  <i>格子匠 GRAZY.CN 技术支持</i>
+</div>
+{include file="common/menu" /}
+{if $is_customer}
+<div class="img-customerService"></div>
+<div class="contact-dialog" id="kefu">
+  <div class="dialog-main">
+		<h1>联系客服</h1>
+		<img src="{$qrcode}">
+		<p>
+		1.长按识别二维码进入公众号;
+		<br>
+		2.回复“客服”联系客服咨询;
+		</p>
+	</div>
+	<div class="dialog-close">
+    <i class="dialog-closebtn "></i>
+  </div>
+</div>
+{/if}
+
+<div class="contact-dialog" id="guanzhu">
+	<div class="dialog-main">
+		<h1>关注公众号</h1>
+		<img src="{$qrcode}">
+		<p class="fc-6">长按识别二维码进入公众号</p>
+	</div>
+	<div class="dialog-close">
+    <i class="dialog-closebtn"></i>
+	</div>
+</div>
+
+
+
+
+<script type="text/javascript">
+var page = 1;
+var size = 10;
+var uid = '{$userinfo.uid}';
+var isbind = '{$userinfo.is_bind}';
+var gallery = mui('.mui-slider');
+gallery.slider({
+  interval:5000//自动轮播周期，若为0则不自动播放，默认为0；
+});
+mui('.course-list').on('tap', 'li', function() {
+	var cid = $(this).attr('data-id');
+	url = "{:url('wechat/course/detail')}";
+	window.location.href = url + '?cid=' + cid + '&version=' + '{$version}';
+});
+mui('.search-box').on('tap', '.search', function() {
+	url = "{:url('wechat/search/index')}";
+	window.location.href = url;
+});
+mui('.course-box').on('tap', '.show_more', function() {
+	url = "{:url('wechat/index/show_more')}";
+	window.location.href = url;
+});
+
+//点击跳转
+$(".bundle-list").on("click","li",function(){
+	var id = $(this).attr('data-id');
+	var url = '/wechat/bundlelist/detail?id='+id;
+	window.location.href=url;
+})
+//客服
+$('.img-customerService').click(function(){
+	$('#kefu').css('display', 'flex');
+});
+$('.concern_top').on('click','.concern',function () {
+    $('#guanzhu').css('display', 'flex');
+});
+$('.contact-dialog').on('click', '.dialog-closebtn', function(){
+    $(this).parents('.contact-dialog').hide();
+});
+$('.mui-slider-indicator').find('.mui-indicator').eq(0).addClass('mui-active');
+// //积分文本提示框
+// 	document.getElementById("toastBtn").addEventListener('tap',function(){
+// 		mui.toast('<div class="toast-content"><p>'+'新用户注册'+'</p>'+'<p>+'+'10'+'积分</p></div>');
+// 	});
+</script>
+<script src="/public/mobile/js/bindmobile.js"></script>

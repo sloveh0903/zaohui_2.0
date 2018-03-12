@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>{$name}</title>
+		<link rel="stylesheet" href="/public/mobile/css/mui.min.css" />
+		<link rel="stylesheet" href="/public/mobile/css/globla.css" />
+		<link rel="stylesheet" href="/public/mobile/css/quiz_index.css" />
+	</head>
+	<style>
+	p img{
+	max-width: 100%;
+    display: block;
+	}
+	</style>
+	<body>
+    <div class="wrapper">
+      
+    </div>
+    <footer class="menu">
+      
+    </footer>
+    <div class="dialog">
+      <div class="confirm-box">
+        <div class="unfinished">
+          <h4>未完成</h4>
+          <p>请完成所有题目后提交</p>
+          <div class="operation">
+            <i class="confirm">确定</i>
+          </div>
+        </div>
+        <div class="finished">
+          <h4>您已做完所有题目</h4>
+          <p>是否确认提交？</p>
+          <div class="operation">
+            <i class="cancel">再检查一下</i>
+            <i class="confirm">提交</i>
+          </div>
+        </div>
+      </div>
+      <div class="result-box">
+        <img src="/public/mobile/img/icon/medal.png" alt="medal">
+        <div class="duration">
+          <span>这次练习您共花了</span>
+          <span class="time"></span>
+        </div>
+        <div class="result-list">
+          
+        </div>
+        <a href="{:url('/wechat/testitembank/testitem_userlist')}?bank_id={$bank_id}" class="btn">查看解析</a>
+      </div>
+    </div>
+    <div class="dialog_prv">
+	      <div class="alert-box">
+	        <h4>提示</h4>
+	        <p>请先购买该课程</p>
+	        <div class="operation">
+	          <i class="confirm" data-id='{$course_id}'>去购买</i>
+	        </div>
+	      </div>
+    </div> 
+	<script src="/public/mobile/js/jquery-3.2.1.min.js"></script>
+    <script src="/public/mobile/js/mui.min.js"></script>
+    <script type="text/javascript" src="/public/mobile/js/globla.js"></script>
+    <script>
+        var uid = '{$userinfo.uid}';
+        var isbind = '{$userinfo.is_bind}';
+    $(function () {
+      var bank_id = {$bank_id};
+
+      var audit = {$audit};
+      var prvi_id ={$prvi_id};
+      var bank_answer_key = 'quiz_data_' + bank_id;
+      var storage = window.localStorage;   
+      var currentPage = 1;
+      var firstPage = 1;
+      var lastPage = {$lastPage};
+      var testitem_arr = {$testitem_lists_json};
+      var this_time = {$this_time};
+      mui(".dialog_prv").on('tap', '.confirm', function (event) {
+  			var course_id = $(this).attr('data-id');
+  			if(course_id !=0){
+  				var url = "{:url('/wechat/course/detail')}?cid="+course_id;
+  			}else{
+  				var url = "{:url('/wechat/index/index')}";
+  			}
+			window.location.href=url;
+		});
+      if(audit==0){
+    	  $('.content-wrapper, .menuNav').addClass('blur');
+    	  $('.dialog_prv').addClass('flex-box');
+    	  $('.dialog_prv p').html('题库已下架');
+			$('.dialog_prv .confirm').html('确定');
+			return;
+      }
+      
+      if(prvi_id==0){
+			$('.content-wrapper, .menuNav').addClass('blur');
+			$('.dialog_prv').addClass('flex-box');
+			return;
+		}
+      
+		if(testitem_arr.length==0){
+			var myhtml = '<div class="empty-state">'+'<img src="/public/mobile/img/icon/folder.png" alt="empty">'+'<p>小编正在努力上传习题..</p>'+'</div>';
+			$('.wrapper').html(myhtml);	
+			$('.menu').css('display','none');
+		}else{
+		    	  get_wrapper_html(0);
+		}
+      //获取本地存储本题库json数据
+      function get_storage_answer() {
+    	  var data = storage.getItem(bank_answer_key);
+    	  if(data) {
+   			  return JSON.parse(data);
+    	  } else {
+    		  return {};
+    	  }
+      }
+      //清除本地存储本题库json数据
+      function clear_storage_answer() {
+    	  storage.removeItem(bank_answer_key);
+      }
+      //获取对应id本地json数据
+      function get_storage_answer_by_item_id(item_id) {
+    	  var answer = get_storage_answer();
+    	  var answer_by_item_id = answer[item_id];
+    	  if(answer_by_item_id) {
+    		  return answer_by_item_id;
+    	  } else {
+    		  return '';
+    	  }
+      }
+      //更新存储数据
+      function update_answer_by_item_id(item_id, new_answer) {
+    	  var answer = get_storage_answer();
+    	  answer[item_id] = new_answer;
+    	  answerString = JSON.stringify(answer);
+    	  storage.setItem(bank_answer_key, answerString);
+      }
+      //更新 当前存储数据
+      function update_current_answer() {
+    	  var id = $('.question-id').data('id');
+          var answerStr = '';
+          [...$('.selected > i')].forEach(function (value, index, array) {
+            answerStr += value.innerText;
+          });
+          answerStr = answerStr.toUpperCase();
+          update_answer_by_item_id('' + id, answerStr);
+      }
+      //保存填空题存储数据
+      function update_tian_current_answer(dataArr) {
+    	  var id = $('.question-id').data('id');
+          var answerStr = dataArr;
+          update_answer_by_item_id('' + id, answerStr);
+      }
+       //试题切换
+      function get_wrapper_html(i){
+    	   var myhtml = '';
+    	  var menuhtml = '';
+    	  $('.wrapper').html(myhtml);
+    	  $('.menu').html(menuhtml);
+    	  var num = parseInt(i) +1;
+    	  var mypage =  parseInt(i);
+    	  var answer = get_storage_answer_by_item_id('' + i);
+    	  myhtml = '<div class="question-box">'+
+			'<p class="question-info"> <span class="question-id" data-id='+i+'>'+
+			num+'</span>'+'<span class="question-type">'+testitem_arr[i]['type_name']+
+			'</span></p>'+
+			'<p class="question-desc">'+testitem_arr[i]['name']+'</p>'+
+		'</div>';
+		myhtml =myhtml+ '<div class="option-box">';
+		var option_arr = testitem_arr[i]['option_arr'];
+		if(testitem_arr[i]['type']==4){
+			myhtml =myhtml+ '<ul class="answer_box">';
+			var myj = 1;
+			if(answer.length>0){
+				for(var answeri=0;answeri<answer.length;answeri++){
+					 myhtml =  myhtml +'<li><span class="ans_num">'+ myj+'</span><input type="text" value="'+answer[answeri]+'"></li>';
+ 
+					//myhtml =  myhtml +'<li><span class="ans_num">'+ myj+'</span><div class="input" style="-webkit-user-select: auto"  contenteditable="true">'+answer[answeri]+'</div></li>';
+					 myj =  myj+1;
+	 			}
+			}else{
+				for(var key in option_arr){
+					 myhtml =  myhtml +'<li><span class="ans_num">'+ myj+'</span><input type="text" value=""></li>';
+					 //myhtml =  myhtml +'<li><span class="ans_num">'+ myj+'</span><div class="input" style="-webkit-user-select: auto" contenteditable="true"></div></li>';
+					 myj =  myj+1;
+	 			}
+			}
+  			myhtml =  myhtml +'</ul>';
+		}else{
+			for(var key in option_arr){
+				key = key.toUpperCase();
+				var selected_mark = '';
+				if(answer.indexOf(key) != -1) {
+					selected_mark = ' selected';
+				}
+				 myhtml =  myhtml +'<div class="option '+testitem_arr[i]['type_class']+ selected_mark + ' ">'+
+					'<i class="option-letter letter-a">'+
+					key+
+				    '</i>'+
+				    '<p class="option-desc">'+option_arr[key]+'</p></div>';
+			}
+		}
+		
+		myhtml =  myhtml +'</div>'+ '</div>';
+		$('.wrapper').html(myhtml);
+		
+		var prenum = mypage-1;
+		var nextnum = mypage+1;
+		menuhtml = menuhtml+'<div class="prev-btn limit btn" data-id="'+prenum+'">'+'<i class="icon left-arrow"></i><p>上一题</p></div>'+
+		'<div class="next-btn limit btn" data-id="'+nextnum+'"><p>下一题</p><i class="icon right-arrow"></i></div><i class="submit-btn limit">提交</i>';
+		$('.menu').html(menuhtml);
+		currentPage  = nextnum;
+		isLastPage();
+		isTouchable();
+		if(currentPage !=1){
+            $('.prev-btn').removeClass('limit');
+		}
+		if(testitem_arr[i]['type']==4){
+			isTouchable_input();
+		}
+		
+      }
+    //光标离开input框时判断是否提交或上下题
+	  //$(".input").blur(function(){
+// 	   $('.wrapper').on('blur', '.input', function () {
+// 		  isTouchable_input()
+// 	  })
+		$('.wrapper').on('input', 'input', function () {
+		  isTouchable_input()
+	  })
+	  //wrapper
+      //单选及判断点击选中
+      $('.wrapper').on('click', '.single', function () {
+        $(this)
+        .addClass('selected')
+        .siblings('.single')
+        .removeClass('selected');
+        update_current_answer();
+      });
+      
+      //多选点击选中及取消
+      $('.wrapper').on('click', '.multi', function () {
+        $(this).toggleClass('selected');
+        update_current_answer();
+      });
+
+      // 选中选项才能跳转
+      $('.wrapper').on('click', '.option-box', function () {
+          if($('input').val()==undefined){
+        	  isTouchable();
+          }
+    	  
+      })
+
+      // 点击上一题或下一题存储数据到本地
+      $('.menu').on('click', '.btn', function () {
+        if ($(this).hasClass('limit')) {
+          return false;
+        }
+      });
+
+      // 点击高亮的提交按钮展示弹窗
+      $('.menu').on('click', '.submit-btn', function () {
+        if ($(this).hasClass('limit')) {
+          return false;
+        }
+        $('.menu, .wrapper').addClass('blur');
+        $('.dialog')
+        .toggleClass('flex-box')
+        .children('.confirm-box')
+        .show()
+        .siblings().
+        hide();
+      });
+
+      // 点击"再检查一下"，取消弹窗及模糊
+      $('.finished .cancel').on('click', function () {
+        $('.dialog')
+        .removeClass('flex-box')
+        .siblings('.wrapper, .menu')
+        .removeClass('blur');
+      })
+    
+      // 点击"提交", 发送请求并弹出结果框
+      $('.finished .confirm').on('click', function () {
+    	  var answer = get_storage_answer();
+    	  console.log(answer);
+    	  $.post(host+"testitemuser/add",{uid:uid,answer:answer,bank_id:bank_id},function(res){
+    		  var minutes = 0;
+    		  var seconds = 0;
+    		  if(res.code == 1){
+				 var testdata = res.data;
+				 var usertime = res.nowtime-this_time;
+				 seconds_per_minute = 60;
+				 minutes = Math.floor(usertime / seconds_per_minute) ;
+				 seconds = usertime - minutes * seconds_per_minute;
+				  var userhtml = minutes+'分'+seconds+'秒';
+				  var resulthtml = '<div class="result-list-title"><p>题型</p><p>数量</p><p>正确</p><p>错误</p></div>';
+				  for(var i =0;i<testdata.length;i++){
+					  //console.log(testdata[i]);
+					  if(testdata[i].count>0){
+						  var resulthtml = resulthtml+
+		  					'<div class="result-list-item">'+
+		  						'<p class="type">'+testdata[i].name+'</p>'+
+		  						'<p class="count">'+testdata[i].count+'</p>'+
+		  						'<p class="right">'+testdata[i].right+'</p>'+
+		  						'<p class="wrong">'+testdata[i].wrong+'</p>'+
+		  						'</div>';
+					  } 
+				  }
+				  $('.result-list').html(resulthtml);
+				  $('.time').html(userhtml);
+				  clear_storage_answer();
+    		  }
+    	  });
+        $('.dialog .result-box').show().siblings().hide();
+      })
+
+      $('.menu').on('click', '.next-btn',function () {
+    	  if ($(this).hasClass('limit')) {
+              return false;
+            }
+    	   var id = $(this).attr('data-id');
+    	   get_wrapper_html(id);
+         });
+       $('.menu').on('click', '.prev-btn', function () {
+    	   if ($(this).hasClass('limit')) {
+    	          return false;
+    	        }
+    	   var id = $(this).attr('data-id');
+    	   get_wrapper_html(id);
+         });
+       
+      
+       function isTouchable() {
+           if ($('.selected').length >= 1) {
+             if (currentPage != firstPage) {
+               $('.prev-btn').removeClass('limit');
+             }
+             if (currentPage != lastPage) {
+               $('.next-btn').removeClass('limit');
+             } else {
+               $('.submit-btn').removeClass('limit');
+             }
+           } else {
+             $('.prev-btn, .next-btn').addClass('limit');
+           }
+         }
+       function isTouchable_input() {
+         	var obj=$("input")     
+         	var dataArr = [];
+         	$(obj).each(function(index,element){      		
+         		var txt=element.value;
+         		if(txt==""){
+         			isEmpty=true;	
+         		}else{
+         			dataArr[index]=txt;
+         			isEmpty=false;
+         		}
+         	})
+           	if (!isEmpty){
+            	   update_tian_current_answer(dataArr);
+        	          if (currentPage != firstPage){
+        	            $('.prev-btn').removeClass('limit');
+        	          }
+        	          if (currentPage != lastPage) {
+        	            $('.next-btn').removeClass('limit');
+        	          } else {
+        	        	$('.submit-btn').removeClass('limit');
+        	          }
+        	        } else {
+						 if (currentPage != firstPage){
+	        	            $('.prev-btn').removeClass('limit');
+	        	          }
+        	        	$('.next-btn,.submit-btn').addClass('limit');
+        	        }
+           		
+        
+         }
+
+      function isLastPage () {
+        if (currentPage == lastPage) {
+          $('.submit-btn').show().siblings('.next-btn').hide();
+        } else {
+          $('.next-btn').show().siblings('.submit-btn').hide();
+        }
+      }
+
+
+    })
+    
+    </script>
+    <script src="/public/mobile/js/bindmobile.js"></script>
+	</body>
+</html>

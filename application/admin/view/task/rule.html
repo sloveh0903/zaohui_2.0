@@ -1,0 +1,171 @@
+{include file="common/header" /}
+<body>
+<div class="article_manage mCustomScrollbar">
+    <div class="course_right_top">
+        <div class="tag_group">
+            <p class="title">任务大厅</p>
+            <img src="/public/gzadmin/images/head@2x30.png" alt="自身头像">
+            <i class="phoneNum">15812348289</i>
+            <div class="clearfix"></div>
+        </div>
+        <div class="system_guanli_div">
+            <ul class="system_guanli_ul">
+                <li><a href="javascript:void(0)" class="goto" data-src='{:url("task/index")}'>基础设置</a></li>
+                <li><a href="javascript:void(0)" class="active goto" data-src='{:url("task/rule")}'>拉新奖励</a></li>
+                <li><a href="javascript:void(0)" class="goto" data-src='{:url("task/coinList")}'>奖励发放</a></li>
+            </ul>
+        </div>
+        <div class="success_tip displayNone">已完成</div>
+    </div>
+
+    <div class="add_article_main ">
+        <div class="articleInfo_fill">
+            <div class="s_menu">
+                <ul>
+                    <li class="active goto" data-src='{:url("task/rule")}'>规则设置</li>
+                    <li class="goto" data-src='{:url("task/userList")}'>拉新数据</li>
+                    <li class="goto" data-src='{:url("task/rewardList")}'>奖励数据</li>
+                </ul>
+            </div>
+
+            <div style="background: rgba(0,182,242,.1);padding:20px;line-height: 24px;color:#8282D9;font-size: 14px;">
+                <font style="font-weight: bold">使用说明</font><br>
+                设置完成后，用户将在 我的 / 任务中心 中看到这个任务<br>
+                <br>
+                <font style="font-weight: bold">用户使用简介：</font><br>
+                领取海报<br>
+                分享海报，邀请好友关注公众号<br>
+                获得奖励
+            </div>
+            {if empty($rule)}
+            <section class="panel panel-padding">
+                <form id="form1" class="layui-form layui-form-pane" action="{:url('rule')}">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">人数</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="nums" required jq-verify="required|number" jq-error="请输入人数" placeholder="请输入人数" autocomplete="off" class="layui-input ">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">奖励虚拟币</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="coin" required jq-verify="required|number" jq-error="请输入奖励虚拟币" placeholder="请输入奖励虚拟币" autocomplete="off" class="layui-input ">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">奖励规则</label>
+                        <div class="layui-input-block">
+                            <input type="radio" name="is_repeat" title="单次奖励" value="0" checked />
+                            <input type="radio" name="is_repeat" title="重复奖励" value="1"  />
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">海报文案</label>
+                        <div class="layui-input-block">
+                            <textarea name="content" placeholder="请输入海报文案" jq-verify="required" jq-error="请输入海报文案" class="layui-textarea"></textarea>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <span class="layui-btn" data-src='{:url("article/add_article")}'>预览</span>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">推送内容</label>
+                        <div class="layui-input-block">
+                            <textarea name="push_content" jq-verify="content" class="layui-textarea"></textarea>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <button class="layui-btn" jq-submit lay-filter="submit">立即提交</button>
+                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                        </div>
+                    </div>
+                </form>
+            </section>
+            {else}
+            <section class="panel panel-padding">
+                <form id="form1" class="layui-form layui-form-pane" action="{:url('rule')}">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">人数</label>
+                        <div class="layui-input-inline">
+                            <input type="hidden" name="id" value="{$rule.id}">
+                            <input type="text" name="nums" value="{$rule.nums}" required jq-verify="required|number" jq-error="请输入人数" placeholder="请输入人数" autocomplete="off" class="layui-input ">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">奖励虚拟币</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="coin" value="{$rule.coin}" required jq-verify="required|number" jq-error="请输入奖励虚拟币" placeholder="请输入奖励虚拟币" autocomplete="off" class="layui-input ">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">奖励规则</label>
+                        <div class="layui-input-block">
+                            <input type="radio" name="is_repeat" title="单次奖励" value="0" {if condition="$rule['is_repeat'] eq '0'"}checked{/if} />
+                            <input type="radio" name="is_repeat" title="重复奖励" value="1" {if condition="$rule['is_repeat'] eq '1'"}checked{/if}  />
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">海报文案</label>
+                        <div class="layui-input-block">
+                            <textarea name="content" id="wenan" placeholder="请输入海报文案" jq-verify="required" jq-error="请输入海报文案" class="layui-textarea">{$rule.content}</textarea>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <i class="add_chapter modal-catch" data-params='{"content": ".edit-subcat","act":"{:url("rule")}","title":"海报预览","data":"","type":"1","area":"378px,600px"}'>预览</i>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">推送内容</label>
+                        <div class="layui-input-block">
+                            <textarea name="push_content" jq-verify="content" class="layui-textarea">{$rule.push_content}</textarea>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <button class="layui-btn" jq-submit lay-filter="submit">立即提交</button>
+                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                        </div>
+                    </div>
+                </form>
+            </section>
+            {/if}
+        </div>
+    </div>
+</div>
+<div class="edit-subcat" style="display: none">
+    <style>
+        .aa{display:flex;justify-content: center;}
+        #ts_content{flex-basis:auto;margin-top: 185px;}
+    </style>
+    <div class="aa" style="background: url(/public/gzadmin/images/haibao.png) center center/248px 441px no-repeat;background-size: cover;height: 441px;">
+        <div id="ts_content" style="font-size: 10px;color: #666666;">
+        </div>
+    </div>
+</div>
+{include file="common/version" /}
+<script>
+    $(function(){
+        $('.add_chapter').on('click',function () {
+            var content = $('#wenan').val();
+            $('#ts_content').html(content.replace(/\n/g,'<br/>'));
+            console.log(content);
+        });
+        console.log($(''))
+    });
+    layui.use('course');
+
+    layui.use(['form'], function(){
+        var forms=layui.form();
+
+        forms.on('.pushcontent', function(data) {
+            console.log(data);
+        });
+    })
+
+</script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+
+/*学习用户详情弹框*/
+.user_data_list{position: fixed;top: 0;left: 0;right: 0;bottom: 0;background: rgba(0,0,0,.4);display: flex;justify-content: center;align-items: center;display: none;z-index:3;}
+.user_data_list .data_list_content{padding: 40px;background: #fff;width: 700px;border-radius: 3px;position: relative;}
+.user_data_list .data_list_content>img{display: block;position: absolute;right: 10px;top: 10px;width: 20px;height: 20px;cursor: pointer;}
+.data_list_content h3{font-weight: normal;font-size: 18px;color: #292B33;text-align:left;margin-bottom: 17px;}
+.data_list_content table{}
+.data_list_content table tr{padding: 0 10px;}
+.data_list_content table th,td{height: 40px;line-height: 40px;}
+.data_list_content table th{font-size: 14px;color: rgba(41, 43, 51, 1);}
+.data_list_content table td{font-size: 14px;color: rgba(41, 43, 51, .8);overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
+.data_list_content table .data_nikname{display: flex;;align-items: center;width: 90px;overflow: hidden;}
+.data_list_content table th{justify-content: flex-start;}
+.data_list_content table .data_nikname img{display: block;width: 20px;height: 20px;border-radius: 10px;margin-right: 10px;}
+.data_list_content table .data_nikname p{font-size: 14px;color: rgba(41, 43, 51, .8);width: ;}
+.data_list_content table .data_phone{width: 100px;}
+.data_list_content table .data_sex{width: 30px;}
+.data_list_content table .data_subPrice{width: 70px;}
+.data_list_content table .data_lastTime{width: 140px;}
+
+.page_bt{display: flex;justify-content: space-between;}
+.page_bt p{font-size: 14px;color: rgba(0,0,0,.4);}
+.video_count>.page_bt{padding:0 20px;}

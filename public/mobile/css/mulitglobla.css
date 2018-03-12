@@ -1,0 +1,255 @@
+.bg_fff {background-color: #fff;}
+/* 搜索栏 */
+.search {
+	width: 100%;
+	height: 40px;
+	background: #f5f5f5;
+	display: block;
+	text-align: center;
+	line-height: 40px;
+	color: #292B33;
+  font-size: 14px;
+  box-shadow: 0 1px rgba(0, 0, 0, .1);
+}
+
+.search span {
+	font-size: 20px;
+	color: #666 !important;
+	line-height: 40px;
+}
+
+/*底部tab菜单*/
+.menuNav {
+	display: inline-block;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 50px;
+	z-index: 102;
+	background: #fff;
+	/*border-top: 1px solid #E7E5EA;*/
+}
+
+.menuNav ul li {
+	float: left;
+	width: 20%;
+	height: 50px;
+}
+
+.navcontent {
+	width: 100%;
+	height: 100%;
+	text-align: center;
+}
+
+.navcontent a {
+	float: left;
+	width: 100%;
+	height: 100%;
+	padding-top: 5px;
+}
+
+.navcontent a span {
+	float: left;
+	width: 100%;
+	text-align: center;
+	color: rgba(41,43,51,0.4);
+	font-size: 12px;
+}
+
+.NavActive a span{
+	color: rgba(41,43,51,1);
+}
+
+.navcontent img {
+	width: 24px;
+	height: 24px;
+	display: block;
+	margin: 0 auto;
+}
+
+/* 商标 */
+.grazy_worker {
+  background: #fff;
+  padding: 15px;
+}
+
+.grazy_worker span {
+  font-size:12px;
+  color: hsla(228, 20%, 20%, .2);
+}
+
+/* 分类列表 */
+.content-wrapper {
+  display: flex;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(0, 0, 0, .12);
+}
+
+.content-wrapper .content-left {
+  flex: 0 0 97px;
+  padding: 10px 0;
+  height: 100%;
+  border-right: 1px solid rgba(0, 0, 0, .06);
+  position: relative;
+}
+
+.content-wrapper .content-left .content-left-list {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.content-wrapper .content-left .content-left-item {
+  width: 100%;
+  padding: 10px 0;
+}
+
+.content-wrapper .content-left .content-left-item i {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  padding: 0 15px;
+  width: 100%;
+  font-size: 13px;
+  color: hsla(228, 20%, 20%, .6);
+}
+.content-wrapper .content-left .content-left-item  .focused {
+  color: #00B6F2;
+  position: relative;
+}
+.content-wrapper .content-left .content-left-item  .focused::after {
+  content: '';
+  position: absolute;
+  display: block;
+  width: 2px;
+  height: 100%;
+  right: 0;
+  top: 0;
+  background-color: #00B6F2;
+  z-index: 100;
+}
+.content-wrapper .content-right {
+  flex: 1;
+  padding: 20px 0;
+  overflow: hidden;
+}
+.content-wrapper .content-right > ul {
+  padding-bottom: 20px;
+}
+.content-wrapper .content-right .content-right-item {
+  width: 100%;
+  padding: 0 15px;
+  margin-bottom: 10px;
+}
+.content-wrapper .content-right .content-right-item:last-of-type {
+  margin: 0;
+}
+.content-wrapper .content-right-item .subtitle {
+  width: 100%;
+  height: 17px;
+  font-size: 13px;
+  line-height: 17px;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 1);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin: 0;
+}
+.content-wrapper .content-right-item .course-box {
+  width: 100%;
+  padding: 10px 0;
+  display: flex;
+}
+.content-right-item .course-box .img-box {
+  flex: 0 0 60px;
+  height: 60px;
+  margin-right: 15px;
+}
+.content-right-item .course-box h2 {
+    background: #fff;
+    padding: 15px;font-size: 12px;
+    color: hsla(228, 20%, 20%, .2);    margin: 60px 60px 60px 60px;
+}
+.content-right-item .course-box .img-box img {
+  width: 60px;
+  height: 60px;
+  border-radius: 5px;
+}
+.content-right-item .course-box .desc-box {
+  flex: 1;
+  height: 60px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.course-box .desc-box h4 {
+  font-weight: 400;
+  font-size: 16px;
+  color: hsla(228, 20%, 20%, .8);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.course-box .desc-box .count {
+  font-size: 12px;
+  color: hsla(228, 20%, 20%, .6);
+}
+.course-box .desc-box .price {
+  font-size: 12px;
+  color: #00B6F2;
+}
+.course-box .desc-box .count,
+.course-box .desc-box .price {
+  height: 16px;
+}
+
+.blur {
+  filter: blur(30px);
+}
+.dialog {
+  position: fixed;
+  z-index: 999;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, .6)
+}
+.dialog-box {
+  width: 280px;
+  height: 184px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 5px;
+}
+.dialog-box h4 {
+  font-weight: 400;
+  font-size: 20px;
+  color: hsla(228, 20%, 20%, .8);
+  margin-bottom: 15px;
+}
+.dialog-box p {
+  font-size: 16px;
+  line-height: 24px;
+  color: hsla(228, 20%, 20%, .6);
+  margin-bottom: 30px;
+}
+.dialog-box .operation {
+  text-align: right;
+}
+.dialog-box .operation span {
+  font-size: 14px;
+  color: #00B6F2;
+  margin-right: 30px;
+}
+.dialog-box .operation a {
+  font-size: 14px;
+  color: #00B6F2;
+}

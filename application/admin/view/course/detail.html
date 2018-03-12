@@ -1,0 +1,391 @@
+{include file="common/header" /}
+<style type="text/css">
+  .rise {
+    background: no-repeat;
+    background-size: 20px 20px;
+    vertical-align: text-bottom;
+    position: relative;
+    left: 20px;
+  }
+  .drop {
+    background:no-repeat;
+    background-size: 20px 20px;
+    vertical-align: text-bottom;
+  }
+</style>
+<?php 
+  $tid = input('tid','chapter');
+?>
+<body>
+   <div class="article_manage">
+      <div class="course_right_top">
+         <div class="tag_group">
+            <p>知识管理</p>
+            {include file="common/admin" /}
+            <div class="clearfix"></div>
+         </div>
+         <div class="system_guanli_div">
+            <p class="p_href_wrap"><i class="goto" data-src='{:url("course/index")}'>课程列表</i> / <i class="goto" data-src='{:url("course/detail?id=".$id)}'>课程详情</i></p>
+         </div>
+         <div class="success_tip displayNone">已完成</div>
+      </div>
+      <div class="course_detail_info ">
+         <img src="{$course_data.banner}" alt="封面">
+         <div class="detail_info">
+            <p>{$course_data.title}</p>
+            <p>{$course_data.desc}</p>
+            <ul class="">
+               <li>
+                  <i>视频数量</i>
+                  <i>总课时</i>
+                  <i>课程总收入</i>
+                  <i>学员人数</i>
+                  <!--<i>完成课程学员</i>-->
+               </li>
+               <li>
+                  <i>{$course_data.video_count}</i>
+                  <i>{$course_data.video_length}</i>
+                  <i>￥{$course_data.order_sum}</i>
+                  <i>{$course_data.order_count}人</i>
+                  <!--<i>365人</i>-->
+               </li>
+            </ul>
+         </div>
+         <div class="edit_float">
+			{if condition="$course_data.audit == 1"}
+            <img src="/public/gzadmin/images/blue_switch_on@2x.png"  alt="上架状态"><i class="active" data-status="on">已上架</i>
+			{else}
+			<img src="/public/gzadmin/images/gray_switch_off@2x.png"  alt="上架状态"><i data-status="off">已下架</i>
+			{/if}
+            <p><img src="/public/gzadmin/images/blue_edit@2x20.png"><i class="goto" data-src='{:url("course/edit_course?cid=".$id)}'>编辑</i></p>
+            <p><i class="goto" style="margin-left:20px" data-src='{:url("course/introduce?cid=".$id)}'>pc版介绍</i></p>
+            <p><i class="goto" style="margin-left:20px" data-src='{:url("course/comment?cid=".$id)}'>学员评价</i></p>
+         </div>
+         <div class="clearfix"></div>
+      </div>
+      <div class="course_detail_main" id="chapter">
+         <i class="add_chapter modal-catch" data-params='{"content":".add-subcat","act":"{:url("add_type")}", "title":"添加章节","type":"1","area":"500px,350px"}'>新增章节</i>
+         <ul class="menu_parent_ul" style="margin-bottom: 50px">
+         {volist name="chapter" id="data" key="j"}
+            <li>
+               <div class="menu_parent_div" id="tid_{$data.id}">
+                  <span>{$j}</span><span>{$data.cate_name}</span>
+                  <img class="img_upDown" src="/public/gzadmin/images/black_down@2x24.png" alt="展开">
+                  <p>
+                     {if condition="($data.audit == 0)" }
+                     <label><img src="/public/gzadmin/images/gray_switch_off@2x.png"  alt="上架状态"><i data-status="off" data-id="{$data.id}">已下架</i></label>
+                     {else}
+                     <label><img src="/public/gzadmin/images/blue_switch_on@2x.png"  alt="上架状态"><i class="active" data-status="on" data-id="{$data.id}">已上架</i></label>
+                     {/if}
+                     <label><img src="/public/gzadmin/images/blue_addNew@2x24.png" alt="新增" style="width: 24px;height: 24px"><i class="goto" data-src='{:url("video/add_video",["tid"=>$data.id])}'>新增视频</i></label>
+                     <label>
+                        <img src="/public/gzadmin/images/edit_pointer@2x20.png">  
+                     </label>
+
+                     <img src="/public/gzadmin/images/arrowUp@2x20.png" style="width: 20px;height: 20px;position: relative;left: 0px" class="rise ajax" data-params='{"url": "{:url("course/moveTypeUpDown")}","data":"id={$data.id}&updown=up"}'>
+                      <img src="/public/gzadmin/images/arrowDown@2x20.png" style="width: 20px;height: 20px;" class="drop ajax" data-params='{"url": "{:url("course/moveTypeUpDown")}","data":"id={$data.id}&updown=down"}'>
+                  </p>
+                  <div class="operate_div">
+                     <i class="modal-catch" data-name="edit_chapter" data-params='{"content": ".edit-subcat","act":"{:url("edit_type")}","title":"编辑{$data.edit_cate_name}","data":"id={$data.id}&audit={$data.audit}&cate_name={$data.edit_cate_name}","type":"1"}'>编辑</i>
+
+                     <i class="ajax" data-name="delete_chapter" data-params='{"url": "{:url("course/del_type")}","data":"id={$data.id}","confirm":"true"}'>删除</i>
+                  </div>
+                  <div class="clearfix"></div>
+               </div>
+               <ul class="menu_child_ul"  {if condition="($tid == $data.id)" } style="display: block;" {/if}>
+                  {volist name="data.video_list" id="video" key="k"}
+                  <li>
+                     <div class="menu_child_div" >
+                        <span>{$j}.{$k}</span><span>{$video.title}</span><span></span>
+                        <p style="width: 160px">
+                          <img src="/public/gzadmin/images/arrowUp@2x20.png" class="rise ajax" data-params='{"url": "{:url("course/moveVideoUpDown")}","data":"id={$video.id}&updown=up"}'>
+                          <img src="/public/gzadmin/images/arrowDown@2x20.png" class="drop ajax" data-params='{"url": "{:url("course/moveVideoUpDown")}","data":"id={$video.id}&updown=down"}'>
+                           <img src="/public/gzadmin/images/black_edit@2x20.png" class="goto" data-src='{:url("video/edit_video",["id"=>$video.id])}' alt="编辑">
+                           <img src="/public/gzadmin/images/black_delete@2x20.png" class="ajax" data-params='{"url": "{:url("video/del_video")}","data":"id={$video.id}","confirm":"true"}' alt="删除">
+                        </p>
+                        <div class="clearfix"></div>
+                     </div> 
+                  </li>
+                  {/volist}
+               </ul>
+            </li>
+         {/volist}
+         </ul>
+      </div>
+   </div>
+   <div class="add-video" style="display: none">
+    <form id="form1" class="layui-form layui-form-pane" method="POST" action='{:url("video/add_video")}'>
+        <div class="layui-form-item">
+            <label class="layui-form-label">标题*</label>
+            <input type="hidden" name="cid" value="{$id}">
+            <input type="hidden" name="video_info">
+            <input type="hidden" name="tid" >
+            <div class="layui-input-block">
+                <input type="text" name="title" required jq-verify="required" jq-error="请输入标题" placeholder="请输入标题" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">视频vid*</label>
+            <div class="layui-input-block">
+                <input type="text" name="vid" required jq-verify="required" jq-error="请输入视频vid" placeholder="请输入视频vid" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">是否试看*</label>
+            <div class="layui-input-block">
+                <input type="radio" name="free" title="否" value="0" checked />
+                <input type="radio" name="free" title="是" value="1" />
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">视频描述</label>
+            <div class="layui-input-block">
+                <textarea name="desc" class="layui-textarea" placeholder="请输入视频描述"></textarea>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" jq-submit jq-filter="submit">确定</button>
+            </div>
+        </div>
+    </form>
+   </div>
+   <div class="edit-video" style="display: none">
+    <form id="form2" class="layui-form layui-form-pane" method="POST" action='{:url("video/edit_video")}'>
+        <div class="layui-form-item">
+            <label class="layui-form-label">标题*</label>
+            <input type="hidden" name="cid" value="{$id}">
+             <input type="hidden" name="id" >
+            <input type="hidden" name="tid" >
+            <div class="layui-input-block">
+                <input type="text" name="title" required jq-verify="required" jq-error="请输入标题" placeholder="请输入标题" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">视频vid*</label>
+            <div class="layui-input-block">
+                <input type="text" name="vid" required jq-verify="required" jq-error="请输入视频vid" placeholder="请输入视频vid" autocomplete="off" class="layui-input">
+
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">是否试看*</label>
+            <div class="layui-input-block">
+                <input type="radio" name="free" title="否" value="0" checked />
+                <input type="radio" name="free" title="是" value="1" />
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">视频描述</label>
+            <div class="layui-input-block">
+                <textarea name="desc" class="layui-textarea" value="" placeholder="请输入视频描述"></textarea>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" jq-submit jq-filter="submit">确定</button>
+            </div>
+        </div>
+    </form>
+   </div>
+   <div class="add-subcat">
+    <form id="form3" class="layui-form layui-form-pane" method="POST" action='{:url("course/add_type")}'>
+        <div class="layui-form-item">
+            <label class="layui-form-label">章节名称</label>
+            <input type="hidden" name="cid" value="{$id}">
+            <input type="hidden" name="orderby" value="{$endorderby}">
+            <div class="layui-input-block">
+                <input type="text" name="cate_name" required jq-verify="required" jq-error="请输入名称" placeholder="章节名称" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">上架状态</label>
+            <div class="layui-input-inline">
+                <input type="radio" name="audit" title="上架" value="1" checked />
+                <input type="radio" name="audit" title="下架" value="0" />
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" jq-submit jq-filter="submit">确定</button>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="edit-subcat" style="display: none">
+    <form id="form4" class="layui-form layui-form-pane" method="POST" action='{:url("course/edit_type")}'>
+        <div class="layui-form-item">
+            <label class="layui-form-label">章节名称</label>
+            <div class="layui-input-block">
+                <input type="hidden" name="cid" value="{$id}">
+                <input type="text" name="cate_name" required jq-verify="required" jq-error="请输入分类名称" placeholder="章节名称" autocomplete="off" class="layui-input ">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">上架状态</label>
+            <div class="layui-input-inline">
+                <input type="radio" name="audit" title="上架" value="1"  />
+                <input type="radio" name="audit" title="下架" value="0" />
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" jq-submit jq-filter="submit">确定</button>
+            </div>
+        </div>
+    </form>
+</div>
+   {include file="common/version" /}
+    <script>
+    layui.define(['jquery', 'modal','jqform','ajax'], function(exports) {
+    var $ = layui.jquery,
+        form = layui.jqform,
+        modal = layui.modal;
+       
+        //初始化
+        modal.init();
+      form.set({
+        "blur": true,
+        "form": "#form1"
+      }).init();
+    exports('main', {});
+});
+    //layui.use('course');
+	</script>
+<script>
+
+   var id = "{$id}";
+  /* $(function(){
+      initHeight();
+      initPhoneNum();
+      $(".mCustomScrollbar").mCustomScrollbar({
+         theme:"minimal-dark"
+      })
+   })*/
+   //浏览器改变触发该事件
+   $(window).resize(function(){
+      initHeight();
+   })
+   var myParent = window.parent.document;  //父级窗口
+   //初始化高度article_manage = window,美化滚动条
+   function initHeight(){
+      var window_height =  $(window).height();
+      $(".article_manage").outerHeight(window_height);
+   }
+   //目录 展开收起
+   $(".menu_parent_ul ").on("click","li .menu_parent_div img.img_upDown",function(e){
+      // e.stopPropagation(); //阻止时间冒泡
+      $(".menu_child_ul").slideUp();
+      $(".menu_parent_div img.img_upDown").attr("src","/public/gzadmin/images/black_down@2x24.png");
+      var menu_child_ul = $(this).closest(".menu_parent_div").next(".menu_child_ul");
+      var cssDisplay  = menu_child_ul.css("display");
+      if("none" == cssDisplay ){
+         menu_child_ul.slideDown();
+         $(this).attr("src","/public/gzadmin/images/black_up@2x24.png");
+      }else{
+         menu_child_ul.slideUp();
+      }
+   })
+
+   //三点弹出操作面板
+   $(".menu_parent_ul").on("click","li .menu_parent_div label:nth-of-type(3) img",function(){
+      var operate_div = $(this).closest("p").next(".operate_div")
+      var display = operate_div.css("display");
+      if("none"==display ){
+         $(".operate_div").hide();
+         operate_div.show();
+      }else{
+         operate_div.hide();
+      }
+   })
+
+   //课程 上架下架
+   $(".edit_float").on("click","img:nth-of-type(1)",function(){
+      var url = "{:url('course/course_state')}";
+      var status =  $(this).next("i").attr("data-status");
+      var str1 = "已下架"; 
+      var str2="已上架"; 
+      var img1 ="/public/gzadmin/images/gray_switch_off@2x.png";  var img2 ="/public/gzadmin/images/blue_switch_on@2x.png";
+      if("on" == status ){
+         $(this).attr({"src":img1});
+         $(this).next("i").removeClass("active").html(str1);
+         $(this).next("i").attr('data-status','off');
+         $.post(url,{id:id,switch:0},function(result){
+         });  
+      }else{
+         $(this).attr({"src":img2,"data-status":"on"});
+         $(this).next("i").attr('data-status','on');
+         $(this).next("i").addClass("active").html(str2);
+         $.post(url,{id:id,switch:1},function(result){ 
+         }); 
+      }
+   })
+
+   //章节 上架/下架
+   $(".menu_parent_ul").on("click","li .menu_parent_div label:nth-of-type(1)>img",function(){
+      var url = "{:url('course/chapter_state')}";
+      var status =  $(this).next("i").attr("data-status");
+      var id = $(this).next("i").attr("data-id");
+      var str1 = "已下架"; var str2="已上架"; 
+      var img1 ="/public/gzadmin/images/gray_switch_off@2x.png";  var img2 ="/public/gzadmin/images/blue_switch_on@2x.png";
+      if("on" == status ){
+         $.post(url,{id:id,switch:0},function(result){ 
+         });
+         $(this).attr("src",img1);
+         $(this).next("i").attr("data-status","off");
+         $(this).next("i").removeClass("active").html(str1);     
+      }else{
+         $.post(url,{id:id,switch:1},function(result){ 
+         });
+         $(this).attr("src",img2);
+         $(this).next("i").attr("data-status","on");
+         $(this).next("i").addClass("active").html(str2);
+      }
+   })
+   $(document).bind("click",function(e){
+      var tg  = $(e.target);
+      var str = ".menu_parent_ul li .menu_parent_div label:nth-of-type(3) img";
+      var thisParent = tg.closest(str)  ;
+      if(  !thisParent.is(str) ){
+         $(".operate_div").hide();
+      }
+   })
+   //链接编辑课程
+   /*$(".course_detail_info").on("click",".edit_float p",function(){
+      var url = "{:url('course/edit_course')}?cid="+id;
+      $("#iframe",myParent).attr("src",url)
+   })*/
+
+   //获取相应属性改变iframe的src
+   $(".p_href_wrap i").click(function(){
+      var src = $(this).attr("data-src");
+      //在子页面获取父页面的dom元素 iframe
+      var iframe  = myParent.getElementById("iframe");
+      switch(src){
+         //课程列表
+         case "course_list":
+            iframe.src = "course_list.html";
+            break;          
+      }
+   })
+
+  //锚点定位
+  var tid = '{$tid}';
+  naver(tid);
+  function naver(tid){
+    if(tid == 'chapter'){
+      tid = 'chapter';
+    }else{
+      tid = 'tid_'+tid;
+    }
+    var obj = document.getElementById(tid);
+    var oPos = obj.offsetTop;
+    return window.scrollTo(0, oPos-36);
+  }
+</script> 
+</body>
+</html>

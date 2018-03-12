@@ -1,0 +1,485 @@
+@charset "UTF-8";
+
+
+/*轮播开始*/
+
+.banner {
+	margin: 108px auto 40px;
+  width: 1180px;
+  height: 336px;
+  border-radius: 5px;
+  box-shadow: 0 3px 6px rgba(0,0,0,.05);
+  display: flex;
+  justify-content:space-between;
+}
+	/*单分类*/
+.banner.banner_dan{
+	height: 413px;
+}
+.banner.banner_dan ul.banner_img li{
+	border-bottom-left-radius: 5px;
+  border-top-left-radius: 5px;	
+}
+.banner.banner_dan ul.banner_img li img{
+	width: 1180px;
+}
+ /*多分类*/
+.banner .banner-nav {
+  flex: 0 0 220px;
+  height: 336px;
+  background-color: rgba(255, 255, 255, 1);
+  border: 1px solid rgba(0,0,0,.05);
+  border-bottom-left-radius: 5px;
+  border-top-left-radius: 5px;
+  cursor: pointer;
+ /* display: none;*/
+}
+.banner .banner-nav .banner-nav-list {
+  height: 100%;
+  width: 100%;
+  display: block;
+}
+.banner .banner-nav .banner-nav-list .banner-nav-item {
+  width: 100%;
+  height: 56px;
+  padding: 17px 5px 17px 20px;
+  display: flex;
+  position: relative;
+  cursor: default;
+}
+.banner .banner-nav .banner-nav-list .banner-nav-item p {
+  width: 180px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  -webkit-touch-callout: none;
+  /* iOS Safari */
+  -webkit-user-select: none;
+  /* Chrome/Safari/Opera */
+  -khtml-user-select: none;
+  /* Konqueror */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* Internet Explorer/Edge */
+  user-select: none;
+                   /* Non-prefixed version, currently
+not supported by any browser */
+}
+.banner .banner-nav .banner-nav-list .banner-nav-item .arrow-right {
+  display: block;
+  width: 20px;
+  height: 20px;
+  background: url("../images/arrow-right.png") no-repeat center/cover;
+}
+.banner .banner-nav .banner-nav-list .banner-nav-item > a {
+  display: block;
+  width: 100%;
+}
+.banner .banner-nav .banner-nav-list .banner-nav-item > a:hover {
+  color: #FFF;
+}
+.banner .banner-nav .banner-nav-list .banner-nav-item:nth-child(6):hover {
+  color: #00b6f2;
+}
+.banner .banner-nav .banner-nav-list .banner-nav-item:nth-child(6) > a:hover {
+  color: #00b6f2;
+}
+.banner .banner-nav .banner-nav-list .banner-nav-item:not(:nth-child(6)):hover {
+  background-color: #00b6f2;
+  color: #FFF;
+}
+.banner .banner-nav .banner-nav-list .banner-nav-item:not(:nth-child(6)):hover > a {
+  background-color: #00b6f2;
+  color: #FFF;
+}
+.banner .banner-nav .banner-nav-list .banner-nav-item:not(:last-child):hover .arrow-right {
+  background: url("../images/arrow-right2.png") no-repeat center/cover;
+}
+
+.banner-navlist-lv2 {
+  width: 220px;
+  padding: 24px;
+  background-color: #FAFAFA;
+  box-shadow: 0 5px 30px rgba(0, 0, 0, 0.1);
+  position: absolute;
+  top: 0;
+  left: 220px;
+  z-index: 2;
+  display: none;
+}
+.banner-navlist-lv2 .banner-navitem-lv2 {
+  width: 100%;
+  height: 20px;
+  font-size: 13px;
+  line-height: 20px;
+}
+.banner-navlist-lv2 .banner-navitem-lv2 a {
+  display: block;
+  color: rgba(41, 43, 51, 0.6);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.banner-navlist-lv2 .banner-navitem-lv2 a:hover {
+  color: #00b6f2;
+}
+.banner-navlist-lv2 .banner-navitem-lv2:not(:last-of-type) {
+  margin-bottom: 13px;
+}
+
+/*banner轮播盒子*/
+.banner_center{
+	width: 100%;
+	height: 100%;
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: flex-end;
+}
+	/*大图*/
+ul.banner_img{
+	width: 100%;
+  height: 100%;
+  
+ }
+ul.banner_img li{
+	width: 100%;
+	height: 100%;
+	border-bottom-right-radius: 5px;
+  border-top-right-radius: 5px;	
+	cursor: pointer;
+	position: absolute;
+	opacity: 0;
+	-webkit-transition:opacity .5s ease-in-out;	
+		 -moz-transition:opacity .5s ease-in-out;	
+		   -o-transition:opacity .5s ease-in-out;	
+				  transition:opacity .5s ease-in-out; 
+}
+ul.banner_img li a{
+	display: block;
+}
+ul.banner_img li a img{
+	display: block;
+	width: 960px;
+}
+ul.banner_img li:hover{
+	cursor: pointer;
+}
+ul.banner_img li.focus{
+	display: list-item;
+	opacity: 1;
+	filter: alpha(opacity=1);
+  	z-index: 1;
+}
+	
+	/*小圆点*/
+ol.ol_box{
+	position: absolute;
+	z-index: 2;
+	width:80px;
+	height: 30px;
+	margin: 0;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+ol.ol_box>li{	
+	height: 30px;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+}
+ol.ol_box li span{
+	display: block;
+	width: 10px;
+	margin: 0 5px;
+	height: 10px;
+	border-radius: 5px;
+	background: rgba(0,0,0,.15);
+}
+ol.ol_box li:hover{
+	cursor: pointer;
+}
+ol.ol_box li.cur span{
+	background: #fff;
+}
+	/*左右箭头*/
+.banner_arrow{
+	width: 50px;
+	height: 50px;
+	background: rgba(0,0,0,.1);
+	border-radius: 5px;
+	position: absolute;
+	align-self: center;
+	cursor: pointer;
+	display:flex;
+	justify-content: center;
+	align-items: center;
+}
+.arrow_l{
+	left: 5px;	
+}
+.arrow_r{
+	right: 5px;
+}
+.banner_arrow img{
+	display: block;
+}
+/*轮播结束*/
+
+.course-showbox {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  margin-bottom: 40px;
+}
+.course-showbox .course-showbox-top {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+.course-showbox .course-showbox-top h2 {
+  color: #292b33;
+  font-size: 20px;
+}
+.course-showbox .course-showbox-top a {
+  color: rgba(41, 43, 51, 0.6);
+  font-size: 14px;
+  line-height: 29px;
+}
+.course-showbox .course-showbox-list {
+  width: 100%;
+  max-height: 413px;
+  margin-bottom: 40px;
+}
+.course-showbox .course-showbox-list .course-showbox-item {
+  width: 220px;
+  display: inline-block;
+  margin-right: 16px;
+  overflow: hidden;
+}
+.course-showbox .course-showbox-list .course-showbox-item:nth-child(-n+5) {
+  margin-bottom: 30px;
+}
+.course-showbox .course-showbox-list .course-showbox-item:nth-child(5n) {
+  margin-right: 0;
+}
+.course-showbox .course-showbox-list .course-showbox-item:hover .course-img {
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.05);
+}
+.course-showbox .course-showbox-list .course-showbox-item:hover .course-caption {
+  color: #00B6F2;
+}
+.course-showbox .course-showbox-list .course-showbox-item .course-img {
+  display: block;
+  width: 220px;
+  height: 124px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+.course-showbox .course-showbox-list .course-showbox-item .course-caption {
+  color: #292b33;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  line-height: 19px;
+}
+.course-showbox .course-showbox-list .course-showbox-item .course-desc {
+  color: rgba(41, 43, 51, 0.4);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 12px;
+  line-height: 16px;
+}
+.course-showbox .course-showbox-list .course-showbox-item .course-price {
+  font-size: 12px;
+  line-height: 16px;
+  color: #00B6F2;
+}
+
+.company-info {
+  padding-bottom: 40px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  overflow: visible;
+}
+.company-info .company-slogan {
+  display: flex;
+}
+.company-info .company-slogan h4 {
+  font-size: 20px;
+  line-height: 32px;
+  color: #292b33;
+  font-weight: 600;
+  margin-right: 15px;
+}
+.company-info .company-slogan p {
+  width: 180px;
+  font-size: 20px;
+  line-height: 32px;
+  color: #292b33;
+  font-weight: lighter;
+}
+.company-info .info-lower .company-desc {
+  width: 590px;
+  font-size: 12px;
+  line-height: 17px;
+  color: rgba(41, 43, 51, 0.6);
+}
+
+.footer {
+  margin: 40px 0 20px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.footer>p {	
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.2);
+  
+}
+.footer .qrcode-area span {
+  display: inline-block;
+  margin-left: 20px;
+  position: relative;
+}
+.footer .qrcode-area span.span_xiaochengxu{
+	margin-left: 10px;
+}
+.footer .qrcode-area span i {
+	display: block;
+	width: 24px;
+	height: 24px;
+  border-radius: 6px;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.05);
+  /*;*/
+  margin: 4px 0 0 0;
+  vertical-align: middle;
+  cursor: pointer;
+
+}
+.footer .qrcode-area span i.wx-img{ 
+	/*width: 20px;*/
+	background: url(../images/weixin_gray.png) no-repeat center/cover;
+}
+.footer .qrcode-area span i.wx-img:hover{
+	background: url(../images/weixin.png) no-repeat center/cover;
+}
+.footer .qrcode-area span i.xcx-img{
+	
+	background: url(../images/xcx_gray.png) no-repeat center/cover;
+}
+.footer .qrcode-area span i.xcx-img:hover{
+	background: url(../images/xcx.png) no-repeat center/cover;
+}
+.footer .qrcode-area span .xiaochengxu_div {
+  width: 240px;
+  height: 262px;
+  padding: 40px;
+  background: #FFFFFF;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 5px 30px rgba(0, 0, 0, 0.05);
+  border-radius: 3px;
+  position: absolute;
+  top: -280px;
+  right: 0;
+  z-index: 1;
+}
+.footer .qrcode-area span .xiaochengxu_div img {
+  width: 160px;
+  height: 160px;
+  vertical-align: middle;
+}
+.footer .qrcode-area span .xiaochengxu_div p {
+  color: #292B33;
+  opacity: .6;
+  text-align: center;
+  margin: 5px 0 0 0;
+}
+.dialog {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+.dialog .bind-box {
+  width: 330px;
+  height: 283px;
+  padding: 30px;
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 3px;
+  box-shadow: 0 5px 30px rgba(0, 0, 0, 0.05);
+  position: relative;
+}
+.dialog .bind-box .cross {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 40px;
+  height: 40px;
+  background: url("../images/delete@2x.png") no-repeat center/cover;
+}
+.dialog .bind-box .bind-caption {
+  font-size: 20px;
+  line-height: 27px;
+  color: #292b33;
+  text-align: center;
+  margin-bottom: 32px;
+}
+.dialog .bind-box .validate-box {
+  margin-bottom: 30px;
+  position: relative;
+}
+.dialog .bind-box .phonenum {
+  display: block;
+  width: 100%;
+  height: 40px;
+  line-height: 38px;
+  padding-left: 15px;
+  border: 1px solid #EEEEEE;
+  border-radius: 3px;
+  margin-bottom: 15px;
+}
+.dialog .bind-box .validatenum {
+  width: 154px;
+  height: 40px;
+  line-height: 38px;
+  padding-left: 15px;
+  border: 1px solid #EEEEEE;
+  border-radius: 3px;
+  margin-right: 9px;
+}
+.dialog .bind-box .getvalidate {
+  width: 101px;
+  height: 40px;
+  font-size: 14px;
+  color: #00B6F2;
+  background-color: #fff;
+  border: 1px solid #00B6F2;
+  border-radius: 3px;
+}
+.dialog .bind-box .error-alert {
+  font-size: 12px;
+  color: #f00;
+  position: absolute;
+  bottom: -21px;
+}
+.dialog .bind-box .confirm {
+  display: block;
+  height: 40px;
+  color: #fff;
+  font-style: normal;
+  line-height: 38px;
+  text-align: center;
+  background-color: #00B6F2;
+  border-radius: 3px;
+}
+
+/*# sourceMappingURL=index-v72.css.map */

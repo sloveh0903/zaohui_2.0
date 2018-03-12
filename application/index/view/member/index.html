@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>个人中心</title>
+    <link rel="stylesheet" type="text/css" href="/public/pc/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/public/pc/css/jquery.mCustomScrollbar.min.css">
+    <link rel="stylesheet" type="text/css" href="/public/pc/css/all.css">
+    <!--[if lt IE 9]> 您的IE浏览器版本太低，请升级浏览器！<![endif]-->
+</head>
+<body class="bg_FAFAFA">
+{include file="common/head" /}
+<div class="personal_study_info mt70">
+    <div class="w980 plr15">
+        <div class="leftFloat personal_head">
+            <img src="{$user.user.face}" alt="{$user.user.nickname}">
+        </div>
+        <div class="leftFloat personal_name">
+            <span class="block opacityWhite">{$user.user.nickname}</span>
+            <span class="block personal_study_time">
+               <i class="mr7">自从{$user.study_begin}学习了{$user.study_day}天</i>
+            </span>
+        </div>
+        <div class=" class_ranking">
+            <span class="class_ranking_num">{$user.ranking}</span>
+            <i>班级排名</i>
+        </div>
+        <div class=" class_ranking  finish_course">
+            <span class="finish_course_num">{$user.study_complete}</span>
+            <i>完成视频</i>
+        </div>
+        <div class=" class_ranking">
+            <span class="integral_num">{$user.user.point}</span>
+            <i>积分</i>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+<div class="personal_study_detail">
+    <div class="w980">
+        <div class="myStudy">
+            {include file="member/memberLeft" /}
+            <div class="leftFloat myStudy_content">
+                <!--我的学习 start-->
+                <div class="myStudy_div my_tab" data-nav="0" data-name="study">
+                    <ul class="tab_nav_ul" id="myTab_study">
+                        <li><a href="#noReadingInfo" data-toggle="tab" class="">我的学习</a></li>
+                    </ul>
+                    <div class="myStudy_group mCustomScrollbar">
+                        {foreach $lists as $studylist}
+                        <div class="myStudy_detail">
+                            <div class="myStudy_time">{$studylist.studydate}</div>
+                            <div class="study_course">
+                                <img src="{$studylist.face}" class="course_teacher_head">
+
+                                <div class="course_teacher_name ">
+                                    <span class="who_course dan">{$studylist.title}</span>
+                              <span class="study_where dan">
+                                 <i>学习至</i>
+                                 <i class="study_course_name">{$studylist.video_title}</i>
+                              </span>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="study_finish">
+                                <span class="progress_text"><i>已学习</i><i class="progress_perc">{$studylist.percent}%</i></span>
+                                <span class="progress_bar"></span>
+                            </div>
+                            <div class="study_state">
+                                <a href="{:url('index/course/course')}?cid={$studylist['cid']}" target="" class="a_continue" style="color:#00B6F2">继续学习</a>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        {/foreach}
+                    </div>
+                </div>
+                <!--我的学习 end-->
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+<div class="personal_study_footer mt20">
+    copyright youren.edu all right reseverd 2017
+</div>
+<script src="/public/pc/js/jquery-1.11.0.min.js"></script>
+<script src="/public/pc/js/bootstrap.min.js"></script>
+<script src="/public/pc/js/jquery.mCustomScrollbar.concat.min.js"></script>
+<script src="/public/pc/js/jqmeter.min.js"></script>
+<script src="/public/pc/js/public_PC.js"></script>
+<script>
+    progressShow();  //异步加载后调用此方法
+    function progressShow() {
+        //进度条显示
+        var strNum = ""; //var strArr =[]
+        $(".progress_perc").each(function (i, dov) {
+            strNum = $(".progress_perc").eq(i).html().replace("%", ""); //去掉百分比符号
+            if (100 == parseInt(strNum)) {
+                $(".a_continue").eq(i).html("再次学习");
+            }
+            if ("" != strNum) {
+                $('.progress_bar').eq(i).jQMeter({
+                    goal: '100',    //进度条的总长度。
+                    raised: "" + strNum + "",  //进度条的当前进度。 str
+                    width: '160px',  //设置进度条的水平宽度。可以设置为百分比或像素值
+                    height: '2px',   //设置进度条的垂直高度。可以设置为百分比或像素值
+                    bgColor: "rgba(0,0,0,.1)",  //进度条的背景颜色。支持hex、rgba和颜色关键字。
+                    barColor: "#00B6F2 ",//进度条的颜色。支持hex、rgba和颜色关键字。
+                    displayTotal: false,  //是否显示进度条完成的百分比数。
+                    animationSpeed: 1000,  //进度条动画时间，单位毫秒
+                    counterSpeed: 1000,   //进度条计数的时间，单位毫秒
+                })
+            }
+        })
+    }
+</script>
+</body>
+</html>

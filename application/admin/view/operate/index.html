@@ -1,0 +1,108 @@
+{include file="common/header" /}
+<style type="text/css">
+  .copy-link-addr{
+    color:#00b6f2;
+    cursor:pointer
+  }
+</style>
+<body>
+<div class="article_manage">
+    <div class="right-side-header clearfix">
+	        <span>公众号配置</span>
+	        {include file="common/admin" /}
+    </div>
+     <div class="right_side_content">
+	   <div class="system_guanli_div">
+	 		<ul class="system_guanli_ul">
+		    	<li><a href="{:url('operate/index')}" class="active" >系统参数</a></li>
+                <li><a href="{:url('customenu/index')}" >自定义菜单</a></li>
+                <li><a href="{:url('operate/subscribereply')}" >关注自动回复</a></li>
+                <li><a href="{:url('wechatkeywords/index')}" >关键字回复</a></li>
+                <li><a href="{:url('wechatkeywords/customer')}" >微信客服设置</a></li>
+				<li><a href="{:url('operate/follow')}">公众号关注引导</a></li>
+           </ul>
+		</div>
+		<div class="success_tip displayNone">已完成</div>
+	    <div class="add_article_main ">
+	    </div>
+	    <div class="add_article_main ">
+	        <div class="articleInfo_fill">
+	            <section class="panel panel-padding">
+	                <form id="form1" class="layui-form layui-form-pane" action="{:url('operate/index')}">
+	                 <label class="layui-form-label">支付授权目录</label>
+	                  <div class="layui-form-item" >
+	                    <span>http://<?php echo $_SERVER['SERVER_NAME'];?>/wechat/ordersubmit/</span>
+	                    <span class="copy-link-addr">复制</span>
+	                  </div>
+	                  <div class="layui-form-item" >
+	                   <span>http://<?php echo $_SERVER['SERVER_NAME'];?>/wechat/rebate/</span>
+	                   <span class="copy-link-addr">复制</span>
+	                  </div>
+	                  <div class="layui-form-item">
+	                    <span>http://<?php echo $_SERVER['SERVER_NAME'];?>/index/course/</span>
+	                    <span class="copy-link-addr">&nbsp;&nbsp;复制</span>
+	                  </div>
+	                  <label class="layui-form-label"></label>
+	                    <div class="layui-form-item">
+	                        <label class="layui-form-label">appid</label>
+	                        <div class="layui-input-block">
+	                            <input type="text" name="wx_public_appid" value="{$config['wx_public_appid']}"  class="layui-input ">
+	                        </div>
+	                    </div>
+	                    <div class="layui-form-item">
+	                        <label class="layui-form-label">secret</label>
+	                        <div class="layui-input-block">
+	                            <input type="text" name="wx_public_secret" value="{$config['wx_public_secret']}" class="layui-input "></textarea>
+	                        </div>
+	                    </div>
+	                    <div class="layui-form-item">
+	                        <label class="layui-form-label">商户id</label>
+	                        <div class="layui-input-block">
+	                            <input type="text" name="wx_public_mchid" value="{$config['wx_public_mchid']}" class="layui-input "></textarea>
+	                        </div>
+	                    </div>
+	                    <div class="layui-form-item">
+	                        <label class="layui-form-label">支付密钥</label>
+	                        <div class="layui-input-block">
+	                            <input type="text" name="wx_public_appkey" value="{$config['wx_public_appkey']}" class="layui-input "></textarea>
+	                        </div>
+	                    </div>
+	                    <div class="layui-form-item">
+	                        <label class="layui-form-label">js域名文件内容</label>
+	                        <div class="layui-input-block">
+	                            <input type="text" name="business_file" value="{$config['business_file']}" class="layui-input "></textarea>
+	                        </div>
+	                    </div>
+	                    <div class="layui-form-item">
+	                        <div class="layui-input-block">
+	                            <button class="layui-btn" jq-submit lay-filter="submit">立即提交</button>
+	                        </div>
+	                    </div>
+	                </form>
+	            </section>
+	        </div>
+	    </div>
+    
+   </div>
+ </div>
+
+    {include file="common/version" /}
+    <script src="/public/gzadmin/js/jquery-1.11.0.min.js"></script>
+    <script src="/public/gzadmin/js/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="/public/gzadmin/js/placeholder.js"></script>
+    <script src="/public/gzadmin/js/public_PC.js"></script>
+    <script src="/public/gzadmin/js/clipboard.min.js"></script>
+    <script>
+        layui.use('course');
+        $('.copy-link-addr').on('click',function () {
+           var link = decodeURI($(this).prev().text());
+           console.log(link);
+           var clipboard = new Clipboard('.copy-link-addr', {
+               text: function() {
+                   return link;
+               }
+           });
+       });
+    </script>     
+</body>
+</html>

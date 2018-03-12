@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>学习平台</title>
+    <link rel="stylesheet" type="text/css" href="/public/pc/css/jquery.mCustomScrollbar.min.css">
+    <link rel="stylesheet" href="/public/pc/css/all.css">
+    <style type="text/css">
+      .free{
+          color: #fff;
+          margin-left: 5px;
+          background: #00B6F2;
+          font-size: 12px;
+          width: 50px;
+          text-align: center;
+          border-radius: 2px;
+          display: inline-block;
+          padding: 2px 0;
+      }
+      .empty_common{
+        text-align: center;padding:100px 0px;
+      }
+      .empty_common p{
+        margin-top:5px;font-size: 14px;opacity:0.4
+      }
+    </style>
+</head>
+<body class="bg_FAFAFA">
+{include file="common/head" /}
+</div>
+<!-- 老师讲课程 start -->
+<div class="teacherSpeakCourseList">
+    <div class="w1180">
+        <ul class="teacherGroupNav">
+            {volist name="course_list" id="data"}
+            <li data-cid="{$data.cid}">
+                <a href="javascript:void(0)" {if condition=" $cid == $data.cid " }class="a_bg_F5F5F5" {/if}>
+                <img src="{$data.face}" alt="老师头像"><i>{$data.title}</i>
+                </a>
+            </li>
+            {/volist}
+        </ul>
+    </div>
+</div>
+<!-- 老师讲课程 end -->
+<!-- 购买提示 start -->
+<div class="courseBuy_tip displayNone">
+    <div class="w1180">
+        <i>提醒&nbsp;&nbsp;播放视频需要购买该视频</i>
+        <img src="/public/pc/images/close_white@2x40.png" alt="关闭" class="img_close">
+        <a href="{:url('course/payment',['cid'=>$cid])}">购买</a>
+        <span class="clearfix"></span>
+    </div>
+</div>
+<!-- 购买提示 end -->
+<div class="study_flatform_main">
+    <div class="w1180">
+        <div class="study_flatform_left">
+            <div class="study_flatform_left_top">
+                <img src="{$course.face}" alt="老师头像" class="head_img40">
+                <span class="who_main_speak">{$course.title}</span>
+               <span class="pingfen">
+                  <i>{$course.score}</i>
+                  <i class="pingfen_star">
+                      <!--    <img src="/public/pc/images/blue_fullStar@2x14.png" alt="评价星星">
+                         <img src="/public/pc/images/blue_fullStar@2x14.png" alt="评价星星">
+                         <img src="/public/pc/images/blue_fullStar@2x14.png" alt="评价星星">
+                         <img src="/public/pc/images/blue_fullStar@2x14.png" alt="评价星星">
+                         <img src="/public/pc/images/blue_halfStar@2x14.png" alt="评价星星"> -->
+                  </i>
+                  {if $course.virtual_amount == 0}
+                  <i class="study-count">{$study_count}人在学</i>
+                  {else}
+                  <i class="study-count">{$course.virtual_amount}人在学</i>
+                  {/if}
+               </span>
+                {if condition="!$buy"}
+                <span class="atOnce_buy buy">立即购买</span>
+                <a href="{:url('course/index',['cid'=>$cid])}"><span class="atOnce_buy course_anwsering">了解课程</span></a>
+                {else}
+                <span class="atOnce_buy">已购买</span>
+                <a href="{:url('ask/index',['cid'=>$cid])}"><span class="atOnce_buy course_anwsering">课程答疑</span></a>
+                {/if}
+                
+
+                <div class="clearfix"></div>
+            </div>
+            <div class="bibei_knowledge ">
+                <ul class="bibei_knowledge_ul">
+                    {volist name="chapter" id="data"}
+                    <li data-id="{$data.id}">
+                        <a href="javascript:void(0)" {if condition=" $tid == $data.id " }class="bg_00B6F2" {/if}>{$data.cate_name}</a>
+                        <!-- <img src="/public/pc/images/new_tip@2x.png" alt="新的提示"  style="display: block;"> -->
+                    </li>
+                    {/volist}
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="video_word_list ">
+                <ul class="video_word_list_ul">
+                    {volist name="video" id="data"}
+                    <!--<li>
+                       <div>
+                          <img src="/public/pc/images/finish@2x24.png" alt="图片切换">
+                          <span><a href="javascript:void(0)">3.现在学微店经营有什么样的机会？</a></span>
+                       </div>
+                       <i>10:29</i>
+                       <img src="/public/pc/images/new_tip@2x.png" alt="新的提示" class="img_new_tip">
+                       <div class="clearfix"></div>
+                    </li>-->
+                    <li data-id="{$data.id}"  data-free="{$data.free}">
+                        <div>
+                            {if condition=" $data.is_look == 0"}
+                            <img src="/public/pc/images/mayPlay@2x.png" alt="图片切换">
+                            {else}
+                            <img src="/public/pc/images/gou@2x40.png" alt="图片切换">
+                            {/if}
+                            <span><a href="javascript:void(0)">{$i}.{$data.title}{if condition=" $data.free == 1"}<em class="free">试看</em> {/if}</a></span>
+                        </div>
+                        <i>{$data.lenght}</i>
+                        <!-- <img src="/public/pc/images/new_tip@2x.png" alt="新的提示" class="img_new_tip" style="display: block;"> -->
+                        <div class="clearfix"></div>
+                    </li>
+                    {/volist}
+                </ul>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="study_flatform_right ">
+           {if condition=" $uid && $speed>30"}
+            <div class="course_manyidu ">
+                <!-- 完成评价蒙板start  -->
+                <div class="comment_finish_alert displayNone">
+                    <span>已评价!</span>
+                </div>
+                <!-- 完成评价蒙板end -->
+                <div class="manyidu_star" id="startone">
+                    <i>课程满意度：</i>
+                  <span class=" opacity40">
+                     <a href="javascript:void(0)"></a>
+                     <a href="javascript:void(0)"></a>
+                     <a href="javascript:void(0)"></a>
+                     <a href="javascript:void(0)"></a>
+                     <a href="javascript:void(0)"></a>
+                  </span>
+
+                    <div class="cover_star"></div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="user_comment">
+                    <textarea name="" placeholder="输入您的评价.." maxlength="100" readonly="true"></textarea>
+                </div>
+                <div class="btn_manyidu_div">
+                    <span><i class="comment_strnum">0</i><i>/100</i></span>
+                    <a href="javascript:void(0)" class="a_manyidu_submit opacity40"></a>
+
+                    <div class="cover_submit"></div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+            {/if}
+
+            <div class="user_comment_list">
+                {if condition="!empty($comment)"}
+                <ul class="user_comment_list_ul">
+                    {volist name="comment" id="data"}
+                    <li>
+                        <img src="{$data.face}" alt="" class="userHead_img30">
+                        <div class="user_comment_detail">
+                            <i class="dan">{$data.nickname}</i>
+                        <span>
+                        {for start="0" end="$data.star"}
+                         <img src="/public/pc/images/gray_fullStar@2x14.png" alt="评级星星">
+                        {/for}
+                        {php} 
+                            $empstar = 5-$data['star'];
+                            if($empstar < 0)  $empstar = 0;
+                        {/php}
+                        {for start="0" end="$empstar"}
+                         <img src="/public/pc/images/gray_emptyStar@2x14.png" alt="评级星星">
+                        {/for}
+                        </span>
+                            <p class="dot-ellipsis dot-height-50">{$data.content}</p>
+                        </div>
+                        <div class="clearfix"></div>
+                    </li>
+                    {/volist}
+                </ul>
+                <div class="textRight">
+                    <span class="more_comment">更多</span>
+                </div>
+                {else}
+                  <div class="empty_common">
+                     <img src="/public/pc/images/empty_common@2x.png" width="50" height="36" alt="还没有用户评价">
+                     <p>还没有用户评价</p>
+                  </div>
+                {/if}
+            </div>
+           <!--  <div class="studentNum"><i>{$study_count}</i><i>学员</i></div>
+            <div class="student_head">
+                {volist name="study_list" id="data"}
+                {if condition=" empty($data.face)"}
+                <img src="/public/pc/images/no_login@2x.png" alt="">
+                {else}
+                <img src="{$data.face}" alt="">
+                {/if}
+                {/volist}
+            </div> -->
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+{include file="common/bottom" /}
+<!-- 评论弹出框分页加滚动条 start -->
+<div class="userComment_alertOutside displayNone">
+    <div class="userComentPager">
+        <div class="userComentPager_top">
+            <i>课程评价</i>
+            <img src="/public/pc/images/delete@2x.png" alt="关闭" class="img_close">
+            <span class="clearfix"></span>
+        </div>
+        <div class="userCommentPager_content mCustomScrollbar">
+            <ul class="user_comment_list_ul userCommentListUl">
+
+
+            </ul>
+        </div>
+        <div class="userComentPager_footer">
+            <!--<ul>
+               <li><a href="javascript:void(0)" ></a></li>
+               <li><a href="javascript:void(0)" >1</a></li>
+               <li><a href="javascript:void(0)"  class="rgba60">2</a></li>
+               <li><a href="javascript:void(0)" >3</a></li>
+               <li><a href="javascript:void(0)" >4</a></li>
+               <li><a href="javascript:void(0)" >5</a></li>
+               <li><a href="javascript:void(0)" >...</a></li>
+               <li><a href="javascript:void(0)" >20</a></li>
+               <li><a href="javascript:void(0)" ></a></li>
+            </ul>-->
+            <div class="tcdPageCode" style="margin-top:-20px"></div>
+        </div>
+    </div>
+</div>
+<!-- 评论弹出框分页加滚动条 end -->
+<script src="/public/pc/js/jquery-1.11.0.min.js"></script>
+<script src="/public/pc/js/jquery.dotdotdot.min.js"></script>
+<script src="/public/pc/js/jquery.mCustomScrollbar.concat.min.js"></script>
+<script src="/public/jqadmin/js/layui/layui.js"></script>
+<script src="/public/pc/js/public_PC.js"></script>
+<script src="/public/pc/js/placeholder.js"></script>
+<script src="/public/pc/js/jquery.page.js"></script>
+<script>
+    var uid = "{$uid}";
+    var cid = "{$cid}";
+    var buy = "{$buy}";
+    var is_pass = "{$is_pass}";
+    var page = 1;
+    var size = 10;
+    var layer;
+    var course_price = "{$course['price']}";
+    layui.use('layer', function(){
+        layer = layui.layer;
+    });
+    $(function () {
+    	//根据课程多少显示的div高度调整
+    	var w1180_height = $('.w1180').height();
+        $('.study_flatform_main').css('padding-top',w1180_height);
+        //评价列表
+        getcomment();
+        function getcomment() {
+            $.get(host + "comment/index?cid=" + cid + "&page=" + page + "&size=" + size, function (result) {
+                if (result.code == 1) {
+                    var comment = result.data.comment;
+                    var inner = "";
+                    for (var i = 0; i < comment.length; i++) {
+                        var star_inner = '';
+                        var star = comment[i].star;
+                        for(var j=0; j<star;j++){
+                            star_inner = star_inner + '<img src="/public/pc/images/gray_fullStar@2x14.png" alt="评级星星">';
+                        }
+                        var empty_star = '';
+                        if(star < 5){
+                            var empty_length = 5-star;
+                            for(var k=0;k<empty_length;k++){
+                                empty_star = empty_star + '<img src="/public/pc/images/gray_emptyStar@2x14.png" alt="评级星星">';
+                            }
+                        }
+                        star_inner = star_inner+empty_star;
+                        inner +=
+                                '<li>' +
+                                '<img src="' + comment[i].face + '" alt="" class="userHead_img30">' +
+                                '<div class="user_comment_detail userCommentDetail">' +
+                                '<i class="dan">' + comment[i].nickname + '</i>' +
+                                '<span>' +star_inner+'</span>' +
+                                '<p class="dot-ellipsis dot-height-50">' + comment[i].content + '</p>' +
+                                '</div>' +
+                                '<div class="clearfix"></div>' +
+                                '</li>';
+                    }
+                    $(".userCommentListUl").html(inner);
+                    //分页
+                    $(".tcdPageCode").createPage({
+                        pageCount: Math.ceil(result.data.comment_count / size),
+                        current: Number(page),
+                        backFn: function (p) {
+                            console.log(p);
+                            page = p;
+                            getcomment();
+                        }
+                    });
+                }
+            });
+        }
+
+        //点击购买
+        $(".buy").click(function () {
+            if (!uid) {
+                $(".weixin_QRcord_alert_outside").show();
+                return false;
+            }
+            var url = "{:url('course/payment')}?cid=" + cid;
+            window.location.href = url;
+        })
+
+        $('.video_word_list_ul li').click(function () {
+            var that = $(this);
+            if (!uid) {
+                $(".weixin_QRcord_alert_outside").show();
+                return false;
+            }
+            
+            var free = $(this).attr('data-free');
+
+
+            //试看不需要密码
+            if(free == 1 && is_pass == 0){
+               if(!buy){
+                  var url = "{:url('course/free')}?id=" + $(this).attr('data-id') + "#" + $(this).attr('data-id');
+               }else{
+                  var url = "{:url('course/video')}?id=" + $(this).attr('data-id')+'#'+$(this).attr('data-id');
+                  if(is_pass == 1){
+                    var url = "{:url('course/free')}?id=" + $(this).attr('data-id') + "#" + $(this).attr('data-id');
+                  }
+               }
+               window.open(url);
+               return;
+            }
+
+          
+            //免费课程
+            if(course_price == 0 && is_pass == 1){
+                if (!buy && free != 1) {
+                   layer.msg("未购买");
+                   return false;
+                }
+                var verification = prompt("请输入课程密码:");
+                if (verification != null){
+                    $.post(host + "course/verificationPass",{uid:uid,cid:cid,pass:verification},function(result){
+                        if(result.code != 1){
+                            alert('密码错误');
+                            return false;
+                        }else{
+                            var url = "{:url('course/free')}?id=" + that.attr('data-id') + "#" + that.attr('data-id');
+                            window.open(url);
+                            return;
+                        }
+                    });
+                }else{
+                    return false;
+                }
+            }
+
+            //试看需要密码非免费课程
+            if(free == 1 && is_pass == 1 && course_price > 0){
+                if(!buy){
+                    var verification = prompt("请输入课程密码:");
+                    if (verification != null){
+                        $.post(host + "course/verificationPass",{uid:uid,cid:cid,pass:verification},function(result){
+                            if(result.code != 1){
+                                alert('密码错误');
+                                return false;
+                            }else{
+                                var url = "{:url('course/free')}?id=" + that.attr('data-id') + "#" + that.attr('data-id');
+                                window.open(url);
+                                return;
+                            }
+                        });
+                    }else{
+                        return false;
+                    }
+                }else{
+                    var url = "{:url('course/video')}?id=" + that.attr('data-id')+'#'+$(this).attr('data-id');
+                    window.open(url);
+                    return;
+                }
+            }
+            var url = "{:url('course/video')}?id=" + $(this).attr('data-id')+'#'+$(this).attr('data-id');
+            if (!buy) {
+               layer.msg("未购买");
+               return false;
+            }
+            window.open(url);
+        })
+
+        //评论提交按钮事件
+        var commentSubmitObj = {};  //提交数据
+        $(".a_manyidu_submit").click(function () {
+            if (!uid) {
+                $(".weixin_QRcord_alert_outside").show();
+                return false;
+            }
+            var textareaValue = $(".user_comment textarea").val();
+            commentSubmitObj.textareaValue = textareaValue;
+            if ("" != textareaValue && commentSubmitObj.starNum != undefined) {
+                $.post(host + "comment/add", {
+                    uid: uid,
+                    cid: cid,
+                    content: textareaValue,
+                    star: commentSubmitObj.starNum
+                }, function (result) {
+                    if (result.code == 1) {
+                        $(".comment_finish_alert").show();
+                        $(".course_manyidu").hide(3000);
+                    } else if (result.code == -1) {
+                        layer.msg(result.message);
+                    }
+                });
+            }
+        })
+
+        //用户评论点星星
+        $(".manyidu_star span a").click(function () {
+            var currIndex = $(this).index() + 1;
+            $(".manyidu_star span a").removeClass("imghover")
+            $(".manyidu_star span a:lt(" + currIndex + ")").addClass("imghover");
+            commentSubmitObj.starNum = currIndex;
+        })
+        //播放视频时提示 先登录再购买
+        $(".video_word_list_ul li div span a,.video_word_list_ul li div img").click(function () {
+            if (!uid) {
+                $(".weixin_QRcord_alert_outside").show();
+                return;
+            }
+            if (!buy) {
+                $(".courseBuy_tip").show();
+                return;
+            }
+
+            // loginAfter();
+        })
+        if (uid) {
+            loginAfter(); //登陆购买之后调用此方法
+        }
+        function loginAfter() {
+            //如果用户登陆，然后购买之后右边满意度正常效果
+            $(".manyidu_star span").removeClass("opacity40");
+            $(".user_comment textarea").attr("readonly", false);
+            $(".a_manyidu_submit").removeClass("opacity40");
+            $(".cover_star").hide();
+            $(".cover_submit").hide();
+        }
+
+        //textarea 输入框事件:数字变化
+        $(".user_comment textarea").bind("input propertychange", function () {
+            var textareaValue_length = $(this).val().length;
+            $(".comment_strnum").html(textareaValue_length);
+        })
+        //老师课程列表导航背景切换
+        $(".teacherGroupNav li a").click(function () {
+            $(".teacherGroupNav li a").removeClass("a_bg_F5F5F5");
+            $(this).addClass("a_bg_F5F5F5");
+        })
+        //左边必备课程列表
+        $(".bibei_knowledge_ul li a").click(function () {
+            $(".bibei_knowledge_ul li a").removeClass("bg_00B6F2");
+            $(this).addClass("bg_00B6F2");
+        })
+        $(".mCustomScrollbar").mCustomScrollbar({
+            theme: "minimal-dark"
+        })
+        //评论更多显示
+        $(".more_comment").click(function () {
+            $(".userComment_alertOutside").show();
+        })
+        //关闭弹窗
+        $(".img_close").click(function () {
+            $(".userComment_alertOutside").hide();
+            $(".courseBuy_tip").hide();
+        })
+        //用户评论分页数字点击
+        $(".userComentPager_footer ul li a").click(function () {
+            $(".userComentPager_footer ul li a").removeClass("rgba60");
+            $(this).addClass("rgba60");
+        })
+        initHeight();
+    })
+    //初始化高度
+    function initHeight() {
+        var leftHeight = $(".bibei_knowledge").outerHeight();
+        var rightHeight = $(".video_word_list").outerHeight();
+        if (parseFloat(leftHeight) >= parseFloat(rightHeight)) {
+            $(".bibei_knowledge").outerHeight(leftHeight);
+        } else {
+            $(".bibei_knowledge").outerHeight(rightHeight);
+        }
+    }
+</script>
+<script>
+    $(function () {
+        //星星评分
+        star_inner = '';
+        var star_num = Number("{$course.star}")
+        var showStarSrc = showstar(star_num);
+        console.log(showStarSrc);
+        for (var i = 1; i < showStarSrc.length; i++) {
+            star_inner += '<img src="' + showStarSrc[i] + '" alt="评价星星">';
+        }
+        $('.pingfen_star').html(star_inner);
+
+        //星星显示数量
+        function showstar(star) {
+            var starNum = parseInt(star)
+            var numType = starNum % 2
+            var stars = starNum / 2
+            console.log(numType + starNum)
+            var starImg = [];
+            console.log(stars)
+            for (var i = 1; i < 6; i++) {
+                if (i <= stars) {
+                    starImg[i] = '/public/pc/images/blue_fullStar@2x14.png'
+                } else {
+                    if (numType == 1 && i == parseInt(stars) + 1) {
+                        starImg[i] = '/public/pc/images/blue_halfStar@2x14.png'
+                    } else {
+                        starImg[i] = '/public/pc/images/blue_emptyStar@2x14.png'
+                    }
+                }
+            }
+            return starImg;
+        }
+
+        $('.teacherGroupNav li').click(function () {
+            var url = "{:url('course/course')}?cid=" + $(this).attr('data-cid');
+            window.location.href = url;
+        });
+
+        $('.bibei_knowledge_ul li').click(function () {
+            var cid = "{$cid}";
+            var url = "{:url('course/course')}?cid=" + cid + "&tid=" + $(this).attr('data-id');
+            window.location.href = url;
+        })
+
+    });
+</script>
+</body>
+</html>

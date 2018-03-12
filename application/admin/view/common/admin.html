@@ -1,0 +1,14 @@
+
+
+<div class="user-box">
+  <span class="user-self">
+    <i>{:session('rolename')}({:session('admin_username')})</i>
+    <img class="img_myself" src="/public/image/logo.png" alt="自身头像">
+  </span>
+  <ul class="user-set-ul">
+   	<li><i class="modal-catch" data-params='{"content":".edit_pswd","act":"{:url("user/edit_password")}", "title":"修改密码","type":"1"}'>修改密码</i></li>
+    <li><a href='{:url("login/loginOut")}'  target="_blank"><i>退出</i></a></li>
+  </ul>
+</div>
+<div class="success_tip displayNone">已完成</div>
+        

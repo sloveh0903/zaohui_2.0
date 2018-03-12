@@ -1,0 +1,186 @@
+/*数据分析一级*/
+.system_guanli_div.data_guanli_div{background: #FAFAFA;border-bottom: none;padding: 0 20px;position: static;}
+.data_guanli_div ul.system_guanli_ul{margin-bottom: 15px;}
+.data_analyse_content>.analyse_right_main{padding: 0;}
+/*.data_analyse_content>.analyse_right_main>.tab_main{padding: 0 20px;}*/
+.data_analyse_content>.tab_main>li{}
+.data_analyse_content>.tab_main>li.cur{display: block;}
+.bgWhite{background: white;border-radius: 5px;box-shadow: 0 10px 50px rgba(0,0,0,.05);margin: 20px; padding: 20px;}
+	/*交易统计*/
+.trade_count{}
+		/*交易数据*/
+.trade_count_data{}
+			/*数据表头*/
+.count_header{display: flex;justify-content: space-between;}	
+.data_header h2{font-weight: normal; font-size: 18px;color: #292B33;line-height: 36px;}
+.data_header p{font-weight: normal; font-size: 14px;color: rgba(41, 43, 51, .6);}		
+				/*数据范围*/
+.data_range{display: flex;}
+
+.data_range label{height: 36px;font-size: 14px;background: #fff;border: 2px solid #eeeeee;padding: 7px 15px 9px;}
+.data_range label:first-child{border-right:none;border-radius: 4px 0 0 4px;}
+.line_chart .data_range label:nth-child(2){border-radius:  0  4px 4px 0;}
+.data_range label:nth-child(3){border-left: none;}
+.data_range label:nth-child(4){border-radius:  0  4px 4px 0;border-left: none;}
+.data_range label:hover{background: #FAFAFA;cursor: pointer;}
+.data_range label input{visibility: hidden;width: 1px;height: 1px;}
+.data_range label span{display: inline-block;height: 36px;line-height: 20px;color: rgba(41, 43, 51, .6);}
+.data_range label.cur{background: #fff;}
+.data_range label.cur span{color:#00B6F2;}
+
+.layui-inline{position: relative;margin-left: 10px;}
+.data_range	input{height: 36px;line-height: 36px; border-radius: 4px;border: 2px solid #EEEEEE;font-size: 14px;color: rgba(41, 43, 51, .6);cursor: pointer;}
+/*.data_range	.layui-input1{width: 100px;margin-right: 10px;}*/	
+.data_range	.layui-input2{width: 210px; padding-left: 10px}
+.data_range	.layui-input3{width: 100px; padding-left: 10px}
+.data_range span.arr_down{display: block;width:8px ;height:5px ;background:url(../images/arr_down@2x.png) no-repeat center ;position: absolute;right: 10px;top: 15px;cursor: pointer;}	
+/*.data_range span.arr1{right: 5px;}*/
+			/*下拉框*/
+.data_range form.layui-form{width: 210px;margin-right: 10px;}
+.layui-select-title i.layui-edge{display: none;}
+.layui-form-select dl dd.layui-this{background-color:#00B6F2}
+.layui-form-item {position: relative;}
+.layui-form-item span.arr_down{right: 10px;}
+.layui-form-select dl dd{font-size: 14px;color: rgba(41, 43, 51, .6);}
+.layui-input.layui-unselect:hover{outline: none;border: 2px solid #EEEEEE;}
+			/*数据具体模块*/
+.trader_data_list{display: flex;justify-content: space-between;margin-top: 16px;}
+.cout_data_list{height: 100px;border-radius: 5px;margin-left: 20px;padding: 20px 10px; display: flex;justify-content: space-around;}
+.cout_data_list:first-child{margin-left: 0;}
+.trader_subprice{background: #3059C9;width:33.3% ;}
+.trader_money{background: #00B6F2;width:33.3% ;}
+.trader_num{background: #6897B1;width:33.3% ;}
+.list_details{text-align: center;}
+.list_details p{font-size:28px ;color:#ffffff ;line-height: 40px;}
+.list_details span{font-size: 14px;color:rgba(255,255,255,.7)}
+		/*折线图*/
+#line_show{width: 100%; height: 270px;}	
+		/*饼状图*/
+.pie_chart{margin-bottom: 25px;}
+.pie_show{display: flex;justify-content: space-between;}
+.pie_show #pie_show{width:400px;height: 270px;}
+			/*上升下降图表*/
+.pie_show .paie_table{margin-top: 24px;}
+.pie_show .paie_table tr{box-shadow: 0 1px 0 rgba(0,0,0,.1);height: 40px;line-height: 40px;font-size: 14px;display: flex;justify-content: space-between;align-items: center;width: 515px;}
+.pie_show .paie_table thead th{color: rgba(41, 43, 51, 1);}
+.pie_show .paie_table tbody td{color: rgba(41, 43, 51, .8);display: flex;justify-content: space-between;}
+.pie_show .paie_table .orient_port{width: 75px;}
+.pie_show .paie_table .order_num{width: 60px;}
+.pie_show .paie_table .num_than{width: 60px;}
+.pie_show .paie_table .subPrice{width: 80px;}
+.pie_show .paie_table .price_than{width: 60px;}
+	/*根据不同情况加限制*/
+.pie_show .paie_table .num_iterm{display: flex;justify-content: space-between;align-items: center;}
+.pie_show .paie_table .num_iterm.limt{display: none;}
+.pie_show .paie_table .nun{display: flex;justify-content: center;align-items: center;width: 100%;}
+.pie_show .paie_table .nun.limit{display: none;}
+.pie_show .paie_table .num_iterm i{display: inline-block;width: 20px;height: 20px;}
+.pie_show .paie_table .num_iterm i.up{background: url(../images/arrow_upward@2x.png) no-repeat center;}
+.pie_show .paie_table .num_iterm i.up.limt{display: none;}
+.pie_show .paie_table .num_iterm i.down{background: url(../images/arrow_downward@2x.png) no-repeat center;}
+.pie_show .paie_table .num_iterm i.down.limt{display: none;}
+.pie_show .paie_table .num_iterm{}
+	/*用户统计*/
+		/*用户数据*/
+			/*数据表头*/
+	
+				/*数据范围*/
+			
+			/*数据具体模块*/
+.cout_data_list.all_user_num{background:#3059C9;width:25%;}
+.cout_data_list.new_user_num{background: #00B6F2;width: 25%;}
+.cout_data_list.paid_user_num{background: #6897B1;width: 25%;}
+.cout_data_list.active_user_num{background: #4CD964;width: 25%;}
+
+		/*折线图*/
+#user_line_show{width:100%; height: 270px;}	
+		/*饼状图*/
+.user_pie_part{display: flex;justify-content: space-between;}
+.user_pie_part .pie_chart{margin-bottom: 25px;width: 50%;}
+.user_pie_part .pie_chart:first-of-type{margin-right: 0;}
+.pie_show_user{display: flex;justify-content: space-between;}
+.pie_show_user #pie_show_user{width:400px;height: 270px;}
+.pie_show_user #pie_show_user2{width:400px;height: 270px;}
+
+	/*课程统计*/
+.course_box{}
+.course_box.cur{display: block;}
+.course_count_tab{padding: 20px; margin: 20px;background: white;border-radius: 5px;box-shadow: 0 10px 50px rgba(0,0,0,.05);}
+.course_count>.data_table{margin-top: 15px;}
+.course_count>.data_table thead {box-shadow: 0 -1px 0 rgba(0,0,0,.05);}
+.data_table tr{padding: 0 10px;}
+.data_table .course_img{width:100px ;padding: 5px 0;}
+.data_table .course_img img{display: block; width: 80px;    height: 100%;margin-top: 2px;}
+.data_table .course_name{width:105px ;    overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
+.data_table .course_num{width:56px ;}
+.data_table .course_user_num{width: 138px;}
+th.course_user_num{display:flex ;align-items: center;position: relative;}
+.course_user_num img{width: 20px;height: 20px;display: block;margin-left: 3px;}
+		/*鼠标经过弹出框*/
+.float_div{position: absolute; z-index: 9;width: 320px;height: 80px;display: none;}
+.float_div{top: 30px;left:-90px;}
+.float_div.float_div_right{left: -205px;}
+.float_div.float_div_right .float_box span{left: 290px;}
+.float_div .float_box {position: relative;width: 320px;height: 80px;}
+.float_div .float_box span{position: absolute;top:-17px;left: 150px; display: block;width:18px ;height:18px ;background: url(../images/float_arrow@2x.png) no-repeat center; background-position-y: 7px;}
+.float_div .float_box p{margin-top: 10px; width:320px;height: 70px;border: 1px solid rgba(41, 43, 51, .1);background: #FFF9E4;border-radius: 5px;padding: 15px;font-size:14px;color:rgba(41, 43, 51,.6);clear: both;}
+.data_table .course_money.th{color: #292B33;}
+.data_table .course_money{width:138px ;}
+.data_table .course_oprate{width:56px ;}
+.data_table .course_oprate a{display: block;line-height:50px;color: #00B6F2;}
+.data_table .course_oprate:hover a{opacity: .8;}
+
+/*数据分析-课程统计二级*/
+	/*视频统计*/
+
+.data_analyse_content>.video_count{padding: 0 ;background: white;border-radius: 5px;box-shadow: 0 10px 50px rgba(0,0,0,.05);margin: 20px;}
+/*.video_count>.system_guanli_div{border-bottom:1px solid rgba(0,0,0,.1) ;}*/
+.data_analyse_content>.video_count>.video_content{margin: 0 20px;}
+.video_content .video_table{}
+.video_content .table_title{display: flex;justify-content: space-between;margin-top: 40px;padding-bottom: 15px;box-shadow: 0 1px 0 rgba(0,0,0,.05);} 
+.video_content .table_title h3{font-weight: normal;font-size:18px ;color: #292B33;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;width: 800px;}
+.video_content .table_title p{font-size:18px ;color:rgba(41, 43, 51, .6);}
+.video_content .table_title p span{color: rgba(41, 43, 51, 1);}
+.video_content .video_table {position: relative;}
+	/*鼠标经过弹出框*/
+.video_table th.course_user_num>.float_div.video_float_box{left: -240px;}
+.video_table .float_div span{float: right;margin-right: 4px;}
+.video_content .video_table .part_name{width:180px;overflow: hidden;}
+.video_content .video_table .video_name{width: 180px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap; }
+.video_content .video_table .course_user_num{cursor: pointer;width:110px;}
+.video_content .video_table td.course_user_num{color: #00B6F2;}
+.video_content .video_table td.course_user_num:hover{opacity: .6;}
+/*学习用户详情弹框*/
+.user_data_list{position: absolute;top: 0;left: 0;right: 0;bottom: 0;background: rgba(0,0,0,.4);display: flex;justify-content: center;align-items: center;display: none;}
+.user_data_list .data_list_content{padding: 40px;background: #fff;width: 680px;border-radius: 3px;position: relative;}
+.user_data_list .data_list_content>img{display: block;position: absolute;right: 10px;top: 10px;width: 20px;height: 20px;cursor: pointer;}
+.data_list_content h3{font-weight: normal;font-size: 18px;color: #292B33;text-align:left;margin-bottom: 17px;}
+.data_list_content table{}
+.data_list_content table tr{padding: 0 10px;}
+/*.data_list_content table th,td{height: 40px;line-height: 40px;}*/
+.data_list_content table th{font-size: 14px;color: rgba(41, 43, 51, 1);}
+.data_list_content table td{font-size: 14px;color: rgba(41, 43, 51, .8);}
+.data_list_content table .data_nikname{display: flex;;align-items: center;width: 90px;overflow: hidden;}
+.data_list_content table th{justify-content: flex-start;}
+.data_list_content table .data_nikname img{display: block;width: 20px;height: 20px;border-radius: 10px;margin-right: 10px;}
+.data_list_content table .data_nikname p{font-size: 14px;color: rgba(41, 43, 51, .8);width: ;}
+.data_list_content table .data_phone{width: 100px;}
+.data_list_content table .data_sex{width: 30px;}
+.data_list_content table .data_subPrice{width: 70px;}
+.data_list_content table .data_lastTime{width: 140px;}
+
+
+.page_bt{display: flex;justify-content: space-between;    margin-top: 25px;margin-bottom: 25px;}
+.page_bt p{font-size: 14px;color: rgba(0,0,0,.4);}
+.video_count>.page_bt{padding:0 20px;}
+
+
+.system_guanli_div {
+    position: static;
+    bottom: 0;
+    z-index: 1;
+}
+.page_div3{
+	margin: 0 auto;
+}
+.article_manage{background: none;position: relative;}

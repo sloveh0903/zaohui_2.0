@@ -1,0 +1,125 @@
+{include file="common/header" /}
+<body>
+<div class="article_manage mCustomScrollbar">
+    <div class="right-side-header clearfix">
+	        <span>系统管理</span>
+	        {include file="common/admin" /}
+   </div>
+   <div class="right_side_content">
+<!-- 	   <div class="system_guanli_div"> -->
+<!-- 	 		<ul class="system_guanli_ul"> -->
+<!-- 		    	 <li><a href="javascript:void(0)" class="goto" data-src='{:url("user/index")}'>后台用户管理</a></li> -->
+<!--                 <li><a href="javascript:void(0)" class="goto" data-src='{:url("role/index")}'>角色管理</a></li> -->
+<!--                 <li><a href="javascript:void(0)" class="active goto" data-src='{:url("ad/index")}'>广告管理</a></li> -->
+<!--                 <li><a href="javascript:void(0)" class="goto" data-src='{:url("index/config")}'>网站配置</a></li> -->
+<!--            </ul> -->
+<!-- 		</div> -->
+<!-- 		<div class="success_tip displayNone">已完成</div> -->
+	    <div class="add_article_main ">
+	        <div class="breadcrumb">
+	              <a href='{:url("ad/index")}'>广告列表</a>
+	              /
+	              <span>添加广告</span>
+	         </div>
+	        <div class="ad_operation_div">
+	            <div class="add_article_step">
+	            	<ul class="editCourse-nav-ul clearFloat">
+<!-- 	                	<li data-src='{:url("ad/index")}?id=1' class="goto {if $advInfo['id']==1} active {/if}"><i data-name="index">小程序首页</i></li> -->
+<!-- 	                	<li data-src='{:url("ad/index")}?id=3' class="goto {if $advInfo['id']==3} active {/if}" ><i data-name="pc_index">pc首页</i></li> -->
+	            	</ul>
+	        	</div>
+	        </div>
+	         <div class="articleInfo_fill">
+	            <section class="panel panel-padding">
+	                <form id="form1" class="layui-form layui-form-pane" action="{:url('add_adv')}">
+	                    <div class="layui-form-item">
+	                        <label class="layui-form-label">标题*</label>
+	                        <div class="layui-input-inline">
+	                            <input type="hidden" name="adv_id" value="{$advInfo['id']}">
+	                            <input type="text" name="title" required jq-verify="required" jq-error="请输入标题" placeholder="请输入标题" autocomplete="off" class="layui-input ">
+	                        </div>
+	                    </div>
+	                    <div class="layui-form-item">
+	                        <label class="layui-form-label">上传图片*</label>
+	                        <div class="layui-input-block">
+	                            <input type="file" name="file" class="layui-upload-file">
+	                            <input type="hidden" name="photopath" jq-verify="required" jq-error="请上传图片" error-id="img-error">
+	                            <p class="upload-info">图片尺寸：1180*413 支持格式：JPG PNG</p>
+	                            <p id="img-error" class="error"></p>
+	                        </div>
+	                    </div>
+	<!-- 					课程选择 style="display: none" -->
+						{if $advInfo['id']==1}
+	                    <div class="layui-form-item" id='itemshow' >
+	                        <label class="layui-form-label">课程选择</label>
+	                        <div class="layui-input-inline">
+	                            <select name="item_id"  lay-filter="item_id">
+	                                <option value="">==请选择==</option>
+	                                {if !empty($course)}
+	                                {foreach name="$course" item="vo"}
+	                                <option value="{$vo.cid}">{$vo.title}</option>
+	                                {/foreach}
+	                                {/if}
+	                            </select>
+	                        </div>
+	                    </div>
+	                    {/if}
+	<!--                     自定义链接 -->
+						{if $advInfo['id']==3}
+						<div class="layui-form-item" >
+	                        <label class="layui-form-label">自定义链接</label>
+	                        <div class="layui-input-inline">
+	                            <input type="text" name="link" required  jq-error="请输入完整url链接" placeholder="请输入完整url链接" autocomplete="off" class="layui-input ">
+	                        </div>
+	                    </div>
+	                    {/if}
+	                    <!--<div class="layui-form-item">
+	                        <label class="layui-form-label">启用</label>
+	                        <div class="layui-input-inline">
+	                            <input type="radio" name="closed" value="0" title="是" checked>
+	                            <input type="radio" name="closed" value="1" title="否">
+	                        </div>
+	                    </div>-->
+	                    <!-- pengpian 排序默认为最后一条 -->
+	                    <!-- 
+	                    <div class="layui-form-item">
+	                        <label class="layui-form-label">排序</label>
+	                        <div class="layui-input-inline">
+	                            <input class="layui-input" type="text" name="orderby" value="50" placeholder="排序"  lay-verify="number">
+	                        </div>
+	                    </div>
+	                     -->
+	                    <!-- end -->
+	                    <div class="layui-form-item">
+	                        <div class="layui-input-block">
+	                            <button class="layui-btn" jq-submit lay-filter="submit">立即提交</button>
+	                        </div>
+	                    </div>
+	                </form>
+	            </section>
+	
+	        </div>
+	      </div>
+    </div>
+</div>
+{include file="common/version" /}
+<script>
+    layui.use('adv');
+    function add_item_id(ret, options, $) {
+        console.log(ret);
+        layui.use(['form'], function(){
+            $('form').find('select[name=item_id]').html('<option>==请选择==</option>');
+            var form = layui.form();
+            if(ret.length > 0){
+                $.each(ret, function (i, n) {
+                    var proHtml = '<option value="' + n.id + '">' + n.title + '</option>';
+                    $('form').find('select[name=item_id]').append(proHtml);
+                });
+            }
+            form.render();
+        });
+    }
+</script>
+
+</body>
+</html>

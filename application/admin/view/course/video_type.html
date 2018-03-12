@@ -1,0 +1,144 @@
+{include file="common/header" /}
+
+<body>
+<div class="container-fluid larry-wrapper">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <!--头部搜索-->
+            <section class="panel panel-padding">
+                <form class="layui-form" action='{:url("course/video_type")}'>
+                    <div class="layui-form">
+                        <div class="layui-inline">
+                            <div class="layui-input-inline">
+                                <input class="layui-input" name="key" placeholder="关键字">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <button lay-submit class="layui-btn" lay-filter="search">查找</button>
+                        </div>
+                    </div>
+                </form>
+            </section>
+
+            <!--列表-->
+            <section class="panel panel-padding">
+                <div class="group-button">
+                    <button class="layui-btn layui-btn-small layui-btn-danger ajax-all" data-name="checkbox" data-params='{"url": "{:url("course/batch_del")}","data":"","confirm":"true"}'>
+                        <i class="iconfont">&#xe626;</i> 删除
+                    </button>
+                    <!--<button class="layui-btn layui-btn-small layui-btn-normal ajax-all" data-name="checkbox" data-params='{"url": "/php/test.php","data":"id=1&name=hao&checkbox=6,9,0&va=23"}'>
+                        <i class="layui-icon">&#x1005;</i> 状态
+                    </button>-->
+                    <button class="layui-btn layui-btn-small modal-catch" data-params='{"content":".add-subcat","act":"add_type", "title":"添加章节","type":"1"}'>
+                        <i class="iconfont">&#xe649;</i> 添加
+                    </button>
+                </div>
+                <div id="list" class="layui-form"></div>
+
+                <div class="text-right" id="page"></div>
+            </section>
+        </div>
+    </div>
+</div>
+<div class="add-subcat">
+    <form id="form1" class="layui-form layui-form-pane" action='{:url("course/add_type")}'>
+        <div class="layui-form-item">
+            <label class="layui-form-label">章节名称</label>
+            <div class="layui-input-block">
+                <input type="hidden" name="cid" value="{$cid}">
+                <input type="text" name="cate_name" required jq-verify="required" jq-error="请输入章节名称" placeholder="请输入分类名称" autocomplete="off" class="layui-input ">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">排序</label>
+            <div class="layui-input-inline">
+                <input type="text" name="orderby" required jq-verify="number" value="50" jq-error="排序必须为数字" placeholder="分类排序" autocomplete="off" class="layui-input ">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">状态</label>
+            <div class="layui-input-inline">
+                <input type="radio" name="closed" title="启用" value="0" checked />
+                <input type="radio" name="closed" title="禁用" value="1" />
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" jq-submit jq-filter="submit">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="edit-subcat" style="display: none">
+    <form id="form2" class="layui-form layui-form-pane" action='{:url("course/edit_type")}'>
+        <div class="layui-form-item">
+            <label class="layui-form-label">章节名称</label>
+            <div class="layui-input-block">
+                <input type="hidden" name="cid">
+                <input type="text" name="cate_name" required jq-verify="required" jq-error="请输入分类名称" placeholder="请输入分类名称" autocomplete="off" class="layui-input ">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">排序</label>
+            <div class="layui-input-inline">
+                <input type="text" name="orderby" required jq-verify="number" value="100" jq-error="排序必须为数字" placeholder="分类排序" autocomplete="off" class="layui-input ">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">状态</label>
+            <div class="layui-input-inline">
+                <input type="radio" name="closed" title="启用" value="0" checked />
+                <input type="radio" name="closed" title="禁用" value="1" />
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" jq-submit jq-filter="submit">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+<script id="list-tpl" type="text/html" data-params='{"url":"{:url("course/video_type",["cid"=>$cid])}","pageid":"#page"}'>
+    <table id="example" class="layui-table lay-even">
+        <thead>
+        <tr>
+            <th width="30"><input type="checkbox" id="checkall" data-name="checkbox" lay-filter="check" lay-skin="primary"></th>
+            <th width="60">序号</th>
+            <th>名称</th>
+            <th width="70">排序</th>
+            <th width="240">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{# layui.each(d.list, function(index, item){ }}
+        <tr>
+            <td><input type="checkbox" name="checkbox" value="{{ item.id}}" lay-skin="primary"></td>
+            <td>{{ item.id}}</td>
+            <td>{{ item.cate_name}}</td>
+            <td><input type="text" class="layui-input ajax-blur" name="orderby" value="{{ item.orderby}}" data-params='{"url":"{:url("course/type_orderby")}","data":"id={{ item.id}}"}'> </td>
+            <td>
+                <button class="layui-btn layui-btn-mini modal-iframe" data-params='{"content": "{{ item.video_url}}","act":"index","title":"视频列表","full":"true"}'>
+                    <i class="iconfont">&#xe653;</i>视频列表
+                </button>
+                <button class="layui-btn layui-btn-mini modal-catch" data-params='{"content": ".edit-subcat","act":"edit_type","title":"编辑{{ item.cate_name}}","data":"id={{ item.id}}&cid={{ item.cid}}&orderby={{ item.orderby}}&cate_name={{ item.cate_name}}&closed={{ item.closed}}","type":"1"}'>
+                    <i class="iconfont">&#xe653;</i>编辑
+                </button>
+                <button class="layui-btn layui-btn-mini layui-btn-danger ajax" data-params='{"url": "{:url("course/del_type")}","data":"id={{ item.id}}","confirm":"true"}'>
+                    <i class="iconfont">&#xe626;</i>删除
+                </button></td>
+            </td>
+        </tr>
+        {{# }); }}
+        </tbody>
+
+    </table>
+</script>
+{include file="common/version" /}
+<script>
+    layui.use('list');
+</script>
+
+</html>

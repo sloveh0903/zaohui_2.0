@@ -1,0 +1,857 @@
+.wrap-box {
+  padding-bottom: 50px;
+}
+.upper-box {
+  padding: 0 15px;
+  background-color: #FAFAFA;
+  box-shadow: 0 1px hsla(228, 20%, 20%, .1);
+}
+/* 头部课程介绍 start */
+.upper-box .course-info {
+  width: 100%;
+  height: 70px;
+  padding: 15px 0;
+  display: flex;
+  box-shadow: 0 1px rgba(0, 0, 0, .1);
+}
+.course-info .img-box {
+  flex: 0 0 40px;
+  margin-right: 10px;
+  display: flex;
+}
+.course-info .img-box img {
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+}
+.course-info .desc-box {
+  flex: 1;
+  display: flex;
+  height:70px;
+  flex-direction: column;
+}
+.course-info .desc-box h4 {
+  max-width: 200px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 16px;
+  font-weight: 400;
+  color: hsla(228, 20%, 20%, .8);
+}
+.course-info .desc-box p {
+  max-width: 200px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 12px;
+  color: hsla(228, 20%, 20%, .6);
+}
+.course-info .price-box {
+  flex: 0 0 40px;
+}
+.course-info .price-box span {
+  display: block;
+  width: 100%;
+  font-size: 14px;
+  line-height: 24px;
+  color: #00B6F2;
+}
+/* 头部课程介绍 end */
+
+/* 问题部分 start */
+.upper-box .question-box {
+  padding: 15px 0;
+}
+.question-box > div:not(:last-of-type) {
+  margin-bottom: 5px;
+}
+.question-box .info {
+  display: flex;
+  align-items: center;
+}
+.question-box .info .user-logo {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  margin-right: 15px;
+}
+.question-box .info .user-id {
+  font-size: 16px;
+  font-weight: 600;
+  color: hsla(228, 20%, 20%, .8);
+}
+.question-box .info .date {
+  flex: 1;
+  text-align: right;
+  font-size: 12px;
+  color: hsla(228, 20%, 20%, .4);
+}
+.question-box .desc p {
+  font-size: 16px;
+  line-height: 22px;
+  color: hsla(228, 20%, 20%, .8);
+}
+.question-box .pic {
+  display: flex;
+}
+.question-box .pic img {
+  width: 100px;
+  height: 100px;
+}
+.question-box .pic img:not(:last-of-type) {
+  margin-right: 10px;
+}
+.question-box .pic > a{
+    flex: 0 0 30%;
+    margin: 0 3px;
+}
+.question-box .pic > a img{
+    width: 0.9rem;
+    height:0.9rem;
+    border-radius: 4px;
+}
+/* 问题部分 end */
+
+
+/* 回复部分 start */
+.lower-box .answer-box {
+  padding: 20px 0 0;
+}
+.answer-box .answer-count {
+  display: flex;
+  align-items: center;
+  padding-left: 15px;
+}
+.answer-count p {
+  font-size: 14px;
+  color: hsla(228, 20%, 20%, .4);
+}
+.answer-box .answer-item {
+  width: 100%;
+  display: flex;
+  padding: 20px 15px;
+  box-shadow: 0 1px hsla(228, 20%, 20%, .1);
+}
+.answer-item .img-box {
+  flex: 0 0 40px;
+  margin-right: 15px;
+}
+.img-box img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+.answer-item .content-box {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.answer-item .content-box .info {
+  height: 23px;
+  display: flex;
+  align-items: center;
+}
+.answer-item .content-box .info h4 {
+  font-size: 14px;
+  font-weight: 600;
+  color: hsla(228, 20%, 20%, .8);
+}
+.answer-item .content-box .info p {
+  font-size: 14px;
+  color: hsla(228, 20%, 20%, .8);
+}
+.answer-item .content-box .info .reply-date {
+  flex: 1;
+  text-align: right;
+  font-size: 12px;
+  color: hsla(228, 20%, 20%, .4);
+}
+.answer-item .content-box .desc p{
+  font-size: 16px;
+  line-height: 28px;
+  color: hsla(228, 20%, 20%, .8);
+}
+.answer-item .content-box .operation {
+  display: flex;
+  justify-content: flex-end;
+}
+.answer-item .content-box .operation > div:not(:last-child) {
+  margin-right: 22px;
+}
+.answer-item .content-box .operation > div {
+  display: flex;
+  align-items: center;
+}
+.answer-item .content-box .operation > div p {
+  font-size: 14px;
+  color: hsla(228, 20%, 20%, .4);
+}
+.gezi-btn {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+}
+.favo-btn {
+  background: url("../img/icon/zan.png") no-repeat center/cover;
+}
+.tapped.favo-btn {
+  background: url("../img/icon/zaned.png") no-repeat center/cover;
+}
+.reply-btn {
+  background: url("../img/icon/qa.png") no-repeat center/cover;
+}
+/* 回复部分 end */
+body p {text-align: left;}
+.wrap.blur {
+  filter: blur(30px);
+}
+.QA-nav {
+  height: 50px;
+  width: 100%;
+  padding: 0 15px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-shadow: 0 1px rgba(0, 0, 0, .1);
+          box-shadow: 0 1px rgba(0, 0, 0, .1);
+}
+.QA-nav .QA-nav-title {
+    flex: 1;
+  font-size: 16px;
+  color: #292B33;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin:0;
+}
+.QA-nav .QA-nav-filter {
+  width: 72px;
+  height: 36px;
+  line-height: 36px;
+  text-align: center;
+  border-radius: 20px;
+  border: 1px solid #D7D7D8;
+  font-size: 14px;
+  color: #B5B6B9;
+}
+.QA-nav .QA-nav-filter.focus {
+  border-color: #00B6F2;
+  color: #00B6F2;
+}
+.QA {
+	width: 100%;
+	float: left;
+	position: relative;
+	padding: 30px 15px 30px 70px;
+	border-bottom: 1px solid #E7E5EA;
+}
+.QA a{
+	float: left;
+}
+.QA .hp {
+	position: absolute;
+	left: 15px;
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+}
+
+.name {
+	text-align: right;
+	color: rgba(41, 43, 51, 0.3);
+}
+
+.name span {
+	float: left;
+  font-size: 14px;
+  margin-bottom: -2px;
+}
+
+.name span img {
+  width: 18px;
+  height: 17px;
+  vertical-align: baseline;
+}
+
+.preview-list a {
+	width: 33.3%;
+	float: left;
+	line-height: 1.8;
+}
+
+.preview-list a:nth-child(1),
+.preview-list a:nth-child(4) {
+	float: left;
+	padding-right: 5px;
+}
+
+.preview-list a:nth-child(2),
+.preview-list a:nth-child(5) {
+	margin: 0 0%;
+	padding: 0 2.5px;
+}
+
+.preview-list a:nth-child(3),
+.preview-list a:nth-child(6) {
+	float: right;
+	padding-left: 5px;
+}
+
+.preview-list a img {
+	width: 0.9rem;
+	height: 0.9rem;
+    border-radius: 4px;
+}
+
+#imgPreview>div img {
+	position: initial !important;
+}
+
+.ui-dialog-close {
+	z-index: 102 !important;
+}
+
+.ui-preview .imgViewTop {
+	z-index: 101;
+	background: #00B6F2 !important;
+	border: 0 !important;
+}
+
+.ui-preview {
+	z-index: 100 !important;
+	background: #000000 !important;
+}
+
+#imgPreview {
+	top: 200px !important;
+}
+
+.imgViewTop em {
+	font-size: 18px;
+	color: #fff !important;
+	font-style: normal;
+}
+
+.js-dialog-close {
+	position: absolute;
+	right: 10px;
+	z-index: 102;
+	font-size: 30px;
+	font-weight: 700;
+	top: 4px;
+}
+.QA-1{
+	float: left;
+	width: 100%;
+}
+.QA-2{
+	float: left;
+	width: 100%;
+	font-size: 14px;
+}
+.QA-2 .reply-id {
+  font-family: 'PingFang SC Medium';
+  font-size: 14px;
+  color: hsla(228, 20, 20, .8);
+}
+.icon-zan{
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	background: url(../img/icon/zan.png);
+	background-size: 100% 100%;
+	    vertical-align: top;
+}
+.icon-zaned{
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	background: url(../img/icon/zaned.png);
+	background-size: 100% 100%;
+	    vertical-align: top;
+}
+.icon-qa{
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	background: url(../img/icon/qa.png);
+	background-size: 100% 100%;
+	    vertical-align: top;
+}
+.QA-3{
+	float: left;
+    display: flex;
+  width: 100%;
+  margin-top: 5px;
+}
+.QA-3 span{
+	float: left;
+	margin-right: 20px;
+	line-height: 16px;
+}
+.QA-3 span:first-child{
+    width: 50px;
+    margin-right: 20px;
+    line-height: 16px;
+}
+.QA-3 font{
+	float: left;
+	font-size: 14px;
+	color: rgba(41,43,51,0.4) !important;
+}
+
+.QA-3 span i{
+	margin-right: 5px;
+	float: left;
+	
+}
+.QA-no {
+	line-height: 25px;
+}
+.QA-no div{
+	float: right;
+}
+.QA-no a{
+	float: left;
+}
+.QA-no i{
+	float: left;
+	color: rgba(41,43,51,1) !important;
+}
+.qaInfo-title{
+	width: 100%;
+    height: auto;
+    padding: 15px 0;
+    display: flex;
+    box-shadow: 0 1px rgba(0, 0, 0, .1);
+}
+}
+/*问题详情*/
+/* .qaInfo-title{ */
+/* 	background: #00B6F2; */
+/* 	float: left; */
+/* 	width: 100%; */
+/* 	color: #fff; */
+/* 	padding: 14px 15px; */
+/* 	position: relative; */
+/* 	height: 60px; */
+	
+/* } */
+/* .qaInfo-title a{ */
+/* 	color: #fff; */
+/* 	width: 100%; */
+/* 	line-height: 1.4; */
+/* 	opacity: 0.8; */
+
+/* } */
+.qaInfo-title a span{
+	float: left;
+	width: 100%;
+	font-size: 12px;
+}
+.qaInfo-title a b{
+	float: left;
+	width: 100%;
+	font-weight: normal;
+	font-size: 14px;
+}
+.qaInfo-title i{
+	position: absolute;
+	right: 0;
+	top: 20px;
+	right: 15px;
+	font-size: 18px;
+}
+.qaInfo-content{
+	float: left;
+	width: 100%;
+	background: #FAFAFA;
+	padding: 25px 15px;
+	border-bottom: 1px solid #E7E5EA;
+}
+.qaInfo-content h1{
+	font-size: 16px;
+	height: 40px;
+	line-height: 40px;
+}
+.qaInfo-content h1 img{
+	float: left;
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	margin-right: 15px;
+}
+.qaInfo-content h1 i{
+	float: right;
+}
+.qaInfo-content p{
+	font-size: 16px;
+	line-height: 1.4;
+	margin-top: 10px;
+}
+.qaInfo-num{
+	float: left;
+	width: 100%;
+	padding: 0 15px;
+	margin-top: 30px;
+	line-height: 1;
+}
+.icon-huifu{
+	position: fixed;
+	bottom: 30px;
+	right: 15px;
+}
+.qainfo-input{
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	height: 60px;
+	width: 100%;
+	z-index: 999;
+	padding: 18px 15px;
+	background: #fff;
+	padding-right: 90px;
+	
+}
+.qainfo-input textarea{
+	border: 0;
+	padding: 0;
+}
+.qainfo-input a{
+	position: absolute;
+	right: 15px;
+	top: 13px;
+	width: 70px;
+	height: 34px;
+	font-size: 14px;
+	border-radius: 17px;
+	color: rgba(255,255,255,0.8);
+	background:#00B6F2;
+	text-align: center;
+	line-height: 34px;
+}
+.icon-huifu-cz{
+	float: right !important;
+  margin-right: 0 !important;
+  font-size: 12px;
+  color: hsla(228, 20%, 20%, .4);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex:1;
+    text-align: right;
+/* 	width: 150px; */
+}
+/* .icon-huifu-cz{ */
+/* 	float: right !important; */
+/* 	margin-right: 0 !important; */
+/* } */
+/* 弹窗 start */
+.dialog {
+  position: fixed;
+  z-index: 200;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, .6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  display: none;
+}
+
+/* 筛选问答弹窗 start */
+/* .dialog .filter-box { */
+/*   width: 280px; */
+/*   justify-content: center; */
+/*   align-items: center; */
+/*   background-color: #fff; */
+/*   border-radius: 2px; */
+/*   box-shadow: 0 19px 38px rgba(0, 0, 0, .5); */
+/*   display: none; */
+/* } */
+
+/* .filter-box .filter-list { */
+/*   width: 100%; */
+/*   height: 100%; */
+/*   padding: 24px; */
+/*   flex-direction: column; */
+/*   align-items: center; */
+/*   max-height: 338px; */
+/*   overflow: auto; */
+/* } */
+
+.filter-list .filter-items {
+    flex: 0 0 20px;
+  line-height: 20px;
+
+  font-size: 14px;
+  text-align: center;
+  color: #292B33;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%;
+}
+
+.filter-list .filter-items:not(:last-of-type) {
+  margin-bottom: 10px;
+}
+
+.filter-list .filter-items.selected {
+  color: #00B6F2;
+}
+/* 筛选问答弹窗 end */
+/* 提示购买课程弹窗 start */
+.dialog .alert-box {
+  width: 280px;
+  padding: 19px 20px 25px 20px;
+  flex-direction: column;
+  background-color: #fff;
+  border-radius: 2px;
+  box-shadow: 0 19px 38px rgba(0, 0, 0, .5);
+  display: none;
+}
+.dialog .alert-box h4 {
+  margin: 0;
+  font-weight: normal;
+  font-size: 20px;
+  color: hsla(228, 20, 20, .8);
+}
+.dialog .alert-box p {
+  font-size: 16px;
+  line-height: 24px;
+  color: hsla(228, 20, 20, .6);
+  margin: 16px 0 30px;
+}
+.dialog .alert-box .operation {
+  display: flex;
+  justify-content: flex-end;
+}
+.dialog .alert-box .operation i {
+  font-size: 14px;
+  color: #00B6F2;
+}
+.dialog .alert-box .operation a {
+  font-size: 14px;
+  color: #00B6F2;
+}
+.dialog .alert-box .operation i {
+  margin-right: 16px;
+}
+/* 提示购买课程弹窗 end */
+/* 提问筛选弹窗 start */
+.dialog .post-box {
+  width: 280px;
+  flex-direction: column;
+  background-color: #fff;
+  border-radius: 2px;
+  box-shadow: 0 19px 38px rgba(0, 0, 0, .5);
+  display: none;
+}
+.dialog .post-box h4 {
+  height: 58px;
+  line-height: 58px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: normal;
+  color: hsla(228, 20, 20, .8);
+  margin: 0;
+  border-bottom: 1px solid rgba(0, 0, 0, .1);
+}
+.dialog .post-box .filter-list {
+	min-height:80px;
+  width: 100%;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-height: 321px;
+  overflow: auto;
+  border-bottom: 1px solid rgba(0, 0, 0, .1);
+}
+.dialog .post-box .tip {
+  display: flex;
+  height: 50px;
+  justify-content: center;
+  align-items: center;
+}
+.dialog .post-box .tip p {
+  margin-bottom: 0;
+  font-size: 14px;
+  color: hsla(228, 20, 20, .6);
+}
+.dialog .post-box .tip a {
+  font-size: 14px;
+  color: #00B6F2;
+}
+/* 提问筛选弹窗 end */
+
+/* 筛选弹窗 start */
+.dialog .filter-box {
+  width: 280px;
+  flex-direction: column;
+  background-color: #fff;
+  border-radius: 2px;
+  box-shadow: 0 19px 38px rgba(0, 0, 0, .5);
+  display: none;
+}
+.dialog .filter-box h4 {
+  height: 58px;
+  line-height: 58px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: normal;
+  color: hsla(228, 20, 20, .8);
+  margin: 0;
+  border-bottom: 1px solid rgba(0, 0, 0, .1);
+}
+.dialog .filter-box .filter-list {
+	min-height:80px;
+  width: 100%;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-height: 321px;
+  overflow: auto;
+  border-bottom: 1px solid rgba(0, 0, 0, .1);
+}
+.dialog .filter-box .tip {
+  display: flex;
+  height: 50px;
+  justify-content: center;
+  align-items: center;
+}
+.dialog .filter-box .tip p {
+  margin-bottom: 0;
+  font-size: 14px;
+  color: hsla(228, 20, 20, .6);
+}
+.dialog .filter-box .tip a {
+  font-size: 14px;
+  color: #00B6F2;
+}
+/* 筛选弹窗 end */
+
+
+/* 弹窗 end */
+
+.qaInfo-title .img-box {
+  flex: 0 0 40px;
+  margin-right: 10px;
+  display: flex;
+}
+.qaInfo-title .img-box img {
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+}
+.qaInfo-title .desc-box {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.qaInfo-title .desc-box h4 {
+  max-width: 200px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 16px;
+  font-weight: 400;
+  color: hsla(228, 20%, 20%, .8);
+}
+.qaInfo-title .desc-box p {
+  max-width: 200px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 12px;
+  color: hsla(228, 20%, 20%, .6);
+}
+.qaInfo-title .price-box {
+  flex: 0 0 40px;
+}
+.qaInfo-title .price-box span {
+  display: block;
+  width: 100%;
+  font-size: 14px;
+  line-height: 24px;
+  color: #00B6F2;
+}
+.bottom-fixed {
+  position: fixed;
+  background-color: #fff;
+  bottom: 0;
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 -1px 2px rgba(0, 0, 0, .08);
+}
+.bottom-fixed p {
+  font-size: 14px;
+  color: hsla(228, 20%, 20%, .4);
+}
+/* 图片预览框 start*/
+#imgPreview {
+  top: 50% !important;
+  transform: translateY(-50%);
+}
+
+#imgPreview>div img {
+  position: initial !important;
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.ui-dialog-close {
+	z-index: 102 !important;
+}
+
+.ui-preview .imgViewTop {
+	z-index: 101;
+	background: #00B6F2 !important;
+	border: 0 !important;
+}
+
+.ui-preview {
+	z-index: 100 !important;
+	background: #000000 !important;
+}
+
+.ui-preview > div:nth-child(2) {
+  width: 100%;
+  height: 100%;
+}
+
+.ui-preview  .pos-relative {
+  width: 100%;
+  height: 100%;
+}
+.imgViewTop em {
+	font-size: 18px;
+	color: #fff !important;
+	font-style: normal;
+}
+
+.js-dialog-close {
+	position: absolute;
+	right: 10px;
+	z-index: 102;
+	font-size: 30px;
+	font-weight: 700;
+	top: 4px;
+}
+/* 图片预览框 end*/

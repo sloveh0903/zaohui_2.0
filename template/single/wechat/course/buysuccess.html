@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <title></title>
+   <link rel="stylesheet" href="/public/mobile/css/mui.min.css">
+   <link rel="stylesheet" href="/public/mobile/css/threeLevelMarketing.css">
+</head>
+{include file="common/share" /}
+<body class="bg_FFF" >
+   <div class="buy_success_main">
+      <div class="buy_success_content ">
+         <h3>购买课程成功</h3>
+         <p>恭喜你成为推广大使，帮助我们推广课程即可获得丰厚的回报。</p>
+         <span>如推广您刚才所购买的课程为例：</span>
+         <div class="course_example">
+            <img src="" alt="老师头像" class="face">
+            <span>
+               <i class="course_title"></i>
+               <i class="rebate" style="display:none" class="money">推广佣金：0元</i>
+            </span>
+         </div>
+         <div class="recommend_word">推荐给身边的朋友，和TA一起学习吧！</div>
+         <div class="operate mt30">
+            <a href="{:url('wechat/rebate/rule')}" class="a_confirmDrawCash">了解更多</a>
+         </div>
+         <div class="contact_platform mt10">
+            <a href="javascript:;" class="godetail">课程详情</a>
+         </div>
+      </div>
+   </div>
+<script src="/public/mobile/js/jquery-3.2.1.min.js"></script>
+<script src="/public/mobile/js/mui.min.js"></script>
+<script src="/public/mobile/js/globla.js"></script>
+<script>
+	var cid = '{$cid}';
+    var uid = '{$userinfo.uid}'; //用户id
+    var isbind = '{$userinfo.is_bind}';
+	$.get(host+"course/detail?cid="+cid+'&uid='+uid, function(result){
+		if(result.code != 1){
+			mui.alert('获取数据失败');return false;
+		}
+		var course_detail = result.data.course_detail;
+		document.title=course_detail.title; 
+		$('.course_title').text(course_detail.title);
+		$('.face').attr("src",course_detail.face);
+		var is_rebate = result.data.is_rebate
+        $('.rebate').text('推广佣金：'+course_detail.rebate_money+'元');
+        console.log(course_detail.rebate_money);
+		if(is_rebate == '1' && course_detail.rebate_status == '1'){
+			$('.rebate').show();
+		}
+		$('.godetail').click(function(){
+			var url = "{:url('wechat/course/detail')}?cid="+cid;
+			window.location.href = url; 
+		})
+	})
+</script>
+<script src="/public/mobile/js/bindmobile.js"></script>
+</body>
+</html>

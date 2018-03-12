@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>{$config['sitename']}</title>
+  <meta name="keywords" content="{$config['seo_keywords']}">
+  <meta name="description" content="{$config['seo_description']}">
+  <link rel="stylesheet" type="text/css" href="/public/mulitpc/css/common.css">
+  <link rel="stylesheet" type="text/css" href="/public/mulitpc/css/index.css">
+   <!--[if lt IE 9]> 您的IE浏览器版本太低，请升级浏览器<![endif]-->
+</head>
+<body>
+  <!-- header -->
+  {include file="common/head" /}
+
+  <!-- banner -->
+  <div class="banner">
+    <!--11月21日轮播图开始-->
+    <!--多分类-->
+    <div class="banner-nav">
+      <ul class="banner-nav-list">
+        {volist name="cate" id="ct" key="ki"}
+        {if $ki<=6}
+        <li class="banner-nav-item" data-topid="{$ct.id}">
+          {if isset($ct.son)}
+          {if $ki == 6}
+          <a href="{:url('mulitcourse/index',['topid'=>$ct.id])}">...</a>
+          {else}
+          <p>{$ct.cate_name}</p>
+          {/if}
+          {if $ki < 6}
+          <span class="arrow-right"></span>
+          <ul class="banner-navlist-lv2">
+            {volist name="ct.son" id="child" key="v"}
+            {if $v<=8}
+            <li class="banner-navitem-lv2">
+              <a href="{:url('mulitcourse/index',['topid'=>$ct.id,'pid'=>$child.id])}">{$child.cate_name}</a>
+            </li>
+            {elseif $v==9}
+            <li class="banner-navitem-lv2">
+              <a href="{:url('mulitcourse/index',['topid'=>$ct.id,'pid'=>''])}">...</a>
+            </li>
+            {/if}
+            {/volist}
+          </ul>
+          {/if}
+          {else}
+          <a href="{:url('mulitcourse/index',['topid'=>$ct.id])}">{if $ki == 6}...{else}{$ct.cate_name}{/if}</a>
+          {/if}
+        </li>
+        {/if}
+        {/volist}
+
+      </ul>
+    </div>
+    <!--轮播图-->
+    <div class="banner_center">
+      <!--大屏幕图-->
+      <ul class="banner_img">
+        {volist name="adv_item" id="adv" key="adv_key"}
+        <li {if $adv_key == 1}class="focus"{/if}><a href="{$adv.link}" target="_blank"><img src="{$adv.photopath}"/></a></li>
+        {/volist}
+      </ul>
+      <!--轮播按钮-->
+      <ol class="ol_box">
+        {volist name="adv_item" id="vda" key="vda_key"}
+        <li {if $vda_key == 1}class="cur"{/if}><span></span></li>
+        {/volist}
+
+      </ol>
+      <!--左右箭头-->
+      <div class="arrow_l banner_arrow" style="display: none;"><img src="/public/pc/images/keyboard_arrow_left@2x.png"/></div>
+      <div class="arrow_r banner_arrow" style="display: none;"><img src="/public/pc/images/keyboard_arrow_right@2x.png"/></div>
+    </div>
+  </div>
+
+
+
+
+
+  <!-- course-showbox -->
+  <div class="content-page course-showbox">
+    <div class="course-showbox-top">
+      <h2>最新课程</h2>
+      <a href="{:url('mulitcourse/index')}">更多</a>
+    </div>
+    <div class="course-showbox-list">
+      {volist name="course" id="ao"}
+      <a href="{:url('mulitcourse/detail')}?cid={$ao.cid}" class="course-showbox-item">
+        <img src="{$ao.banner}" alt="{$ao.title}" class="course-img">
+        <h4 class="course-caption">{$ao.title}</h4>
+        <p class="course-desc">{$ao.desc}</p>
+        <p class="course-price">{if $ao.price==0}免费{else}¥{$ao.price}{/if}</p>
+      </a>
+      {/volist}
+    </div>
+  </div>
+
+  <!-- company-info -->
+  <div class="content-page company-info">
+    {$config['introduce']}
+  </div>
+<!-- <div class="qrcode-area"> -->
+<!--       	<span class="span_weixin "> -->
+<!--           <img src="/public/mulitpc/images/weixin@2x40.png" alt="微信" name="weixin"> -->
+<!--           <div class="xiaochengxu_div weixin_div displayNone"> -->
+<!--             <img src="{$config['wxcode']}" alt="微信二维码"> -->
+<!--             <p>{$config['sitename']}公众号</p > -->
+<!--           </div> -->
+<!--         </span> -->
+<!--         <span class="span_xiaochengxu"> -->
+<!--           <img src="/public/mulitpc/images/xcx@2x40.png" alt="小程序" name="xiaochengxu"> -->
+<!--           <div class="xiaochengxu_div displayNone"> -->
+<!--             <img src="{$config['wxmincode']}" alt="小程序二维码"> -->
+<!--             <p>{$config['sitename']}小程序</p > -->
+<!--           </div> -->
+<!--         </span>        -->
+<!--     </div> -->
+  <!-- footer -->
+<style>
+.footer {
+    margin: 40px 0 20px;
+}
+.footer p {
+    font-size: 12px;
+    color: rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+</style>
+<div class="footer">
+   <p>{$config['copyright']}&nbsp;&nbsp;&nbsp;&nbsp;
+	 <!--<a href="http://www.grazy.cn/" target="_blank">格子匠技术支持 GRAZY.CN</a>-->
+  </p>
+   <div class="qrcode-area">
+      	<span class="span_weixin ">
+      	  <i class="wx-img"></i>
+          <!--<img src="./images/weixin@2x40.png" alt="微信" name="weixin">-->
+          <div class="xiaochengxu_div weixin_div displayNone" style="display: none;">          	
+            <img src="{$config['wxcode']}" alt="微信二维码">
+            <p>{$config['sitename']}公众号</p>
+          </div>
+        </span>
+        <span class="span_xiaochengxu">
+          <i class="xcx-img"></i>
+          <!--<img src="./images/xcx@2x40.png" alt="小程序" name="xiaochengxu">-->
+          <div class="xiaochengxu_div displayNone" style="display: none;">         	
+            <img src="{$config['wxmincode']}" alt="小程序二维码">
+            <p>{$config['sitename']}小程序</p>
+          </div>
+        </span>       
+      </div>
+</div>
+
+<script src="/public/mulitpc/js/jquery-1.11.0.min.js"></script>
+<script src="/public/mulitpc/js/bootstrap.min.js"></script>
+<script src="/public/mulitpc/js/index.js"></script>
+<script src="/public/mulitpc/js/public_PC.js"></script>
+</body>
+</html>

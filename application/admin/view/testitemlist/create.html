@@ -1,0 +1,182 @@
+{include file="common/header" /}
+<body>
+    <div class="article_manage mCustomScrollbar">
+      <div class="right-side-header clearfix">
+        <span>题库管理</span>
+        {include file="common/admin" /}
+        <div class="success_tip displayNone">已完成</div>
+      </div>
+      <div class="right_side_content">
+        <div class="add_article_main add_quiz_main">
+          <div class="breadcrumb breadcrumb-quiz">
+            <a href="{:url('testitemlist/index')}?bank_id={$bank_id}">习题管理</a>
+            /
+            <span>添加习题</span>
+          </div>
+          <form id="form1" action="{:url('testitemlist/save')}" method="post">
+          <div class="courseInfo_fill">
+            <ul class="add_course_ul">
+              <li>
+                <span>题目类型*</span>
+                <p>
+                 <input type='hidden' name='bank_id' value='{$bank_id}'>
+                 <input type='hidden' name='back_url' id='back_url' value=''>
+                 <input type='hidden' name='type' value='1' id='type'>
+                 
+                  <label name="single" data-name="difficulty" class="tab single checked"></label><i>单选题</i>
+                  <label name="multi" data-name="difficulty" class="tab multi"></label><i>多选题</i>
+                  <label name="judge" data-name="difficulty" class="tab judge"></label><i>判断题</i>
+                  <label name="judge" data-name="difficulty" class="tab fill"></label><i>填空题</i>
+                </p>
+                <div class="clearfix"></div>
+              </li>
+              <li>
+                <span>题目标题*</span>
+                <p>
+                  <!-- 加载编辑器的容器 -->
+                  <script id="container0" name="content" type="text/plain"></script>
+                  <span class='jq-error'  id='namechecked'>标题必填</span>
+                </p>
+                <input type='hidden' name='name' value=''  id='name'>
+                <div class="clearfix"></div>
+                
+              </li>
+              <input type="hidden" name="select_option" value=''  id='option_json_arr'>
+              <li class="answer-option fill-option">
+                <span>正确答案*</span>
+                <p>
+                  <ul>
+                     <li>
+                      <input type="text" name="fill_option[]">
+                    </li>
+                  </ul>
+                  <i class="add_option-btn">添加选项</i>
+                </p>
+                <div class="clearfix"></div>
+              </li>
+              <li class="answer-option choose-option">
+                <span>答案选项*</span>
+                <p>
+                  <ul>
+                    <li class="choose-optionbox editor-container">
+                      <i class="option-letter">A</i>
+                    </li>
+                    <li class="choose-optionbox editor-container">
+                      <i class="option-letter">B</i>
+                    </li>
+                    <li class="choose-optionbox editor-container">
+                      <i class="option-letter">C</i>
+                      <i class="delete-option">删除</i>
+                    </li>
+                    <li class="choose-optionbox editor-container">
+                      <i class="option-letter">D</i>
+                      <i class="delete-option">删除</i>
+                    </li>
+                  </ul>
+                  <i class="add_option-btn">添加选项</i>
+                  <p>
+                  <span class='jq-error'  style='width:auto;' id='optionchecked'></span>
+                  </p>
+                  
+                </p>
+                
+                <div class="clearfix"></div>
+                
+              </li>
+              <input type='hidden' name='correct_option' value=''  id='correct_option'>
+              <li class="correct-answer choose-answer">
+                <span>正确答案*</span>
+                <p>
+                  <i class="option-letter">A</i>
+                  <i class="option-letter">B</i>
+                  <i class="option-letter">C</i>
+                  <i class="option-letter">D</i>
+                  
+                </p>
+                <p><span class='jq-error'  style='width:auto;' id='correctoptionchecked'></span></p>
+                <div class="clearfix"></div>
+                
+              </li>
+              <li class="correct-answer judge-answer">
+                <span>正确答案*</span>
+                <p>
+                  <i class="option-letter">A</i>正确
+                  <i class="option-letter">B</i>错误
+                </p>
+                <div class="clearfix"></div>
+              </li>
+              <li class="correct-answer fill-answer"></li>
+              <li>
+                <span>题目解析</span>
+                <p >
+                  <!-- 加载编辑器的容器 -->
+                  <script id="container1" name="content" type="text/plain"></script>
+                  <span class='jq-error'  id='parsechecked'>解析必填</span>
+                  <input type='hidden' name='parse' value=''  id='parse'>
+                </p>
+                <div class="clearfix"></div>
+                
+              </li>
+              <li class="quiz-diff">
+                <span>难度</span>
+                <p>
+                <input type='hidden' name='level' value='1' id='level'>
+                  <label for="simple" name="simple"  class="simple checked"  data-name="difficulty" ></label><i>简单</i>
+                  <label for="middle" name="middle" class="middle"  data-name="difficulty" ></label><i>一般</i>
+                  <label for="higher" name="higher" class="higher" data-name="difficulty"></label><i>困难</i>
+                </p>
+                <div class="clearfix"></div>
+              </li>
+            </ul>
+          </div>
+<!--           <i class="submit-first">公式提交</i> -->
+          
+          <i class="submit-once">立即提交</i>
+          
+          <i class="submit-more">提交并继续添加</i>
+          </form>
+        </div>
+      </div>
+   </div>
+
+<script src="/public/gzadmin/js/jquery-1.11.0.min.js"></script>
+<script src="/public/gzadmin/js/placeholder.js"></script>
+<script src="/public/gzadmin/js/public_PC.js"></script>
+<!-- 配置文件 -->
+<script type="text/javascript" src="/public/webueditor/ueditor.config.js"></script>
+<!-- 编辑器源码文件 -->
+<script type="text/javascript" src="/public/webueditor/ueditor.all.js"></script>
+<script type="text/javascript" src="/public/webueditor/lang/zh-cn/zh-cn.js"></script>
+<script type="text/javascript" charset="utf-8" src="/public/webueditor/kityformula-plugin/addKityFormulaDialog.js"></script>
+<script type="text/javascript" charset="utf-8" src="/public/webueditor/kityformula-plugin/getKfContent.js"></script>
+<script type="text/javascript" charset="utf-8" src="/public/webueditor/kityformula-plugin/defaultFilterFix.js"></script>
+<script type="text/javascript" charset="utf-8" src="/public/gzadmin/js/add_quiz.js"></script>
+ 
+{include file="common/version" /}
+<script>
+    layui.use('course');
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

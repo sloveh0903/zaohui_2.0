@@ -1,0 +1,276 @@
+{include file="common/header" /}
+<link rel="stylesheet" href="/public/gzadmin/css/custom-template.css">
+<body>
+<div class="article_manage mCustomScrollbar">
+	<div class="right-side-header clearfix">
+	        <span>知识管理</span>
+	        {include file="common/admin" /}
+   </div>
+   <div class="right_side_content">
+	    <div class="add_article_main ">
+	        <div class="breadcrumb">
+	              <a href='{:url("package/index")}'>套餐列表</a>
+	              /
+	              <span>编辑套餐</span>
+	         </div>
+	         <div class="add_article_step"></div>
+	        <div class="articleInfo_fill">
+	            <section class="panel panel-padding">
+	                <form id="form1" class="layui-form layui-form-pane" action="{:url('edit_package')}">
+	                    <div class="layui-form-item">
+	                        <label class="layui-form-label">套餐标题*</label>
+	                        <div class="layui-input-block">
+	                            <input type="hidden" name="id" value="{$package.id}" autocomplete="off" class="layui-input ">
+	                            <input type="text" name="title" required jq-verify="required" value="{$package.title}" jq-error="请输入标题" placeholder="请输入标题" autocomplete="off" class="layui-input ">
+	                        </div>
+	                    </div>
+						<div class="layui-form-item articleInfo_fill">
+							<label class="layui-form-label">选择课程*</label>
+							<div class="layui-input-inline">
+								<div class="choose-course">
+									<input type="hidden" name="course_id" class="course_id" value="{$package.choose_course_id}">
+									<span style="color:#292B33;opacity: 0.6;line-height: 32px;padding-right:5px;">已选择{$package.course_count}门课程</span>
+									<p style="cursor: pointer;font-size: 14px;color: #00B6F2;line-height: 32px;display: inline-block">选择</p>
+								</div>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label">宣传图片</label>
+							<div class="layui-input-block">
+								<input type="file" name="file" class="layui-upload-file">
+								<input type="hidden" value="{$package.banner}" name="banner" jq-error="请上传图片" error-id="small-error">
+								<p class="upload-info">图片尺寸：750*420 支持格式：JPG PNG</p>
+								<p id="small-error" class="error" style="margin-left: 300px;"></p>
+							</div>
+							{if $package.banner}
+							<div class="layui-input-block">
+								<div class="imgbox">
+									<img src="{$package.banner}" name="face" alt="" style="height:60px;">
+								</div>
+							</div>
+							{/if}
+						</div>
+	                    <div class="layui-form-item ">
+	                        <label class="layui-form-label">价格*</label>
+	                        <div class="layui-input-block">
+								<input type="text" name="price" required jq-verify="required" value="{$package.price}" jq-error="请输入价格" placeholder="￥" autocomplete="off" autocomplete="off" class="layui-input ">
+	                        </div>
+	                    </div>
+
+	                    <div class="layui-form-item">
+	                        <div class="layui-input-block">
+	                            <button class="layui-btn" jq-submit lay-filter="submit">立即提交</button>
+<!-- 	                            <button type="reset" class="layui-btn layui-btn-primary">重置</button> -->
+	                        </div>
+	                    </div>
+	                </form>
+	            </section>
+	        </div>
+    	</div>
+    </div>
+</div>
+<div class="dialog">
+	<div class="table-box">
+		<div class="cross-icon"></div>
+		<div class="row">
+			<p>选择课程</p>
+			<div class="select-box">
+				<div class="placeholder-box">选择分类</div>
+				<div class="slide-box">
+					<div class="slide-item course-link" data-id="0">全部</div>
+					{volist name="top_pid_arr" id="vo"}
+					<div class="slide-item course-link" data-id="{$vo.id}">{$vo.cate_name}</div>
+					{/volist}
+				</div>
+				<i class="slide-icon"></i>
+			</div>
+			<div class="search-box" data-id='' id="search-boxid">
+				<input type="text" placeholder="搜索..." id='search-boxtext'>
+				<i class="search-icon"></i>
+			</div>
+		</div>
+		<div class="table-content">
+			<div id='change_banner_html'></div>
+			<div class="row operation-row">
+				<i class="btn confirm-btn">确认</i>
+				<div class="pager">
+					<div class="table-pager-list" style="text-align: center">
+
+						<div class="page_div3 paging" onselectstart="return false"
+							 style="font-size: 13px; font-family: 微软雅黑; font-weight: 400; height: 32px; width : auto;">
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{include file="common/version" /}
+<script src="/public/gzadmin/js/jquery-1.11.0.min.js"></script>
+<script src="/public/static/js/jquery.paging.js"></script>
+<script>
+	$('body').on('click',function(){
+		$('.slide-box').css('display','none');
+	});
+    var tmpTag = 'https:' == document.location.protocol ? false : true;
+    if(tmpTag){
+        var protocol = 'http';
+    }else{
+        var protocol = 'https';
+    }
+    var host = protocol+'://' + window.location.host + '/api/';
+    var choose_course_id = '{$package.choose_course_id}';
+    var store_addcousrse = choose_course_id.split(',');
+    store_addcousrse = [...new Set(store_addcousrse)];
+    
+    layui.use('package');
+    $('.dialog').on('click', '.select-box', function (e) {
+    	e.stopPropagation();
+        $(this).find('.slide-box').toggle();
+        //console.log(e.target);
+    })
+    // 课程设置点击选择课程，显示多选框弹窗以及确认按钮
+    $('.layui-form-pane').on('click', '.choose-course p', function () {
+    	store_addcousrse = [...new Set(store_addcousrse)];
+        var title='';var pid=0;
+        get_course(title,pid);
+        $('.dialog').css('display', 'flex').find('.table-box').addClass('multi').removeClass('single').show().siblings().hide();
+        $(this).parents('.choose-course').addClass('modifying');
+        $('#search-boxtext').val('');
+        $('#search-boxid').attr('data-id','');
+        $('.dialog').find('.placeholder-box').html('选择分类');
+    })
+
+    // 多课程关联，确定后前端页面改变
+    $('.dialog').on('click', '.multi .confirm-btn', function () {
+        //
+        store_addcousrse = [...new Set(store_addcousrse)];
+        if(store_addcousrse.length > 0) {
+            var count = store_addcousrse.length;
+            $('.modifying').css('display', 'flex').find('span').remove();
+            $('<span style="color:#292B33;opacity: 0.6;line-height: 32px;padding-right:5px;">已选择' + count + '门课程</span>').insertBefore($('.modifying p'));
+            $('.course_id').val(store_addcousrse.join());
+        } else if ($('.dialog .checked').length == 0) {
+            $('.choose-course').find('span').remove();
+            $('.course_id').val('');
+        }
+        $('.dialog').hide();
+    })
+
+    $('body').on('dragover', function (e) {
+        if(e.target.classList.contains('template-content') || e.target.classList.contains('banner-setting') || e.target.classList.contains('add-btn')) {
+            $('.tip-box').remove();
+            isTipCreated = false;
+        }
+    })
+    //选择分类
+    $('.dialog').on('click','.slide-item', function (e) {
+        e.stopPropagation();
+        $(this).parent().hide();
+        var id = $(this).data('id');
+        //console.log(id);
+        $(this).parent().siblings('.placeholder-box').html($(this).html()).parent().siblings('.search-box').attr('data-id', id);
+    })
+    //点击搜索
+    $('.dialog').on('click','.search-icon', function () {
+        pid = $(this).parent().attr('data-id');
+        title = $('#search-boxtext').val();
+        get_course(title,pid);
+    })
+    $('.dialog').on('click', '.multi_check', function () {
+        $(this).toggleClass('checked');
+        store_addcousrse = [...new Set(store_addcousrse)];
+        if($(this).attr('id') == 'check_All') {
+            $('.multi_check').attr('class', $(this).attr('class'));
+            if($('#check_All').hasClass('checked')) {
+                $(this).parents('.row').nextAll('.row').find('.multi_check').each(function (index, elem) {
+                	var id = $(elem).data('id')+'';
+                    store_addcousrse.push(id)
+                })
+            } else {
+                $(this).parents('.row').nextAll('.row').find('.multi_check').each(function (index, elem) {
+                	var id = $(elem).data('id')+'';
+                    store_addcousrse.splice(store_addcousrse.indexOf(id), 1);
+                })
+            }
+
+        } else {
+            var id = parseInt($(this).attr('data-id'));
+            if($(this).hasClass('checked')){
+                store_addcousrse.push(id);
+            }else{
+                store_addcousrse.splice(store_addcousrse.indexOf(id), 1);
+            }
+        }
+        $('.multi_check').each(function (index, elem) {
+            if(!elem.classList.contains('checked')) {
+                $('#check_All').removeClass('checked');
+            }
+        })
+    })
+    $('.dialog').on('click', '.cross-icon, .cencel', function () {
+        $('.dialog').hide();
+        //title pid 还原
+        title = '';
+        pid = 0;
+
+    })
+    //
+    //点击 课程选择 方法
+    function get_course(title,pid){
+        $(".page_div3").html('');
+        var page4 = $(".page_div3").paging({
+            submitStyle:"ajax",
+            ajaxSubmitType: "get",
+            url:host + 'customtemplate/getcourse',
+            ajaxData:{title:title,pid:pid},
+            ajaxSubmitBack: function (data) {
+                var currentpage = data.currentPage;
+                changecourselist(data.courselist);
+                if(currentpage==1&&data.courselist.length<10)
+                {
+                    $('.jqpagediv').hide();
+                }
+            },
+        });
+        function changecourselist(courselist){
+            var temphtml ='';
+            var temp_arr = [];
+            if(courselist.length==0){
+                temphtml =temphtml+'<div><span>暂时无数据..</span></div>';
+                $('.jqpagediv').hide();
+            }else{
+                $('.jqpagediv').show();
+                temphtml = '<div class="row table-caption">'+
+                    '<div class="course-caption"><p>课程</p></div>'+
+                    '<div class="price-caption"><p>价格</p></div>'+
+                    '<div class="choose-caption"><i class="multi_check" id="check_All"></i></div>'+
+                    '</div>';
+                if(courselist.length>0){
+                    for (var i = 0; i < courselist.length; i++) {
+                        var isset = 1;
+                        if(store_addcousrse!=[]){
+                            var isset = store_addcousrse.indexOf(courselist[i]['cid']);//-1不存在
+                        }
+                        //temp_arr.push(courselist[i]['cid']);
+                        temphtml =temphtml+'<div class="row table-row">'+
+                            '<div class="course-name"><p>'+courselist[i]['title']+'</p></div>'+
+                            '<div class="price"><p>¥'+courselist[i]['price']+'</p></div>'+
+                            '<div class="choose"><i class="btn check-btn" data-id="'+courselist[i]['cid']+'"></i><i class="multi_check ';
+                        if(isset !=-1){
+                            temphtml =temphtml+'checked';
+                        }
+                        temphtml =temphtml+'" data-id="'+courselist[i]['cid']+'"></i></div>'+
+                            '</div>';
+                    }
+                }
+
+            }
+            $('#change_banner_html').html(temphtml);
+        }
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <title>提问</title>
+</head>
+<body class="bg-body-gray"> 
+  {include file="common/header" /}
+  <!-- 移动端nav列表start -->
+  {include file="common/mobilenav" /}
+  <!-- 提问区域 start-->
+  <div class="pq-wrapbox">
+    <div class="pc-mobile-tiwen-alert">
+        <img class="img-close" src="/public/wenda/images/close_ring@2x40.png" alt="关闭">
+        <span>
+          <p>
+            <i>提问</i>
+            <em>精确描述的问题更容易得到解答</em>
+          </p>
+          <img class="img-gray_close" src="/public/wenda/images/gray_close@2x40.png" alt="关闭">
+        </span>
+        <div class="textarea-wenti-title">
+          <textarea class="textarea-common mt20" name="" placeholder="问题标题" id="title"></textarea>
+          <i class="error-prompt title-error">请输入问题标题</i>
+        </div>
+        <div class="mt20 wrap-textarea">
+          <textarea class="textarea-common" name="" id="content" placeholder="问题描述(可选)"></textarea>
+        </div>
+        <div class="tiwen-alert-wrap-tag ">
+          <div class="select-wenti-classify ">
+              <select name=""  id="category">
+                <option value="0" selected="true" disabled="disabled">选择分类</option>
+                {volist name="category" id="item"}
+                 <option value="{$item.id}">{$item.cate_name}</option>
+                {/volist}
+              </select>
+              <i class="error-prompt category-error">请选择分类</i>
+          </div>
+         
+          <div class="input-upload ">
+              <label for="input-upload-file">
+                <input type="file" name="" class="input-upload-file inputFill" accept="image/*" id="input-upload-file">
+              </label>
+          </div>
+          <span class="nike-name-tag">
+              <label for="nickName" class="checked" id="anonymous">
+                <input type="checkbox" id="nickName" checked="checked">
+              </label>
+          </span>
+          <a href="javascript:void(0)" class="btn-tiwen ml15 submit" ></a>
+        </div>
+    </div>
+  </div>
+ 
+  <!-- mobilePhone/PC 登录 -->
+  
+  <div class="kaitai-word active">
+    <span>{include file="common/copyright" /}</span>
+  </div>
+  <!-- 操作提示 -->
+<!--   <div class="opreate-success-tip " style="display:flex;">
+    <span>已重置密码，请登录。</span>
+  </div>  -->
+</body>
+<script type="text/javascript">
+  var uid = '{$uid}';
+  //选择分类
+  $('#category').click(function(){
+      var category = $('#category').val();
+      if(category){
+        $('.category-error').hide();
+      }else{
+        $('.category-error').show();
+      }
+  })
+
+  //输入标题
+  $("#title").keyup(function(){
+      var title = $('#title').val();
+      if(title != ''){
+          $('.title-error').hide();
+      }else{
+          $('.title-error').show();
+      }
+  });
+
+  //上传图片
+  var upload_arr = [];
+  $(".inputFill").on("change", function () {
+      var  length = $(".fill-img").length;
+      if(length >=2 ){
+          return false;
+      }
+      var file = this.files[0];
+      var objUrl = getObjectURL(file); //获取图片的路径，该路径不是图片在本地的路径
+      var reader = new FileReader();
+      var result = reader.readAsDataURL(file);
+      reader.onload = function (e) {
+          if (objUrl) {
+              var url = '{:url("/api/ask/uploadfile")}';
+              $.post(url, {img: e.target.result}, function (ret) {
+                  if (ret.img == "") {
+                      layer.msg('图片上传失败');
+                      return;
+                  } else {
+                      var img_inner = '<div class="fill-img "><span><img class="delete-img" src="/public/wenda/images/delete_img@2x24.png"><img src="'+ret.img+'"></span></div>';
+                      $('.select-wenti-classify').after(img_inner);
+                      upload_arr.push( ret.img );
+                  }
+              }, 'json');
+          }
+      };
+  });
+
+  function getObjectURL(file) {
+        var url = null;
+        if (window.createObjectURL != undefined) { // basic
+            url = window.createObjectURL(file);
+        } else if (window.URL != undefined) { // mozilla(firefox)
+            url = window.URL.createObjectURL(file);
+        } else if (window.webkitURL != undefined) { // webkit or chrome
+            url = window.webkitURL.createObjectURL(file);
+        }
+        return url;
+    }
+
+  //删除图片
+  $(document).on('click', ".delete-img", function () {
+      var currIndex = $(this).closest(".fill-img").index();
+      var src = $(this).next('img').attr('src');
+      $(this).parent().parent('.fill-img').remove();
+      for(var i=0; i<upload_arr.length; i++) {
+        if(upload_arr[i] == src) {
+          upload_arr.splice(i, 1);
+          break;
+        }
+      }
+  })
+
+  //提交问题
+  $('.submit').click(function(){
+     var title = $('#title').val();
+     var content = $('#content').val();
+     var category = $('#category').val();
+     if(title == ''){
+        layer.msg('请输入问题标题');
+        return false;
+     }
+     if(!category){
+        layer.msg('请选择分类');
+        return false;
+     }
+     //是否匿名
+     if($('#anonymous').hasClass('checked')){
+        var anonymous = 1;
+     }else{
+        var anonymous = 0;
+     }
+     var imgpath = '';
+     for (var i = 0; i < upload_arr.length; i++) {
+        if (upload_arr[i] != '') {
+            imgpath += upload_arr[i] + ',';
+        }
+     }
+     var data = {
+        uid: uid,
+        pid: category,
+        content: content,
+        title: title,
+        imgpath: imgpath,
+        anonymous:anonymous
+     }
+
+      var url = "{:url('/api/ask/submit')}";
+      $.post(url, data, function (res) {
+            if(res.code == -1){
+              layer.msg(res.message);
+              return false;
+            }
+            if(res.code == 1){
+              layer.msg('提交成功');
+              location.reload()
+            }
+      }, 'json');
+    // console.log(data);
+  })
+</script>
+</html>

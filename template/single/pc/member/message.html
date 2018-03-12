@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>个人中心</title>
+    <link rel="stylesheet" type="text/css" href="/public/pc/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/public/pc/css/jquery.mCustomScrollbar.min.css">
+    <link rel="stylesheet" type="text/css" href="/public/pc/css/all.css">
+    <!--[if lt IE 9]> 您的IE浏览器版本太低，请升级浏览器！<![endif]-->
+</head>
+<body class="bg_FAFAFA">
+{include file="common/head" /}
+<div class="personal_study_info mt70">
+    <div class="w980 plr15">
+        <div class="leftFloat personal_head">
+            <img src="{$user.user.face}" alt="{$user.user.nickname}">
+        </div>
+        <div class="leftFloat personal_name">
+            <span class="block opacityWhite">{$user.user.nickname}</span>
+            <span class="block personal_study_time">
+               <i class="mr7">自从{$user.study_begin}学习了{$user.study_day}天</i>
+            </span>
+        </div>
+        <div class=" class_ranking">
+            <span class="class_ranking_num">{$user.ranking}</span>
+            <i>班级排名</i>
+        </div>
+        <div class=" class_ranking  finish_course">
+            <span class="finish_course_num">{$user.study_complete}</span>
+            <i>完成课程</i>
+        </div>
+        <div class=" class_ranking">
+            <span class="integral_num">{$user.user.point}</span>
+            <i>积分</i>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+<div class="personal_study_detail">
+    <div class="w980">
+        <div class="myStudy">
+            {include file="member/memberLeft" /}
+            <div class="leftFloat myStudy_content">
+                <!--我的学习 start-->
+                <div class="myMessage_div" data-nav="1" data-name="message">
+                    <ul class="tab_nav_ul" id="myTab_study">
+                        <li><a href="#noReadingInfo" data-toggle="tab" class="">我的消息</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div id="noReadingInfo">
+                            <div class="noReadingInfo mCustomScrollbar">
+                                {foreach $messageList as $msg}
+                                <div class="system_notice" style='width:96%;'>
+                                    <img src="{$msg.face}" alt="{$msg.tips}" class="noticeImg ">
+
+                                    <div class="noticeContent">
+                                        <span class="notice_title">{$msg.tips}</span>
+                                        <i class="notice_time">{$msg.create_time}</i>
+
+                                        <div class="clearfix"></div>
+                                        <p class="notice_word">{$msg.content}</p>
+                                        {if $msg.type == 1}
+                                        <a href='{:url($msg.targetType."/detail",["id"=>$msg.target])}'
+                                           class="a_startStudy">查看主题</a>
+                                        {/if}
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                                {/foreach}
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!--我的学习 end-->
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+{include file="common/bottom" /}
+<script src="/public/pc/js/jquery-1.11.0.min.js"></script>
+<script src="/public/pc/js/bootstrap.min.js"></script>
+<script src="/public/pc/js/jquery.mCustomScrollbar.concat.min.js"></script>
+<script src="/public/pc/js/jqmeter.min.js"></script>
+<script src="/public/pc/js/public_PC.js"></script>
+<script>
+    $(function () {
+        $(".mCustomScrollbar").mCustomScrollbar({
+            theme: "minimal-dark"
+        });
+
+    })
+</script>
+</body>
+</html>

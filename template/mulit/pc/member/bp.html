@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>个人中心</title>
+    <link rel="stylesheet" type="text/css" href="/public/mulitpc/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/public/mulitpc/css/common.css">
+    <link rel="stylesheet" type="text/css" href="/public/mulitpc/css/jquery.mCustomScrollbar.min.css">
+    <link rel="stylesheet" type="text/css" href="/public/mulitpc/css/personal_study.css">
+    <!--[if lt IE 9]> 您的IE浏览器版本太低，请升级浏览器！<![endif]-->
+</head>
+<body>
+{include file="common/head"/}
+{include file="member/memberTop"/}
+  <div class="userinfo-detail">
+    {include file="member/memberLeft"/}
+    <div class="detail-container" data-nav="0" data-name="study">
+      <div class="detail-title">
+        <p data-toggle="tab" style="font-size: 14px">积分明细</p>
+      </div>
+      <div class="bp-top">
+        <div class="bp-info">
+          <div class="bp-remain">
+            <i class="bpdot-icon"></i>
+            <span>剩余积分</span>
+            <span class="bp-remain-num">{$user.user.now_integral}</span>
+          </div>
+          <div class="bp-total">
+            <i class="bpdot-icon"></i>
+            <span>总积分</span>
+            <span class="bp-total-num">{$user.user.integral_count}</span>
+          </div>
+        </div>
+        <div class="bp-filter">
+          <div class="bp-filtershow">
+            <p>全部</p>
+            <i class="bp-filtericon"></i>
+          </div>
+          <div class="bp-filterslide">
+            <div class="bp-filteritem" data-val="0">
+              <p>全部</p>
+            </div>
+            <div class="bp-filteritem" data-val="1">
+              <p>获取</p>
+            </div>
+            <div class="bp-filteritem" data-val="2">
+              <p>使用</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="bprecord-list mCustomScrollbar">
+        <div class="bplist-head">
+          <p>时间</p>
+          <p>类型</p>
+          <p style="width: 100px">积分变动</p>
+        </div>
+        <div class="contentlist">
+        </div>
+
+        <div  class='jqpage' style="margin-top: 20px;float: right">
+          <div  class='jqpagediv'>
+            <div class="page_div3 paging" onselectstart="return false">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<div class="personal_study_footer mt20">
+  copyright youren.edu all right reseverd 2017&nbsp;&nbsp;&nbsp;&nbsp;
+  <!--<a href="http://www.grazy.cn/" target="_blank">格子匠技术支持 GRAZY.CN</a>-->
+</div>
+<script src="/public/pc/js/jquery-1.11.0.min.js"></script>
+<script src="/public/pc/js/bootstrap.min.js"></script>
+<script src="/public/pc/js/jquery.mCustomScrollbar.concat.min.js"></script>
+<script src="/public/pc/js/jqmeter.min.js"></script>
+<script src="/public/static/js/jquery.paging.js"></script>
+<script src="/public/pc/js/public_PC.js"></script>
+<script src="/public/mulitpc/js/jquery.paging.js"></script>
+<script>
+    $(function () {
+        var uid = '{$uid}';
+        var type = 0;
+        changelist(uid,type);
+        function changelist(uid,type) {
+            $(".page_div3").html('');
+            var page4 = $(".page_div3").paging({
+                total: '1',
+                currentPage:'1',
+                submitStyle:'ajax',
+                ajaxSubmitType:'get',
+                ajaxData:{uid:uid,type:type,size:8},
+                url:host+'integral/integralList',
+                ajaxSubmitBack: function (data) {
+                    var currentpage = data.currentPage;
+                    renderlist(data.detail);
+                    if(currentpage==1&&data.totoal<=1)
+                    {
+                        $('.jqpagediv').hide();
+                    }
+                },
+            });
+        }
+
+        function renderlist(detail) {
+            var temphtml ='';
+            $.each(detail,function(j,item){
+                temphtml =temphtml+'<div class="bplist-row"><p>'+item.create_time+'</p><p>'+item.config_name+'</p><p class="add">'+item.integral+'</p></div>';
+            })
+            $('.contentlist').html(temphtml);
+        }
+      $('.bp-filter').on('click', function () {
+        $(this).toggleClass('open').find('.bp-filterslide').toggle();
+      }).on('click', '.bp-filteritem', function () {
+          type = $(this).attr('data-val');
+          changelist(uid,type);
+        $('this').parents('.bp-filterslide').hide();
+        $('.bp-filtershow').find('p').html($(this).find('p').html());
+      })
+    })
+</script>
+</body>
+</html>

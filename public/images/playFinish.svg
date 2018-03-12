@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="451 489 40 40">
+  <defs>
+    <style>
+      .cls-1, .cls-2 {
+        fill: #fff;
+      }
+
+      .cls-1 {
+        stroke: #95989a;
+      }
+
+      .cls-2 {
+        opacity: 0;
+      }
+
+      .cls-3 {
+        clip-path: url(#clip-path);
+      }
+
+      .cls-4 {
+        fill: #ddd;
+        font-size: 16px;
+        font-family: MaterialIcons-Regular, Material Icons;
+      }
+    </style>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_3669" data-name="Rectangle 3669" class="cls-1" width="16" height="16" transform="translate(15 500)"/>
+    </clipPath>
+  </defs>
+  <g id="Group_3374" data-name="Group 3374" transform="translate(445)">
+    <rect id="Rectangle_3668" data-name="Rectangle 3668" class="cls-2" width="40" height="40" transform="translate(6 489)"/>
+    <g id="Mask_Group_28" data-name="Mask Group 28" class="cls-3" transform="translate(3 1)">
+      <text id="check" class="cls-4" transform="translate(15 516)"><tspan x="0" y="0">check</tspan></text>
+    </g>
+  </g>
+</svg>

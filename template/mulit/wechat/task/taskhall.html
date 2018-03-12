@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <title>任务大厅</title>
+   <link rel="stylesheet" href="/public/mobile/css/mui.min.css" />
+   <link rel="stylesheet" href="/public/mobile/css/threeLevelMarketing.css">
+</head>
+{include file="common/share" /}
+<body class="bg_FFF">
+   <div class="task-hall-main" style="display: none">
+      <ul class="task-hall-ul">
+         <li>
+            <a href="{:url('/wechat/task/poster')}">
+               <img src="/public/mobile/img/icon/task_img@2x.png">
+               <div>
+                  <p>
+                     <span>拉新奖励</span>
+                     <i class="nums">邀请0名好友关注海报二维码，</i>
+                     <i class="coin">可获得0枚{$task['title']}。</i>
+                  </p>
+               </div>
+            </a>
+         </li>
+      </ul>
+   </div>
+   <a href="{:url('explain')}"><img class="img-reward-icon" src="/public/mobile/img/icon/reward_icon@2x60.png"></a>
+<script src="/public/mobile/js/jquery-3.2.1.min.js"></script>
+<script src="/public/mobile/js/mui.min.js"></script>
+<script src="/public/mobile/js/globla.js"></script>   
+<script type="text/javascript">
+var uid = '{$userinfo.uid}'; //用户id
+var title = "{$task['title']}";
+$.get(host+"task/task?&uid="+uid, function(result){
+   if(result.code != 1){
+      mui.alert(result.message);
+      return false;
+   }
+   if(result.code == 1){
+      var result = result.data;
+      console.log(result);
+      if(result.task.audit == 1){
+         $('.task-hall-main').show();
+      }
+      $('.nums').text('邀请'+result.taskRule.nums+'名好友关注海报二维码,');
+      $('.coin').text('可获得'+result.taskRule.coin+title);
+   }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,173 @@
+{include file="common/header" /}
+<body>
+    <div class="article_manage mCustomScrollbar">
+      <div class="right-side-header clearfix">
+        <span>题库管理</span>
+        {include file="common/admin" /}
+        <div class="success_tip displayNone">已完成</div>
+      </div>
+      <div class="right_side_content">
+        <div class="add_article_main add_quiz_main">
+          <div class="breadcrumb breadcrumb-quiz">
+            <a href="{:url('testitemlist/index')}?bank_id={$lists['bank_id']}">习题管理</a>
+            /
+            <span>编辑习题</span>
+          </div>
+          <form id="formsave" action="{:url('testitemlist/editsave')}" method="post">
+          <div class="courseInfo_fill">
+          		<input type='hidden' name='bank_id' value='{$lists.bank_id}'>
+                <input type='hidden' name='id' value='{$lists.id}'>
+                <input type='hidden' name='type' id='type' value='{$lists.type}'>
+                <input type='hidden' name='option_count' id='option_count' value='{$option_count}'>
+              <ul class="add_course_ul">
+                <li style="position: relative">
+                    <span>题目类型*</span>
+                    <p>
+                      <label name="single" data-name="difficulty" class="tab single  {if $lists['type']==1} checked {/if}"></label><i>单选题</i>
+                      <label name="multi" data-name="difficulty" class="tab multi  {if $lists['type']==2} checked {/if}"></label><i>多选题</i>
+                      <label name="judge" data-name="difficulty" class="tab judge  {if $lists['type']==3} checked {/if}"></label><i>判断题</i>
+                      <label name="judge" data-name="difficulty" class="tab fill  {if $lists['type']==4} checked {/if}"></label><i>填空题</i>
+                    </p>
+                    <div class="modify-quiz-mask"></div>
+                    <div class="clearfix"></div>
+                </li>
+                <li>
+                    <span>题目标题*</span>
+                    <p>
+	                  <!-- 加载编辑器的容器 -->
+	                  <script id="container0" name="option[]" type="text/plain">{$lists.name}</script>
+	                </p>
+                   <p>
+                      <!--  <textarea name="name" id='name'  placeholder="一段题目标题描述" class="caption-textarea">{$lists.name}</textarea> -->
+                    </p>
+                    <span class='jq-error'  id='namechecked'>标题必填</span>
+                    <input type='hidden' name='name' value=''  id='name'>
+                    <div class="clearfix"></div>
+                </li>
+                <input type="hidden" name="select_option" value=''  id='option_json_arr'>
+              
+              {if $lists.type ==4}
+              <li class="answer-option fill-option">
+                <span>正确答案*</span>
+                <p>
+                  <ul>
+                  {php}$fill_i=1;{/php}
+                  {foreach $correct_option_arr as $key=>$val}
+                     <li>
+                      <input type="text" name="fill_option[]" value="{$val}">
+                      {if $fill_i>1}
+                      <i class="delete-option">删除</i>
+                      {/if}
+                      {php}$fill_i++;{/php}
+                    </li>
+                    {/foreach}
+                  </ul>
+                  <i class="add_option-btn">添加选项</i>
+                </p>
+                <div class="clearfix"></div>
+              </li>
+              <li class="answer-option choose-option">
+              </li>
+              <li class="correct-answer choose-answer">
+              </li>
+              <li class="correct-answer judge-answer">
+              </li>
+              {else}
+                <li class="answer-option choose-option">
+                    <span>答案选项*</span>
+                    <p>
+                      <ul>
+                      {php}$i=2;{/php}
+                      {foreach $option_arr as $key=>$val}
+                      <li  class="choose-option choose-optionbox editor-container">
+                       {if $i>3}
+                         <i class="option-letter">{$key}</i>
+                      <i class="delete-option">删除</i>
+                        {else}
+                         <i class="option-letter">{$key}</i>
+                        {/if}
+                         <script id="container{$i}" name="option[{$key}]" type="text/plain">{$val}</script>
+                        {php}$i++;{/php}
+                        </li>
+                        {/foreach}
+                       
+                      </ul>
+                      <i class="add_option-btn">添加选项</i>
+                    </p>
+                    <span class='jq-error'  style='width:auto;' id='optionchecked'></span>
+                    <div class="clearfix"></div>
+                </li>
+                <input type='hidden' name='correct_option' value='{$lists.correct_option}' id='correct_option'> 
+               
+                <li class="correct-answer choose-answer">
+                  <span>正确答案*</span>
+                  <p>
+                  	{foreach $option_arr as $key=>$val}
+                    <i class="option-letter {if in_array($key,$correct_option_arr)} selected {/if}">{$key}</i>
+                    {/foreach}
+                  </p>
+                  <span class='jq-error' style='width:auto;'  id='correct_optionchecked'>正确答案必填</span>
+                  <div class="clearfix"></div>
+                </li>
+                <li class="correct-answer judge-answer">
+                  <span>正确答案*</span>
+                  <p>
+                  {foreach $option_arr as $key=>$val}
+                    <i class="option-letter {if in_array($key,$correct_option_arr)} selected {/if} ">{$key}</i>{$val}
+                    {/foreach}
+                   
+                  </p>
+                  <span class='jq-error' style='width:auto;'  id='judge_correct'>正确答案必填</span>
+                  <div class="clearfix"></div>
+                </li>
+                {/if}
+                <li class="correct-answer fill-answer"></li>
+                <li>
+                    <span>题目解析*</span>
+                    <p>
+                    <script id="container1" name="option[]" type="text/plain">{$lists.parse}</script>
+                     <!--  <textarea class="analyse-textarea" name="parse">{$lists.parse}</textarea> -->
+                    </p>
+                    <span class='jq-error'  id='parsechecked'>解析必填</span>
+                    <input type='hidden' name='parse' value=''  id='parse'>
+                    <div class="clearfix"></div>
+                </li>
+                <li class="quiz-diff">
+                    <span>难度</span>
+                    <p>
+                    <input type='hidden' name='level' value="{$lists['level']}" id='level'>
+                      <label for="simple" data-name="difficulty" class="simple {if $lists['level']==1} checked {/if}"></label><i>简单</i>
+                      <label for="middle" data-name="difficulty" class="middle {if $lists['level']==2} checked {/if} " ></label><i>一般</i>
+                      <label for="higher" data-name="difficulty" class="higher {if $lists['level']==3} checked {/if}"></label><i>困难</i>
+                    </p>
+                    <div class="clearfix"></div>
+                </li>
+              </ul>
+          </div>
+          <i class="submit-once">立即提交</i>
+          </form>
+        </div>
+      </div>
+   </div>
+<script src="/public/gzadmin/js/jquery-1.11.0.min.js"></script>
+<script src="/public/gzadmin/js/placeholder.js"></script>
+<script src="/public/gzadmin/js/public_PC.js"></script>
+<!-- 配置文件 -->
+<script type="text/javascript" src="/public/webueditor/ueditor.config.js"></script>
+<!-- 编辑器源码文件 -->
+<script type="text/javascript" src="/public/webueditor/ueditor.all.js"></script>
+<script type="text/javascript" src="/public/webueditor/lang/zh-cn/zh-cn.js"></script>
+<script type="text/javascript" charset="utf-8" src="/public/webueditor/kityformula-plugin/addKityFormulaDialog.js"></script>
+<script type="text/javascript" charset="utf-8" src="/public/webueditor/kityformula-plugin/getKfContent.js"></script>
+<script type="text/javascript" charset="utf-8" src="/public/webueditor/kityformula-plugin/defaultFilterFix.js"></script>
+<script>
+
+</script>
+<script type="text/javascript" charset="utf-8" src="/public/gzadmin/js/edit_quiz.js"></script>
+{include file="common/version" /}
+<script>
+    layui.use('course');
+</script>
+</body>
+</html>
+

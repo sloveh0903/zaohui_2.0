@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>{$config['sitename']}首页</title>
+    <meta name="keywords" content="{$config['seo_keywords']}">
+    <meta name="description" content="{$config['seo_description']}">
+    <link rel="stylesheet" type="text/css" href="/public/pc/css/jquery.mCustomScrollbar.min.css">
+    <link rel="stylesheet" type="text/css" href="/public/pc/css/all.css">
+    <!--[if lt IE 9]> 您的IE浏览器版本太低，请升级浏览器<![endif]-->
+</head>
+<body>
+<!-- 添加pc首页图片控制 -->
+<style>
+.youren_main{width:100%;height:100%;  background: #b3b3c1;margin-top:70px;padding:40px 10%;
+   background: url('{$pc_url}') center center/1920px 750px no-repeat;background-size: cover;
+ }
+</style>
+{include file="common/head" /}
+<div class="youren_main mt70">
+    <div class="youren_main_course  textCenter  mCustomScrollbar">
+        <div class="youren_main_course_title relative " style='margin-top:21px;'>
+            <i class="inlineBlock shortLine"></i>
+            <span class="inlineBlock font18 mlr10 opacityWhite">课程</span>
+            <i class="inlineBlock shortLine"></i>
+        </div>
+        <div class="youren_main_course_content  mt20 textLeft">
+            <ul class="course_content_ul ">
+                {volist name="course" id="data"}
+                <li>
+                    <a href="{:url('course/index',['cid'=>$data.cid])}">
+                        <div class="inlineBlock tou_div">
+                            <img src="{$data.face}" alt="{$data.realname}">
+                        </div>
+                        <div class="inlineBlock ml15 teacher_product">
+                            <div class="teacher_name dan  opacityWhite ">{$data.title}</div>
+                            <div class="teacher_name teacher_info dan opacityWhite opacity80 mb3">{$data.desc}</div>
+                        </div>
+                    </a>
+                </li>
+                {/volist}
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="youren_main2 mb40">
+    <div class="mt40 font40 color292B33 ">{$config['sitename']}</div>
+    <div class="font40 color292B33" style="font-weight: 300">{$config['title']}</div>
+    <div class="mt15 youren_main2_text ">
+        <p>{$config['introduce']}</p>
+    </div>
+    <div class="youren_main2_footer mt40">
+        <div class="leftFloat pt10">
+            <span class="inlineBlock font13 vertical_lineHeight" style="line-height: 12px;"><font class="opacity40" style="font-size: 13px;">版权所有：{$config['copyright']} </font><br><a href="http://www.grazy.cn" target="_blank"><img src="/public/pc/images/copyright.png" width="160" height="11"></a></span>
+        </div>
+        <!-- <div href="javascript:void(0)" title=""> -->
+        <div class="rightFloat youren_main2_smallCX ml20 relative pt10" name="xiaochengxu">
+            <img src="/public/pc/images/xcx@2x40.png" alt="小程序">
+            <div class="smallCX displayNone">
+                <div class="smallCX_QRcord">
+                    <img src="/public/pc/images/gh_5238cc8f786e_344.jpg" alt="小程序二维码">
+                </div>
+                <div class="smallCX_img textCenter">
+                    <span class="color292B33 opacity60 inlineBlock">小程序</span>
+                </div>
+            </div>
+            <!-- </div> -->
+        </div>
+        <!-- <div href="javascript:void(0)" title="" > -->
+        <div class="rightFloat youren_main2_smallCX youren_main2_weixin ml20 relative pt10" name="weixin">
+            <img src="/public/pc/images/weixin@2x40.png" alt="微信">
+            <div class="smallCX  weixin displayNone">
+                <div class="smallCX_QRcord weixin_QRcord">
+                    <img src="/public/pc/images/weixin_QRcord@2x.jpg" alt="微信二维码">
+                </div>
+                <div class="smallCX_img textCenter">
+                    <span class="color292B33 opacity60 inlineBlock">公众号</span>
+                </div>
+            </div>
+        </div>
+        <!-- </div> -->
+        <div class="rightFloat">
+            <span class="vertical_lineHeight font13 opacity60 pt10 ">其他平台</span>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+
+</div>
+<script src="/public/pc/js/jquery-1.11.0.min.js"></script>
+<script src="/public/pc/js/bootstrap.min.js"></script>
+<script src="/public/pc/js/jquery.mCustomScrollbar.concat.min.js"></script>
+<script type="text/javascript" src="/public/mobile/js/globla.js"></script>
+<script src="/public/pc/js/public_PC.js"></script>
+<script>
+    $(function(){
+        var _Width = document.body.clientWidth;
+        _Height = _Width*750/1920;
+        $('.youren_main').css('height',_Height);
+        $('.youren_main_course').css('height',_Height-80);
+        //console.log(_Height);
+    });
+    $(".mCustomScrollbar").mCustomScrollbar({
+        theme: "minimal-dark"
+    });
+    // 小程序二维码隐藏、显示
+    $(".youren_main2_smallCX[name='xiaochengxu']").hover(
+            function () {
+                // $(".smallCX").show()
+                $(this).find(".smallCX").show();
+            },
+            function () {
+                // $(".smallCX").show()
+
+                $(this).find(".smallCX").hide();
+            }
+    )
+    // 微信二维码隐藏、显示
+    $(".youren_main2_smallCX[name='weixin']").hover(
+            function () {
+                // $(".weixin").show()
+                $(this).find(".smallCX").show();
+            },
+            function () {
+                $(this).find(".smallCX").hide();
+                // $(".weixin").hide()
+            }
+    )
+</script>
+</body>
+</html>

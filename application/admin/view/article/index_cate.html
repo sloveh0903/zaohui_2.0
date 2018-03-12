@@ -1,0 +1,58 @@
+{include file="common/header" /}
+<body>
+<div class="article_manage mCustomScrollbar">
+	<div class="right-side-header clearfix">
+	        <span>文章管理</span>
+	        {include file="common/admin" /}
+   </div>
+    <div class="right_side_content">
+	   <div class="system_guanli_div">
+	 		<ul class="system_guanli_ul">
+	 		<li><a href="javascript:void(0)" class="active  goto" data-src='{:url("article/index_cate")}'>文章分类</a></li>
+		    	<li><a href="javascript:void(0)" class="goto" data-src='{:url("article/index")}'>文章列表</a></li>
+            	
+           </ul>
+		</div>
+		<div class="success_tip displayNone">已完成</div>
+		    <div class="course_right_main ">
+	        <div class="operation_div">
+	            <span class="span_add btn goto" data-src='{:url("article/add_cate")}'>添加分类</span>
+	            <span class="span_delete btn ajax-all" data-name="checkbox" data-params='{"url": "{:url("article/batch_cate")}","data":"","confirm":"true"}'>删除</span>
+	            <div class="clearfix"></div>
+	        </div>
+	        <div id="list" class="layui-form"></div>
+	        <div class="text-right" id="page"></div>
+	    </div>
+	 </div>
+</div>
+<script id="list-tpl" type="text/html" data-params='{"url":"{:url("article/index_cate")}","pageid":"#page"}'>
+    <table id="example" class="layui-table" lay-skin="line">
+        <thead>
+        <tr>
+            <th style="width: 6%"><input type="checkbox" id="checkall" data-name="checkbox" lay-filter="check" lay-skin="primary"></th>
+            <th>类名</th>
+            <th style="width: 13%">排序</th>
+            <th style="width: 13%">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{# layui.each(d.list, function(index, item){ }}
+        <tr>
+            <td>
+                <input type="checkbox" name="checkbox" value="{{ item.id}}" lay-skin="primary">
+            </td>
+            <td>{{ item.cate_name}}</td>
+            <td class="icon"><i class="rise ajax" data-params='{"url": "{:url("article/moveUpDown")}","data":"id={{ item.id}}&updown=up"}'></i><i class="drop ajax" data-params='{"url": "{:url("article/moveUpDown")}","data":"id={{ item.id}}&updown=down"}'><!-- </i><i class="more"></i> --></td>
+            <td><i class="i_edit goto" data-src='{:url("article/edit_cate")}?id={{ item.id }}'>编辑</i>／<i class="i_delete ajax" data-params='{"url": "{:url("article/del_cate")}","data":"id={{ item.id}}","confirm":"true"}'>删除</i></td>
+        </tr>
+        {{# }); }}
+        </tbody>
+
+    </table>
+</script>
+{include file="common/version" /}
+<script>
+    layui.use('list');
+</script>
+</body>
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <meta charset="utf-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <title>阅读</title>
+   <link rel="stylesheet" href="/public/mulitpc/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/public/mulitpc/css/common.css">
+    <link rel="stylesheet" type="text/css" href="/public/mulitpc/css/read.css">
+</head>
+<body class="bg_FFFFFF">
+  <!-- header -->
+   {include file="common/head" /}
+   <div class=" read_main pb20">
+      <div class="w940">
+          <div class="read_main_lunbo mt30">
+              <div data-ride="carousel" class="carousel slide" id="carousel-example-generic">
+                  <ol class="carousel-indicators">
+                      {volist name="advs" id="vo" key="k"}
+                      <li class="{$k==1 ? 'active' : ''}" data-slide-to='{$k}' data-target='#carousel-example-generic'></li>
+                      {/volist}
+                  </ol>
+                  <div role="listbox" class="carousel-inner">
+                      {volist name="advs" id="ao" key="key"}
+                      <div class="item {$key==1 ? 'active' : ''} ">
+                          <a href='{$ao.link}'><img src="{$ao.photopath}" alt="{$ao.title}"></a>
+                      </div>
+                      {/volist}
+                  </div>
+              </div>
+          </div>
+         <div class="mt30 read_main_middle">
+            <div class="read_main_left leftFloat">
+               <div class="read_main_left_list">
+
+               </div>
+                <div  class='jqpage'>
+                    <div  class='jqpagediv'>
+                        <div class="page_div3 paging" onselectstart="return false">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="read_main_right leftFloat">
+               <div class="acticle-type">
+                  <h4>文章分类</h4>
+                  <ul class="acticle-type-ul">
+                      {foreach $categorys as $category}
+                      <li data-id="{$category.id}">
+                          <i></i><a href="javascript:void(0)" >{$category.cate_name}</a>
+                      </li>
+                      {/foreach}
+                  </ul>
+               </div>
+                <div class="use_xcx mt30">
+                    <p class="opacityWhite">使用小程序</p>
+                    <p class="opacityWhite">课程随时学</p>
+                    <a href="javascript:void(0)" target="_blank" class="a_get textCenter mt10">获取</a>
+                    <div class="rightFloat youren_main2_smallCX ml20 relative pt10">
+                        <div class="smallCX displayNone" style="top: -302px;">
+                            <div class="close" style="position: absolute;right: 0;top: 0;"><img src="/public/pc/images/delete@2x.png" width="30" height="30"></div>
+                            <div class="smallCX_QRcord">
+                                <img src="{$config.wxmincode}" alt="小程序二维码">
+                            </div>
+                            <div class="smallCX_img textCenter">
+                                <span class="color292B33 opacity60 inlineBlock">小程序<br>手机微信扫一扫</span>
+                            </div>
+                        </div>
+                        <!-- </div> -->
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+         </div>
+      </div>
+      <div class="read_load mt40  textCenter">
+         <p class="mt40 font13 opacity40 color292B33">{$config.copyright}&nbsp;&nbsp;&nbsp;&nbsp;
+		   <!--格子匠技术支持 GRAZY.CN-->
+		</p>
+      </div>
+   </div>
+<script src="/public/mulitpc/js/jquery-1.11.0.min.js"></script>
+<script src="/public/mulitpc/js/bootstrap.min.js"></script>
+<script src="/public/mulitpc/js/public_PC.js"></script>
+  <script src="/public/mulitpc/js/jquery.paging.js"></script>
+  <script>
+      var cid = "";
+      $(function () {
+          var tmpTag = 'https:' == document.location.protocol ? false : true;
+          if(tmpTag){
+              var protocol = 'http';
+          }else{
+              var protocol = 'https';
+          }
+          var host = protocol+'://' + window.location.host + '/api/';
+          changepage(host,cid);
+          function changepage(host,cid){
+              //自定义皮肤，精简模式一
+              $(".page_div3").html('');
+              var page4 = $(".page_div3").paging({
+                  submitStyle:"ajax",
+                  ajaxSubmitType: "get",
+                  url:host + 'article/mulitindex',
+                  ajaxData:{cid:cid},
+                  ajaxSubmitBack: function (data) {
+                      changearticlelist(data.article)
+                  },
+              });
+          }
+          function changearticlelist(articlelist){
+              var temphtml ='';
+              if(articlelist.length==0){
+                  temphtml =temphtml+'<div class="nocourse"><div><img src="/public/mulitpc/images/nocourse.png"></div><span>小编正努力上传中..</span></div>';
+                  $('.jqpagediv').hide();
+              }else{
+                  $('.jqpagediv').show();
+                  $.each(articlelist,function(j,item){
+                      temphtml += '<div class="list_group">' +
+                          '<a href='+'{:url("article/detail")}?id='+item.id+' target="_blank" class="list_group_href">' +
+                          '<div class="list_left leftFloat"> <img src="'+item.banner+'" alt="'+item.title+'">' +
+                          '</div>' +
+                          '<div class="list_right leftFloat">' +
+                          '<p class="list_right_p1 color292B33 font24  dot-ellipsis dot-height-70" >'+item.title+'</p>' +
+                          '<p class="font14 color292B33 opacity60 dan ">'+item.desc+'</p>' +
+                          '<div class=" list_right_footer ">' +
+                          '<div class="leftFloat">' +
+                          '<img src="/public/mulitpc/images/eye_gray@2x.png" alt="图片可视" class="img_eye16"><i class="font13 opacity40">'+item.views+'</i>' +
+                          '<img src="/public/mulitpc/images/comment_gray@2x16.png" alt="图片评论" class="img_comment16"><i class="font13 opacity40">'+item.comments+'</i>' +
+                          '</div>' +
+                          '<div class="rightFloat "><i class="time_show font13 opacity40" >'+item.create_time+'</i></div>' +
+                          '<div class="clearfix"></div>' +
+                          '</div>' +
+                          '</div>' +
+                          '<div class="clearfix"></div>' +
+                          '</a>' +
+                          '</div>';
+                  });
+              }
+              $('.read_main_left_list').html(temphtml);
+          }
+          //一级栏目
+          $('.acticle-type-ul').on('click','li', function () {
+              $id = $(this).attr('data-id');
+              changepage(host,$id);
+          });
+      });
+
+  </script>
+<script>
+   //轮播自动播放关闭
+   $(".a_get").on('click',function () {
+       $(".smallCX").show();
+   });
+   $(".close,.smallCX").on('click',function () {
+       $(".smallCX").hide();
+   });
+   $('#carousel-example-generic').carousel({
+        // interval: false
+    })
+   $(function () {
+       $('.list_right_p1').css('white-space','nowrap');
+   })
+</script>    
+</body>
+</html>

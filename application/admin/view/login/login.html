@@ -1,0 +1,126 @@
+{include file="common/header" /}
+<script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+<script src="http://static.geetest.com/static/tools/gt.js"></script>
+<body class="login_body_bg">
+<div class="login_top"><img src="/public/gzadmin/images/login_top@2x283.png"></div>
+<div class="login_main">
+    <!--<form id="form1" class="layui-form layui-form-pane" action="{:url('doLogin')}">-->
+    <div class="login_main_up">
+        <p>登录</p>
+        <span class="error_tip" id="error_tip"></span>
+    </div>
+    <div class="login_main_down">
+        <input type="text" style="width: 100%" name="username" placeholder="账号" autocomplete="off" class="layui-input username" >
+        <input type="password" style="width: 100%" name="password" placeholder="密码" autocomplete="off" class="layui-input password">
+        <p>
+            {if condition="config('verify_type') eq 1"}
+            <div style="margin-bottom:70px">
+                <input type="text" class="form-control" placeholder="验证码"
+                       style="color:black;width:120px;float:left;margin:0px 0px;" name="code" id="code"/>
+                <img src="{:url('checkVerify')}"
+                     onclick="javascript:this.src='{:url('checkVerify')}?tm='+Math.random();"
+                     style="float:right;cursor: pointer"/>
+            </div>
+            {else}
+            <div id="embed-captcha"></div>
+            <p id="wait" style="display:none;">正在加载验证码......</p>
+            {/if}
+        </p>
+        <i class="i_login_confirm">登录</i>
+    </div>
+    <!--</form>-->
+    <!--<form id="form1" class="layui-form layui-form-pane" action="{:url('add_course')}">
+        <input type="text" name="title" required jq-verify="required" jq-error="请输入课程名称" placeholder="请输入课程名称" value="" autocomplete="off" class="layui-input ">
+
+    </form>-->
+    <i></i>
+</div>
+<div class="login_footer">ALL RIGHTS RESVERED</div>
+
+</body>
+{include file="common/version" /}
+<script>
+    layui.use('course');
+</script>
+<script>
+    $(function(){
+        initHeight();
+        var handlerEmbed = function (captchaObj) {
+            $("#embed-submit").click(function (e) {
+                var validate = captchaObj.getValidate();
+                if (!validate) {
+                    $("#notice")[0].className = "show";
+                    setTimeout(function () {
+                        $("#notice")[0].className = "hide";
+                    }, 2000);
+                    e.preventDefault();
+                }
+            });
+            // 将验证码加到id为captcha的元素里
+            captchaObj.appendTo("#embed-captcha");
+            captchaObj.onReady(function () {
+                $("#wait")[0].className = "hide";
+            });
+            // 更多接口参考：http://www.geetest.com/install/sections/idx-client-sdk.html
+        };
+        $.ajax({
+            // 获取id，challenge，success（是否启用failback）
+            url: "{:url('/admin/Login/getVerify',array('t'=>time()))}", // 加随机数防止缓存
+            type: "get",
+            dataType: "json",
+            success: function (data) {
+                // 使用initGeetest接口
+                // 参数1：配置参数
+                // 参数2：回调，回调的第一个参数验证码对象，之后可以使用它做appendTo之类的事件
+                initGeetest({
+                    gt: data.gt,
+                    challenge: data.challenge,
+                    product: "float", // 产品形式，包括：float，embed，popup。注意只对PC版验证码有效
+                    offline: !data.success // 表示用户后台检测极验服务器是否宕机，一般不需要关注
+                }, handlerEmbed);
+            }
+        });
+        $('.i_login_confirm').on('click', function () {
+            var username = $.trim($('.username').val());
+            var password = $.trim($('.password').val());
+            if (!username) {
+                layer.msg('账号不能为空');
+                return false;
+            }
+            if (!password) {
+                layer.msg('密码不能为空');
+                return false;
+            }
+            $.ajax({
+                url: "{:url('doLogin')}", // 加随机数防止缓存
+                type: "post",
+                data: {
+                    username:username,
+                    password:password,
+                    geetest_challenge:$('.geetest_challenge').val(),
+                    geetest_validate:$('.geetest_validate').val(),
+                    geetest_seccode:$('.geetest_seccode').val()
+                },
+                success: function (res) {
+                    layer.msg(res.msg);
+                    if(res.status != 200){
+                        return false;
+                    }else{
+                        window.location.href=res.url;
+
+                    }
+                }
+            });
+        });
+    });
+    //浏览器改变触发该事件
+    $(window).resize(function(){
+        initHeight();
+    })
+    //初始化height
+    function initHeight(){
+        var window_height =  $(window).height();
+        $(document.body).height( window_height);
+    }
+</script>
+</html>

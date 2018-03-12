@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>我的解答</title>
+		<link rel="stylesheet" href="/public/mobile/css/mui.min.css" />
+		<link rel="stylesheet" href="/public/mobile/css/globla.css" />
+		<link rel="stylesheet" href="/public/mobile/css/member.css" />
+	</head>
+    {include file="common/share" /}
+	<body>
+		<div class="mui-row myquestions-list">
+			<ul id="answer">
+			</ul>
+		</div>
+		<script type="text/javascript" src="/public/mobile/js/jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="/public/mobile/js/mui.min.js"></script>
+		<script type="text/javascript" src="/public/mobile/js/globla.js"></script>
+		<script>
+            var uid = '{$userinfo.uid}';
+            $.ajax({
+                url:host+'user/answer',
+                data:{
+                    uid:uid
+                },
+                type:'GET', //GET
+                async:true,    //或false,是否异步
+                timeout:5000,    //超时时间
+                dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+                success:function(data,textStatus,jqXHR){
+                    if(data.code==1){
+                        var list = "";
+                        var result = data.data;
+                        console.log(result);
+                        $.each(result.list,function(j,item){
+          					if(item.ask_id){
+                                list += '<li data-id="' + item.ask_id + '">' + '<h1 class="font-size-16 font-color-8">'+item.ask_title+'</h1>' +
+									'<span class="font-size-14 font-color-6">'+item.content+'</span>' +
+									'<span class="myAnswer-icon"><i class="icon-zan"></i><font>'+item.likes+'</font><i class="icon-msg"></i><font>'+item.comments+'</font></span></li>';
+                            }
+                        });
+                        if(result.list.length == 0){
+							$('#answer').append(nodata);
+						}else{
+                            $("#answer").append(list);
+                        }
+                    }
+                }
+            });
+            mui('#answer').on('tap','li',function () {
+                var id = $(this).attr('data-id');
+                url = "{:url('wechat/ask/detail')}";
+                window.location.href = url + '?id=' + id;
+            });
+		</script>
+	</body>
+</html>

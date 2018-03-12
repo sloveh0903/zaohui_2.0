@@ -1,0 +1,764 @@
+{include file="common/header" /}
+<link rel="stylesheet" href="/public/qiniu/dist/video.css">
+<body>
+<div class="article_manage right-side-main">
+	<div class="right-side-header clearfix">
+	        <span>课程管理</span>
+	        {include file="common/admin" /}
+   </div>
+   <div class="right_side_content">
+	    <div class="add_article_main ">
+	    	<div class="breadcrumb">
+	            <a href='{:url("course/index")}'>课程列表</a>
+	            /
+	            <span>编辑课程</span>
+	          </div>
+	        <div class="add_article_step">
+	            <ul class="editCourse-nav-ul clearFloat">
+	                <li data-src='{:url("course/edit_course",["cid"=>$id])}' class="goto"><i data-name="edit_course">课程简介</i></li>
+	                <li class="goto active" data-src='{:url("chapter/update",["id"=>$id])}'><i data-name="edit_course_video">课程视频</i></li>
+	                <li class="goto" data-src='{:url("course/introduce",["cid"=>$id,"type"=>"update"])}'><i data-name="edit_pc_production">pc版介绍</i></li>
+	            </ul>
+	        </div>
+	        <div class="right-side-content mt20 ">
+	            <div class="addVideo-body mt30 mb15">
+	                <div class="addVideo-header">
+                        <span style="font-size: 14px;color: rgba(41,43,51,.4);float: right;line-height:48px;height: 33px;">上传视频格式MP4,视频大小不超过1GB <a href="http://www.grazy.cn/help?i=210" target="_blank"><img src="/public/gzadmin/images/videotag.png" width="20" height="20"></a> </span>
+	                    <span class="btn-border-primary btn-addChapter">新增章节</span>
+	                </div>
+	                <div class="addVideo-content mt20">
+	                    <ul class="chapter-ul">
+	                        {foreach $chapter as $item}
+	                        <li>
+	                            <div class="chapter-heading">
+	                                <h5>{$item.cate_name}</h5>
+	                                <div class="chapter-curr-operate">
+	                                    <img class="chapter-up" data-id="{$item.id}"
+	                                         src="/public/static/merch/images/chapter_up@2x20.png">
+	                                    <img class="chapter-down" data-id="{$item.id}"
+	                                         src="/public/static/merch/images/chapter_down@2x20.png">
+	                                    <span class="upload-video" id="pupload{$item.id}" data-id="{$item.id}">上传视频</span>
+	                                    <span class="edit-chapter" data-id="{$item.id}" data-title="{$item.cate_name}">编辑</span>
+	                                    <span class="delete-chapter" data-id="{$item.id}">删除</span>
+	                                </div>
+	                            </div>
+	                            <ul class="video-ul">
+	
+	                                {foreach $item.video as $v}
+	                                {php}if(!$v){ continue; }{/php}
+	                                <li>
+	                                    <div class="video-heading">
+	                                        <h5>{$v.title}</h5>
+	                                        <div class="video-curr-operate">
+	                                            {if $v.free}
+	                                            <i data-status="on" class="active setfree" data-id="{$v.id}"></i>
+	                                            {else}
+	                                            <i data-status="off" class="setfree" data-id="{$v.id}"></i>
+	                                            {/if}
+	                                            <font style="font-size: 14px;color:rgba(41,43,51,.3);margin:0 6px 0 10px">试看</font>
+	                                            <img class="video-up" data-id="{$v.id}"
+	                                                 src="/public/static/merch/images/video_up@2x20.png">
+	                                            <img class="video-down" data-id="{$v.id}"
+	                                                 src="/public/static/merch/images/video_down@2x20.png">
+	                                            <span class="move-video" data-id="{$v.id}">移动</span>
+	                                            <span class="edit-video" data-id="{$v.id}" data-title="{$v.title}">编辑</span>
+	                                            <span class="delete-video" data-id="{$v.id}">删除</span>
+	                                        </div>
+	                                    </div>
+	                                </li>
+	                                {/foreach}
+	                            </ul>
+	                        </li>
+	                        {/foreach}
+	                    </ul>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+    </div>
+    <div class="modal-bms course-move-modal" style="display: none;left: 0;top:0">
+        <div class="modal-dialog-bms">
+            <div class="modal-header">
+                <h5>课程移动</h5>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body mt20">
+                <select name="chapter_id">
+                    <option value="0">请选择章节</option>
+                    {foreach $chapter as $item}
+                    <option value="{$item.id}">{$item.cate_name}</option>
+                    {/foreach}
+                </select>
+            </div>
+            <div class="modal-footer mt40">
+                <span class="btn-primary">保存</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 新增章节 -->
+    <div class="modal-bms add-chapter-modal" style="top:0;left: 0;">
+        <div class="modal-dialog-bms">
+            <div class="modal-header">
+                <h5>新增章节</h5>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body mt20">
+                <input class="add-chapter-input add-charset-title" type="text" name="" placeholder="请输入章节名称">
+            </div>
+            <div class="modal-footer mt40">
+                <span class="btn-primary">保存</span>
+            </div>
+        </div>
+    </div>
+    <input type="hidden" id="domain" value="{$domain}">
+    <input type="hidden" id="uptoken_url" value="{$token}">
+
+    <!-- 课程管理删除提示1 -->
+    <div class="modal-bms course-delete-modal" >
+        <div class="modal-dialog-bms">
+            <div class="modal-header">
+                <h5>删除提示</h5>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body mt20">
+                <p class="course-delete-text">该章节内含有视频，请先清除视频后<br>再行删除。</p>
+            </div>
+            <div class="modal-footer mt40">
+                <span class="btn-primary">确定</span>
+            </div>
+        </div>
+    </div>
+    <!-- 课程管理删除提示2 -->
+    <div class="modal-bms course-delete-confirm-modal" >
+        <div class="modal-dialog-bms">
+            <div class="modal-header">
+                <h5>删除提示</h5>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body mt20">
+                <p class="course-delete-text">是否确认删除?</p>
+            </div>
+            <div class="modal-footer mt40">
+                <span class="btn-danger">确定</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 编辑章节 -->
+    <div class="modal-bms edit-chapter-modal" >
+        <div class="modal-dialog-bms">
+            <div class="modal-header">
+                <h5>章节名称编辑</h5>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body mt20">
+                <input class="add-chapter-input" type="text" name=""  placeholder="请输入章节名称">
+            </div>
+            <div class="modal-footer mt40">
+                <span class="btn-primary">保存</span>
+            </div>
+        </div>
+    </div>
+    <!-- 编辑视频 -->
+    <div class="modal-bms edit-video-modal" >
+        <div class="modal-dialog-bms">
+            <div class="modal-header">
+                <h5>视频名称编辑</h5>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body mt20">
+                <input class="add-chapter-input" type="text" name="" value="">
+            </div>
+            <div class="modal-footer mt40">
+                <span class="btn-primary">保存</span>
+            </div>
+        </div>
+    </div>
+</div>
+{include file="common/version" /}
+<script type="text/javascript" src="/public/qiniu/dist/moxie.js"></script>
+<script type="text/javascript" src="/public/qiniu/dist/plupload.dev.js"></script>
+<script type="text/javascript" src="/public/qiniu/dist/zh_CN.js"></script>
+<script type="text/javascript" src="/public/static/js/base64.js"></script>
+<script type="text/javascript" src="/public/qiniu/dist/ui.js"></script>
+<script type="text/javascript" src="/public/qiniu/dist/qiniu.js"></script>
+<script type="text/javascript" src="/public/qiniu/dist/highlight.js"></script>
+<script type="text/javascript">hljs.initHighlightingOnLoad();</script>
+<script>
+    var cid = '{$id}';
+
+    //上一步
+    $(".prev-step").click(function () {
+        var src = "{:url('course/create')}";
+        $("#iframe", obj.myParent).attr("src", src);
+    })
+    //新增章节
+    $(".btn-addChapter").click(function () {
+        $(".add-chapter-modal").css('display','flex');
+    });
+    $(".chapter-ul .video-ul").on("click",".setfree",function(){
+        var status = $(this).attr("data-status");
+        var that = $(this);
+        var id = $(this).attr("data-id");
+        var free = 0;
+        if( "off" == status ){
+            free = 1;
+        }else if("on"==status){
+            free = 0;
+        }
+        $.ajax({
+            url:"{:url('/admin/video/set_free')}",
+            type:"post",
+            data:{
+                id: id,
+                free:free
+            },
+            success: function (data) {
+                if(data.status == "200"){
+                    if( 1 == free ){
+                        that.addClass("active");
+                        that.attr("data-status","on");
+                    }else if("on"==status){
+                        console.log('bb');
+                        that.removeClass("active");
+                        that.attr("data-status","off");
+                    }
+                }
+            }
+        });
+
+    });
+
+    //新增章节确认
+    // $(".add-chapter-modal .btn-primary",obj.myParent).on("click",function(){
+
+    //    $(".add-chapter-modal",obj.myParent).hide();
+    //    //...
+    // })
+    //章节删除提示1
+    $(".delete-chapter").on("click", function () {
+        //判断章节内是否有视频来选择打开对话框
+
+        var id = $(this).attr('data-id');
+        $.ajax({
+            url:"{:url('/api/chapter/delete')}",
+            type:"post",
+            data:{id: id},
+            success: function (data) {
+                if(data.code == 1){
+                    window.location.reload();
+                }
+            }
+        });
+    });
+    //删除视频
+    $(".right-side-main").on('click','.delete-video',function () {
+        var id = $(this).attr('data-id');
+        $(".course-delete-confirm-modal .btn-danger").attr('data-id', id);
+        $(".course-delete-confirm-modal").css('display','flex');;
+    });
+    //删除视频确认
+    $(".course-delete-confirm-modal").on("click",".btn-danger", function () {
+        var id = $(this).attr('data-id');
+        $(".course-delete-confirm-modal").hide();
+        $.ajax({
+            url:"{:url('/api/video/delete')}",
+            type:"post",
+            data:{id: id},
+            success: function (data) {
+                if(data.code == 1){
+                    window.location.reload();
+                }
+            }
+        });
+    })
+    //编辑章节
+    $(".right-side-main").on("click",".edit-chapter", function () {
+        $(".edit-chapter-modal").css('display','flex');;
+        var title = $(this).attr('data-title');
+        var id = $(this).attr('data-id');
+        $('.edit-chapter-modal .add-chapter-input').val(title);
+        $('.edit-chapter-modal .add-chapter-input').attr('data-id', id);
+    })
+    //编辑章节确认
+    $(".edit-chapter-modal .btn-primary").on("click", function () {
+        $(".edit-chapter-modal").hide();
+        //...
+    })
+    //编辑视频
+    $(".right-side-main").on("click",".edit-video", function () {
+        var id = $(this).attr('data-id');
+        var title = $(this).attr('data-title');
+        $(".edit-video-modal .add-chapter-input").val(title);
+        $(".edit-video-modal .add-chapter-input").attr('data-id', id);
+        $(".edit-video-modal").css('display','flex');;
+    })
+    //编辑章节确认
+    $(".edit-video-modal .btn-primary").on("click", function () {
+        $(".edit-video-modal").hide();
+        var title = $('.edit-video-modal .add-chapter-input').val();
+        if (title == '') {
+            isShowOperateTip('请输入视频名称');
+            return false;
+        }
+        var dataid = $('.edit-video-modal .add-chapter-input').attr('data-id');
+        var param = {
+            title: title,
+            id: dataid
+        }
+        $.ajax({
+            url:"{:url('/api/video/update')}",
+            type:"post",
+            data:param,
+            success: function (data) {
+                if(data.code == 1){
+                    window.location.reload();
+                }
+            }
+        });
+        //...
+    })
+    //保存
+    $(".addVideo-footer>.btn-success").on('click',function () {
+        var src = "{:url('course/stepfinish',['id'=>$id])}";
+        $("#iframe", obj.myParent).attr("src", src);
+    })
+    //保存并上架
+    $(".addVideo-footer>.btn-info").on('click',function () {
+        $.ajax({
+            url:"{:url('/api/course/update')}",
+            type:"post",
+            data:{id: id, audit: 1},
+            success: function (data) {
+                if(data.code == 1){
+                    window.location.reload();
+                }
+            }
+        });
+    })
+
+    //移动章节
+    $(".right-side-main").on('click','.move-video',function () {
+        var id = $(this).attr('data-id');
+        $('.course-move-modal .btn-primary').attr('data-id', id);
+        $('.course-move-modal').css('display','flex');;
+    })
+
+    $('.course-move-modal .btn-primary').on('click',function () {
+        var id = $('.course-move-modal .btn-primary').attr('data-id');
+        //var cid = $(this).attr('data-cid');
+        var tid = $('.course-move-modal select').val();
+        if (tid == 0) {
+            isShowOperateTip('请选择章节');
+        } else {
+            var param = {
+                id: id,
+                tid: tid,
+            }
+            $.ajax({
+                url:"{:url('/api/video/update')}",
+                type:"post",
+                data:param,
+                success: function (data) {
+                    console.log(data);
+                    if(data.code == 1){
+                        window.location.reload();
+                    }
+                }
+            });
+        }
+    })
+
+    $('.close').on('click',function () {
+        $('.modal-bms').hide();
+    })
+
+    //添加章节
+    $('.add-chapter-modal .btn-primary').on('click',function () {
+        var title = $('.add-charset-title').val();
+        var param = {
+            title: title,
+            cid: cid,
+        }
+        $('.add-chapter-modal .charset-title').val('');
+        $.ajax({
+            url:"{:url('/api/chapter/create')}",
+            type:"post",
+            data:param,
+            success: function (data) {
+                if(data.code == 1){
+                    window.location.reload();
+                }
+            }
+        });
+    })
+
+    //编辑章节
+    $('.edit-chapter-modal .btn-primary').click(function () {
+        var title = $('.edit-chapter-modal .add-chapter-input').val();
+        if (title == '') {
+            isShowOperateTip('请输入章节名称');
+            return false;
+        }
+        var dataid = $('.edit-chapter-modal .add-chapter-input').attr('data-id');
+        var param = {
+            title: title,
+            id: dataid
+        };
+        $.ajax({
+            url:"{:url('/api/chapter/update')}",
+            type:"post",
+            data:param,
+            success: function (data) {
+                if(data.code == 1){
+                    window.location.reload();
+                }
+            }
+        });
+    })
+
+    //章节上移排序
+    $(".right-side-main").on('click','.chapter-up',function () {
+        var id = $(this).attr('data-id');
+        // var cid = $(this).attr('data-cid');alert(cid);
+        var updown = 'up';
+        $.ajax({
+            url:"{:url('/api/chapter/moveUpDown')}",
+            type:"post",
+            data:{cid:cid,id: id, updown: updown},
+            success: function (data) {
+                if(data.code == 1){
+                    window.location.reload();
+                }
+            }
+        });
+    })
+
+    //章节下移排序
+    $(".right-side-main").on('click','.chapter-down',function () {
+        var id = $(this).attr('data-id');
+        //var cid = $(this).attr('data-cid');
+        var updown = 'down';
+        $.ajax({
+            url:"{:url('/api/chapter/moveUpDown')}",
+            type:"post",
+            data:{cid:cid,id: id, updown: updown},
+            success: function (data) {
+                if(data.code == 1){
+                    window.location.reload();
+                }
+            }
+        });
+    })
+
+    //视频上移排序
+    $(".right-side-main").on('click','.video-up',function () {
+        var id = $(this).attr('data-id');
+        console.log(id);
+        //var cid = $(this).attr('data-cid');
+        var updown = 'up';
+        $.ajax({
+            url:"{:url('/api/video/moveUpDown')}",
+            type:"post",
+            data:{cid:cid,id: id, updown: updown},
+            success: function (data) {
+                window.location.reload();
+            }
+        });
+
+    })
+
+    //视频下移排序
+    $(".right-side-main").on('click','.video-down',function () {
+        var id = $(this).attr('data-id');
+        //var cid = $(this).attr('data-cid');
+        var updown = 'down';
+        $.ajax({
+            url:"{:url('/api/video/moveUpDown')}",
+            type:"post",
+            data:{cid:cid,id: id, updown: updown},
+            success: function (data) {
+                if(data.code == 1){
+                    window.location.reload();
+                }
+            }
+        });
+    });
+</script>
+<script>
+    function getfilename(upFileName) {
+        var index1 = upFileName.lastIndexOf(".");
+        var index2 = upFileName.length;
+        var suffix = upFileName.substring(index1 + 1, index2);//后缀名
+        var suffix2 = upFileName.substring(0, index1);//前缀名
+        person = new Object();
+        person.firstname = suffix2;
+        person.lastname = suffix;
+        return person;
+    }
+
+    $(function () {
+        var chapter_id = 5;
+        $(".upload-video").each(function() {
+            self = $(this);
+            //chapter_id = self.attr('data-id');
+
+            fsUploadProgress = self.parent().parent().next('.video-ul');
+            var uploader = Qiniu.uploader({
+                disable_statistics_report: false,
+                runtimes: 'html5,flash,html4',
+                /*browse_button: 'pickfiles',*/
+                browse_button: self.attr('id'),
+                /*                container: 'container',
+                 drop_element: 'container',
+                max_file_size: '1024mb',*/
+                flash_swf_url: 'bower_components/plupload/js/Moxie.swf',
+                dragdrop: true,
+                chunk_size: '4mb',
+                multi_selection: !(moxie.core.utils.Env.OS.toLowerCase() === "ios"),
+                uptoken: $('#uptoken_url').val(),
+                filters: {
+                    prevent_duplicates: false,
+                    mime_types: [
+                        {title: "Video files", extensions: "avi,mp4,wmv,mpg,mov,flv,mkv,mpeg"}
+                    ]
+                },
+                domain: $('#domain').val(),
+                get_new_uptoken: false,
+                auto_start: true,
+                log_level: 5,
+                unique_names: true,
+                init: {
+                    'BeforeChunkUpload': function(up, file) {
+                        console.log("before chunk upload:", file.name);
+                    },
+                    'FilesAdded': function(up, files) {
+                        var fsUploadProgress = $('#'+up.getOption('browse_button')['0'].id).parent().parent().next('.video-ul');
+
+                        console.log(files);
+                        plupload.each(files, function (file) {
+                            var progress = new FileProgress(file,
+                                fsUploadProgress);
+                            progress.setStatus("等待...");
+                            progress.bindUploadCancel(up);
+                        });
+
+
+
+                        /* $('table').show();
+                         $('#success').hide();
+
+                         plupload.each(files, function(file) {
+                         var progress = new FileProgress(file,
+                         'fsUploadProgress');
+                         progress.setStatus("等待...");
+                         progress.bindUploadCancel(up);
+                         });*/
+                    },
+                    'BeforeUpload': function(up, file) {
+                        /*console.log("this is a beforeupload function from init");
+                         var progress = new FileProgress(file, 'fsUploadProgress');
+                         var chunk_size = plupload.parseSize(this.getOption(
+                         'chunk_size'));
+                         if (up.runtime === 'html5' && chunk_size) {
+                         progress.setChunkProgess(chunk_size);
+                         }*/
+                    },
+                    'UploadProgress': function(up, file) {
+
+                        var fsUploadProgress = $('#'+this.getOption('browse_button')['0'].id).parent().parent().next('.video-ul');
+                        var progress = new FileProgress(file, fsUploadProgress);
+                        var chunk_size = plupload.parseSize(this.getOption(
+                            'chunk_size'));
+                        progress.setProgress(file.percent + "%", file.speed,
+                            chunk_size);
+
+
+                        /*var progress = new FileProgress(file, 'fsUploadProgress');
+                         var chunk_size = plupload.parseSize(this.getOption(
+                         'chunk_size'));
+                         progress.setProgress(file.percent + "%", file.speed,
+                         chunk_size);*/
+                    },
+                    'UploadComplete': function() {
+                        $('#success').show();
+                    },
+                    'FileUploaded': function(up, file, info) {
+                        /*var progress = new FileProgress(file, 'fsUploadProgress');
+                         console.log(file);
+                         console.log("response:", info.response);
+                         progress.setComplete(up, info.response);*/
+
+                        var chapter_id = $('#'+up.getOption('browse_button')['0'].id).attr('data-id');
+                        var fsUploadProgress = $('#'+up.getOption('browse_button')['0'].id).parent().parent().next('.video-ul');
+                        var progress = new FileProgress(file, fsUploadProgress);
+                        var domain = up.getOption('domain');
+                        info = eval(info);
+                        var res = info.response;
+                        var json = eval('(' + res + ')');
+                        var sourceLink = domain + '/'+json.key; //获取上传成功后的文件的Url
+                        var filename = getfilename(file.name);
+                        console.log(file.name);
+                        console.log(filename);
+                        var title = filename.firstname;
+                        console.log(title)
+                        var data = {
+                            'domain':domain,
+                            'key': json.key,
+                            'title': title,
+                            'video_path': sourceLink,
+                            'chapter_id': chapter_id, //章节id
+                            'course_id': '{$id}' //课程id
+                        };
+                        console.log(data);
+                        $.ajax({
+                            url:"{:url('/admin/video/create')}",
+                            type:"post",
+                            data:data,
+                            success: function (data) {
+                                if(data.code == 1){
+                                    video_data = data.data;
+                                    progress.setComplete(up, info.response,video_data);
+                                }
+                            }
+                        });
+
+
+                    },
+                    'Error': function(up, err, errTip) {
+                        $('table').show();
+                        var progress = new FileProgress(err.file, 'fsUploadProgress');
+                        progress.setError();
+                        progress.setStatus(errTip);
+                    }
+                    // ,
+                    // 'Key': function(up, file) {
+                    //     var key = "";
+                    //     // do something with key
+                    //     return key
+                    // }
+                }
+            });
+        });
+
+        var getRotate = function (url) {
+            if (!url) {
+                return 0;
+            }
+            var arr = url.split('/');
+            for (var i = 0, len = arr.length; i < len; i++) {
+                if (arr[i] === 'rotate') {
+                    return parseInt(arr[i + 1], 10);
+                }
+            }
+            return 0;
+        };
+
+        $('#myModal-img .modal-body-footer').find('a').on('click', function () {
+            var img = $('#myModal-img').find('.modal-body img');
+            var key = img.data('key');
+            var oldUrl = img.attr('src');
+            var originHeight = parseInt(img.data('h'), 10);
+            var fopArr = [];
+            var rotate = getRotate(oldUrl);
+            if (!$(this).hasClass('no-disable-click')) {
+                $(this).addClass('disabled').siblings().removeClass('disabled');
+                if ($(this).data('imagemogr') !== 'no-rotate') {
+                    fopArr.push({
+                        'fop': 'imageMogr2',
+                        'auto-orient': true,
+                        'strip': true,
+                        'rotate': rotate,
+                        'format': 'png'
+                    });
+                }
+            } else {
+                $(this).siblings().removeClass('disabled');
+                var imageMogr = $(this).data('imagemogr');
+                if (imageMogr === 'left') {
+                    rotate = rotate - 90 < 0 ? rotate + 270 : rotate - 90;
+                } else if (imageMogr === 'right') {
+                    rotate = rotate + 90 > 360 ? rotate - 270 : rotate + 90;
+                }
+                fopArr.push({
+                    'fop': 'imageMogr2',
+                    'auto-orient': true,
+                    'strip': true,
+                    'rotate': rotate,
+                    'format': 'png'
+                });
+            }
+
+            $('#myModal-img .modal-body-footer').find('a.disabled').each(
+                function () {
+
+                    var watermark = $(this).data('watermark');
+                    var imageView = $(this).data('imageview');
+                    var imageMogr = $(this).data('imagemogr');
+
+                    if (watermark) {
+                        fopArr.push({
+                            fop: 'watermark',
+                            mode: 1,
+                            image: 'http://www.b1.qiniudn.com/images/logo-2.png',
+                            dissolve: 100,
+                            gravity: watermark,
+                            dx: 100,
+                            dy: 100
+                        });
+                    }
+
+                    if (imageView) {
+                        var height;
+                        switch (imageView) {
+                            case 'large':
+                                height = originHeight;
+                                break;
+                            case 'middle':
+                                height = originHeight * 0.5;
+                                break;
+                            case 'small':
+                                height = originHeight * 0.1;
+                                break;
+                            default:
+                                height = originHeight;
+                                break;
+                        }
+                        fopArr.push({
+                            fop: 'imageView2',
+                            mode: 3,
+                            h: parseInt(height, 10),
+                            q: 100,
+                            format: 'png'
+                        });
+                    }
+
+                    if (imageMogr === 'no-rotate') {
+                        fopArr.push({
+                            'fop': 'imageMogr2',
+                            'auto-orient': true,
+                            'strip': true,
+                            'rotate': 0,
+                            'format': 'png'
+                        });
+                    }
+                });
+
+            var newUrl = Qiniu.pipeline(fopArr, key);
+
+            var newImg = new Image();
+            img.attr('src', 'images/loading.gif');
+            newImg.onload = function () {
+                img.attr('src', newUrl);
+                img.parent('a').attr('href', newUrl);
+            };
+            newImg.src = newUrl;
+            return false;
+        });
+
+    });
+
+</script>
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>申请提现</title>
+    <link rel="stylesheet" href="/public/mobile/css/mui.min.css">
+    <link rel="stylesheet" href="/public/mobile/css/threeLevelMarketing.css">
+    <style>
+        .ime{ime-mode:disabled;}
+    </style>
+</head>
+<body class="bg_FAFAFA">
+<div class="draw_apply_title">
+    <i>提现至支付宝账号</i>
+    <span>{$userinfo.alipay}</span>
+</div>
+<div class="draw_apply_main">
+    <div class="draw_apply_content">
+        <span>提现金额 每次最低提现50元</span>
+        <p>
+            <i>¥</i>
+            <input type="number" name="money" class="money" onKeypress="return myNumberic(event)">
+        </p>
+        <div class="balance_drawCash">
+            <i>可提现余额：{$userinfo.money}元</i>
+            {if $userinfo.money >= 50}
+            <em class="all_draw">全部提现</em>
+            {/if}
+        </div>
+    </div>
+    <div class="operate mt30">
+        <a href="javacript:void(0)" class="a_confirmDrawCash">确认提现</a>
+    </div>
+</div>
+</body>
+<script type="text/javascript" src="/public/mobile/js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="/public/mobile/js/mui.min.js"></script>
+<script type="text/javascript" src="/public/mobile/js/globla.js"></script>
+<script>
+    function myNumberic(e,len) {
+        var key=e.keyCode || e.which;
+        var obj=e.srcElement || e.target;
+        var dot=obj.value.indexOf(".");
+        len = (typeof(len)=="undefined") ? 2 : len;
+        if(dot==-1 && key==46){
+            //只能输入一次点
+            return true;
+        }
+        if(key==8 || key==9 || (key>=37  && key<=40)){
+            return true;
+        }//这里为了兼容Firefox的backspace,tab,del,方向键
+        if (key<=57 && key>=48) { //数字
+            if(dot==-1)//没有小数点
+                return true;
+            else if(obj.value.length <= dot+len)//小数位数
+                return true;
+        }
+        return false;
+    }
+    mui('.balance_drawCash').on('tap','.all_draw',function () {
+        var tot = '{$userinfo.money}';
+        $('.money').val(Number(tot));
+    });
+    mui('.operate').on('tap','.a_confirmDrawCash',function () {
+        var money = $('.money').val();
+        var total = '{$userinfo.money}';
+        var uid = '{$userinfo.uid}';
+        if(!money){
+            mui.alert('金额不能为空', '提示',function(){
+                $('.money').val('');
+            });
+            return false;
+        }
+        if(!(/^(([1-9][0-9]*)|(([0]\.\d{1,2}|[1-9][0-9]*\.\d{1,2})))$/.test(money))){
+            mui.alert('金额输入有误', '提示',function(){
+                $('.money').val('');
+            });
+            return false;
+        }
+        if(money < 50){
+            mui.alert('每次最低提现金额为50元', '提示',function(){
+                $('.money').val('');
+            });
+            return false;
+        }
+        if(money > total){
+            mui.alert('佣金不足', '提示',function(){
+                $('.money').val('');
+            });
+            return false;
+        }
+
+        $.ajax({
+            url:host+'rebate/Withdraw',
+            data:{
+                uid:uid,
+                money:money
+            },
+            type:'POST', //GET
+            async:true,    //或false,是否异步
+            timeout:5000,    //超时时间
+            dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+            success:function(data,textStatus,jqXHR){
+                if(data.code==1){
+                    mui.toast('提现成功');
+                    url = "{:url('wechat/rebate/withdraw')}";
+                    window.location.href = url;
+                }else{
+                    mui.alert(data.error, '提示',function(){
+                        $('.money').val('');
+                    });
+                }
+            }
+        });
+    });
+</script>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <title>我的管理</title>
+   <link rel="stylesheet" href="/public/mobile/css/mui.min.css">
+   <link rel="stylesheet" href="/public/mobile/css/threeLevelMarketing.css">
+   <link rel="stylesheet" href="/public/mobile/css/globla.css" />
+</head>
+<body class="bg_FAFAFA" >
+<div class="my_jinkuang_top">
+   <div class="mui-row">
+      <img src="{$userinfo.face}" alt="自身头像">
+      <span>{$userinfo.nickname}</span>
+      <a href="{:url('wechat/member/index')}">
+         <img src="/public/mobile/img/icon/arrow_left@2x20.png" alt="返回箭头">
+         <i>返回学习模式</i>
+      </a>
+   </div>
+   <ul class="my_jinkuang_nav">
+      <li><a href='{:url("index")}' >近况</a></li>
+      <li><a href='{:url("record")}'>数据</a></li>
+      <li><a href='{:url("manage")}' class="active">管理</a></li>
+   </ul>
+</div>
+<div class="my_jinkuang_main">
+   <ul class="manageDetail_ul">
+      <li>
+         <a href='{:url("order",["type"=>"1"])}'>
+            <i>全部订单</i>
+            <img src="/public/mobile/img/icon/gray_arrow_right@2x24.png" alt="链接箭头">
+         </a>
+         <a href='{:url("order",["type"=>"2"])}' >
+            <i>直销订单</i>
+            <img src="/public/mobile/img/icon/gray_arrow_right@2x24.png" alt="链接箭头">
+         </a>
+         <a href='{:url("order",["type"=>"3"])}' >
+            <i>下级订单</i>
+            <img src="/public/mobile/img/icon/gray_arrow_right@2x24.png" alt="链接箭头">
+         </a>
+         <a href='{:url("withdraw")}' >
+            <i>收入提现</i>
+            <img src="/public/mobile/img/icon/gray_arrow_right@2x24.png" alt="链接箭头">
+         </a>
+         <a href='{:url("bind_account")}'>
+            <i>手机支付绑定</i>
+            <img src="/public/mobile/img/icon/gray_arrow_right@2x24.png" alt="链接箭头">
+         </a>
+      </li>
+      <li>
+         <a href="{:url('sharecourse')}" >
+            <i>分享课程</i>
+            <img src="/public/mobile/img/icon/gray_arrow_right@2x24.png" alt="链接箭头">
+         </a>
+         <a href="{:url('promoter')}" >
+            <i>下级推广员</i>
+            <img src="/public/mobile/img/icon/gray_arrow_right@2x24.png" alt="链接箭头">
+         </a>
+         <a href="{:url('rule')}" >
+            <i>分销规则</i>
+            <img src="/public/mobile/img/icon/gray_arrow_right@2x24.png" alt="链接箭头">
+         </a>
+      </li>
+   </ul>
+   <div class="contact_platform mt15">
+      <a href="tel:{$phone}">联系平台</a>
+   </div>
+</div>
+{include file="common/menu" /}
+<script src="/public/mobile/js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="/public/mobile/js/globla.js"></script>
+<script>
+    var uid = '{$userinfo.uid}'; //用户id
+    var isbind = '{$userinfo.is_bind}';
+    $('.mui-table-view li').find('img').eq(2).attr('src', '/public/mobile/img/icon/4a.png');
+    $('.mui-table-view li').find('.navcontent').removeClass('NavActive');
+    $('.mui-table-view li').find('.navcontent').eq(2).addClass('NavActive');
+</script>
+<script src="/public/mobile/js/bindmobile.js"></script>
+</body>
+</html>

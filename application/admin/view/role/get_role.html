@@ -1,0 +1,53 @@
+{include file="common/header" /}
+<body>
+<div class="article_manage mCustomScrollbar">
+	<div class="right-side-header clearfix">
+	        <span>系统设置</span>
+	        {include file="common/admin" /}
+   </div>
+   <div class="right_side_content">
+	   <div class="system_guanli_div">
+	 		
+		</div>
+		<div class="success_tip displayNone">已完成</div>
+	    <div class="course_right_main ">
+	     
+        <div class="articleInfo_fill">
+            <form id="form1" class="layui-form layui-form-pane" action='{:url("get_role")}'>
+            <input type="hidden" name="id" value="{$id}">
+            {foreach name="list" item="list"}
+            <div class="course_manage_quanxian">
+                <p>{$list.title}</p>
+                {foreach name="list.child" item="child"}
+                <dl class="course_manage_dl">
+                    <dt>
+                        <input type="checkbox" name="status[{$child.id}]" lay-filter="role" value="{$child.id}" {$child.checked} lay-skin="primary"><i> {$child.title}</i>
+                    </dt>
+                    {if condition="isset($child.child)"}
+                    {foreach name="child.child" item="three"}
+                    <dd><input type="checkbox" name="status[{$three.id}]" lay-filter="role" value="{$three.id}" {$three.checked} lay-skin="primary"><i> {$three.title}</i></dd>
+                    {/foreach}
+                    {/if}
+                </dl>
+                {/foreach}
+            </div>
+            {/foreach}
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" jq-submit jq-filter="submit">立即提交</button>
+                </div>
+            </div>
+            </form>
+        </div>
+	    </div>
+	 </div>
+</div>
+    
+</div>
+{include file="common/version" /}
+<script>
+    layui.use('role');
+</script>
+
+</body>
+</html>

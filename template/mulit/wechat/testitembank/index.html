@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>题库</title>
+		<link rel="stylesheet" href="/public/mobile/css/mui.min.css" />
+		<link rel="stylesheet" href="/public/mobile/css/global.css" />
+		<link rel="stylesheet" href="/public/mobile/css/quiz-public.css" />
+		<script src="/public/mobile/js/jquery-3.2.1.min.js"></script>
+     	<script src="/public/mobile/js/mui.min.js"></script>
+		<script type="text/javascript" src="/public/mobile/js/globla.js"></script>
+	</head>
+
+	<body> 
+  <div class="wrap">
+    <div class="content-wrapper">
+    	{if empty($bank_testlist) && empty($course_testlist)}
+    	<div class="empty-state">
+		        <img src="/public/mobile/img/icon/folder.png" alt="empty">
+		        <p>小编正在努力上传习题..</p>
+	      	</div>
+    	{/if}
+    	{if !empty($bank_testlist)}
+		<div class="quiz-bank">
+	        <div class="caption">
+	          <h2>题库练习</h2>
+	          <a href="{:url('/wechat/testitembank/bank_more')}" class="more tikumore">更多</a>
+	        </div>
+	        {volist name="bank_testlist[0]"  id="bank" offset="0" length='3'}
+	        <div class="cate-box">
+	          <div class="quiz-box">
+	            <div class="info">
+	              <h6 class="caption">{$bank['name']}</h6>
+	              <p>
+	              		{if $bank['is_finish']}
+	              		已完成
+	              		{else}
+	              		<span class="count">{$bank['list_count']}</span>题
+	              		{/if}
+	              </p>
+	            </div>
+	            <a href="" data-id="{$bank['id']}" data-cid="{$bank['course_id']}"  data-prv="{$bank['prvi_id']}"  class="quiz-btn">开始做题</a>
+	          </div>
+	        </div>
+	        {/volist}
+	   </div>
+	   {/if}
+	   {if !empty($course_testlist)}
+		<div class="afterclass-quiz" {if empty($bank_testlist)}style="margin-top:0;"{/if}>
+			<div class="caption">
+	          <h2>课后练习</h2>
+	          <a href="{:url('/wechat/testitembank/course_more')}" class="more kehoumore">更多</a>
+	        </div>
+	        {volist name="course_testlist"  id="list" offset="0" length='3'}
+	        <div class="cate-box">
+	          <h4 class="caption">{$list[0]['course_name']}</h4>
+		          {volist name="$list"  id="kehoulist"}
+		          <div class="quiz-box">
+		            <div class="info">
+		              <h6 class="caption">{$kehoulist['name']}</h6>
+		              <p>
+		                	{if $kehoulist['is_finish']}
+		              		已完成
+		              		{else}
+		              		<span class="count">{$kehoulist['list_count']}</span>题
+		              		{/if}
+		              </p>
+		            </div>
+		            <a href="" data-id="{$kehoulist['id']}" data-cid="{$kehoulist['course_id']}" data-prv="{$kehoulist['prvi_id']}" class="quiz-btn">开始做题</a>
+		          </div>
+		          {/volist}
+	        </div>
+	        {/volist}
+		</div>
+		{/if}		 
+    </div> 
+    <div class="buy-dialog" id="BuyDialog" style="z-index: 999">
+    	<div class="alert-box">
+			<h1 class="fs-20 fc-8">提示</h1>
+			<p class="fs-16 fc-6">请先购买该课程</p>
+			<div class="buy-dialog-btn">
+				<a class="Cancel">取消</a>
+				<a id="onBridgeReady" class="onBridgeReady">购买</a>
+			</div>
+		</div>
+	</div>
+  </div>
+	{include file="common/menu"/}
+    <script>
+        var uid = '{$userinfo.uid}';
+        var isbind = '{$userinfo.is_bind}';
+    $(function () {
+
+    	mui("body").on('tap', '.quiz-btn', function (event) {
+    		id = $(this).attr('data-id');
+    		prv = $(this).attr('data-prv');
+    		cid = $(this).attr('data-cid');
+ 			if(prv==0){
+ 				if(cid !=0){
+ 	  				var url = "{:url('/wechat/course/detail')}?cid="+cid;
+ 	  			}else{
+ 	  				var url = "{:url('/wechat/index/index')}";
+ 	  			}
+ 				$('.onBridgeReady').attr('href',url);
+ 				$('.content-wrapper, .menuNav').addClass('blur');
+ 				$('.buy-dialog').addClass('flex-box');
+ 				return;
+ 			}
+			var url = "{:url('wechat/testitembank/do_testitem')}";
+			window.location.href=url+'?bank_id='+id;
+		});
+    	mui("body").on('tap', '.onBridgeReady', function (event) {
+    		$(this).addClass('bg-color')
+    		url = $(this).attr('href');
+			window.location.href=url;
+		});
+    	mui("body").on('tap', '.tikumore', function (event) {
+			var url = "{:url('/wechat/testitembank/bank_more')}";
+			window.location.href=url;
+		});
+    	mui("body").on('tap', '.kehoumore', function (event) {
+			var url = "{:url('/wechat/testitembank/course_more')}";
+			window.location.href=url;
+		});
+    	 $('.buy-dialog .Cancel').on('click', function () {
+    	 	$(this).addClass('bg-color')
+             $('.content-wrapper, .menuNav').removeClass('blur');
+             $('.buy-dialog').removeClass('flex-box');
+           })
+    });
+    </script>
+  <script src="/public/mobile/js/bindmobile.js"></script>
+
+	</body>
+</html>

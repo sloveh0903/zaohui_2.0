@@ -1,0 +1,73 @@
+{include file="common/header" /}
+<body>
+<div class="article_manage">
+	<div class="right-side-header clearfix">
+	        <span>营销中心</span>
+	        {include file="common/admin" /}
+   </div>
+   <div class="right_side_content">
+	   <div class="system_guanli_div">
+		 	<ul class="system_guanli_ul">
+		 		<li><a href="javascript:void(0)" class="goto active" data-src='{:url("couponcode/index")}'>优惠码管理</a></li>
+		     </ul>
+		</div>
+	   <div class="course_right_main ">
+	         <div class="operation_div">
+	         	 <div class="select_search " >
+	                <form class="layui-form" action='{:url("couponcode/uselist")}'>
+	                    <input class="search_btn" type="image" src="/public/gzadmin/images/gray_search@2x20.png" lay-submit name="submit" lay-filter="search" align="" >
+	                    <input type='hidden' name="id" value={$id}'>
+	                    <div class="layui-form">
+	                        <div class="layui-inline">
+	                            <div class="layui-input-inline">
+	                                <input class="layui-input" name="key" placeholder="用户昵称">
+	                            </div>
+	                        </div>
+	                    </div>
+
+	                </form>
+	            </div>
+	         </div>
+	         <div id="list" class="layui-form">
+	         </div> 
+			 <div class="text-right" id="page"></div>
+	 
+	      </div>
+   	</div>
+</div>
+
+<script id="list-tpl" type="text/html"  data-params='{"url":"{:url("couponcode/uselist",["id"=>"$id"])}","pageid":"#page"}'>
+    <table id="example" class="layui-table" lay-skin="line">
+        <thead>
+         <tr>
+          
+    	   <th>订单编号</th>
+    	   <th>用户昵称</th>
+			<th>支付状态</th>
+			<th>使用日期</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{# layui.each(d.list, function(index, item){ }}
+        <tr>
+			 
+             <td style='width: 260px;'>{{ item.order_sn}}</td>
+			 <td style='width: 260px;'>{{ item.nickname}}</td>
+			<td style='width: 160px;'>{{ item.pay_status_name}}</td>
+			 <td style='width: 260px;'>{{ item.create_time}}</td>
+        </tr>
+        {{# }); }}
+        </tbody>
+    </table>
+</script>
+
+
+{include file="common/version" /}
+<script src="/public/gzadmin/js/clipboard.min.js"></script>
+<script>
+    layui.use('list');
+    
+</script>
+</body>
+</html>
+

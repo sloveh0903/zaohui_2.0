@@ -1,0 +1,170 @@
+html, body {
+  background-color: #F0F3F5; }
+
+textarea {
+  border: 0;
+  border-radius: 0;
+  font-family: DroidSans, DroidSansFallback, Arial, "Microsoft YaHei";
+  font-size: 16px;
+  height: 120px;
+  float: left;
+  margin-bottom: 0;
+  color: rgba(41, 43, 51, 0.8); }
+
+textarea::-webkit-input-placeholder {
+  color: rgba(41, 43, 51, 0.4);
+  font-size: 16px; }
+
+.operation {
+  background: #fff;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 80px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 0 15px;
+  border-top: 1px solid rgba(0, 0, 0, 0.06); }
+
+.z_photo {
+  clear: both;
+  background: #fff; }
+
+.z_photo img {
+  width: 50px;
+  height: 50px;
+  border-radius: 2px; }
+
+.z_file {
+  width: 50px;
+  height: 50px;
+  background: url(../../../public/mobile/img/icon/add-pic.png) no-repeat center;
+  background-size: 24px 24px;
+  float: left;
+  border-radius: 2px;
+  border: 1px solid rgba(41, 43, 51, 0.1); }
+
+.z_addImg {
+  margin-right: 15px;
+  position: relative;
+  float: left; }
+
+.z_addImg i {
+  position: absolute;
+  top: -7px;
+  right: -7px;
+  width: 24px;
+  height: 24px;
+  background: url("/public/mobile/img/icon/pic-cross.png") no-repeat center/cover; }
+
+.z_file input::-webkit-file-upload-button {
+  width: 1rem;
+  height: 1rem;
+  border: none;
+  position: absolute;
+  outline: 0;
+  opacity: 0; }
+
+.z_file input#file {
+  display: block;
+  width: auto;
+  border: 0;
+  vertical-align: middle; }
+
+.operation .other {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin-top: 30px; }
+
+.operation .other p {
+  margin-left: 15px;
+  font-size: 14px;
+  color: rgba(41, 43, 51, 0.4); }
+
+.operation .other .input-box {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end; }
+
+.operation .other input {
+  width: 16px;
+  height: 16px;
+  visibility: hidden; }
+
+.operation .other label {
+  font-size: 14px;
+  color: rgba(41, 43, 51, 0.4);
+  width: 55px;
+  height: 24px;
+  line-height: 24px;
+  text-align: right;
+  background: url(../../../public/mobile/img/icon/check@3x.png) no-repeat left;
+  background-size: 24px 24px; }
+
+.operation .other label.checked {
+  background: url(../../../public/mobile/img/icon/checked@3x.png) no-repeat left;
+  background-size: 24px 24px; }
+
+.mask-loading {
+  display: none;
+  width: 112px;
+  height: 112px;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 5px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center; }
+
+@-webkit-keyframes rotatee {
+  from {
+    -webkit-transform: rotate(0);
+            transform: rotate(0); }
+  to {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg); } }
+
+@keyframes rotatee {
+  from {
+    -webkit-transform: rotate(0);
+            transform: rotate(0); }
+  to {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg); } }
+.mask-loading img {
+  width: 36px;
+  height: 36px;
+  -webkit-animation-name: rotatee;
+          animation-name: rotatee;
+  -webkit-animation-duration: 2s;
+          animation-duration: 2s;
+  -webkit-animation-iteration-count: infinite;
+          animation-iteration-count: infinite;
+  -webkit-animation-timing-function: linear;
+          animation-timing-function: linear; }
+
+.mui-row textarea {
+  height: 160px; }
+
+/*# sourceMappingURL=question.css.map */

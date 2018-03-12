@@ -1,0 +1,137 @@
+html, body {
+  background-color: #F7F7F7;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  font-weight: 400;
+}
+
+.content-wrapper {
+  padding: 20px 15px 20px;
+}
+
+.cate-box {
+  padding: 15px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+.cate-box:not(:last-child) {
+  margin-bottom: 20px;
+}
+.cate-box > .caption {
+  font-size: 12px;
+  line-height: 18px;
+  font-weight: 400;
+  color: rgba(41, 43, 51, 0.4);
+  margin-bottom: 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.content-wrapper > .empty-state {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.content-wrapper > .empty-state > img {
+  display: block;
+  margin: 0 auto;
+  width: 72px;
+  height: 72px;
+}
+.content-wrapper > .empty-state > p {
+  font-size: 14px;
+  line-height: 23px;
+  color: rgba(41, 43, 51, 0.3);
+}
+.quiz-box {
+  display: flex;
+}
+.quiz-box:not(:last-child) {
+  margin-bottom: 10px;
+}
+.quiz-box > .info {
+  flex: 1;
+  overflow: hidden;
+}
+.quiz-box > .info h6 {
+  font-size: 14px;
+  line-height: 20px;
+  color: rgba(41, 43, 51, 0.8);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.quiz-box > .info p {
+  font-size: 12px;
+  line-height: 17px;
+  color: rgba(41, 43, 51, 0.3);
+}
+.quiz-box > .quiz-btn {
+  width: 80px;
+  height: 32px;
+  font-size: 14px;
+  line-height: 30px;
+  text-align: center;
+  color: #00B6F2;
+/*   border: 1px solid rgba(0, 182, 242, 0.1); */
+  border-radius: 18px;
+  background-color: rgba(0, 182, 242, 0.1);
+  margin-top: 3px;
+  margin-left: 15px;
+}
+
+
+.blur {
+  filter: blur(30px);
+}
+
+.dialog {
+  position: fixed;
+  z-index: 103;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  align-items: center;
+  justify-content: center;
+  display: none;
+}
+.dialog.flex-box {
+  display: flex;
+}
+.dialog > .alert-box {
+  width: 280px;
+  height: 160px;
+  background-color: #fff;
+  padding: 22px 20px;
+  border-radius: 2px;
+}
+.dialog > .alert-box > h4 {
+  font-size: 18px;
+  line-height: 24px;
+  color: rgba(41, 43, 51, 0.8);
+  margin-bottom: 6px;
+}
+.dialog > .alert-box > p {
+  height: 48px;
+  font-size: 16px;
+  line-height: 24px;
+  color: rgba(41, 43, 51, 0.6);
+  margin-bottom: 20px;
+}
+.dialog > .alert-box > .operation {
+  text-align: right;
+}
+.dialog > .alert-box > .operation > i, .dialog > .alert-box > .operation a {
+  font-size: 14px;
+  line-height: 19px;
+  color: #24B6F7;
+  margin-left: 30px;
+}
+
+/*# sourceMappingURL=quiz_more-v73.css.map */

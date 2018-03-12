@@ -1,0 +1,88 @@
+{include file="common/header" /}
+<body>
+    <div class="container-fluid larry-wrapper">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <!--头部搜索-->
+                <section class="panel panel-padding">
+                    <form class="layui-form" action='{:url("index")}'>
+                        <div class="layui-form">
+                            <div class="layui-inline">
+                                <div class="layui-input-inline">
+                                    <input class="layui-input" name="key" placeholder="关键字">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <button lay-submit class="layui-btn" lay-filter="search">查找</button>
+                            </div>
+                        </div>
+                    </form>
+                </section>
+
+                <!--列表-->
+                <section class="panel panel-padding">
+                    <div class="group-button">
+                        <button class="layui-btn layui-btn-small layui-btn-danger ajax-all" data-name="checkbox" data-params='{"url": "{:url("delAll_role")}","data":"id=1&name=ni&checkbox=6,9,0&va=23"}'>
+                            <i class="iconfont">&#xe626;</i> 删除
+                        </button>
+                        <button class="layui-btn layui-btn-small modal-iframe" data-params='{"content":"{:url("add_menu")}", "title":"添加菜单","type":"1","full":"true"}'>
+                            <i class="iconfont">&#xe649;</i> 添加菜单
+                        </button>
+                    </div>
+                    <div id="list" class="layui-form"></div>
+
+                    <div class="text-right" id="page"></div>
+                </section>
+            </div>
+        </div>
+    </div>
+</body>
+<script id="list-tpl" type="text/html" data-params='{"url":"{:url("index")}","pageid":"#page"}'>
+    <table id="example" class="layui-table lay-even">
+        <thead>
+        <tr>
+            <th width="30"><input type="checkbox" id="checkall" data-name="checkbox" lay-filter="check" lay-skin="primary"></th>
+            <th>ID</th>
+            <th>权限名称</th>
+            <th>节点</th>
+            <th style="text-align:center">排序</th>
+            <th style="text-align:center">添加时间</th>
+            <th width="242">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{# layui.each(d.list, function(index, item){ }}
+        <tr>
+            <td><input type="checkbox" name="checkbox" value="{{ item.id}}" lay-skin="primary"></td>
+            <td>{{ item.id}}</td>
+            <td>
+                {{# if(item.pid==0){ }}
+                <span class="folder-open"><i class="{{ item.css}}"></i></span>
+                {{# } else { }}<span style="display:inline-block;width:{{ item.leftpin}}px;"></span><span class="folder-line"></span>
+                {{# } }}{{ item.title}}
+            </td>
+            <td>{{ item.name}}</td>
+            <td>{{ item.sort}}</td>
+            <td>{{ item.create_time}}</td>
+            <td>
+                <button class="layui-btn layui-btn-mini modal-iframe" data-params='{"content": "{{ item.edit_url}}","title":"编辑管理员","full":"true"}'>
+                    <i class="iconfont">&#xe653;</i>编辑
+                </button>
+                <button class="layui-btn layui-btn-mini layui-btn-danger ajax" data-params='{"url": "{:url("del_menu")}","data":"id={{ item.id}}"}'>
+                    <i class="iconfont">&#xe626;</i>删除
+                </button>
+            </td>
+        </tr>
+        {{# }); }}
+        </tbody>
+
+    </table>
+</script>
+{include file="common/version" /}
+<script>
+    layui.use('list');
+
+
+</script>
+
+</html>

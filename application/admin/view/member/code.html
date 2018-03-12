@@ -1,0 +1,44 @@
+{include file="common/header" /}
+<body>
+<div class="article_manage mCustomScrollbar">
+    <div class="course_right_top">
+        <div class="tag_group">
+            <p class="title">用户管理</p>
+            {include file="common/admin" /}
+            <div class="clearfix"></div>
+        </div>
+        
+        <div class="success_tip displayNone">已完成</div>
+    </div>
+    <div class="add_article_main ">
+        <div class="articleInfo_fill">
+            <section class="panel panel-padding">
+                <div class="weixin_QRcord_div" id="login_container">
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+{include file="common/version" /}
+<script src="http://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js"></script>
+<script type="text/javascript">
+    var redirect_uri = "{$data['url']}";
+    var appid = "{$data['wx_open_appid']}";
+    var obj = new WxLogin({
+        id:"login_container",
+        appid: appid,
+        scope: "snsapi_login",
+        redirect_uri: redirect_uri,
+        href:"https://api.fuwangdian.com/public/pc/css/qrcode.css"
+    });
+
+    var int=setInterval(function(){
+        obj = false;
+    },2000)
+</script>
+<script>
+    layui.use('course');
+</script>
+
+</body>
+</html>

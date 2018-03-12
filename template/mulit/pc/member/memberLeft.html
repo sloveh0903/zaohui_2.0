@@ -1,0 +1,65 @@
+<div class="userinfo-tabs">
+  <a href={:url("index")} class="userinfo-tabitems a_myStudy a_asynload {if $action == 'index'}selected{/if}">
+    <i class="userinfo-tabicon study-icon"></i>
+    <span>我的学习</span>
+  </a>
+  <a href='{:url("message")}' class="userinfo-tabitems a_myMessage a_asynload {if $action == 'message'}selected{/if}">
+    <i class="userinfo-tabicon msg-icon"></i>
+    <span>消息中心</span>
+  </a>
+  <a href='{:url("ask")}' class="userinfo-tabitems a_myMessage a_asynload {if $action == 'ask'}selected{/if}">
+    <i class="userinfo-tabicon qa-icon"></i>
+    <span>课程答疑</span>
+  </a>
+  <a href='{:url("order")}' class="userinfo-tabitems a_myMessage a_asynload {if $action == 'order'}selected{/if}">
+    <i class="userinfo-tabicon order-icon"></i>
+    <span>我的订单</span>
+  </a>
+  <a href='{:url("bp")}' class="userinfo-tabitems a_myMessage a_asynload {if $action == 'bp'}selected{/if}">
+    <i class="userinfo-tabicon bp-icon"></i>
+    <span>积分明细</span>
+  </a>
+  <a href='{:url("bindphone")}' class="userinfo-tabitems a_myMessage a_asynload {if $action == 'bindphone'}selected{/if}">
+    <i class="userinfo-tabicon setting-icon"></i>
+    <span>设置</span>
+  </a>
+</div>
+<!-- <div class="leftFloat myStudy_nav">
+    <ul class="myStudy_nav_ul">
+        <li>
+            <a href='{:url("index")}' class="a_myStudy a_asynload {if $action == 'index'}active{/if}">
+                <i class="myStudy_i"></i>
+                <span>学习</span>
+                <img src="/public/pc/images/img_leftArrow@2x.png" alt="向左箭头" {if condition="($action == 'index')" }class="img_leftArrow" {else}class="img_leftArrow displayNone" {/if}>
+            </a>
+        </li>
+        <li>
+            <a href='{:url("message")}' class="a_myMessage a_asynload {if $action == 'message'}active{/if}">
+                <i class="myMessage_i"></i>
+                <span>消息</span>
+                <img src="/public/pc/images/img_leftArrow@2x.png" alt="向左箭头" {if condition="($action == 'message')" }class="img_leftArrow" {else}class="img_leftArrow displayNone" {/if}>
+            </a>
+        </li>
+        <li>
+            <a href='{:url("ask")}' class="a_myMessage a_asynload {if $action == 'ask'}active{/if}">
+                <i class="myAmswer_i"></i>
+                <span>答疑</span>
+                <img src="/public/pc/images/img_leftArrow@2x.png" alt="向左箭头" {if condition="($action == 'ask')" }class="img_leftArrow" {else}class="img_leftArrow displayNone" {/if}>
+            </a>
+        </li>
+        <li>
+            <a href='{:url("order")}' class="a_myOrder a_asynload {if $action == 'order'}active{/if}">
+                <i class="myOrder_i"></i>
+                <span>订单</span>
+                <img src="/public/pc/images/img_leftArrow@2x.png" alt="向左箭头" {if condition="($action == 'order')" }class="img_leftArrow" {else}class="img_leftArrow displayNone" {/if}>
+            </a>
+        </li>
+        <li>
+            <a href='{:url("bindphone")}' class="a_myOrder a_asynload {if $action == 'bindphone'}active{/if}">
+                <i class="mySet_i"></i>
+                <span>设置</span>
+                <img src="/public/pc/images/img_leftArrow@2x.png" alt="向左箭头" {if condition="($action == 'bindphone')" }class="img_leftArrow" {else}class="img_leftArrow displayNone" {/if}>
+            </a>
+        </li>
+    </ul>
+</div> -->

@@ -1,0 +1,86 @@
+{include file="common/header" /}
+<body>
+<div class="article_manage mCustomScrollbar">
+	<div class="right-side-header clearfix">
+	        <span>文章管理</span>
+	        {include file="common/admin" /}
+   </div>
+   
+     <div class="right_side_content">
+	    <div class="add_article_main ">
+	        <div class="breadcrumb">
+	              <a href='{:url("article/index_cate")}'>文章分类</a>
+	              /
+	              <span>编辑分类</span>
+	         </div>
+	         <div class="add_article_step"></div>
+	        <div class="articleInfo_fill">
+            <section class="panel panel-padding">
+                <form id="form1" class="layui-form layui-form-pane" action="{:url('edit_cate')}">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">分类名*</label>
+                        <div class="layui-input-block">
+                            <input type="hidden" name="id" value="{$cateInfo.id}">
+                            <input type="text" name="cate_name" style="width: 40%" required jq-verify="required" value="{$cateInfo.cate_name}" jq-error="请输入分类名" placeholder="请输入分类名" autocomplete="off" class="layui-input ">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">排序</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="orderby" required jq-verify="number" value="{$cateInfo.orderby}" jq-error="排序必须为数字" placeholder="分类排序" autocomplete="off" class="layui-input ">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">标签小图*</label>
+                        <div class="layui-input-block">
+                            <input type="file" name="file" class="layui-upload-file">
+                            <input type="hidden" value="{$cateInfo.small_photo}" name="small_photo" jq-verify="required" jq-error="请上传图片" error-id="small-error">
+                            <p class="upload-info">图片尺寸：440*120 支持格式：JPG PNG</p>
+                            <p id="small-error" class="error"></p>
+                        </div>
+                        <div class="layui-input-block">
+                            <div class="imgbox">
+                                <img src="{$cateInfo.small_photo}" name="small_photo" alt="..." class="img-thumbnail">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">标签大图*</label>
+                        <div class="layui-input-block">
+                            <input type="file" name="file" class="layui-upload-file">
+                            <input type="hidden" value="{$cateInfo.big_photo}" name="big_photo" jq-verify="required" jq-error="请上传图片" error-id="big-error">
+                            <p class="upload-info">图片尺寸：1400*160 支持格式：JPG PNG</p>
+                            <p id="big-error" class="error"></p>
+                        </div>
+                        <div class="layui-input-block">
+                            <div class="imgbox">
+                                <img src="{$cateInfo.big_photo}" name="big_photo" alt="..." class="img-thumbnail">
+                            </div>
+                        </div>
+                    </div>
+<!--                     <div class="layui-form-item">
+                        <label class="layui-form-label">状态</label>
+                        <div class="layui-input-inline">
+                            <input type="radio" name="audit" title="启用" value="0" {if condition="$cateInfo['closed'] eq 0"}checked{/if} />
+                            <input type="radio" name="audit" title="禁用" value="1" {if condition="$cateInfo['closed'] eq 1"}checked{/if} />
+                        </div>
+                    </div> -->
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <button class="layui-btn" jq-submit lay-filter="submit">立即提交</button>
+                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                        </div>
+                    </div>
+                </form>
+            </section>
+			</div>
+        </div>
+    </div>
+</div>
+{include file="common/version" /}
+<script>
+    layui.use('course');
+</script>
+
+</body>
+</html>

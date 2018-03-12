@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>{$course_name}</title>
+		<link rel="stylesheet" href="/public/mobile/css/mui.min.css" />
+		<link rel="stylesheet" href="/public/mobile/css/globla.css" />
+		<link rel="stylesheet" href="/public/mobile/css/quiz_more.css" />
+	</head>
+
+	<body>
+	  <div class="wrap">
+	    <div class="content-wrapper">
+	   	{if empty($course_testlist)}
+	   	<div class="empty-state">
+	        <img src="/public/mobile/img/icon/folder.png" alt="empty">
+	        <p>小编正在努力上传习题..</p>
+      	</div>
+	   	{else}
+	        {volist name="course_testlist"  id="list"}
+	        
+		          {volist name="$list"  id="kehoulist"}
+		          <div class="cate-box">
+		          <div class="quiz-box">
+		            <div class="info">
+		              <h6 class="caption">{$kehoulist['name']}</h6>
+		              <p>
+		                	{if $kehoulist['is_finish']}
+		              		已完成
+		              		{else}
+		              		<span class="count">{$kehoulist['list_count']}</span>题
+		              		{/if}
+		              </p>
+		            </div>
+		            <a href="" data-id="{$kehoulist['id']}" data-cid="{$kehoulist['course_id']}" data-prv="{$kehoulist['prvi_id']}" class="quiz-btn">开始做题</a>
+		          </div>
+		          </div>
+		          {/volist}
+	        {/volist}
+		{/if}
+	    </div>  
+	    <div class="dialog">
+	      <div class="alert-box">
+	        <h4>提示</h4>
+	        <p>请先购买该课程</p>
+	        <div class="operation">
+	          <i  class="cancel">取消</i>
+	          <a href="" class="confirm">去购买</a>
+	        </div>
+	      </div>
+    	</div> 
+	  </div>
+	<script src="/public/mobile/js/jquery-3.2.1.min.js"></script>
+    <script src="/public/mobile/js/mui.min.js"></script>
+	  <script src="/public/mobile/js/globla.js"></script>
+    <script>
+        var uid = '{$userinfo.uid}';
+        var isbind = '{$userinfo.is_bind}';
+    $(function () {
+
+    	mui("body").on('tap', '.quiz-btn', function (event) {
+    		id = $(this).attr('data-id');
+    		prv = $(this).attr('data-prv');
+    		cid = $(this).attr('data-cid');
+ 			if(prv==0){
+ 				if(cid !=0){
+ 	  				var url = "{:url('/wechat/course/detail')}?cid="+cid;
+ 	  			}else{
+ 	  				var url = "{:url('/wechat/index/index')}";
+ 	  			}
+ 				$('.confirm').attr('href',url);
+ 				$('.content-wrapper, .menuNav').addClass('blur');
+ 				$('.dialog').addClass('flex-box');
+ 				return;
+ 			}
+			var url = "{:url('wechat/testitembank/do_testitem')}";
+			window.location.href=url+'?bank_id='+id;
+		});
+    	 $('.dialog .cancel').on('click', function () {
+             $('.content-wrapper, .menuNav').removeClass('blur').siblings('.dialog').removeClass('flex-box');
+           })
+           mui("body").on('tap', '.confirm', function (event) {
+        	   url = $(this).attr('href');
+   			   window.location.href=url;
+   		});
+    });
+    </script>
+	  <script src="/public/mobile/js/bindmobile.js"></script>
+	</body>
+</html>

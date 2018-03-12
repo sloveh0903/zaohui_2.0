@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>问答详情</title>
+		<link rel="stylesheet" href="/public/mobile/css/mui.min.css" />
+		<link rel="stylesheet" href="/public/mobile/css/globla.css" />
+		<link rel="stylesheet" href="/public/mobile/css/interlocution.css" />
+		<link rel="stylesheet" href="/public/mobile/js/imgpreview/dialog.css" />
+		<link rel="stylesheet" href="/public/mobile/js/imgpreview/mobile-photo-preview.css" />
+	</head>
+	 {include file="common/share" /}
+	<body>
+<!-- 	<div class="wrap-box"> -->
+      
+      
+     
+<!--     </div> -->
+   
+  
+<!-- 		<header id="header" class="mui-bar mui-bar-nav"> -->
+<!-- 			<a class="mui-action-back mui-icon mui-icon-arrowthinleft mui-pull-left"></a> -->
+<!-- 			<h1 class="mui-title">问答详情</h1> -->
+<!-- 		</header> -->
+		
+		<div id="pullrefresh" class="mui-scroll-wrapper">
+		
+		<div class="mui-scroll">
+		
+		<div class="upper-box">
+	        <div class="course-info" data-cid='{$course_arr.cid}'>
+	          <div class="img-box">
+	            <img src="{$course_arr.face}" alt="course-logo" class="course-logo">
+	          </div>
+	          <div class="desc-box">
+	            <h4>{$course_arr.title}</h4>
+	            <p>{$course_arr.desc}</p>
+	          </div>
+	          <div class="price-box">
+	            <span>￥{$course_arr.price}</span>
+	          </div>
+	        </div>
+	        <div class="question-box">
+	          <div class="info">
+	            <img src="" alt="user-logo" class="user-logo">
+	            <p class="user-id"></p>
+	            <p class="date"></p>
+	          </div>
+	          <div class="desc">
+	            <p></p>
+	          </div>
+	          <div class="pic">
+	          </div>
+	        </div>
+	      </div>
+	       <div class="lower-box">
+	        <div class="answer-box">
+	          <div class="answer-count">
+	            <p class="count">0</p>
+	            <p style=''>条回答</p>
+	          </div>
+<!-- 	          老师回答 -->
+				{if $answer_admin_list}
+				{volist name="answer_admin_list" id="data"}
+		          <div class="answer-item">
+		            <div class="img-box">
+		              <img src="/public/gzadmin/images/admin_img.png" alt="reply-logo" class="reply-logo">
+		            </div>
+		            <div class="content-box">
+		              <div class="info">
+		                <h4>老师{if $data.puid} 回复 {$data.p_nickname}{/if}</h4>
+		                <p class="reply-date">{php} echo date("m-d H:i",$data['create_time']);{/php}</p>
+		              </div>
+		              <div class="desc">
+		                <p>{$data.content}</p>
+		              </div>
+		              <div class="operation">
+		              <div class="favo">
+		              <span class="zan" data-has-like="0" data-id="{$data.id}">
+		              {if $data.likes}
+		              <i class="icon-zaned zan-i"></i>
+		              <font style="color:#8f8f94;">{$data.likes}</font>
+		              {else}
+		              <i class="icon-zan zan-i"></i>
+		              <font style="color:#8f8f94;">0</font>
+		              
+		              {/if}
+		              
+		              
+		              </span>
+		              </div>
+		              <div class="reply"><span class="icon-huifu-cz" style="width:auto;" data-id="{$data.id}" data-uid="0">
+		              <i class="icon-qa"></i><font>回答</font></span></div></div>
+
+		            </div>
+	          	</div>
+	          	{/volist}
+	          	{/if}
+	          <div class="mui-row qaInfo-list">
+	        </div>
+	        </div>
+	        
+      </div>
+	
+		  
+    </div>
+   
+    </div>
+ <!--  贴底回复按钮 start  -->
+    <div class="fixed-btn bottom-fixed">
+      <i class="reply-btn gezi-btn"></i>
+      <p style=' margin-top: 10px;'>回答</p>
+    </div>
+		<div class="qainfo-input" style="display: none;">
+			<textarea placeholder="回复" id="text"></textarea>
+			<a id="submit">发送</a>
+		</div>
+		<div class="mui-popup-backdrop mui-active" id="backdrop" style="display: none;"></div>
+		<script type="text/javascript" src="/public/mobile/js/jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="/public/mobile/js/mui.min.js"></script>
+		<script type="text/javascript" src="/public/mobile/js/imgpreview/dialog.min.js"></script>
+		<script type="text/javascript" src="/public/mobile/js/imgpreview/mobile-photo-preview.min.js"></script>
+		<script type="text/javascript" src="/public/mobile/js/globla.js"></script>
+		<script type="text/javascript">
+      
+		   var  is_pay  = {$is_pay};
+			var id = GetQueryString('id');
+			var uid = '{$userinfo.uid}'; //用户id
+			var answer_uid = 0;
+			var answer_id = 0;
+			var page = 1;
+			var size = 10;
+			//var host = 'https://api.fuwangdian.com/api/';
+			toList();
+			$('.mui-scroll-wrapper').css('z-index','0');
+			mui.init({
+                pullRefresh: {
+                    container: '#pullrefresh',
+                    up : {
+                        //height:50,//可选.默认50.触发上拉加载拖动距离
+                        //auto:true,//可选,默认false.自动上拉加载一次
+                        contentrefresh : "正在加载...",//可选，正在加载状态时，上拉加载控件上显示的标题内容
+                        contentnomore:'没有更多数据了',//可选，请求完毕若没有更多数据时显示的提醒内容；
+                        callback :pullupRefresh //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+                    }
+
+                }
+            });
+			function pullupRefresh() {
+				//console.log('下拉');
+                setTimeout(function() {
+                    page++;//翻下一页
+					toList();//具体取数据的方法
+					mui('#pullrefresh').pullRefresh().endPullupToRefresh();
+                }, 100);
+            }
+			
+			function toList(){
+				$.get(host+"ask/detail?id="+id+"&uid="+uid+'&page='+page+'&size='+size, function(result){ 
+				//console.log(result);
+				if(result.code != 1){
+					mui.alert('请求数据失败');return;
+				}
+				var course = result.data.course;
+				var point = result.data.point;
+				var question = result.data.question;
+				var answer = result.data.answer;
+				var photopath = question.photopath;
+				$('.lower-box .answer-box .answer-count .count').html(question.comments);
+				//相关课程
+// 				if(course.length == 0){
+// 					//$('.qaInfo-title').css('display','none');
+// 				}else{
+// 					//$('.qaInfo-title .title').html(course.title);
+// 					$('.qaInfo-title .mui-icon-forward').attr('cid',course.cid);
+// 				}
+				
+				//问题详情
+				if(question.anonymous == 1){
+					question.nickname = '匿名';
+				}
+				$('.question-box .info img').attr('src',question.face);
+				$('.question-box .info .user-id').html(question.nickname);
+				$('.question-box .info .date').html(question.create_time);
+				$('.question-box .desc').html(question.title);
+				img_inner = "";
+				for(var i=0;i<photopath.length;i++){
+					img_inner+='<a href="'+photopath[i]+'"><img src="'+photopath[i]+'" alt="Q-pic"></a>';
+				}
+				$('.question-box .pic').html(img_inner);
+				var answer_inner = '';
+				for(var i=0;i<answer.length;i++){
+					if(answer[i].has_likes == 0){
+						var zan = '<i class="icon-zan zan-i"></i><i class="icon-zaned zan-i" style="display: none;"></i>';
+					}else{
+						var zan = '<i class="icon-zan zan-i" style="display: none;"></i><i class="icon-zaned zan-i"></i>';
+					}
+					
+					if(answer[i].puid > 0){
+						answer[i].nickname = answer[i].nickname+'<font style=" font-size:14px; color: #8f8f94;">回复</font>'+answer[i].pnickname;
+					}
+					if(answer[i].puid ==-1){
+						answer[i].nickname = answer[i].nickname+'<font style=" font-size:14px; color: #8f8f94;">回复</font>老师';
+					}
+					
+					answer_inner+= 
+					
+					'<div class="answer-item">'+
+					' <div class="img-box"><img src="'+answer[i].face+'" alt="reply-logo" class="reply-logo">'+
+					'</div>'+
+					'<div class="content-box"><div class="info">'+
+		              '<h4>'+answer[i].nickname+'</h4>'+
+		                '<p class="reply-date">'+answer[i].create_time+'</p>'+
+		              '</div>'+
+		              '<div class="desc">'+
+		               ' <p>'+answer[i].content+'</p>'+
+		               '</div><div class="operation"><div class="favo">'+
+		               '<span class="zan" data-has-like="'+answer[i].has_likes+'" data-id="'+answer[i].id+'">'+zan+'<font style="color:#8f8f94;">'+answer[i].likes+'</font></span>'+
+		                '</div>'+
+		                '<div class="reply">'+
+		                '<span class="icon-huifu-cz" style="width:auto;" data-id="'+answer[i].id+'" data-uid="'+answer[i].uid+'"><i class="icon-qa"></i><font>回答</font></span>'+
+		                '</div></div></div></div>';
+				}
+				if(page == 1){
+					$('.qaInfo-list').html(answer_inner);
+				}else{
+					$('.qaInfo-list').append(answer_inner);
+				}
+				
+				
+// 				mui(document).on('tap', '.icon-zan', function (event) {
+// 					var that = this;
+// 					var itemid = $(that).parent().attr('data-id');
+// 					var has_likes = $(that).parent().attr('data-has-like');
+// 					//var likes = Number($(that).parent().find('font').html());
+// 					//console.log(likes);
+// 					if(has_likes == 0){
+// 						$.post(host+"like/add",{uid:uid,itemid:itemid,typeid:2},function(res){ 
+// 							console.log(res);
+// 							if(res.code == 1){
+// // 								$(".icon-zan").css('display','none');
+// // 								$(".icon-zaned").css('display','');
+// // 								//$(that).children("i").toggle();
+// // 								//$(that).parent().attr('data-has-like',1);
+// // 								$(that).parent().find('font').html(1);
+// 								$(".icon-zan").css('display','none');
+// 								$(".icon-zaned").css('display','');
+// 								$(that).parent().find('font').html(1);
+// 							}else{
+// 								mui.alert('点赞失败');
+// 							}
+// 						});
+// 					}
+// 					alert('sdd');
+// 				})
+				mui("body").on('tap', '.icon-huifu', function (event) {
+					if(is_pay==0){
+						mui.alert('未购买课程不能回复');
+						//location.reload();
+					}else{
+						var url = "{:url('wechat/ask/reply')}?id="+id+"&puid=0&pid=0";
+						window.location.href=url;
+					}
+					
+					
+				})
+				mui("body").on('tap', '.course-info', function (event) {
+					var itemcid =  $(this).attr('data-cid');
+					var url = "{:url('wechat/course/detail')}?cid="+itemcid;
+					window.location.href=url;
+					
+				})
+				
+				mui("body").on('tap', '.fixed-btn', function (event) {
+					if(is_pay==0){
+						mui.alert('未购买课程不能回复');
+						//location.reload();
+					}else{
+						var url = "{:url('wechat/ask/reply')}?id="+id+"&puid=0&pid=0";
+						window.location.href=url;
+					}
+					
+				})
+				
+				mui("body").on('tap', '.icon-huifu-cz', function (event) {
+				    answer_uid = $(this).attr('data-uid');
+				    answer_id = $(this).attr('data-id');
+					if(is_pay==0){
+						mui.alert('未购买课程不能回复');
+						//location.reload();
+					}else{
+					    var puid = answer_uid;
+						if(answer_uid==0){puid = -1;}
+						var url = "{:url('wechat/ask/reply')}?id="+id+"&puid="+puid+"&pid="+answer_id;
+						window.location.href=url;
+					}
+					
+				})
+				
+				mui("body").on('tap', '.mui-icon-forward', function (event) {
+				    var cid = $(this).attr('cid');
+					var url = "{:url('wechat/course/detail')}";
+					window.location.href=url+'?cid='+cid;
+				})
+				mui(".qainfo-input").on('tap', '#submit', function (event) {
+					var content = $('textarea').val();
+					$('.qainfo-input').hide();
+					if(content == ""){
+						return false;
+					}
+					$("#submit").hide();
+					$.post(host+"answer/add",{uid:uid,aid:id,pid:answer_id,puid:answer_uid,content:content,anonymous:0},function(res){ 
+						$("#submit").show();
+						//console.log(res);
+						if(res.code == 1){
+							$('textarea').val('');
+							mui.alert('回复成功');
+							location.reload();
+							return;
+						}else if(res.code == -1){
+							mui.alert(res.message);
+							$('.qainfo-input').show();
+							return;
+						}else{
+							$('.qainfo-input').show();
+							mui.alert('回复失败');return;
+						}
+					});
+				})
+				
+			});
+			}
+			
+			$('.preview-list').MobilePhotoPreview({
+				trigger: '.preview',
+			});
+			
+			
+			
+	      
+			$(function() {
+				mui("body").on('tap', '#backdrop', function (event) {
+					$(".qainfo-input").hide();
+					$(".mui-popup-backdrop").hide();
+				})
+				//点赞
+				 mui("body").on('tap', '.icon-zan', function (event){
+					var that = this;
+					var itemid = $(that).parent().attr('data-id');
+					var has_likes = $(that).parent().attr('data-has-like');
+					var likes = Number($(that).parent().find('font').html());
+					if(has_likes == 0){
+						$.post(host+"like/add",{uid:uid,itemid:itemid,typeid:2},function(res){ 
+							if(res.code == 1){
+								$(that).parent().find(".icon-zan").css('display','none');
+								$(that).parent().find(".icon-zaned").css('display','');
+								//$(that).parent().attr('data-has-like',1);
+								$(that).parent().find('font').html(likes+1);
+							}else{
+								mui.alert('点赞失败');
+							}
+						});
+					}
+				})
+			})
+		</script>
+	</body>
+
+</html>

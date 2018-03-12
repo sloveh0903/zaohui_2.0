@@ -1,0 +1,222 @@
+
+{include file="common/header" /}
+<link rel="stylesheet" href="/public/gzadmin/css/data_analyse.css">
+
+	<body>
+	<div class="article_manage">
+      <!-- 9.13 替换右侧头部 -->
+      <div class="right-side-header clearfix">
+        <span>数据分析</span>
+        <div class="user-box">
+          {include file="common/admin" /}
+        </div>
+        <div class="success_tip displayNone">已完成</div>
+      </div>
+      <!-- 替换右侧头部 结束 -->
+      <!--内容开始-->
+      	
+      <!--用户管理选项卡-->
+      <div class="system_guanli_div data_guanli_div ">
+        	<ul class="system_guanli_ul user_edit_ul">
+	           	<li><a href="javascript:void(0)" data-src="data_analyse">交易统计</a></li>
+	            <li><a href="{:url('user')}" data-src="{:url('user')}">用户统计</a></li>
+	            <li><a href="javascript:void(0)" class="active"  data-src="data_analyse">课程统计</a></li>
+        	</ul>
+      </div>
+      <div class="data_analyse_content">      	
+        <!--数据分析详情--课程统计二级-->
+	       		 <!--视频统计-->
+	        <div class="video_count ">
+		        <!--标题-->
+		      	<div class="system_guanli_div">
+			      	<ul class="system_guanli_ul user_edit">
+			            <li><a href="javascript:;" class="active" data-src='{:url("statistics/course")}'>课程统计</a><span>&nbsp;/&nbsp;视频统计</span></li>
+					</ul>
+				</div>
+				<!--视频统计内容-->
+				<div class="video_content">
+					<div class="table_title">
+						<h3>课程名称：{$title}</h3>
+						<p>课程已学人数：<span>{$studynum}</span></p>
+					</div>
+					<table  class="user_table data_table video_table">
+	        			<thead>
+	        			
+	        				<tr>
+	        					<th class="part_name">章节名称</th>
+	        					<th class="video_name">视频名称</th>
+	        					<th class="course_user_num">
+	        						<p>视频已学人数</p>
+	        						<img class="help" src="/public/gzadmin/images/help@2x.png" alt="帮助"/>
+	        						<div class="float_div float_div_right">
+	        							<div class="float_box">
+		        							<span></span>
+		        							<p>统计标准：用户学习完视频的70%，系统定义为已学习</p>
+	        							</div>
+	        						</div>
+	        					</th>            					
+	        				</tr>
+	        				
+	        			</thead>
+	        			<tbody>
+	        				{if $list_arr}
+	            				{foreach $list_arr as $vo} 
+		        				<tr>
+		        					<td class="part_name">{$vo.cate_name}</td>
+		        					<td class="video_name">{if $vo.title}{$vo.title}{else}无{/if}</td>
+		        					<td class="course_user_num" data-vid="{$vo.vid}" data-title="{$vo.title}" data-cid="{$cid}" >{if $vo.video_study_count}{$vo.video_study_count}{else}0{/if}</td>            					
+		        				</tr>
+	        				{/foreach}
+	            			{/if}
+	        				
+	        			</tbody>
+	            	</table>
+				</div>
+				<div class="page_bt">
+           			   <div class="page_div3 paging" onselectstart="return false"
+	                   style="font-size: 13px; font-family: 微软雅黑; font-weight: 400; height: 32px; width : auto;">
+	                  </div>
+			            <div class="clearfix" style="clear: both;overflow: hidden;"></div>
+			    </div>
+          	</div>
+        </div>
+            
+	   
+   		<!--学习用户详情弹框-->
+    
+    </div>  
+    <!--学习用户详情弹框-->
+    <div class="user_data_list">
+    	<div class="data_list_content">
+    		<img class="data_list_close" src="/public/gzadmin/images/close@2x.png" alt="关闭"/>
+    		<h3></h3>
+    		<input type='hidden' class="vid" name='vid' value=''>
+    		<input type='hidden' class="cid" name='cid' value=''>
+    		<input type='hidden' class="allpage" name='allpage' value=''>
+    		<table class="data_list_table user_table">
+    			<thead>
+    				<tr>
+    					<th class="data_nikname">头像/昵称</th>
+    					<th class="data_phone">手机号码</th>
+    					<th class="data_sex">性别</th>
+    					<th class="data_lastTime">最后观看时间</th>
+    				</tr>
+    			</thead>
+    			<tbody>
+    				
+    			</tbody>
+    		</table>
+    		<div class="mt20 mb0 page" >
+	            <ul  class="course_pager_ul">
+	               
+	            </ul>
+	            <div class="clearfix"></div>
+	        </div>  
+    	</div>
+    </div>
+	</body>
+	<script type="text/javascript" src="/public/gzadmin/js/jquery-1.11.0.min.js"></script>
+	<script type="text/javascript" src="/public/jqadmin/js/layui/layui.js"></script>
+	<script src="/public/gzadmin/js/jquery.paging.js"></script>
+	<script>
+$(function(){
+
+ //自定义皮肤，精简模式一
+   var page4 = $(".page_div3").paging({
+       total: '{$allpage}',
+       currentPage: '{$Nowpage}',
+       url: "/admin/statistics/video_detail" + '{$search_str}'
+   });
+   var t = '{$allpage}';
+   if (parseInt(t) == 0) {
+       page4.HiddenLast(0);
+       page4.HiddenFirst(0);
+   }
+   
+ //点击课程统计，回到数据分析一级页面--课程统计
+	$(".video_count>.system_guanli_div").on("click","a.active",function(){
+		var url = $(this).attr('data-src');
+		window.location.href=url;
+	})
+	
+ //鼠标经过学习人数问号，float_box出现
+	$(".course_user_num").on("mouseover",".help", function(){
+		$(".float_div").show()
+	})
+	$(".course_user_num").on("mouseleave",".help", function(){
+		$(".float_div").hide()
+	})
+//	/*学习用户详情*/
+	//点击学习人数，弹框出现
+	$(".video_table ").on("click","td.course_user_num",function(){
+		var vid = $(this).attr("data-vid");
+		var cid = $(this).attr("data-cid");	
+		if($(this).attr("data-title").length>=12){
+			var subtitle = $(this).attr("data-title").substring(0,12);
+			var title = "”"+subtitle+'...'+"“"+'学习详情';
+		}else{
+			var subtitle = $(this).attr("data-title");
+			var title = "”"+subtitle+"“"+'学习详情';
+		}
+		
+		
+		$('.vid').val(vid);
+		$('.cid').val(cid);
+		$(".data_list_content h3").html(title);
+		$(".user_data_list").css("display","flex");
+		page = 1;
+		var nextpage = page+1;
+		var allpage = ' <li data-page="0"><a href="javascript:void(0)">上一页</a></li>'+
+					  '<li data-page="'+nextpage+'"><a href="javascript:void(0)">下一页</a></li>';
+		$(".course_pager_ul").html(allpage);
+		changelist(vid,cid,page);
+		
+	})
+	$(".course_pager_ul").on("click","li",function(){
+		var vid = $('.vid').val();
+		var cid = $('.cid').val();	
+        var page = $(this).attr("data-page");
+        var allpage =$('.allpage').val();	 
+        if(page !=0 && page<=allpage){
+        	changelist(vid,cid,page);
+        	var prepage = parseInt(page)-1;
+        	var nextpage = parseInt(page)+1;
+        	var allpage = ' <li data-page="'+prepage+'"><a href="javascript:void(0)">上一页</a></li>'+
+			  '<li data-page="'+nextpage+'"><a href="javascript:void(0)">下一页</a></li>';
+			$(".course_pager_ul").html(allpage);
+        }
+		
+		
+	})
+	function changelist(vid,cid,page){
+	 var returndata = {};
+		$.get("video_study?vid="+vid+"&cid="+cid+"&page="+page, function(result){
+			var bodyhtml = '';
+			var data = result.data.user_data;
+			for(var i=0;i<data.length;i++){
+				bodyhtml = bodyhtml+'<tr>'+
+				'<td class="data_nikname ">'+
+				'<img src="'+data[i].face+'" alt="用户头像"/>'+
+				'<p >'+data[i].nickname+'</p>'+
+				'</td>'+
+				'<td class="data_phone">'+data[i].mobile+'</td>'+
+				'<td class="data_sex">'+data[i].sex+'</td>'+
+				'<td class="data_lastTime">'+data[i].update_time+'</td>'+
+				'</tr>';
+				
+			} 
+		   $('.user_data_list .user_table tbody').html(bodyhtml);
+		   var allpage = result.data.allpage;
+		   $('.allpage').val(allpage);
+		});
+		
+    }
+	
+	//点击close按钮弹框消失
+	$(".user_data_list").on("click",".data_list_close",function(){
+		$(".user_data_list").hide()
+	})
+		
+	})
+</script>
+</html>

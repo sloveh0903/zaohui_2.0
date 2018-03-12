@@ -1,0 +1,104 @@
+{include file="common/header" /}
+<body>
+<div class="article_manage">
+	<div class="right-side-header clearfix">
+	        <span>营销中心</span>
+	        {include file="common/admin" /}
+   </div>
+   
+    <div class="right_side_content">
+	   	 <div class="system_guanli_div">
+            <ul class="system_guanli_ul">
+                <li><a href="javascript:void(0)" class="goto" data-src='{:url("distribution/index")}'>分销规则</a></li>
+                <li><a href="javascript:void(0)" class="goto" data-src='{:url("distribution/rebater")}'>分销员</a></li>
+                <li><a href="javascript:void(0)" class="goto" data-src='{:url("distribution/rebatelist")}'>分销记录</a></li>
+                <li><a href="javascript:void(0)" class=" active   goto" data-src='{:url("distribution/withdraw")}'>提现记录</a></li>
+                <li><a href="javascript:void(0)" class="goto" data-src='{:url("poster/index")}'>营销海报</a></li>
+            </ul>
+        </div>
+		<div class="success_tip displayNone">已完成</div>
+	    <div class="course_right_main ">
+	        <div class="operation_div">
+	            <span class="span_selector {if $status == 0}active{/if} goto" data-src='{:url("withdraw",["status"=>"0"])}'>待付款</span>
+	            <span class="span_selector {if $status == 2}active{/if} goto" data-src='{:url("withdraw",["status"=>"2"])}'>驳回</span>
+	            <span class="span_selector {if $status == 3}active{/if} goto" data-src='{:url("withdraw",["status"=>"3"])}'>全部</span>
+	            <div class="select_search ">
+	
+	                <form class="layui-form" action='{:url("withdraw")}'>
+	                <!--<input class="keyword" type="text" name="key" placeholder="收索..">-->
+	                <input class="search_btn" type="image" src="/public/gzadmin/images/gray_search@2x20.png" lay-submit name="submit" lay-filter="search" align="" >
+	                <div class="layui-form">
+	                    <div class="layui-inline">
+	                        <div class="layui-input-inline">
+	                            <input type="hidden" name="status" value="{$status}">
+	                            <input class="layui-input" name="key" placeholder="提现流水号">
+	                        </div>
+	                    </div>
+	                </div>
+	                </form>
+	            </div>
+	            <div class="clearfix"></div>
+	        </div>
+	        <div id="list" class="layui-form"></div>
+	        <div class="text-right" id="page"></div>
+    </div>
+    <div class="add-subcat">
+        <form id="form1" class="layui-form layui-form-pane" action='{:url("reject")}'>
+
+            <div class="layui-form-item">
+                <input type="hidden" name="id">
+                <div class="layui-input-block" style="margin-left: 0;">
+                    <textarea name="remark" style="width: 100%" placeholder="请输入驳回理由" class="layui-textarea"></textarea>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block" style="margin-left: 0;">
+                    <button class="layui-btn" jq-submit jq-filter="submit">确定</button>
+                </div>
+            </div>
+        </form>
+    </div>
+   </div>
+</div>
+<script id="list-tpl" type="text/html" data-params='{"url":"{:url("withdraw",["status"=>$status])}","pageid":"#page"}'>
+    <table id="example" class="layui-table" lay-skin="line">
+        <thead>
+        <tr>
+            <th>提现流水号</th>
+            <th>分销员</th>
+            <th>申请提现（元）</th>
+            <th>支付宝账号</th>
+            <th>申请日期</th>
+            {switch name="status"}
+            {case value="0"}<th>操作</th>{/case}
+            {case value="2"}<th>驳回理由</th>{/case}
+            {case value="3"}<th>状态</th>{/case}
+            {/switch}
+        </tr>
+        </thead>
+        <tbody>
+        {{# layui.each(d.list, function(index, item){ }}
+        <tr>
+            <td><i title>{{ item.cash_no}}</i></td>
+            <td><i title>{{ item.nickname}}</i></td>
+            <td><i title>￥{{ item.money}}</i></td>
+            <td><i title>{{ item.alipay}}</i></td>
+            <td>{{ item.create_time}}</td>
+            {switch name="status"}
+            {case value="0"}<td><i class="i_delete ajax" data-params='{"url": "{:url("payment")}","confirm":"true","data":"id={{ item.id}}"}'>确认打款</i>／<i class="modal-catch i_edit" data-params='{"content":".add-subcat","act":"{:url("reject")}","data":"id={{ item.id}}", "title":"驳回提现申请","type":"1","area":"500px,320px"}'>驳回</i></td>{/case}
+            {case value="2"}<td>{{ item.remark}}</td>{/case}
+            {case value="3"}<td>{{ item.flag}}</td>{/case}
+            {/switch}
+
+        </tr>
+        {{# }); }}
+        </tbody>
+
+    </table>
+</script>
+{include file="common/version" /}
+<script>
+    layui.use('list');
+</script>
+</body>
+</html>

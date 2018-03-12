@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+   <title>问答首页</title>
+   <link rel="stylesheet" type="text/css" href="/public/mulitpc/css/common.css">
+   <link rel="stylesheet" type="text/css" href="/public/mulitpc/css/interlocution-v72.css">
+   <style>
+    .a_login{height: 30px;
+    margin-top: 20px;
+    line-height: 20px;}
+   </style>
+   <!--[if lt IE 9]> 您的IE浏览器版本太低，请升级浏览器<![endif]-->
+</head>
+{include file="common/head" /}
+  <!-- main -->
+  <div class="main-box">
+    <div class="main-top">
+      <div class="filter">
+        <p>全部课程</p>
+        <i class="icon arrowdown-icon"></i>
+      </div>
+      <a href="javascript:void(0)" class="btn tiwen-btn">我要提问</a>
+    </div>
+    <div class="main-content">
+
+    </div>
+    <div class="empty-box"> <div><img src="/public/mulitpc/images/question.png" alt="为空"><p>暂无内容哦~</p> </div></div>
+    <div class="bottom-box">
+        <i class="showmore">显示更多</i>
+    </div>
+  </div>
+
+  <!-- footer -->
+  <div class="footer">
+    <p>版权所有：{$config_data['copyright']}&nbsp;&nbsp;&nbsp;&nbsp;
+	  <!--<a href="http://www.grazy.cn/" target="_blank">格子匠技术支持 GRAZY.CN</a>-->
+	</p>
+  </div>
+
+  <!-- 选择课程弹窗 -->
+  <div class="dialog course-category">
+    <div class="filter-box">
+      <div class="top">
+        <h4>选择课程</h4>
+        <i class="icon cross"></i>
+      </div>
+      <div class="dialog-item filter-all">
+        <p>全部课程</p>
+      </div>
+    {volist name="course_category" id="vo"}
+      <div class="dialog-item">
+        <h2 class="toplv-caption">{$vo.cate_name}</h2>
+        <div class="course-box">
+  <!--         <h4 class="seclv-caption"></h4> -->
+          <ul class="course-list">
+            {volist name="vo.course" id="v"}
+            <li class="course-item" data-cid="{$v.cid}">{$v.title}</li>
+            {/volist}
+          </ul>
+        </div>
+        {volist name="vo.chirden" id="vo2"}
+        <div class="course-box">
+          <h4 class="seclv-caption">{$vo2.cate_name}</h4>
+          <ul class="course-list">
+            {volist name="vo2.course" id="vo3"}
+            <li class="course-item" data-cid="{$vo3.cid}">{$vo3.title}</li>
+            {/volist}
+          </ul>
+        </div>
+        {/volist}
+      </div>
+    {/volist}
+
+    </div>
+    <div class="alert-box">
+      <i class="icon cross"></i>
+      <h4>提示</h4>
+      <p>需要购买课程才能提问</p>
+      <i class="btn">确认</i>
+    </div>
+  </div>
+
+<script src="/public/pc/js/jquery-1.11.0.min.js"></script>
+<script src="/public/pc/js/public_PC.js"></script>
+<script src="/public/jqadmin/js/layui/layui.js"></script>
+<script type="text/javascript">
+var layer;
+layui.use('layer', function(){
+  layer = layui.layer;
+});
+var uid = '{$uid}';
+var isBuy = '{$buy}';
+var page = 1;
+var cid = 0;
+getask();
+
+$('.showmore').click(function(){
+    page++;
+    getask();
+})
+
+//获取问答数据
+function getask(){
+	$('.empty-box').css('display','none');
+    $.get(host+'/ask/index',{page:page,cid:cid},function(res){
+      if(res.code == 1){
+         var ask = res.data.ask;
+         if(ask.length < 10){
+           $('.showmore').hide();
+         }
+         var inner = '';
+         $('body').css('overflow', 'auto');
+         //$('.footer').css({'position': 'static', 'width': '100%', 'bottom': '20px'});
+         //console.log(ask);
+         if(ask.length==0 && page==1){
+        	 $('.empty-box').css('display','flex');
+         }else{
+        	 for(var i=0;i<ask.length;i++){
+                 var img_inner = '';
+                 var photopath_thumb = ask[i].photopath_thumb;
+                 for(var j=0;j<photopath_thumb.length;j++){
+                	 if(photopath_thumb[j] !='1'){
+                		 img_inner+='<img src="'+photopath_thumb[j]+'" alt="img">';
+                	 }
+                 }
+                 if(ask[i].face == ''){
+                     ask[i].face = '/public/pc/images/no_login@2x.png';
+                 }
+                 if(ask[i].hot == 1){
+                    var essence = '<i class="icon essence"></i>';
+                 }else{
+                    var essence = '';
+                 }
+                 if(ask[i].anonymous == 1){
+                	 ask[i].face = '/public/image/anonymity.png';
+                     ask[i].nickname = '匿名';
+                 }
+                 inner += '<div class="content-box">'+
+                   '<div class="content-top">'+
+                   '<div class="user-box">'+
+                       '<img src="'+ask[i].face+'" alt="user-avatar" class="user-avatar">'+
+                       '<p class="username">'+ask[i].nickname+'</p>'+essence+
+                     '</div>'+
+                     '<p class="time">'+ask[i].create_time+'</p>'+
+                   '</div>'+
+                   '<div class="desc">'+
+                     '<a href="/index/ask/detail/id/'+ask[i].id+'.html">'+ask[i].title+'</a>'+
+                     '<div class="img-box"><a href="/index/ask/detail/id/'+ask[i].id+'.html">'+img_inner+'</a></div>'+
+                   '</div>'+
+                   '<div class="info">'+
+                     '<p class="course-name">'+res.data.catename+'</p>'+
+                     '<a class="reply-box">'+
+                       '<i class="icon reply-icon"></i>'+
+                       '<a href="/index/ask/detail/id/'+ask[i].id+'.html"><p class="reply-count">'+
+                         '<span>'+ask[i].comments+'</span>'+
+                         '条回答'+
+                       '</p></a>'+
+                     '</a>'+
+                   '</div>'+
+                 '</div>';
+            }
+         }
+         
+         if(page == 1){
+            $('.main-content').html(inner);
+         }else{
+            $('.main-content').append(inner);
+         }
+         if(ask.length==0 && page==1){
+        	 $('.footer').css({'width': '100%', 'bottom': '0px'})
+         }else{
+        	 copyright();
+         }
+          
+         
+      }
+  })
+}
+$(function () {
+
+	//我要提问
+	$('.tiwen-btn').click(function(){
+	  if(!uid){
+	    layer.msg('请先登录');
+	    //$('.dialog').show();
+	  }else{
+          var showdialog = '{$showdialog}';  //弹出提示框   需要购买才能提问的弹出框
+          if(showdialog == '1'){
+              $('.dialog').css('display','flex');
+          }else{
+              var url = '{:url("/index/ask/putquestion")}';
+              window.location.href = url;
+          }
+	  }
+	})
+	$('.alert-box .btn').click(function(){
+	   $('.dialog').hide();
+	   $('body').css('overflow', 'auto');
+	})
+
+	//点击筛选课程
+	$('.course-category li').click(function(){
+	    cid = $(this).attr('data-cid');
+	    var text = $(this).text();
+	    $('.main-top .filter p').text(text);
+	    page = 1;
+	    $('.dialog').hide();
+      $('body').css('overflow', 'auto');
+	    getask();
+	})
+
+	//点击全部课程
+	$('.course-category p').click(function(){
+	    page = 1;
+	    cid = 0;
+	    $('.dialog').hide();
+	    $('body').css('overflow', 'auto');
+	    $('.main-top .filter p').text('全部课程');
+	    getask();
+	});
+    
+});
+function copyright() {
+    var tempheight = $(window).innerHeight() - 222 - $('.main-box').innerHeight();
+    if (tempheight > 0) {
+        $('.footer').css({'position': 'absolute', 'width': '100%', 'bottom': '20px'})
+    }
+}
+</script>
+<script src="/public/mulitpc/js/interlocution-v72.js"></script>
+</body>
+</html>

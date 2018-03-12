@@ -1,0 +1,301 @@
+body {
+    font-family: '微软雅黑';
+}
+.progress {
+    height: 20px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    background-color: #f5f5f5;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, .1);
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, .1);
+}
+.progress-bar {
+    float: left;
+    width: 0;
+    height: 100%;
+    font-size: 12px;
+    line-height: 20px;
+    color: #fff;
+    text-align: center;
+    background-color: #337ab7;
+    -webkit-box-shadow: inset 0 -1px 0 rgba(0, 0, 0, .15);
+    box-shadow: inset 0 -1px 0 rgba(0, 0, 0, .15);
+    -webkit-transition: width .6s ease;
+    -o-transition: width .6s ease;
+    transition: width .6s ease;
+}
+.progress-striped .progress-bar,
+.progress-bar-striped {
+    background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+    background-image:      -o-linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+    background-image:         linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+    -webkit-background-size: 40px 40px;
+    background-size: 40px 40px;
+}
+.progress.active .progress-bar,
+.progress-bar.active {
+    -webkit-animation: progress-bar-stripes 2s linear infinite;
+    -o-animation: progress-bar-stripes 2s linear infinite;
+    animation: progress-bar-stripes 2s linear infinite;
+}
+.progress-bar-success {
+    background-color: #5cb85c;
+}
+.progress-striped .progress-bar-success {
+    background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+    background-image:      -o-linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+    background-image:         linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+}
+.progress-bar-info {
+    background-color: #5bc0de;
+}
+.progress-striped .progress-bar-info {
+    background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+    background-image:      -o-linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+    background-image:         linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+}
+.progress-bar-warning {
+    background-color: #f0ad4e;
+}
+.progress-striped .progress-bar-warning {
+    background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+    background-image:      -o-linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+    background-image:         linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+}
+.progress-bar-danger {
+    background-color: #d9534f;
+}
+.progress-striped .progress-bar-danger {
+    background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+    background-image:      -o-linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+    background-image:         linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+}
+h1 {
+    border-bottom: 1px solid #d2d2d2;
+    padding-bottom: 15px;
+    position: relative;
+    font-weight: bold;
+    margin-bottom: 15px;
+    font-family: '微软雅黑';
+}
+h3,h4 {
+    color: #d2d2d2;
+    font-family: '微软雅黑',"Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+h1 .view_github {
+    display: block;
+    font-size:  14px;
+    line-height: 30px;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    border: 1px solid #d2d2d2;
+    border-bottom: none;
+    border-radius:0;
+
+}
+h1 .view_github:hover,h1 .view_code:hover {
+    background-color: #f5f5f5;
+}
+
+h1 .view_code {
+    display: block;
+    font-size:  14px;
+    line-height: 30px;
+    position: absolute;
+    right: 225px;
+    bottom: 0;
+    border: 1px solid #d2d2d2;
+    border-bottom: none;
+    border-radius:0;
+    height: 45px;
+}
+.col-md-12.no-padding {
+    padding-left:0;
+    padding-right:0;
+}
+.info {
+
+    position: relative;
+    top:8px;
+    height: 100%;
+}
+.progress{
+    width: 94%;
+    display: inline-block;
+}
+.progress-bar {
+    min-height: 20px;
+    float: none;
+}
+.progress, .progress div {
+    height: 20px;
+}
+
+.progress .chunk-status {
+    position: absolute;
+    left: 24px;
+    top: 0;
+}
+.progressCancel{
+    display: inline-block;
+    float: right;
+    left:0;
+    position: relative;
+    z-index: 100;
+    color: #333;
+    text-decoration: none;
+}
+.status {
+    position: absolute;
+    width: 100%;
+    top:0;
+    left: 10px;
+    font-size: 13px;
+}
+.tip {
+    padding-left: 30px;
+}
+.tip p {
+    line-height: 1;
+}
+#container {
+    margin-bottom: 20px;
+    border-width: 2px;
+    border-radius: 3px;
+    border-color: #dcdcdc;
+    cursor: default;
+}
+#container:hover,#container:active  {
+    background-color:#fff;
+    border-color: #dcdcdc;
+    -webkit-box-shadow:none;
+    box-shadow:none;
+}
+#container.draging {
+    background-color:#fff;
+    border-color:#999999;
+}
+#success {
+    line-height: 30px;
+    height: 30px;
+    margin:20px 0 0 0;
+}
+#success div {
+    padding-left: 24px;
+}
+#container a {
+    width: 15%;
+    min-width: 145px;
+
+
+}
+
+button {
+    border-radius: 3px;
+    -webkit-box-shadow: 0 1px 0 rgba(243, 243, 243, 0.75);
+    box-shadow: 0 1px 0 rgba(243, 243, 243, 0.75);
+    color: #646464;
+    border: 1px solid #d2d2d2;
+    text-align: center;
+    -webkit-transition: background-color 0.218s, border-color 0.218s, box-shadow 0.218s;
+    transition: background-color 0.218s, border-color 0.218s, box-shadow 0.218s;
+    -webkit-user-select: none;
+    outline: none;
+}
+td .Wrapper {
+    margin-top: 20px;
+    text-align: center;
+    overflow: hidden;
+}
+td .Wrapper .infoWrapper{
+    width:50%;
+    height:100px;
+    margin-left: 10px;
+    text-align: left;
+    line-height: 25px;
+}
+td .Wrapper .infoWrapper a:first-child{
+    margin-right: 10px;
+}
+td .Wrapper.default {
+    margin-top: 20px;
+    text-align: left;
+}
+td .Wrapper.default img{
+    width:100px;
+    height:100px;
+}
+td .imgWrapper {
+    position: relative;
+    width:100px;
+    height: 100px;
+}
+td .imgWrapper .linkWrapper {
+    position: absolute;
+    left: 15px;
+    top: 0;
+    width:100px;
+    height: 100px;
+    cursor: pointer;
+}
+td .imgWrapper .linkWrapper a{
+    line-height: 50px;
+
+}
+table td .hash {
+    margin-bottom: 20px;
+}
+pre  {
+    margin-top: 20px;
+}
+
+.container .modal-dialog {
+    width: 45%;
+}
+.container .modal-dialog .modal-content {
+    max-height: 90%;
+}
+.container .modal-dialog  .modal-body img{
+    max-width: 95%;
+    max-height: 70%;
+}
+.container .modal-body-footer , .container .modal-body-footer div{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.container .modal-dialog .modal-body-footer  {
+    margin-top: 0px;
+}
+.container .modal-dialog .modal-body-footer span {
+    margin-right: 20px;
+}
+.container .modal-dialog .modal-body-footer .text-warning,.container .modal-dialog .modal-footer span ,.container .modal-dialog .modal-footer a{
+    font-size: 12px;
+}
+.body .btn-default {
+    border-radius: 3px;
+    -webkit-box-shadow: 0 1px 0 rgba(243, 243, 243, 0.75);
+    box-shadow: 0 1px 0 rgba(243, 243, 243, 0.75);
+    color: #646464;
+    border: 1px solid #d2d2d2;
+    text-align: center;
+    -webkit-transition: background-color 0.218s, border-color 0.218s, box-shadow 0.218s;
+    transition: background-color 0.218s, border-color 0.218s, box-shadow 0.218s;
+    -webkit-user-select: none;
+    outline: none;
+}
+.body .btn-default:hover,.body .btn-default:active,.body .btn-default:focus ,.no-padding button:hover,.no-padding button:active,.no-padding button:focus{
+    border-color: #bebebe;
+    text-decoration: none;
+    background-color: #fff;
+    color: #262626;
+    outline: none;
+    -webkit-box-shadow: 0 1px 0 rgba(230, 230, 230, 0.8);
+    box-shadow: 0 1px 0 rgba(230, 230, 230, 0.8);
+}
+
+a {
+    cursor: pointer;
+}

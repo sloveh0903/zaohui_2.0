@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <title>我的任务</title>
+   <link rel="stylesheet" href="/public/mobile/css/mui.min.css" />
+   <link rel="stylesheet" href="/public/mobile/css/threeLevelMarketing.css">
+   <style type="text/css">
+   .laxin-list{display: none}
+   #pullrefresh{margin-top: 100px}
+   </style>
+</head>
+{include file="common/share" /}
+<body class="bg_FFF">
+   <div class="my-task-header">
+      <div class="my-virtual-coin">
+         <span>我的{$task['title']}</span>
+         <p>
+            <img src="/public/mobile/img/icon/blue_virtual_coin@2x.png">
+            <i>0</i>
+         </p>
+      </div>
+   </div>
+   <div id="pullrefresh" class="mui-scroll-wrapper">
+      <div class="mui-scroll">
+         <div class="my-task-main">
+            <div class="laxin-list laxin-list1">
+               <span>拉新奖励</span>
+               <p>
+                  <span class="title">邀请0名好友，奖励0{$task['title']}</span>
+                  <i>进度：0/0</i>
+               </p>
+               <div class="mui-progressbar">
+                  <span></span>
+               </div>
+               <ul class="laxin-reward-ul">
+                  
+               </ul>
+            </div>
+            <div class="laxin-list laxin-list2">
+               <span>拉新奖励</span>
+               <p>
+                  <span class="title">邀请0名好友，奖励0{$task['title']}</span>
+                  <i>进度：已完成</i>
+               </p>
+               <div class="mui-progressbar">
+                  <span></span>
+               </div>
+               <ul class="laxin-reward-ul">
+                  
+               </ul>
+            </div>
+            <div class="laxin-list laxin-list3">
+               <span>拉新奖励</span>
+               <p>
+                  <span class="title2">每邀请0名好友，奖励0{$task['title']}</span>
+                  <i>已邀请3位好友</i>
+               </p>
+               <div class="mui-progressbar">
+                  <span></span>
+               </div>
+               <ul class="laxin-reward-ul">
+                  
+               </ul>
+            </div>
+         </div>
+      </div>
+   </div>
+<script src="/public/mobile/js/jquery-3.2.1.min.js"></script>
+<script src="/public/mobile/js/mui.min.js"></script>
+<script src="/public/mobile/js/globla.js"></script>   
+<script type="text/javascript">
+var uid = '{$userinfo.uid}'; //用户id
+var count = 0;
+var type = 0;
+var page = 1;
+var size = 10;
+var title = "{$task['title']}";
+mui.init({
+    pullRefresh: {
+        container: '#pullrefresh',
+        up : {
+            //height:50,//可选.默认50.触发上拉加载拖动距离
+            //auto:true,//可选,默认false.自动上拉加载一次
+            contentrefresh : "",//可选，正在加载状态时，上拉加载控件上显示的标题内容
+            contentnomore:'',//可选，请求完毕若没有更多数据时显示的提醒内容；
+            callback :pullupRefresh //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+        }
+
+    }
+});
+
+
+function pullupRefresh() {
+console.log('下拉');
+    setTimeout(function() {
+        page++;//翻下一页
+        getlist();
+    }, 100);
+}
+//获取基本数据
+$.get(host+"task/task?&uid="+uid, function(result){
+   if(result.code != 1){
+      mui.alert(result.message);
+      return false;
+   }
+   if(result.code == 1){
+      var result = result.data;
+      count = result.count;
+      $('.my-virtual-coin i').text(result.coin);
+      if(result.taskRule.is_repeat == 0){
+         if(count >= result.taskRule.nums){
+            $('.laxin-list2').show();
+            type = 2;
+         }else{
+            $('.laxin-list1').show();
+            $('.laxin-list1 i').text('进度：'+count+'/'+result.taskRule.nums);
+            var progress  = count/result.taskRule.nums*100;
+            if(count == 0){
+                progress = 100;
+            }
+            mui(".laxin-list1>.mui-progressbar").progressbar({progress:parseInt(progress)}).show();
+            type = 1;
+         }
+         $('.title').text('邀请'+result.taskRule.nums+'名好友，奖励'+result.taskRule.coin+title);
+      }else{
+         type = 3;
+         $('.laxin-list3').show();
+         $('.laxin-list3 i').text('已邀请'+count+'位好友');
+         $('.title2').text('每邀请'+result.taskRule.nums+'名好友，奖励'+result.taskRule.coin+title);
+      } 
+   }
+   console.log(type);
+});
+
+getlist();
+
+//获取列表
+function  getlist(){
+   $.get(host+"task/list?&uid="+uid+'&page='+page+'&size='+size, function(result){
+      if(result.code == 1){
+         var result = result.data.taskUser;
+         var text = '';
+         for(var i=0;i<result.length;i++){
+            text += 
+            '<li>'+
+               '<img src="'+result[i].be_face+'" >'+
+               '<span>'+result[i].be_nickname+'</span>'+
+               '<time>'+result[i].create_time+'</time>'+
+            '</li>';
+         }
+         $('.laxin-list'+type+' .laxin-reward-ul').append(text);
+         mui('#pullrefresh').pullRefresh().endPullupToRefresh();
+      }
+   });
+}
+</script>
+<script>
+   mui(".laxin-list1>.mui-progressbar").progressbar({progress:75}).show();
+   mui(".laxin-list2>.mui-progressbar").progressbar({progress:100}).show();
+   mui(".laxin-list3>.mui-progressbar").progressbar({progress:100}).show();
+</script>  
+</body>
+</html>

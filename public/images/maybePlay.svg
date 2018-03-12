@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="451 434 40 40">
+  <defs>
+    <style>
+      .cls-1, .cls-2 {
+        fill: #fff;
+      }
+
+      .cls-1 {
+        stroke: #95989a;
+      }
+
+      .cls-2 {
+        opacity: 0;
+      }
+
+      .cls-3 {
+        clip-path: url(#clip-path);
+      }
+
+      .cls-4 {
+        fill: #53e0db;
+        font-size: 16px;
+        font-family: MaterialIcons-Regular, Material Icons;
+      }
+    </style>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_3673" data-name="Rectangle 3673" class="cls-1" width="16" height="16" transform="translate(15 390)"/>
+    </clipPath>
+  </defs>
+  <g id="Group_3373" data-name="Group 3373" transform="translate(445)">
+    <rect id="Rectangle_3672" data-name="Rectangle 3672" class="cls-2" width="40" height="40" transform="translate(6 434)"/>
+    <g id="Mask_Group_30" data-name="Mask Group 30" class="cls-3" transform="translate(3 56)">
+      <text id="play_circle_filled" class="cls-4" transform="translate(15 406)"><tspan x="0" y="0">play_circle_filled</tspan></text>
+    </g>
+  </g>
+</svg>

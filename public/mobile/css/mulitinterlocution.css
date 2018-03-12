@@ -1,0 +1,487 @@
+﻿body p {text-align: left;}
+.wrap.blur {
+  filter: blur(30px);
+}
+.QA-nav {
+  position: relative;
+  z-index: 2;
+  height: 50px;
+  width: 100%;
+  padding: 0 15px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-shadow: 0 1px rgba(0, 0, 0, .1);
+          box-shadow: 0 1px rgba(0, 0, 0, .1);
+}
+.QA-nav .QA-nav-title {
+	flex: 1;
+	padding-right: 10px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	margin-bottom: 0;
+  font-size: 16px;
+  color: #292B33;
+}
+.QA-nav .QA-nav-filter {
+  width: 72px;
+  height: 36px;
+  line-height: 36px;
+  text-align: center;
+  border-radius: 20px;
+  border: 1px solid #D7D7D8;
+  font-size: 14px;
+  color: #B5B6B9;
+}
+.QA-nav .QA-nav-filter.focus {
+  border-color: #00B6F2;
+  color: #00B6F2;
+}
+.QA {
+	width: 100%;
+	float: left;
+	position: relative;
+	padding: 30px 15px 30px 70px;
+	border-bottom: 1px solid #E7E5EA;
+}
+.QA a{
+	float: left;
+}
+.QA .hp {
+	position: absolute;
+	left: 15px;
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+}
+
+.name {
+	text-align: right;
+	color: rgba(41, 43, 51, 0.3);
+}
+
+.name span {
+	float: left;
+  font-size: 14px;
+  margin-bottom: -2px;
+}
+
+.name span img {
+  width: 18px;
+  height: 17px;
+  vertical-align: baseline;
+}
+
+.preview-list a {
+	width: 33.3%;
+	float: left;
+	line-height: 1.8;
+}
+
+.preview-list a:nth-child(1),
+.preview-list a:nth-child(4) {
+	float: left;
+	padding-right: 5px;
+}
+
+.preview-list a:nth-child(2),
+.preview-list a:nth-child(5) {
+	margin: 0 0%;
+	padding: 0 2.5px;
+}
+
+.preview-list a:nth-child(3),
+.preview-list a:nth-child(6) {
+	float: right;
+	padding-left: 5px;
+}
+
+.preview-list a img {
+	width: 0.9rem;
+	height: 0.9rem;
+	border-radius: 4px;
+}
+
+#imgPreview>div img {
+	position: initial !important;
+}
+
+.ui-dialog-close {
+	z-index: 102 !important;
+}
+
+.ui-preview .imgViewTop {
+	z-index: 101;
+	background: #00B6F2 !important;
+	border: 0 !important;
+}
+
+.ui-preview {
+	z-index: 100 !important;
+	background: #000000 !important;
+}
+
+#imgPreview {
+	top: 200px !important;
+}
+
+.imgViewTop em {
+	font-size: 18px;
+	color: #fff !important;
+	font-style: normal;
+}
+
+.js-dialog-close {
+	position: absolute;
+	right: 10px;
+	z-index: 102;
+	font-size: 30px;
+	font-weight: 700;
+	top: 4px;
+}
+.QA-1{
+	float: left;
+	width: 100%;
+}
+.QA-2{
+	float: left;
+	width: 100%;
+	font-size: 14px;
+}
+.QA-2 .reply-id {
+  font-family: 'PingFang SC Medium';
+  font-size: 14px;
+  color: hsla(228, 20%, 20%, .8);
+}
+.icon-zan{
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	background: url(../img/icon/zan.png);
+	background-size: 100% 100%;
+}
+.icon-zaned{
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	background: url(../img/icon/zaned.png);
+	background-size: 100% 100%;
+}
+.icon-qa{
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	background: url(../img/icon/qa.png);
+	background-size: 100% 100%;
+}
+.QA-3{
+	float: left;
+	display: flex;
+  width: 100%;
+  margin-top: 5px;
+}
+.QA-3 span{
+	margin-right: 20px;
+	line-height: 16px;
+
+}
+.QA-3 span:first-child{
+	width: 50px;
+	margin-right: 20px;
+	line-height: 16px;
+}
+.QA-3 font{
+	float: left;
+	font-size: 14px;
+	color: rgba(41,43,51,0.4) !important;
+}
+
+.QA-3 span i{
+	margin-right: 5px;
+	float: left;
+	
+}
+.QA-no {
+	line-height: 25px;
+}
+.QA-no div{
+	float: right;
+}
+.QA-no a{
+	float: left;
+}
+.QA-no i{
+	float: left;
+	color: rgba(41,43,51,1) !important;
+}
+
+/*问题详情*/
+.qaInfo-title{
+	background: #00B6F2;
+	float: left;
+	width: 100%;
+	color: #fff;
+	padding: 14px 15px;
+	position: relative;
+	height: 60px;
+	
+}
+.qaInfo-title a{
+	color: #fff;
+	width: 100%;
+	line-height: 1.4;
+	opacity: 0.8;
+
+}
+.qaInfo-title a span{
+	float: left;
+	width: 100%;
+	font-size: 12px;
+}
+.qaInfo-title a b{
+	float: left;
+	width: 100%;
+	font-weight: normal;
+	font-size: 14px;
+}
+.qaInfo-title i{
+	position: absolute;
+	right: 0;
+	top: 20px;
+	right: 15px;
+	font-size: 18px;
+}
+.qaInfo-content{
+	float: left;
+	width: 100%;
+	background: #FAFAFA;
+	padding: 25px 15px;
+	border-bottom: 1px solid #E7E5EA;
+}
+.qaInfo-content h1{
+	font-size: 16px;
+	height: 40px;
+	line-height: 40px;
+}
+.qaInfo-content h1 img{
+	float: left;
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	margin-right: 15px;
+}
+.qaInfo-content h1 i{
+	float: right;
+}
+.qaInfo-content p{
+	font-size: 16px;
+	line-height: 1.4;
+	margin-top: 10px;
+}
+.qaInfo-num{
+	float: left;
+	width: 100%;
+	padding: 0 15px;
+	margin-top: 30px;
+	line-height: 1;
+}
+.icon-huifu{
+	position: fixed;
+	bottom: 30px;
+	right: 15px;
+}
+.qainfo-input{
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	height: 60px;
+	width: 100%;
+	z-index: 999;
+	padding: 18px 15px;
+	background: #fff;
+	padding-right: 90px;
+	
+}
+.qainfo-input textarea{
+	border: 0;
+	padding: 0;
+}
+.qainfo-input a{
+	position: absolute;
+	right: 15px;
+	top: 13px;
+	width: 70px;
+	height: 34px;
+	font-size: 14px;
+	border-radius: 17px;
+	color: rgba(255,255,255,0.8);
+	background:#00B6F2;
+	text-align: center;
+	line-height: 34px;
+}
+.icon-huifu-cz{
+	float: right !important;
+  margin-right: 0 !important;
+  font-size: 12px;
+  color: hsla(228, 20%, 20%, .4);
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	flex:1;
+	text-align: right;
+}
+/* 弹窗 start */
+.dialog {
+  position: fixed;
+  z-index: 200;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: #fff;
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+.dialog > div {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  display: none;
+}
+.filter-head {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  box-shadow: 0 1px rgba(0, 0, 0, .1);
+}
+.question-head {
+  height: 70px;
+}
+.filter-head>h4 {
+  font-weight: 400;
+  font-size: 16px;
+  color: hsla(228, 20%, 20%, 1);
+  flex: 1;
+  text-align: center;
+  padding-left: 10px;
+}
+.filter-head .filter-notice {
+  padding-left: 10px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.filter-notice h4 {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 21px;
+  color: hsla(228, 20%, 20%, 1);
+}
+.filter-notice p {
+  font-size: 12px;
+  color: hsla(228, 20%, 20%, .4);
+}
+.filter-head i {
+  display: block;
+  width: 20px;
+  height: 20px;
+  background: url("../img/icon/cross.png") no-repeat center/cover;
+}
+.filter-box .filter-item:first-child {
+  padding-bottom: 0;
+}
+.filter-item {
+  padding: 0 10px 20px;
+  border-bottom: 1px solid rgba(0, 0, 0, .05);
+}
+.filter-item:not(:last-child) {
+  margin-bottom: 10px;
+}
+.filter-item .filter-all {
+  height: 50px;
+  padding-left: 5px;
+  font-size: 14px;
+  line-height: 50px;
+  color: hsla(228, 20%, 20%, .8);
+}
+.filter-item .toplv-caption {
+  margin: 22px 0 18px;
+  padding-left: 5px;
+  font-weight: bold;
+  font-size: 16px;
+  color: rgba(41, 43, 51, 1);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.filter-item .seclv-caption {
+  height: 30px;
+  padding-left: 10px;
+  font-size: 12px;
+  line-height: 30px;
+  color: hsla(228, 20%, 20%, .6);
+  background-color: #FAFAFA;
+  margin:15px 0 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.filter-item .course-caption {
+  height: 30px;
+  padding-left: 5px;
+  font-size: 14px;
+  line-height: 36px;
+  color: rgba(41, 43, 51, .8);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.dialog .alert-box {
+  width: 280px;
+  height: 184px;
+  padding: 19px 20px 25px 20px;
+  flex-direction: column;
+  background-color: #fff;
+  border-radius: 2px;
+  box-shadow: 0 19px 38px rgba(0, 0, 0, .5);
+  display: none;
+}
+.dialog .alert-box h4 {
+  margin: 0;
+  font-weight: normal;
+  font-size: 20px;
+  color: hsla(228, 20%, 20%, .8);
+}
+.dialog .alert-box p {
+  height: 48px;
+  font-size: 16px;
+  line-height: 24px;
+  color: hsla(228, 20%, 20%, .6);
+  margin: 16px 0 30px;
+}
+.dialog .alert-box .operation {
+  display: flex;
+  justify-content: flex-end;
+}
+.dialog .alert-box .operation i {
+  font-size: 14px;
+  color: #00B6F2;
+}
+.dialog .alert-box .operation a {
+  font-size: 14px;
+  color: #00B6F2;
+}
+.dialog .alert-box .operation i {
+  margin-right: 16px;
+}

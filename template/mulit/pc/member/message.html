@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>个人中心</title>
+    <link rel="stylesheet" type="text/css" href="/public/mulitpc/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/public/mulitpc/css/common.css">
+    <link rel="stylesheet" type="text/css" href="/public/mulitpc/css/jquery.mCustomScrollbar.min.css">
+    <link rel="stylesheet" type="text/css" href="/public/mulitpc/css/personal_study.css">
+    <!--[if lt IE 9]> 您的IE浏览器版本太低，请升级浏览器！<![endif]-->
+</head>
+<body class="bg_FAFAFA">
+{include file="common/head" /}
+{include file="member/memberTop"/}
+<div class="userinfo-detail">   
+  {include file="member/memberLeft" /}
+  <div class="detail-container" data-nav="1" data-name="message">
+    <div class="detail-title">
+      <p data-toggle="tab" style="font-size: 14px">我的消息</p>
+    </div>
+    <div class="tab-content">
+      <div id="noReadingInfo">
+        <div class="noReadingInfo mCustomScrollbar">
+          {foreach $messageList as $msg}
+          <div class="system_notice" style="width:96%;">
+            <img src="{$msg.face}" alt="{$msg.tips}" class="noticeImg">
+            <div class="noticeContent">
+              <span class="notice_title">{$msg.tips}</span>
+              <i class="notice_time">{$msg.create_time}</i>
+              <div class="clearfix"></div>
+              <p class="notice_word">{$msg.content}</p>
+              {if $msg.type == 1}
+              <a href='{:url($msg.targetType."/detail",["id"=>$msg.target])}'
+                class="a_startStudy">查看主题</a>
+              {/if}
+            </div>
+            <div class="clearfix"></div>
+          </div>
+          {/foreach}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{include file="common/bottom" /}
+<script src="/public/pc/js/jquery-1.11.0.min.js"></script>
+<script src="/public/pc/js/bootstrap.min.js"></script>
+<script src="/public/pc/js/jquery.mCustomScrollbar.concat.min.js"></script>
+<script src="/public/pc/js/jqmeter.min.js"></script>
+<script src="/public/pc/js/public_PC.js"></script>
+<script>
+    $(function () {
+        $(".mCustomScrollbar").mCustomScrollbar({
+            theme: "minimal-dark"
+        });
+
+    })
+</script>
+</body>
+</html>

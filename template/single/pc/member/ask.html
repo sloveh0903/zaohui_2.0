@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>个人中心</title>
+    <link rel="stylesheet" type="text/css" href="/public/pc/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/public/pc/css/jquery.mCustomScrollbar.min.css">
+    <link rel="stylesheet" type="text/css" href="/public/pc/css/all.css">
+    <style>
+        .mCustomScrollbar li{margin: 10px;}
+        .mCustomScrollbar li .count{float:right;color: #bbb;font-size: 12px;}
+        .mCustomScrollbar li .course{color: #bbb;}
+    </style>
+    <!--[if lt IE 9]> 您的IE浏览器版本太低，请升级浏览器！<![endif]-->
+</head>
+<body class="bg_FAFAFA">
+{include file="common/head" /}
+<div class="personal_study_info mt70">
+    <div class="w980 plr15">
+        <div class="leftFloat personal_head">
+            <img src="{$user.user.face}" alt="{$user.user.nickname}">
+        </div>
+        <div class="leftFloat personal_name">
+            <span class="block opacityWhite">{$user.user.nickname}</span>
+            <span class="block personal_study_time">
+               <i class="mr7">自从{$user.study_begin}学习了{$user.study_day}天</i>
+            </span>
+        </div>
+        <div class=" class_ranking">
+            <span class="class_ranking_num">{$user.ranking}</span>
+            <i>班级排名</i>
+        </div>
+        <div class=" class_ranking  finish_course">
+            <span class="finish_course_num">{$user.study_complete}</span>
+            <i>完成课程</i>
+        </div>
+        <div class=" class_ranking">
+            <span class="integral_num">{$user.user.point}</span>
+            <i>积分</i>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+<div class="personal_study_detail">
+    <div class="w980">
+        <div class="myStudy">
+            {include file="member/memberLeft" /}
+            <div class="leftFloat myStudy_content">
+                <!--我的答疑 start-->
+                <div class="myStudy_div my_tab" data-nav="0" data-name="study">
+                    <ul class="tab_nav_ul" id="myTab_study">
+                        <li><a href="{:url('member/ask?type=1')}"  {if $type == 1}class="defaultTab_a"{/if}>我的提问</a></li>
+                        <li><a href="{:url('member/ask?type=2')}"  {if $type == 2}class="defaultTab_a"{/if}>我的回答</a></li>
+                    </ul>
+
+                    {if $type == 1}
+                    <div class="myStudy_group mCustomScrollbar">
+                        {foreach $lists as $v}
+                         <a href="{:url('ask/detail',['id'=>$v.id])}">
+                            <li>{$v.title} </li>
+                            <li><span class="course">相关课程:{$v.ctitle}</span><span class="count">{$v.comments}条回答</span></li>
+                         </a>
+                        {/foreach}
+                        <div class="page">{$page}</div>
+                    </div>
+                    {/if}
+
+                    {if $type == 2}
+                    <div class="myStudy_group mCustomScrollbar">
+                        {foreach $list_answer as $v}
+                         <a href="{:url('ask/detail',['id'=>$v.aid])}">
+                            <li>问题：{$v.ask_title} </li>
+                            <li>{$v.content} </li>
+                            <li><span class="course">相关课程:{$v.title}</span></li>
+                         </a>
+                        {/foreach}
+                        <div class="page">{$page_answer}</div>
+                    </div>
+                    {/if}
+
+                </div>
+                <!--我的答疑 end-->
+            </div>
+            <div class="clearfix"></div>
+
+        </div>
+    </div>
+</div>
+{include file="common/bottom" /}
+<script src="/public/pc/js/jquery-1.11.0.min.js"></script>
+<script src="/public/pc/js/bootstrap.min.js"></script>
+<script src="/public/pc/js/jquery.mCustomScrollbar.concat.min.js"></script>
+<script src="/public/pc/js/jqmeter.min.js"></script>
+<script src="/public/pc/js/public_PC.js"></script>
+<script>
+  
+</script>
+</body>
+</html>

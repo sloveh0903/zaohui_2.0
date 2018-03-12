@@ -1,0 +1,77 @@
+{include file="common/header" /}
+<body>
+<div class="article_manage">
+	<div class="right-side-header clearfix">
+	        <span>营销中心</span>
+	        {include file="common/admin" /}
+   </div>
+   <div class="right_side_content">
+	   	 <div class="system_guanli_div">
+            <ul class="system_guanli_ul">
+                <li><a href="javascript:void(0)" class="goto" data-src='{:url("distribution/index")}'>分销规则</a></li>
+                <li><a href="javascript:void(0)" class="active goto" data-src='{:url("distribution/rebater")}'>分销员</a></li>
+                <li><a href="javascript:void(0)" class="goto" data-src='{:url("distribution/rebatelist")}'>分销记录</a></li>
+                <li><a href="javascript:void(0)" class="goto" data-src='{:url("distribution/withdraw")}'>提现记录</a></li>
+                <li><a href="javascript:void(0)" class="goto" data-src='{:url("poster/index")}'>营销海报</a></li>
+            </ul>
+        </div>
+		<div class="success_tip displayNone">已完成</div>
+	    <div class="course_right_main ">
+	        <div class="operation_div">
+	            <div class="select_search " >
+	                <form class="layui-form" action='{:url("rebater")}'>
+	                <!--<input class="keyword" type="text" name="key" placeholder="收索..">-->
+	                <input class="search_btn" type="image" src="/public/gzadmin/images/gray_search@2x20.png" lay-submit name="submit" lay-filter="search" align="" >
+	                <div class="layui-form">
+	                    <div class="layui-inline">
+	                        <div class="layui-input-inline">
+	                            <input class="layui-input" name="key" placeholder="关键字">
+	                        </div>
+	                    </div>
+	                </div>
+	                </form>
+	            </div>
+	            <div class="clearfix"></div>
+	        </div>
+	        <div id="list" class="layui-form"></div>
+	        <div class="text-right" id="page"></div>
+    	</div>
+    </div>
+</div>
+<script id="list-tpl" type="text/html" data-params='{"url":"{:url("rebater")}","pageid":"#page"}'>
+    <table id="example" class="layui-table" lay-skin="line">
+        <thead>
+        <tr>
+            <th style="width: 15%">分销员</th>
+            <th>手机号</th>
+            <th>直销订单（个）</th>
+            <th>直销金额</th>
+            <th>下级-下2级（人）</th>
+            <th>下级佣金合计</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{# layui.each(d.list, function(index, item){ }}
+        <tr>
+            <td><i title>{{ item.nickname}}</i></td>
+            <td><i title>{{ item.mobile}}</i></td>
+            <td><i title>{{ item.First_count}}</i></td>
+            <td>￥{{ item.First_total}}</td>
+            <td>{{ item.Secord_people}}-{{ item.Third_people}}</td>
+            <td><i>￥{{ item.Orther_total}}</i></td>
+            <td>
+                <i class="goto i_edit" data-src='{:url("rebate")}?uid={{ item.uid }}'>分销明细</i>
+            </td>
+        </tr>
+        {{# }); }}
+        </tbody>
+
+    </table>
+</script>
+{include file="common/version" /}
+<script>
+    layui.use('list');
+</script>
+</body>
+</html>

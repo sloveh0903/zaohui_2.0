@@ -1,0 +1,1934 @@
+[ 2018-02-09T23:35:45+08:00 ] 172.21.0.3 115.231.183.177 POST /api/recharge/convert.html
+[ log ] zaohui.qusukj.com/api/recharge/convert.html [运行时间：1.453927s][吞吐率：0.69req/s] [内存消耗：2,777.08kb] [文件加载：50]
+[ info ] [ LANG ] /home/wwwroot/lamp-2.4/domain/qusu/web/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'Recharge',
+    2 => 'postconvert',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'accept-encoding' => 'gzip',
+  'x-trace' => 'c00967155eab6885/f0bb217b9467cbd4|0',
+  'x-reqid' => 'j28AAEEt6qECshEV',
+  'user-agent' => 'qiniu-callback/1.0',
+  'host' => 'zaohui.qusukj.com',
+  'content-type' => 'application/json',
+  'content-length' => '545',
+)
+[ info ] [ PARAM ] array (
+  'id' => 'z0.5a7dbec1b946531900b2aae0',
+  'pipeline' => '1380835044.convert',
+  'code' => 0,
+  'desc' => 'The fop was completed successfully',
+  'reqid' => 'j28AAEEt6qECshEV',
+  'inputBucket' => 'deji-media-video',
+  'inputKey' => 'o_1c5tflmv2epe1o6m1kqa1dcg1j14r.mp4',
+  'items' => 
+  array (
+    0 => 
+    array (
+      'cmd' => 'avthumb/mp4/ab/160k/ar/44100/acodec/libfaac/r/30/vb/2400k/vcodec/libx264/s/1280x720/autoscale/1/stripmeta/0|saveas/ZGVqaS1tZWRpYS12aWRlbzoyMDE4MDIwOTYzOTkzLm1wNA==',
+      'code' => 0,
+      'desc' => 'The fop was completed successfully',
+      'hash' => 'lgAq6Hv2JHGPo5RKd0hxDSNcD_34',
+      'key' => '2018020963993.mp4',
+      'returnOld' => 0,
+    ),
+  ),
+  'action' => 'convert',
+)
+[ info ] [ RUN ] app\api\controller\Recharge->postConvert[ /home/wwwroot/lamp-2.4/domain/qusu/web/application/api/controller/Recharge.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000248s ] mysql:dbname=qusukj;host=localhost;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_qiniu_account` [ RunTime:0.000712s ]
+[ sql ] [ SQL ] SELECT `id`,`uid`,`domain`,`key`,`secret`,`bucket`,`money` FROM `gz_qiniu_account` WHERE  `closed` = 0 LIMIT 1 [ RunTime:0.000227s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_convert` [ RunTime:0.000761s ]
+[ sql ] [ SQL ] INSERT INTO `gz_convert` (`money` , `videopath` , `resolution` , `lenght` , `create_time` , `update_time`) VALUES (0.54 , 'http://zhibo-media.dejikeji.com/2018020900907.m3u8' , 'sd' , 1545 , 1518105600 , 1518105600) [ RunTime:0.000239s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_video` [ RunTime:0.000526s ]
+[ sql ] [ SQL ] UPDATE `gz_video`  SET `transcoding_path`='http://zhibo-media.dejikeji.com/2018020900907.m3u8'  WHERE  `video_id` = 'z0.5a7dbec1b946531900b2aae0' [ RunTime:0.000303s ]
+
+---------------------------------------------------------------
+[ 2018-02-09T23:37:38+08:00 ] 172.21.0.3 123.206.84.18 GET /api/index/index
+[ log ] 123.206.84.18/api/index/index [运行时间：0.026102s][吞吐率：38.31req/s] [内存消耗：3,184.81kb] [文件加载：42]
+[ info ] [ LANG ] /home/wwwroot/lamp-2.4/domain/qusu/web/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'Index',
+    2 => 'getindex',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'accept' => '*/*',
+  'host' => '123.206.84.18',
+)
+[ info ] [ PARAM ] array (
+  'action' => 'index',
+)
+[ info ] [ RUN ] app\api\controller\Index->getIndex[ /home/wwwroot/lamp-2.4/domain/qusu/web/application/api/controller/Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000254s ] mysql:dbname=qusukj;host=localhost;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_rebate_config` [ RunTime:0.000697s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_rebate_config` WHERE  `closed` = 0 LIMIT 1 [ RunTime:0.000194s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_course` [ RunTime:0.000594s ]
+[ sql ] [ SQL ] SELECT `cid`,`uid`,`title`,`face`,`desc`,`banner`,`price`,`content`,`subscribe_num`,`virtual_amount` FROM `gz_course` WHERE  `audit` = 1  AND `closed` = 0 ORDER BY `orderby`  desc LIMIT 0,10 [ RunTime:0.000627s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_user` [ RunTime:0.000673s ]
+[ sql ] [ SQL ] SELECT `uid`,`uname`,`face`,`info`,`realname`,`follow` FROM `gz_user` WHERE  `uid` IN (0,0,0,0,0,0,0,0,0,0)  AND `closed` = 0 [ RunTime:0.000217s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_config` [ RunTime:0.000623s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_config` WHERE  `id` = 1  AND `closed` = 0 LIMIT 1 [ RunTime:0.000244s ]
+
+---------------------------------------------------------------
+[ 2018-02-09T23:37:38+08:00 ] 172.21.0.3 123.206.84.18 GET /api/config/index
+[ log ] 123.206.84.18/api/config/index [运行时间：0.019027s][吞吐率：52.56req/s] [内存消耗：2,769.12kb] [文件加载：39]
+[ info ] [ LANG ] /home/wwwroot/lamp-2.4/domain/qusu/web/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'Config',
+    2 => 'getindex',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'accept' => '*/*',
+  'host' => '123.206.84.18',
+)
+[ info ] [ PARAM ] array (
+  'action' => 'index',
+)
+[ info ] [ RUN ] app\api\controller\Config->getIndex[ /home/wwwroot/lamp-2.4/domain/qusu/web/application/api/controller/Config.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000217s ] mysql:dbname=qusukj;host=localhost;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_config` [ RunTime:0.000852s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_config` WHERE  `closed` = 0 LIMIT 1 [ RunTime:0.000280s ]
+
+---------------------------------------------------------------
+[ 2018-02-09T23:37:38+08:00 ] 172.21.0.3 123.206.84.18 GET /api/mulitcourse/index
+[ log ] 123.206.84.18/api/mulitcourse/index [运行时间：0.011083s][吞吐率：90.23req/s] [内存消耗：1,603.54kb] [文件加载：28]
+[ info ] [ LANG ] /home/wwwroot/lamp-2.4/domain/qusu/web/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'mulitcourse',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'accept' => '*/*',
+  'host' => '123.206.84.18',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LOG ] INIT File
+
+---------------------------------------------------------------
+[ 2018-02-09T23:37:38+08:00 ] 172.21.0.3 184.3.45.191 POST /
+[ log ] 123.206.84.18/ [运行时间：0.088120s][吞吐率：11.35req/s] [内存消耗：2,967.75kb] [文件加载：44]
+[ info ] [ LANG ] /home/wwwroot/lamp-2.4/domain/qusu/web/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'PHPSESSID=8jjdp582hik2ukrfn8qighi0tinlvbmo',
+  'cache-control' => 'no-cache',
+  'host' => '123.206.84.18',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; rv:11.0) like Gecko',
+  'content-type' => 'application/x-www-form-urlencoded',
+  'content-length' => '368',
+)
+[ info ] [ PARAM ] array (
+  'R61ZxY7MZjGce7V_6Gb5IjZ35/PyQ1I67R8KijeKnyv_vUNAhyCDKVz7LwuFZ2w/2m0ZHz7ny1JCUl9CWZEhlE4E2rxItht2MFoXkpDbPdeWfaXBBbdmZ3/LlSldPaYCdT5qGuaJFHvokwrWlpbg1l4NBirpfns1zEU7w33ZCea2Lwmc4QIeqfrO_2msTBpEkNuJ8GHiIVn4aAxm8CtSLhUSiHxEmtxyVP826sf65fpx1aK2e0oEQg1VHjAOpUNU/Oab48uEU7Y5yMHOI0CFVoch6/ZJ82VNXGqGd3fc5oPWxvIKLSbBVmrIYy6vAuP0ulmwWmp2K6NNZKDQ5M63/D1kQbB/CPBViX6mYajaz1J36Iq8' => '',
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /home/wwwroot/lamp-2.4/domain/qusu/web/application/index/controller/Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] ./template/mulit/pc/index/index.html [ array (
+  0 => 'course',
+  1 => 'config',
+  2 => 'adv_item',
+  3 => 'cate',
+) ]
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000192s ] mysql:dbname=qusukj;host=localhost;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_config` [ RunTime:0.000753s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_config` WHERE  `closed` = 0 LIMIT 1 [ RunTime:0.000342s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_course` [ RunTime:0.000684s ]
+[ sql ] [ SQL ] SELECT `cid`,`banner`,`price`,`title`,`desc` FROM `gz_course` WHERE  `closed` = 0  AND `audit` = 1 ORDER BY `cid`  desc LIMIT 10 [ RunTime:0.000267s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_course_category` [ RunTime:0.000459s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`cate_name` FROM `gz_course_category` WHERE  `closed` = 0 ORDER BY orderby desc [ RunTime:0.000166s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_adv_item` [ RunTime:0.000508s ]
+[ sql ] [ SQL ] SELECT `photopath`,`link` FROM `gz_adv_item` WHERE  `adv_id` = 3  AND `closed` = 0 ORDER BY id desc [ RunTime:0.000144s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000228s ] mysql:dbname=qusukj;host=localhost;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_show_switch` [ RunTime:0.000624s ]
+[ sql ] [ SQL ] SELECT `is_showask` FROM `gz_show_switch` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.000176s ]
+
+---------------------------------------------------------------
+[ 2018-02-09T23:39:39+08:00 ] 172.21.0.3 123.206.84.18 GET /api/index/index
+[ log ] 123.206.84.18/api/index/index [运行时间：0.027011s][吞吐率：37.02req/s] [内存消耗：3,184.81kb] [文件加载：42]
+[ info ] [ LANG ] /home/wwwroot/lamp-2.4/domain/qusu/web/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'Index',
+    2 => 'getindex',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'accept' => '*/*',
+  'host' => '123.206.84.18',
+)
+[ info ] [ PARAM ] array (
+  'action' => 'index',
+)
+[ info ] [ RUN ] app\api\controller\Index->getIndex[ /home/wwwroot/lamp-2.4/domain/qusu/web/application/api/controller/Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000256s ] mysql:dbname=qusukj;host=localhost;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_rebate_config` [ RunTime:0.000712s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_rebate_config` WHERE  `closed` = 0 LIMIT 1 [ RunTime:0.000242s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_course` [ RunTime:0.000659s ]
+[ sql ] [ SQL ] SELECT `cid`,`uid`,`title`,`face`,`desc`,`banner`,`price`,`content`,`subscribe_num`,`virtual_amount` FROM `gz_course` WHERE  `audit` = 1  AND `closed` = 0 ORDER BY `orderby`  desc LIMIT 0,10 [ RunTime:0.000670s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_user` [ RunTime:0.000661s ]
+[ sql ] [ SQL ] SELECT `uid`,`uname`,`face`,`info`,`realname`,`follow` FROM `gz_user` WHERE  `uid` IN (0,0,0,0,0,0,0,0,0,0)  AND `closed` = 0 [ RunTime:0.000221s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_config` [ RunTime:0.000670s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_config` WHERE  `id` = 1  AND `closed` = 0 LIMIT 1 [ RunTime:0.000235s ]
+
+---------------------------------------------------------------
+[ 2018-02-09T23:39:39+08:00 ] 172.21.0.3 123.206.84.18 GET /api/config/index
+[ log ] 123.206.84.18/api/config/index [运行时间：0.019069s][吞吐率：52.44req/s] [内存消耗：2,769.12kb] [文件加载：39]
+[ info ] [ LANG ] /home/wwwroot/lamp-2.4/domain/qusu/web/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'Config',
+    2 => 'getindex',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'accept' => '*/*',
+  'host' => '123.206.84.18',
+)
+[ info ] [ PARAM ] array (
+  'action' => 'index',
+)
+[ info ] [ RUN ] app\api\controller\Config->getIndex[ /home/wwwroot/lamp-2.4/domain/qusu/web/application/api/controller/Config.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000338s ] mysql:dbname=qusukj;host=localhost;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_config` [ RunTime:0.000832s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_config` WHERE  `closed` = 0 LIMIT 1 [ RunTime:0.000362s ]
+
+---------------------------------------------------------------
+[ 2018-02-09T23:39:39+08:00 ] 172.21.0.3 123.206.84.18 GET /api/mulitcourse/index
+[ log ] 123.206.84.18/api/mulitcourse/index [运行时间：0.011775s][吞吐率：84.93req/s] [内存消耗：1,603.54kb] [文件加载：28]
+[ info ] [ LANG ] /home/wwwroot/lamp-2.4/domain/qusu/web/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'mulitcourse',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'accept' => '*/*',
+  'host' => '123.206.84.18',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LOG ] INIT File
+
+---------------------------------------------------------------
+[ 2018-02-09T23:39:39+08:00 ] 172.21.0.3 184.3.45.191 POST /
+[ log ] 123.206.84.18/ [运行时间：0.092701s][吞吐率：10.79req/s] [内存消耗：2,967.88kb] [文件加载：44]
+[ info ] [ LANG ] /home/wwwroot/lamp-2.4/domain/qusu/web/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'PHPSESSID=8jjdp582hik2ukrfn8qighi0tinlvbmo',
+  'cache-control' => 'no-cache',
+  'host' => '123.206.84.18',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; rv:11.0) like Gecko',
+  'content-type' => 'application/x-www-form-urlencoded',
+  'content-length' => '428',
+)
+[ info ] [ PARAM ] array (
+  'SvQIl97MZPja1iw5Te2ZSmi6fsblsl7T94YOCrDUWfp_igDlaYtRn2OvHKz_PHQzV_60po/Id89d2MSw3cwRHbuDHrtX2hVlZ1l0xC5k1SJCxMKRbw8xpKEMApzby7xf09QBytYsF9VxLPsBbdN4G4RdYyYi_XvDaEcOmiAMmWJgRN/xDAs/pQ3RVOxOCx0Bkl5aa4Nbl/02peLJIIpG9uHZ9TBTO6gurIajWSweVyHZLECxO8L3joNY4zxEiZtbfoi1Ki87ersPuiOD5/6n/9wpGBNBy8WALnnH7MT8_xYIaN4VVaHWznyMJxvy3NDev6dVVTvq_KRCT1aPxbcBL7K9bhyunp4ukjFy6j20lzP6IaVOvYhXNb__jjDcOHXUnIergUe/LJcgtfUteYKN6oSzgsQQuwOibUJbmtZimQ' => '=',
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /home/wwwroot/lamp-2.4/domain/qusu/web/application/index/controller/Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] ./template/mulit/pc/index/index.html [ array (
+  0 => 'course',
+  1 => 'config',
+  2 => 'adv_item',
+  3 => 'cate',
+) ]
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000206s ] mysql:dbname=qusukj;host=localhost;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_config` [ RunTime:0.000728s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_config` WHERE  `closed` = 0 LIMIT 1 [ RunTime:0.000301s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_course` [ RunTime:0.000577s ]
+[ sql ] [ SQL ] SELECT `cid`,`banner`,`price`,`title`,`desc` FROM `gz_course` WHERE  `closed` = 0  AND `audit` = 1 ORDER BY `cid`  desc LIMIT 10 [ RunTime:0.000270s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_course_category` [ RunTime:0.000582s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`cate_name` FROM `gz_course_category` WHERE  `closed` = 0 ORDER BY orderby desc [ RunTime:0.000227s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_adv_item` [ RunTime:0.000564s ]
+[ sql ] [ SQL ] SELECT `photopath`,`link` FROM `gz_adv_item` WHERE  `adv_id` = 3  AND `closed` = 0 ORDER BY id desc [ RunTime:0.000155s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000405s ] mysql:dbname=qusukj;host=localhost;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_show_switch` [ RunTime:0.000632s ]
+[ sql ] [ SQL ] SELECT `is_showask` FROM `gz_show_switch` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.000158s ]
+
+---------------------------------------------------------------
+[ 2018-02-09T23:41:40+08:00 ] 172.21.0.3 123.206.84.18 GET /api/index/index
+[ log ] 123.206.84.18/api/index/index [运行时间：0.027962s][吞吐率：35.76req/s] [内存消耗：3,184.81kb] [文件加载：42]
+[ info ] [ LANG ] /home/wwwroot/lamp-2.4/domain/qusu/web/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'Index',
+    2 => 'getindex',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'accept' => '*/*',
+  'host' => '123.206.84.18',
+)
+[ info ] [ PARAM ] array (
+  'action' => 'index',
+)
+[ info ] [ RUN ] app\api\controller\Index->getIndex[ /home/wwwroot/lamp-2.4/domain/qusu/web/application/api/controller/Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000302s ] mysql:dbname=qusukj;host=localhost;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_rebate_config` [ RunTime:0.000663s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_rebate_config` WHERE  `closed` = 0 LIMIT 1 [ RunTime:0.000185s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_course` [ RunTime:0.000602s ]
+[ sql ] [ SQL ] SELECT `cid`,`uid`,`title`,`face`,`desc`,`banner`,`price`,`content`,`subscribe_num`,`virtual_amount` FROM `gz_course` WHERE  `audit` = 1  AND `closed` = 0 ORDER BY `orderby`  desc LIMIT 0,10 [ RunTime:0.000579s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_user` [ RunTime:0.000736s ]
+[ sql ] [ SQL ] SELECT `uid`,`uname`,`face`,`info`,`realname`,`follow` FROM `gz_user` WHERE  `uid` IN (0,0,0,0,0,0,0,0,0,0)  AND `closed` = 0 [ RunTime:0.000280s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_config` [ RunTime:0.000805s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_config` WHERE  `id` = 1  AND `closed` = 0 LIMIT 1 [ RunTime:0.000265s ]
+
+---------------------------------------------------------------
+[ 2018-02-09T23:41:40+08:00 ] 172.21.0.3 123.206.84.18 GET /api/config/index
+[ log ] 123.206.84.18/api/config/index [运行时间：0.018479s][吞吐率：54.12req/s] [内存消耗：2,769.12kb] [文件加载：39]
+[ info ] [ LANG ] /home/wwwroot/lamp-2.4/domain/qusu/web/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'Config',
+    2 => 'getindex',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'accept' => '*/*',
+  'host' => '123.206.84.18',
+)
+[ info ] [ PARAM ] array (
+  'action' => 'index',
+)
+[ info ] [ RUN ] app\api\controller\Config->getIndex[ /home/wwwroot/lamp-2.4/domain/qusu/web/application/api/controller/Config.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000246s ] mysql:dbname=qusukj;host=localhost;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_config` [ RunTime:0.000900s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_config` WHERE  `closed` = 0 LIMIT 1 [ RunTime:0.000300s ]
+
+---------------------------------------------------------------
+[ 2018-02-09T23:41:40+08:00 ] 172.21.0.3 123.206.84.18 GET /api/mulitcourse/index
+[ log ] 123.206.84.18/api/mulitcourse/index [运行时间：0.010411s][吞吐率：96.05req/s] [内存消耗：1,603.54kb] [文件加载：28]
+[ info ] [ LANG ] /home/wwwroot/lamp-2.4/domain/qusu/web/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'mulitcourse',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'accept' => '*/*',
+  'host' => '123.206.84.18',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LOG ] INIT File
+
+---------------------------------------------------------------
+[ 2018-02-09T23:41:40+08:00 ] 172.21.0.3 184.3.45.191 POST /
+[ log ] 123.206.84.18/ [运行时间：0.087728s][吞吐率：11.40req/s] [内存消耗：2,967.81kb] [文件加载：44]
+[ info ] [ LANG ] /home/wwwroot/lamp-2.4/domain/qusu/web/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'PHPSESSID=8jjdp582hik2ukrfn8qighi0tinlvbmo',
+  'cache-control' => 'no-cache',
+  'host' => '123.206.84.18',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; rv:11.0) like Gecko',
+  'content-type' => 'application/x-www-form-urlencoded',
+  'content-length' => '396',
+)
+[ info ] [ PARAM ] array (
+  'QKcLko/LZW42Sbb8eYT73wSTrmYOyQPRq6nL24G5Kq7z0fauvKzApSV1LTLuYh7pBKtsk6NNYjPRe8TvrZHCog_o12uyExLp04/cJRTdm3ECpBRarhOa3Gc4DVu2OIcQr092euiQD1leQuqpH3IatGMPuIk_4Yt0KXGuu2YVQiitPD15qdPeUy1tkEtEamgIvmVDrtN3AOJiAfOCJhXMvYGCilWzKA1osIGebebK/S55zAK0N1JbHoJENDIGNpdReSHoR3DzQB4q17z/DtRLhC5wjH_RKT1tlXHL4nL6lvvBBkAM7GBBLkpltJIN5qyJ54WOAq258NSYOqbNo9d2/dazBz_4FUBo_WxK_RToV4K3TkKit82Rhpco4KySx6F6ZcYKt24TzBE' => '',
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /home/wwwroot/lamp-2.4/domain/qusu/web/application/index/controller/Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] ./template/mulit/pc/index/index.html [ array (
+  0 => 'course',
+  1 => 'config',
+  2 => 'adv_item',
+  3 => 'cate',
+) ]
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000183s ] mysql:dbname=qusukj;host=localhost;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_config` [ RunTime:0.000661s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_config` WHERE  `closed` = 0 LIMIT 1 [ RunTime:0.000263s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_course` [ RunTime:0.000580s ]
+[ sql ] [ SQL ] SELECT `cid`,`banner`,`price`,`title`,`desc` FROM `gz_course` WHERE  `closed` = 0  AND `audit` = 1 ORDER BY `cid`  desc LIMIT 10 [ RunTime:0.000258s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_course_category` [ RunTime:0.000461s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`cate_name` FROM `gz_course_category` WHERE  `closed` = 0 ORDER BY orderby desc [ RunTime:0.000159s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_adv_item` [ RunTime:0.000468s ]
+[ sql ] [ SQL ] SELECT `photopath`,`link` FROM `gz_adv_item` WHERE  `adv_id` = 3  AND `closed` = 0 ORDER BY id desc [ RunTime:0.000161s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000164s ] mysql:dbname=qusukj;host=localhost;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_show_switch` [ RunTime:0.000512s ]
+[ sql ] [ SQL ] SELECT `is_showask` FROM `gz_show_switch` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.000138s ]
+
+---------------------------------------------------------------
+[ 2018-02-09T23:43:06+08:00 ] 172.21.0.3 113.245.110.104 POST /admin/video/create.html
+[ log ] zaohui.qusukj.com/admin/video/create.html [运行时间：1.662697s][吞吐率：0.60req/s] [内存消耗：3,144.27kb] [文件加载：54]
+[ info ] [ LANG ] /home/wwwroot/lamp-2.4/domain/qusu/web/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'video',
+    2 => 'create',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'PHPSESSID=hl8p82sjl717ca6heecfqnmn264ikbb5; Hm_lvt_407473d433e871de861cf818aa1405a1=1518072494,1518072587,1518160166; Hm_lpvt_407473d433e871de861cf818aa1405a1=1518184390',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate',
+  'referer' => 'http://zaohui.qusukj.com/admin/chapter?cid=87',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36',
+  'x-requested-with' => 'XMLHttpRequest',
+  'origin' => 'http://zaohui.qusukj.com',
+  'accept' => '*/*',
+  'connection' => 'keep-alive',
+  'host' => 'zaohui.qusukj.com',
+  'content-type' => 'application/x-www-form-urlencoded; charset=UTF-8',
+  'content-length' => '220',
+)
+[ info ] [ PARAM ] array (
+  'domain' => 'http://zhibo-media.dejikeji.com',
+  'key' => 'o_1c5tflvvo1ts9f5bu907c4c3811.mp4',
+  'title' => '2017-11-01 20-57-22',
+  'video_path' => 'http://zhibo-media.dejikeji.com/o_1c5tflvvo1ts9f5bu907c4c3811.mp4',
+  'chapter_id' => '78',
+  'course_id' => '87',
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Video->create[ /home/wwwroot/lamp-2.4/domain/qusu/web/application/admin/controller/Video.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000261s ] mysql:dbname=qusukj;host=localhost;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_video` [ RunTime:0.000746s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_video` WHERE  `cid` = 87  AND `tid` = 78  AND `closed` = 0 ORDER BY `orderby`  desc LIMIT 1 [ RunTime:0.000299s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_qiniu_account` [ RunTime:0.000496s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_qiniu_account` LIMIT 1 [ RunTime:0.000161s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_convert` [ RunTime:0.000695s ]
+[ sql ] [ SQL ] INSERT INTO `gz_convert` (`money` , `videopath` , `resolution` , `lenght` , `create_time` , `update_time`) VALUES (0.31 , 'http://zhibo-media.dejikeji.com/2018020935806.mp4' , 'sd480' , 1994 , 1518105600 , 1518105600) [ RunTime:0.000215s ]
+[ sql ] [ SQL ] INSERT INTO `gz_convert` (`money` , `videopath` , `resolution` , `lenght` , `create_time` , `update_time`) VALUES (0.31 , 'http://zhibo-media.dejikeji.com/2018020910466.m3u8' , 'sd480' , 1994 , 1518105600 , 1518105600) [ RunTime:0.000256s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_course` [ RunTime:0.000760s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_course` WHERE  `cid` = 87  AND `closed` = 0 LIMIT 1 [ RunTime:0.000299s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000212s ] mysql:dbname=qusukj;host=localhost;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_video_category` [ RunTime:0.000492s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_video_category` WHERE  `cid` = 87  AND `id` = 78 LIMIT 1 [ RunTime:0.000173s ]
+[ sql ] [ SQL ] INSERT INTO `gz_video` (`cid` , `tid` , `title` , `video_path` , `desc` , `lenght` , `video_id` , `transcoding_path` , `orderby` , `update_time` , `create_time`) VALUES (87 , 78 , '2017-11-01 20-57-22' , 'http://zhibo-media.dejikeji.com/2018020935806.mp4' , '2017-11-01 20-57-22' , 1994 , 'z0.5a7dc18ab946531900b3513c' , 'http://zhibo-media.dejikeji.com/2018020910466.m3u8' , 1 , 1518190984 , 1518190984) [ RunTime:0.000237s ]
+
+---------------------------------------------------------------
+[ 2018-02-09T23:43:41+08:00 ] 172.21.0.3 123.206.84.18 GET /api/index/index
+[ log ] 123.206.84.18/api/index/index [运行时间：0.025364s][吞吐率：39.43req/s] [内存消耗：3,184.81kb] [文件加载：42]
+[ info ] [ LANG ] /home/wwwroot/lamp-2.4/domain/qusu/web/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'Index',
+    2 => 'getindex',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'accept' => '*/*',
+  'host' => '123.206.84.18',
+)
+[ info ] [ PARAM ] array (
+  'action' => 'index',
+)
+[ info ] [ RUN ] app\api\controller\Index->getIndex[ /home/wwwroot/lamp-2.4/domain/qusu/web/application/api/controller/Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000221s ] mysql:dbname=qusukj;host=localhost;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_rebate_config` [ RunTime:0.000639s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_rebate_config` WHERE  `closed` = 0 LIMIT 1 [ RunTime:0.000184s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_course` [ RunTime:0.000607s ]
+[ sql ] [ SQL ] SELECT `cid`,`uid`,`title`,`face`,`desc`,`banner`,`price`,`content`,`subscribe_num`,`virtual_amount` FROM `gz_course` WHERE  `audit` = 1  AND `closed` = 0 ORDER BY `orderby`  desc LIMIT 0,10 [ RunTime:0.000590s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_user` [ RunTime:0.000627s ]
+[ sql ] [ SQL ] SELECT `uid`,`uname`,`face`,`info`,`realname`,`follow` FROM `gz_user` WHERE  `uid` IN (0,0,0,0,0,0,0,0,0,0)  AND `closed` = 0 [ RunTime:0.000207s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_config` [ RunTime:0.000689s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_config` WHERE  `id` = 1  AND `closed` = 0 LIMIT 1 [ RunTime:0.000231s ]
+
+---------------------------------------------------------------
+[ 2018-02-09T23:43:41+08:00 ] 172.21.0.3 123.206.84.18 GET /api/config/index
+[ log ] 123.206.84.18/api/config/index [运行时间：0.017962s][吞吐率：55.67req/s] [内存消耗：2,769.12kb] [文件加载：39]
+[ info ] [ LANG ] /home/wwwroot/lamp-2.4/domain/qusu/web/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'Config',
+    2 => 'getindex',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'accept' => '*/*',
+  'host' => '123.206.84.18',
+)
+[ info ] [ PARAM ] array (
+  'action' => 'index',
+)
+[ info ] [ RUN ] app\api\controller\Config->getIndex[ /home/wwwroot/lamp-2.4/domain/qusu/web/application/api/controller/Config.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000219s ] mysql:dbname=qusukj;host=localhost;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_config` [ RunTime:0.000721s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_config` WHERE  `closed` = 0 LIMIT 1 [ RunTime:0.000285s ]
+
+---------------------------------------------------------------
+[ 2018-02-09T23:43:41+08:00 ] 172.21.0.3 123.206.84.18 GET /api/mulitcourse/index
+[ log ] 123.206.84.18/api/mulitcourse/index [运行时间：0.010596s][吞吐率：94.38req/s] [内存消耗：1,603.54kb] [文件加载：28]
+[ info ] [ LANG ] /home/wwwroot/lamp-2.4/domain/qusu/web/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'mulitcourse',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'accept' => '*/*',
+  'host' => '123.206.84.18',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LOG ] INIT File
+
+---------------------------------------------------------------
+[ 2018-02-09T23:43:41+08:00 ] 172.21.0.3 184.3.45.191 POST /
+[ log ] 123.206.84.18/ [运行时间：0.082996s][吞吐率：12.05req/s] [内存消耗：2,967.81kb] [文件加载：44]
+[ info ] [ LANG ] /home/wwwroot/lamp-2.4/domain/qusu/web/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'PHPSESSID=8jjdp582hik2ukrfn8qighi0tinlvbmo',
+  'cache-control' => 'no-cache',
+  'host' => '123.206.84.18',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; rv:11.0) like Gecko',
+  'content-type' => 'application/x-www-form-urlencoded',
+  'content-length' => '400',
+)
+[ info ] [ PARAM ] array (
+  'QqcLl9zMZybfgbR/SAKoQuH2h8swZ2a6Kz4bgdjPQSKYa6XpI7vMeYROBYEkfcFXyMbF2Nl4zUFtddeUM9HEUQj3zOXMi7UR5kohmu7qhjoXRlh4MyjS09kH6czWu7eFOG1frttm6ouhvJA6HqbpU3gT0QUYUR/dOe6CGgFqBMkALHPLeXx1wfDCfU0gY2k6tq8i8V/STRtxBNQ7E4HM/JFvyjrbfpcb2Vb6rtgjKEysAWr9tqzwTARb_lQoZNE4890rFfvNJDXh6vJQNEf3CPLbnDY0zRmsTOPV2KqLmVuxCDqL1PC0NG8Ut8Hcyjp9hYL0ZxBGG_OY9mIm9VOwGbfOL68geAhXAqp0Dnqb6SXN5skOx9xjFHB_15CmvNcUe5747g95WeJlhKM/' => '',
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /home/wwwroot/lamp-2.4/domain/qusu/web/application/index/controller/Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] ./template/mulit/pc/index/index.html [ array (
+  0 => 'course',
+  1 => 'config',
+  2 => 'adv_item',
+  3 => 'cate',
+) ]
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000159s ] mysql:dbname=qusukj;host=localhost;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_config` [ RunTime:0.000665s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_config` WHERE  `closed` = 0 LIMIT 1 [ RunTime:0.000280s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_course` [ RunTime:0.000538s ]
+[ sql ] [ SQL ] SELECT `cid`,`banner`,`price`,`title`,`desc` FROM `gz_course` WHERE  `closed` = 0  AND `audit` = 1 ORDER BY `cid`  desc LIMIT 10 [ RunTime:0.000260s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_course_category` [ RunTime:0.000440s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`cate_name` FROM `gz_course_category` WHERE  `closed` = 0 ORDER BY orderby desc [ RunTime:0.000177s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_adv_item` [ RunTime:0.000480s ]
+[ sql ] [ SQL ] SELECT `photopath`,`link` FROM `gz_adv_item` WHERE  `adv_id` = 3  AND `closed` = 0 ORDER BY id desc [ RunTime:0.000144s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000150s ] mysql:dbname=qusukj;host=localhost;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_show_switch` [ RunTime:0.000497s ]
+[ sql ] [ SQL ] SELECT `is_showask` FROM `gz_show_switch` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.000136s ]
+
+---------------------------------------------------------------
+[ 2018-02-09T23:44:52+08:00 ] 172.21.0.3 113.245.110.104 POST /admin/video/create.html
+[ log ] zaohui.qusukj.com/admin/video/create.html [运行时间：1.069266s][吞吐率：0.94req/s] [内存消耗：3,144.27kb] [文件加载：54]
+[ info ] [ LANG ] /home/wwwroot/lamp-2.4/domain/qusu/web/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'video',
+    2 => 'create',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'PHPSESSID=hl8p82sjl717ca6heecfqnmn264ikbb5; Hm_lvt_407473d433e871de861cf818aa1405a1=1518072494,1518072587,1518160166; Hm_lpvt_407473d433e871de861cf818aa1405a1=1518184390',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'accept-encoding' => 'gzip, deflate',
+  'referer' => 'http://zaohui.qusukj.com/admin/chapter?cid=87',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36',
+  'x-requested-with' => 'XMLHttpRequest',
+  'origin' => 'http://zaohui.qusukj.com',
+  'accept' => '*/*',
+  'connection' => 'keep-alive',
+  'host' => 'zaohui.qusukj.com',
+  'content-type' => 'application/x-www-form-urlencoded; charset=UTF-8',
+  'content-length' => '222',
+)
+[ info ] [ PARAM ] array (
+  'domain' => 'http://zhibo-media.dejikeji.com',
+  'key' => 'o_1c5tflg8718l31ml13ra1ds23gth.mp4',
+  'title' => '2017-11-01 18-56-37',
+  'video_path' => 'http://zhibo-media.dejikeji.com/o_1c5tflg8718l31ml13ra1ds23gth.mp4',
+  'chapter_id' => '76',
+  'course_id' => '87',
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Video->create[ /home/wwwroot/lamp-2.4/domain/qusu/web/application/admin/controller/Video.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000237s ] mysql:dbname=qusukj;host=localhost;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_video` [ RunTime:0.000751s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_video` WHERE  `cid` = 87  AND `tid` = 76  AND `closed` = 0 ORDER BY `orderby`  desc LIMIT 1 [ RunTime:0.000296s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_qiniu_account` [ RunTime:0.000515s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_qiniu_account` LIMIT 1 [ RunTime:0.000162s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_convert` [ RunTime:0.000708s ]
+[ sql ] [ SQL ] INSERT INTO `gz_convert` (`money` , `videopath` , `resolution` , `lenght` , `create_time` , `update_time`) VALUES (0.34 , 'http://zhibo-media.dejikeji.com/2018020987076.mp4' , 'sd480' , 2203 , 1518105600 , 1518105600) [ RunTime:0.000232s ]
+[ sql ] [ SQL ] INSERT INTO `gz_convert` (`money` , `videopath` , `resolution` , `lenght` , `create_time` , `update_time`) VALUES (0.34 , 'http://zhibo-media.dejikeji.com/2018020963663.m3u8' , 'sd480' , 2203 , 1518105600 , 1518105600) [ RunTime:0.000231s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_course` [ RunTime:0.000722s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_course` WHERE  `cid` = 87  AND `closed` = 0 LIMIT 1 [ RunTime:0.000321s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000194s ] mysql:dbname=qusukj;host=localhost;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_video_category` [ RunTime:0.000553s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_video_category` WHERE  `cid` = 87  AND `id` = 76 LIMIT 1 [ RunTime:0.000196s ]
+[ sql ] [ SQL ] INSERT INTO `gz_video` (`cid` , `tid` , `title` , `video_path` , `desc` , `lenght` , `video_id` , `transcoding_path` , `orderby` , `update_time` , `create_time`) VALUES (87 , 76 , '2017-11-01 18-56-37' , 'http://zhibo-media.dejikeji.com/2018020987076.mp4' , '2017-11-01 18-56-37' , 2203 , 'z0.5a7dc1f4b946531900b36cdb' , 'http://zhibo-media.dejikeji.com/2018020963663.m3u8' , 1 , 1518191091 , 1518191091) [ RunTime:0.000198s ]
+
+---------------------------------------------------------------
+[ 2018-02-09T23:45:42+08:00 ] 172.21.0.3 123.206.84.18 GET /api/index/index
+[ log ] 123.206.84.18/api/index/index [运行时间：0.024782s][吞吐率：40.35req/s] [内存消耗：3,184.81kb] [文件加载：42]
+[ info ] [ LANG ] /home/wwwroot/lamp-2.4/domain/qusu/web/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'Index',
+    2 => 'getindex',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'accept' => '*/*',
+  'host' => '123.206.84.18',
+)
+[ info ] [ PARAM ] array (
+  'action' => 'index',
+)
+[ info ] [ RUN ] app\api\controller\Index->getIndex[ /home/wwwroot/lamp-2.4/domain/qusu/web/application/api/controller/Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000243s ] mysql:dbname=qusukj;host=localhost;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_rebate_config` [ RunTime:0.000683s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_rebate_config` WHERE  `closed` = 0 LIMIT 1 [ RunTime:0.000191s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_course` [ RunTime:0.000608s ]
+[ sql ] [ SQL ] SELECT `cid`,`uid`,`title`,`face`,`desc`,`banner`,`price`,`content`,`subscribe_num`,`virtual_amount` FROM `gz_course` WHERE  `audit` = 1  AND `closed` = 0 ORDER BY `orderby`  desc LIMIT 0,10 [ RunTime:0.000577s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_user` [ RunTime:0.000626s ]
+[ sql ] [ SQL ] SELECT `uid`,`uname`,`face`,`info`,`realname`,`follow` FROM `gz_user` WHERE  `uid` IN (0,0,0,0,0,0,0,0,0,0)  AND `closed` = 0 [ RunTime:0.000229s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_config` [ RunTime:0.000603s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_config` WHERE  `id` = 1  AND `closed` = 0 LIMIT 1 [ RunTime:0.000232s ]
+
+---------------------------------------------------------------
+[ 2018-02-09T23:45:42+08:00 ] 172.21.0.3 123.206.84.18 GET /api/config/index
+[ log ] 123.206.84.18/api/config/index [运行时间：0.018141s][吞吐率：55.12req/s] [内存消耗：2,769.12kb] [文件加载：39]
+[ info ] [ LANG ] /home/wwwroot/lamp-2.4/domain/qusu/web/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'Config',
+    2 => 'getindex',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'accept' => '*/*',
+  'host' => '123.206.84.18',
+)
+[ info ] [ PARAM ] array (
+  'action' => 'index',
+)
+[ info ] [ RUN ] app\api\controller\Config->getIndex[ /home/wwwroot/lamp-2.4/domain/qusu/web/application/api/controller/Config.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000204s ] mysql:dbname=qusukj;host=localhost;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_config` [ RunTime:0.000763s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_config` WHERE  `closed` = 0 LIMIT 1 [ RunTime:0.000279s ]
+
+---------------------------------------------------------------
+[ 2018-02-09T23:45:42+08:00 ] 172.21.0.3 123.206.84.18 GET /api/mulitcourse/index
+[ log ] 123.206.84.18/api/mulitcourse/index [运行时间：0.010722s][吞吐率：93.26req/s] [内存消耗：1,603.54kb] [文件加载：28]
+[ info ] [ LANG ] /home/wwwroot/lamp-2.4/domain/qusu/web/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'mulitcourse',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'accept' => '*/*',
+  'host' => '123.206.84.18',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LOG ] INIT File
+
+---------------------------------------------------------------
+[ 2018-02-09T23:45:42+08:00 ] 172.21.0.3 184.3.45.191 POST /
+[ log ] 123.206.84.18/ [运行时间：0.084283s][吞吐率：11.86req/s] [内存消耗：2,967.81kb] [文件加载：44]
+[ info ] [ LANG ] /home/wwwroot/lamp-2.4/domain/qusu/web/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'PHPSESSID=8jjdp582hik2ukrfn8qighi0tinlvbmo',
+  'cache-control' => 'no-cache',
+  'host' => '123.206.84.18',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; rv:11.0) like Gecko',
+  'content-type' => 'application/x-www-form-urlencoded',
+  'content-length' => '404',
+)
+[ info ] [ PARAM ] array (
+  'QKAIx9jPNuHxJnH8ujjA2XAYkKAfg_rziKeQcbOYozjXbegX4aOFsEyFWENFc77QhzHbfv9G0Dh3P/aM0Trli_CCJcRtsvBe3YTBldo0fT7rG_g4L_dEGg_NmSHWxUvO6CYZXWZEKqzYfWdkIXWnajdMfYOh7tIX3qIyvYEIzgt9vy6_YlTbRYjA8pEOhOPLPHldQNElNDpQdMAQIpe_bCTVt3I9ObjViI6pOsckPYDaErMmNeV93jk8J8iN1RdBi1tCgSj7BP4/2U20RUT7_pdJN4w2KhX0PPjRvwOiCsKhcFgSDVw803OueJRjlK6b_tq2sWGhD/rHeMHLfVlyDghcuPq7aD9A9lHykJcKkzlVeiz3EMw9npXaUzojGVDJfd_c8prn3B4uNVKRYZjE' => '',
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /home/wwwroot/lamp-2.4/domain/qusu/web/application/index/controller/Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] ./template/mulit/pc/index/index.html [ array (
+  0 => 'course',
+  1 => 'config',
+  2 => 'adv_item',
+  3 => 'cate',
+) ]
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000208s ] mysql:dbname=qusukj;host=localhost;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_config` [ RunTime:0.000704s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_config` WHERE  `closed` = 0 LIMIT 1 [ RunTime:0.000281s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_course` [ RunTime:0.000550s ]
+[ sql ] [ SQL ] SELECT `cid`,`banner`,`price`,`title`,`desc` FROM `gz_course` WHERE  `closed` = 0  AND `audit` = 1 ORDER BY `cid`  desc LIMIT 10 [ RunTime:0.000274s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_course_category` [ RunTime:0.000439s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`cate_name` FROM `gz_course_category` WHERE  `closed` = 0 ORDER BY orderby desc [ RunTime:0.000173s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_adv_item` [ RunTime:0.000502s ]
+[ sql ] [ SQL ] SELECT `photopath`,`link` FROM `gz_adv_item` WHERE  `adv_id` = 3  AND `closed` = 0 ORDER BY id desc [ RunTime:0.000145s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000195s ] mysql:dbname=qusukj;host=localhost;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_show_switch` [ RunTime:0.000597s ]
+[ sql ] [ SQL ] SELECT `is_showask` FROM `gz_show_switch` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.000147s ]
+
+---------------------------------------------------------------
+[ 2018-02-09T23:47:43+08:00 ] 172.21.0.3 123.206.84.18 GET /api/index/index
+[ log ] 123.206.84.18/api/index/index [运行时间：0.025964s][吞吐率：38.51req/s] [内存消耗：3,184.81kb] [文件加载：42]
+[ info ] [ LANG ] /home/wwwroot/lamp-2.4/domain/qusu/web/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'Index',
+    2 => 'getindex',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'accept' => '*/*',
+  'host' => '123.206.84.18',
+)
+[ info ] [ PARAM ] array (
+  'action' => 'index',
+)
+[ info ] [ RUN ] app\api\controller\Index->getIndex[ /home/wwwroot/lamp-2.4/domain/qusu/web/application/api/controller/Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000244s ] mysql:dbname=qusukj;host=localhost;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_rebate_config` [ RunTime:0.000699s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_rebate_config` WHERE  `closed` = 0 LIMIT 1 [ RunTime:0.000213s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_course` [ RunTime:0.000627s ]
+[ sql ] [ SQL ] SELECT `cid`,`uid`,`title`,`face`,`desc`,`banner`,`price`,`content`,`subscribe_num`,`virtual_amount` FROM `gz_course` WHERE  `audit` = 1  AND `closed` = 0 ORDER BY `orderby`  desc LIMIT 0,10 [ RunTime:0.000627s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_user` [ RunTime:0.000643s ]
+[ sql ] [ SQL ] SELECT `uid`,`uname`,`face`,`info`,`realname`,`follow` FROM `gz_user` WHERE  `uid` IN (0,0,0,0,0,0,0,0,0,0)  AND `closed` = 0 [ RunTime:0.000205s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_config` [ RunTime:0.000614s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_config` WHERE  `id` = 1  AND `closed` = 0 LIMIT 1 [ RunTime:0.000242s ]
+
+---------------------------------------------------------------
+[ 2018-02-09T23:47:43+08:00 ] 172.21.0.3 123.206.84.18 GET /api/config/index
+[ log ] 123.206.84.18/api/config/index [运行时间：0.018338s][吞吐率：54.53req/s] [内存消耗：2,769.12kb] [文件加载：39]
+[ info ] [ LANG ] /home/wwwroot/lamp-2.4/domain/qusu/web/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'Config',
+    2 => 'getindex',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'accept' => '*/*',
+  'host' => '123.206.84.18',
+)
+[ info ] [ PARAM ] array (
+  'action' => 'index',
+)
+[ info ] [ RUN ] app\api\controller\Config->getIndex[ /home/wwwroot/lamp-2.4/domain/qusu/web/application/api/controller/Config.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000239s ] mysql:dbname=qusukj;host=localhost;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_config` [ RunTime:0.000773s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_config` WHERE  `closed` = 0 LIMIT 1 [ RunTime:0.000331s ]
+
+---------------------------------------------------------------
+[ 2018-02-09T23:47:43+08:00 ] 172.21.0.3 123.206.84.18 GET /api/mulitcourse/index
+[ log ] 123.206.84.18/api/mulitcourse/index [运行时间：0.010794s][吞吐率：92.64req/s] [内存消耗：1,603.54kb] [文件加载：28]
+[ info ] [ LANG ] /home/wwwroot/lamp-2.4/domain/qusu/web/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'mulitcourse',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'accept' => '*/*',
+  'host' => '123.206.84.18',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LOG ] INIT File
+
+---------------------------------------------------------------
+[ 2018-02-09T23:47:43+08:00 ] 172.21.0.3 184.3.45.191 POST /
+[ log ] 123.206.84.18/ [运行时间：0.085273s][吞吐率：11.73req/s] [内存消耗：2,967.75kb] [文件加载：44]
+[ info ] [ LANG ] /home/wwwroot/lamp-2.4/domain/qusu/web/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'PHPSESSID=8jjdp582hik2ukrfn8qighi0tinlvbmo',
+  'cache-control' => 'no-cache',
+  'host' => '123.206.84.18',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; rv:11.0) like Gecko',
+  'content-type' => 'application/x-www-form-urlencoded',
+  'content-length' => '376',
+)
+[ info ] [ PARAM ] array (
+  'RfcLwdzIYNDXtpab1mVP3Cy1XCll5tHS8vptz_dSJJ3CY4DUM572IIWWuJkJndi5Z1koZk_orYZ7wiHJoHOZ1h2DAGqD5WNVvtviTLYfIyUq26ewB60Axn__jWZyj8QIi1JSfZtB5QwKnjQ0FIIqCic_ZIPe8D/YhHiCjxe8ThjzMXtp8buKfwOhq8P1NnDVgviSMv38t4MGMdCJDxxdXGAxRm2_V97UM9c_PMylzK9I1VkEDiPLbTQGs/ZbjNXyKpP0mvHksy/JPkY7YbC8wnhqEy2NThIXyu4jkpx_yfr5/puO/ruBNmVrG4n5PjkUTkhpLPSqsYDW_u8wYbamuVzEsE1JYmyeR/IX7ZDtDCmAFbp53aZIkg' => '=',
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /home/wwwroot/lamp-2.4/domain/qusu/web/application/index/controller/Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] ./template/mulit/pc/index/index.html [ array (
+  0 => 'course',
+  1 => 'config',
+  2 => 'adv_item',
+  3 => 'cate',
+) ]
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000210s ] mysql:dbname=qusukj;host=localhost;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_config` [ RunTime:0.000731s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_config` WHERE  `closed` = 0 LIMIT 1 [ RunTime:0.000270s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_course` [ RunTime:0.000573s ]
+[ sql ] [ SQL ] SELECT `cid`,`banner`,`price`,`title`,`desc` FROM `gz_course` WHERE  `closed` = 0  AND `audit` = 1 ORDER BY `cid`  desc LIMIT 10 [ RunTime:0.000257s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_course_category` [ RunTime:0.000459s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`cate_name` FROM `gz_course_category` WHERE  `closed` = 0 ORDER BY orderby desc [ RunTime:0.000160s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_adv_item` [ RunTime:0.000493s ]
+[ sql ] [ SQL ] SELECT `photopath`,`link` FROM `gz_adv_item` WHERE  `adv_id` = 3  AND `closed` = 0 ORDER BY id desc [ RunTime:0.000166s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000187s ] mysql:dbname=qusukj;host=localhost;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_show_switch` [ RunTime:0.000548s ]
+[ sql ] [ SQL ] SELECT `is_showask` FROM `gz_show_switch` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.000145s ]
+
+---------------------------------------------------------------
+[ 2018-02-09T23:49:45+08:00 ] 172.21.0.3 123.206.84.18 GET /api/index/index
+[ log ] 123.206.84.18/api/index/index [运行时间：0.025358s][吞吐率：39.44req/s] [内存消耗：3,184.81kb] [文件加载：42]
+[ info ] [ LANG ] /home/wwwroot/lamp-2.4/domain/qusu/web/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'Index',
+    2 => 'getindex',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'accept' => '*/*',
+  'host' => '123.206.84.18',
+)
+[ info ] [ PARAM ] array (
+  'action' => 'index',
+)
+[ info ] [ RUN ] app\api\controller\Index->getIndex[ /home/wwwroot/lamp-2.4/domain/qusu/web/application/api/controller/Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000247s ] mysql:dbname=qusukj;host=localhost;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_rebate_config` [ RunTime:0.000669s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_rebate_config` WHERE  `closed` = 0 LIMIT 1 [ RunTime:0.000181s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_course` [ RunTime:0.000593s ]
+[ sql ] [ SQL ] SELECT `cid`,`uid`,`title`,`face`,`desc`,`banner`,`price`,`content`,`subscribe_num`,`virtual_amount` FROM `gz_course` WHERE  `audit` = 1  AND `closed` = 0 ORDER BY `orderby`  desc LIMIT 0,10 [ RunTime:0.000646s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_user` [ RunTime:0.000701s ]
+[ sql ] [ SQL ] SELECT `uid`,`uname`,`face`,`info`,`realname`,`follow` FROM `gz_user` WHERE  `uid` IN (0,0,0,0,0,0,0,0,0,0)  AND `closed` = 0 [ RunTime:0.000214s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_config` [ RunTime:0.000624s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_config` WHERE  `id` = 1  AND `closed` = 0 LIMIT 1 [ RunTime:0.000254s ]
+
+---------------------------------------------------------------
+[ 2018-02-09T23:49:45+08:00 ] 172.21.0.3 123.206.84.18 GET /api/config/index
+[ log ] 123.206.84.18/api/config/index [运行时间：0.018149s][吞吐率：55.10req/s] [内存消耗：2,769.12kb] [文件加载：39]
+[ info ] [ LANG ] /home/wwwroot/lamp-2.4/domain/qusu/web/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'Config',
+    2 => 'getindex',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'accept' => '*/*',
+  'host' => '123.206.84.18',
+)
+[ info ] [ PARAM ] array (
+  'action' => 'index',
+)
+[ info ] [ RUN ] app\api\controller\Config->getIndex[ /home/wwwroot/lamp-2.4/domain/qusu/web/application/api/controller/Config.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000198s ] mysql:dbname=qusukj;host=localhost;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_config` [ RunTime:0.000739s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_config` WHERE  `closed` = 0 LIMIT 1 [ RunTime:0.000288s ]
+
+---------------------------------------------------------------
+[ 2018-02-09T23:49:45+08:00 ] 172.21.0.3 123.206.84.18 GET /api/mulitcourse/index
+[ log ] 123.206.84.18/api/mulitcourse/index [运行时间：0.010498s][吞吐率：95.26req/s] [内存消耗：1,603.54kb] [文件加载：28]
+[ info ] [ LANG ] /home/wwwroot/lamp-2.4/domain/qusu/web/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'mulitcourse',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'accept' => '*/*',
+  'host' => '123.206.84.18',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LOG ] INIT File
+
+---------------------------------------------------------------
+[ 2018-02-09T23:49:45+08:00 ] 172.21.0.3 184.3.45.191 POST /
+[ log ] 123.206.84.18/ [运行时间：0.083956s][吞吐率：11.91req/s] [内存消耗：2,967.81kb] [文件加载：44]
+[ info ] [ LANG ] /home/wwwroot/lamp-2.4/domain/qusu/web/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'PHPSESSID=8jjdp582hik2ukrfn8qighi0tinlvbmo',
+  'cache-control' => 'no-cache',
+  'host' => '123.206.84.18',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; rv:11.0) like Gecko',
+  'content-type' => 'application/x-www-form-urlencoded',
+  'content-length' => '396',
+)
+[ info ] [ PARAM ] array (
+  'QaYNwdqaMBHb67XVjhxaDJDHCnvndOMHA0/1SRLcQ7f0ZOeiIOCH5/JGUGxhgZMWYGoyMuIgAI9pGOT9LfJkm1mGUFRQZfVYjZwbRY//x5GY2_WGQO8kVtbhqcNm2PAD0qaC_JHPHbI84Tpm9AZJmvbnte3Rdmeregkvu4JB/StYS6fSeVviyK1jWSCcERwCYaDMEU/UnBk5YmFtnQPhnDOW7kBvNEPik6bFMxQ5CSqAWbZqMO6g4S9d2hKhbt8i1_QJwQSgAftxOOd038oZR1zG9Oqu/qfjblmyK8hBwiK9eEmoDKtH_K4ApgcZmkON_YYIP11JpqTVh/Ttkz5Ncpw3jcPbYQ9pHJJrttTOrlWX5tHXA7AJNxGVuQzhowkaYoK8aOeu0z0' => '',
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /home/wwwroot/lamp-2.4/domain/qusu/web/application/index/controller/Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] ./template/mulit/pc/index/index.html [ array (
+  0 => 'course',
+  1 => 'config',
+  2 => 'adv_item',
+  3 => 'cate',
+) ]
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000172s ] mysql:dbname=qusukj;host=localhost;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_config` [ RunTime:0.000704s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_config` WHERE  `closed` = 0 LIMIT 1 [ RunTime:0.000258s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_course` [ RunTime:0.000558s ]
+[ sql ] [ SQL ] SELECT `cid`,`banner`,`price`,`title`,`desc` FROM `gz_course` WHERE  `closed` = 0  AND `audit` = 1 ORDER BY `cid`  desc LIMIT 10 [ RunTime:0.000240s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_course_category` [ RunTime:0.000460s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`cate_name` FROM `gz_course_category` WHERE  `closed` = 0 ORDER BY orderby desc [ RunTime:0.000156s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_adv_item` [ RunTime:0.000465s ]
+[ sql ] [ SQL ] SELECT `photopath`,`link` FROM `gz_adv_item` WHERE  `adv_id` = 3  AND `closed` = 0 ORDER BY id desc [ RunTime:0.000158s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000188s ] mysql:dbname=qusukj;host=localhost;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_show_switch` [ RunTime:0.000550s ]
+[ sql ] [ SQL ] SELECT `is_showask` FROM `gz_show_switch` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.000144s ]
+
+---------------------------------------------------------------
+[ 2018-02-09T23:50:24+08:00 ] 172.21.0.3 115.231.183.178 POST /api/recharge/convert.html
+[ log ] zaohui.qusukj.com/api/recharge/convert.html [运行时间：1.459073s][吞吐率：0.69req/s] [内存消耗：2,777.16kb] [文件加载：50]
+[ info ] [ LANG ] /home/wwwroot/lamp-2.4/domain/qusu/web/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'Recharge',
+    2 => 'postconvert',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'accept-encoding' => 'gzip',
+  'x-trace' => '31b09aea22ff3579/3863fe288f2aecc1|0',
+  'x-reqid' => 'cGsAAMhm83WoshEV',
+  'user-agent' => 'qiniu-callback/1.0',
+  'host' => 'zaohui.qusukj.com',
+  'content-type' => 'application/json',
+  'content-length' => '543',
+)
+[ info ] [ PARAM ] array (
+  'id' => 'z0.5a7dc189b946531900b3512d',
+  'pipeline' => '1380835044.convert',
+  'code' => 0,
+  'desc' => 'The fop was completed successfully',
+  'reqid' => 'cGsAAMhm83WoshEV',
+  'inputBucket' => 'deji-media-video',
+  'inputKey' => 'o_1c5tflvvo1ts9f5bu907c4c3811.mp4',
+  'items' => 
+  array (
+    0 => 
+    array (
+      'cmd' => 'avthumb/mp4/ab/160k/ar/44100/acodec/libfaac/r/30/vb/2400k/vcodec/libx264/s/1280x720/autoscale/1/stripmeta/0|saveas/ZGVqaS1tZWRpYS12aWRlbzoyMDE4MDIwOTM1ODA2Lm1wNA==',
+      'code' => 0,
+      'desc' => 'The fop was completed successfully',
+      'hash' => 'lhwUZr5HHdd0qb0iVuxlBE4MkKn5',
+      'key' => '2018020935806.mp4',
+      'returnOld' => 0,
+    ),
+  ),
+  'action' => 'convert',
+)
+[ info ] [ RUN ] app\api\controller\Recharge->postConvert[ /home/wwwroot/lamp-2.4/domain/qusu/web/application/api/controller/Recharge.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000281s ] mysql:dbname=qusukj;host=localhost;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_qiniu_account` [ RunTime:0.000775s ]
+[ sql ] [ SQL ] SELECT `id`,`uid`,`domain`,`key`,`secret`,`bucket`,`money` FROM `gz_qiniu_account` WHERE  `closed` = 0 LIMIT 1 [ RunTime:0.000200s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_convert` [ RunTime:0.000743s ]
+[ sql ] [ SQL ] INSERT INTO `gz_convert` (`money` , `videopath` , `resolution` , `lenght` , `create_time` , `update_time`) VALUES (0.71 , 'http://zhibo-media.dejikeji.com/2018020968747.m3u8' , 'sd' , 1994 , 1518105600 , 1518105600) [ RunTime:0.000214s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_video` [ RunTime:0.000537s ]
+[ sql ] [ SQL ] UPDATE `gz_video`  SET `transcoding_path`='http://zhibo-media.dejikeji.com/2018020968747.m3u8'  WHERE  `video_id` = 'z0.5a7dc189b946531900b3512d' [ RunTime:0.000264s ]
+
+---------------------------------------------------------------
+[ 2018-02-09T23:51:46+08:00 ] 172.21.0.3 123.206.84.18 GET /api/index/index
+[ log ] 123.206.84.18/api/index/index [运行时间：0.028163s][吞吐率：35.51req/s] [内存消耗：3,184.81kb] [文件加载：42]
+[ info ] [ LANG ] /home/wwwroot/lamp-2.4/domain/qusu/web/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'Index',
+    2 => 'getindex',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'accept' => '*/*',
+  'host' => '123.206.84.18',
+)
+[ info ] [ PARAM ] array (
+  'action' => 'index',
+)
+[ info ] [ RUN ] app\api\controller\Index->getIndex[ /home/wwwroot/lamp-2.4/domain/qusu/web/application/api/controller/Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000250s ] mysql:dbname=qusukj;host=localhost;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_rebate_config` [ RunTime:0.000679s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_rebate_config` WHERE  `closed` = 0 LIMIT 1 [ RunTime:0.000214s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_course` [ RunTime:0.000611s ]
+[ sql ] [ SQL ] SELECT `cid`,`uid`,`title`,`face`,`desc`,`banner`,`price`,`content`,`subscribe_num`,`virtual_amount` FROM `gz_course` WHERE  `audit` = 1  AND `closed` = 0 ORDER BY `orderby`  desc LIMIT 0,10 [ RunTime:0.000596s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_user` [ RunTime:0.000722s ]
+[ sql ] [ SQL ] SELECT `uid`,`uname`,`face`,`info`,`realname`,`follow` FROM `gz_user` WHERE  `uid` IN (0,0,0,0,0,0,0,0,0,0)  AND `closed` = 0 [ RunTime:0.000224s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_config` [ RunTime:0.000627s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_config` WHERE  `id` = 1  AND `closed` = 0 LIMIT 1 [ RunTime:0.000250s ]
+
+---------------------------------------------------------------
+[ 2018-02-09T23:51:46+08:00 ] 172.21.0.3 123.206.84.18 GET /api/config/index
+[ log ] 123.206.84.18/api/config/index [运行时间：0.019923s][吞吐率：50.19req/s] [内存消耗：2,769.12kb] [文件加载：39]
+[ info ] [ LANG ] /home/wwwroot/lamp-2.4/domain/qusu/web/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'Config',
+    2 => 'getindex',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'accept' => '*/*',
+  'host' => '123.206.84.18',
+)
+[ info ] [ PARAM ] array (
+  'action' => 'index',
+)
+[ info ] [ RUN ] app\api\controller\Config->getIndex[ /home/wwwroot/lamp-2.4/domain/qusu/web/application/api/controller/Config.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000217s ] mysql:dbname=qusukj;host=localhost;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_config` [ RunTime:0.000755s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_config` WHERE  `closed` = 0 LIMIT 1 [ RunTime:0.000293s ]
+
+---------------------------------------------------------------
+[ 2018-02-09T23:51:46+08:00 ] 172.21.0.3 123.206.84.18 GET /api/mulitcourse/index
+[ log ] 123.206.84.18/api/mulitcourse/index [运行时间：0.011680s][吞吐率：85.62req/s] [内存消耗：1,603.54kb] [文件加载：28]
+[ info ] [ LANG ] /home/wwwroot/lamp-2.4/domain/qusu/web/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'mulitcourse',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'accept' => '*/*',
+  'host' => '123.206.84.18',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LOG ] INIT File
+
+---------------------------------------------------------------
+[ 2018-02-09T23:51:46+08:00 ] 172.21.0.3 184.3.45.191 POST /
+[ log ] 123.206.84.18/ [运行时间：0.090388s][吞吐率：11.06req/s] [内存消耗：2,967.81kb] [文件加载：44]
+[ info ] [ LANG ] /home/wwwroot/lamp-2.4/domain/qusu/web/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'PHPSESSID=8jjdp582hik2ukrfn8qighi0tinlvbmo',
+  'cache-control' => 'no-cache',
+  'host' => '123.206.84.18',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; rv:11.0) like Gecko',
+  'content-type' => 'application/x-www-form-urlencoded',
+  'content-length' => '412',
+)
+[ info ] [ PARAM ] array (
+  'QPBaxIzLZ9D1NAoSFHW_xHHvzTEnu0EHPvKWuMpb_CEiUllW6_m4LmAQYT3MPabSWm2PVCPAMtq/xiy_1jA9KeC5CEdfOUtCL8JCCHeeajZbQ3JapczKEGQMcZ/sxluFr5Q/19jw0SEAt5wFihkzo/1w5CttuTifzLwBnqO/04DqFqMCa_ApztIc0pgTOBA9pmkvsxb3ZtCcDYpUnjER7ltYSa1XaNBzodFRgPT94owVkbcFTwA3zm/_H0NmdvW0oYQXbV_YAf9NqyOuvch2Upsv_hxpATKPyZFoymENc0/DQWkkJ0fCS3pp3qRqSQQFpHxUQvTaWRBgvNIlsDWKRVH1GmI325Y8PWsZB4nBHHlsuxX9xfScMM1KuUVVAebC15Dz/IweXBXLW7VqZrd4Sp1R6Cs' => '',
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /home/wwwroot/lamp-2.4/domain/qusu/web/application/index/controller/Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] ./template/mulit/pc/index/index.html [ array (
+  0 => 'course',
+  1 => 'config',
+  2 => 'adv_item',
+  3 => 'cate',
+) ]
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000183s ] mysql:dbname=qusukj;host=localhost;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_config` [ RunTime:0.000775s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_config` WHERE  `closed` = 0 LIMIT 1 [ RunTime:0.000269s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_course` [ RunTime:0.000630s ]
+[ sql ] [ SQL ] SELECT `cid`,`banner`,`price`,`title`,`desc` FROM `gz_course` WHERE  `closed` = 0  AND `audit` = 1 ORDER BY `cid`  desc LIMIT 10 [ RunTime:0.000261s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_course_category` [ RunTime:0.000514s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`cate_name` FROM `gz_course_category` WHERE  `closed` = 0 ORDER BY orderby desc [ RunTime:0.000169s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_adv_item` [ RunTime:0.000523s ]
+[ sql ] [ SQL ] SELECT `photopath`,`link` FROM `gz_adv_item` WHERE  `adv_id` = 3  AND `closed` = 0 ORDER BY id desc [ RunTime:0.000159s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000181s ] mysql:dbname=qusukj;host=localhost;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_show_switch` [ RunTime:0.000567s ]
+[ sql ] [ SQL ] SELECT `is_showask` FROM `gz_show_switch` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.000204s ]
+
+---------------------------------------------------------------
+[ 2018-02-09T23:52:42+08:00 ] 172.21.0.3 115.231.183.161 POST /api/recharge/convert.html
+[ log ] zaohui.qusukj.com/api/recharge/convert.html [运行时间：0.962874s][吞吐率：1.04req/s] [内存消耗：2,777.16kb] [文件加载：50]
+[ info ] [ LANG ] /home/wwwroot/lamp-2.4/domain/qusu/web/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'Recharge',
+    2 => 'postconvert',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'accept-encoding' => 'gzip',
+  'x-trace' => '1abf07318c866be0/545b1b8b93223150|0',
+  'x-reqid' => 'j28AAKJLYUfBshEV',
+  'user-agent' => 'qiniu-callback/1.0',
+  'host' => 'zaohui.qusukj.com',
+  'content-type' => 'application/json',
+  'content-length' => '544',
+)
+[ info ] [ PARAM ] array (
+  'id' => 'z0.5a7dc1f4b946531900b36cd5',
+  'pipeline' => '1380835044.convert',
+  'code' => 0,
+  'desc' => 'The fop was completed successfully',
+  'reqid' => 'j28AAKJLYUfBshEV',
+  'inputBucket' => 'deji-media-video',
+  'inputKey' => 'o_1c5tflg8718l31ml13ra1ds23gth.mp4',
+  'items' => 
+  array (
+    0 => 
+    array (
+      'cmd' => 'avthumb/mp4/ab/160k/ar/44100/acodec/libfaac/r/30/vb/2400k/vcodec/libx264/s/1280x720/autoscale/1/stripmeta/0|saveas/ZGVqaS1tZWRpYS12aWRlbzoyMDE4MDIwOTg3MDc2Lm1wNA==',
+      'code' => 0,
+      'desc' => 'The fop was completed successfully',
+      'hash' => 'lpN7Be1yBqRo30rLOnel92pxuKKr',
+      'key' => '2018020987076.mp4',
+      'returnOld' => 0,
+    ),
+  ),
+  'action' => 'convert',
+)
+[ info ] [ RUN ] app\api\controller\Recharge->postConvert[ /home/wwwroot/lamp-2.4/domain/qusu/web/application/api/controller/Recharge.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000255s ] mysql:dbname=qusukj;host=localhost;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_qiniu_account` [ RunTime:0.000701s ]
+[ sql ] [ SQL ] SELECT `id`,`uid`,`domain`,`key`,`secret`,`bucket`,`money` FROM `gz_qiniu_account` WHERE  `closed` = 0 LIMIT 1 [ RunTime:0.000188s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_convert` [ RunTime:0.000675s ]
+[ sql ] [ SQL ] INSERT INTO `gz_convert` (`money` , `videopath` , `resolution` , `lenght` , `create_time` , `update_time`) VALUES (0.77 , 'http://zhibo-media.dejikeji.com/2018020997847.m3u8' , 'sd' , 2203 , 1518105600 , 1518105600) [ RunTime:0.000237s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_video` [ RunTime:0.000521s ]
+[ sql ] [ SQL ] UPDATE `gz_video`  SET `transcoding_path`='http://zhibo-media.dejikeji.com/2018020997847.m3u8'  WHERE  `video_id` = 'z0.5a7dc1f4b946531900b36cd5' [ RunTime:0.000290s ]
+
+---------------------------------------------------------------
+[ 2018-02-09T23:53:47+08:00 ] 172.21.0.3 123.206.84.18 GET /api/index/index
+[ log ] 123.206.84.18/api/index/index [运行时间：0.025649s][吞吐率：38.99req/s] [内存消耗：3,184.81kb] [文件加载：42]
+[ info ] [ LANG ] /home/wwwroot/lamp-2.4/domain/qusu/web/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'Index',
+    2 => 'getindex',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'accept' => '*/*',
+  'host' => '123.206.84.18',
+)
+[ info ] [ PARAM ] array (
+  'action' => 'index',
+)
+[ info ] [ RUN ] app\api\controller\Index->getIndex[ /home/wwwroot/lamp-2.4/domain/qusu/web/application/api/controller/Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000253s ] mysql:dbname=qusukj;host=localhost;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_rebate_config` [ RunTime:0.000723s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_rebate_config` WHERE  `closed` = 0 LIMIT 1 [ RunTime:0.000195s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_course` [ RunTime:0.000610s ]
+[ sql ] [ SQL ] SELECT `cid`,`uid`,`title`,`face`,`desc`,`banner`,`price`,`content`,`subscribe_num`,`virtual_amount` FROM `gz_course` WHERE  `audit` = 1  AND `closed` = 0 ORDER BY `orderby`  desc LIMIT 0,10 [ RunTime:0.000638s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_user` [ RunTime:0.000789s ]
+[ sql ] [ SQL ] SELECT `uid`,`uname`,`face`,`info`,`realname`,`follow` FROM `gz_user` WHERE  `uid` IN (0,0,0,0,0,0,0,0,0,0)  AND `closed` = 0 [ RunTime:0.000215s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_config` [ RunTime:0.000643s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_config` WHERE  `id` = 1  AND `closed` = 0 LIMIT 1 [ RunTime:0.000250s ]
+
+---------------------------------------------------------------
+[ 2018-02-09T23:53:47+08:00 ] 172.21.0.3 123.206.84.18 GET /api/config/index
+[ log ] 123.206.84.18/api/config/index [运行时间：0.020098s][吞吐率：49.76req/s] [内存消耗：2,769.12kb] [文件加载：39]
+[ info ] [ LANG ] /home/wwwroot/lamp-2.4/domain/qusu/web/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'Config',
+    2 => 'getindex',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'accept' => '*/*',
+  'host' => '123.206.84.18',
+)
+[ info ] [ PARAM ] array (
+  'action' => 'index',
+)
+[ info ] [ RUN ] app\api\controller\Config->getIndex[ /home/wwwroot/lamp-2.4/domain/qusu/web/application/api/controller/Config.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000282s ] mysql:dbname=qusukj;host=localhost;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_config` [ RunTime:0.000867s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_config` WHERE  `closed` = 0 LIMIT 1 [ RunTime:0.000299s ]
+
+---------------------------------------------------------------
+[ 2018-02-09T23:53:47+08:00 ] 172.21.0.3 123.206.84.18 GET /api/mulitcourse/index
+[ log ] 123.206.84.18/api/mulitcourse/index [运行时间：0.011691s][吞吐率：85.54req/s] [内存消耗：1,603.54kb] [文件加载：28]
+[ info ] [ LANG ] /home/wwwroot/lamp-2.4/domain/qusu/web/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'mulitcourse',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'accept' => '*/*',
+  'host' => '123.206.84.18',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LOG ] INIT File
+
+---------------------------------------------------------------
+[ 2018-02-09T23:53:47+08:00 ] 172.21.0.3 184.3.45.191 POST /
+[ log ] 123.206.84.18/ [运行时间：0.088267s][吞吐率：11.33req/s] [内存消耗：2,967.75kb] [文件加载：44]
+[ info ] [ LANG ] /home/wwwroot/lamp-2.4/domain/qusu/web/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'PHPSESSID=8jjdp582hik2ukrfn8qighi0tinlvbmo',
+  'cache-control' => 'no-cache',
+  'host' => '123.206.84.18',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; rv:11.0) like Gecko',
+  'content-type' => 'application/x-www-form-urlencoded',
+  'content-length' => '376',
+)
+[ info ] [ PARAM ] array (
+  'QqZZkN/PZRWykrnrFEKfctmWWGcfNCIYaNb2UJCC31HjtYuv_Fvi1uGIpyjhqfN6tvKqf4qjeybyuJkY9lyCiyKqKr4tN2P5Fg81Urf1vFUEWMhT6HYF48Ae44Z/wSF2maHx3WP8Q5OqpAN9Nx/dbtyksRcZN5_GaFJzxtpLTkL5p3mt06gASxLoqWgyuYBOzvztC/PINCfXRM3KfFhcSpYyMILULSYo_7vG3QjUGz7NT6_VojxrxnSXUEtdUGrsaxE5Fzb7theg3jMzCJIbaRFiCFLoSS9BCrlHRfFjWlkRW/4UFFfbQPOywF8bMBSlDzqqcSJLmnhp3qwPsvGHnh_9dXD_mwpVDVJXfGEdYsRQ_YwI55Ro1tVx' => '',
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /home/wwwroot/lamp-2.4/domain/qusu/web/application/index/controller/Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] ./template/mulit/pc/index/index.html [ array (
+  0 => 'course',
+  1 => 'config',
+  2 => 'adv_item',
+  3 => 'cate',
+) ]
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000196s ] mysql:dbname=qusukj;host=localhost;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_config` [ RunTime:0.000696s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_config` WHERE  `closed` = 0 LIMIT 1 [ RunTime:0.000282s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_course` [ RunTime:0.000600s ]
+[ sql ] [ SQL ] SELECT `cid`,`banner`,`price`,`title`,`desc` FROM `gz_course` WHERE  `closed` = 0  AND `audit` = 1 ORDER BY `cid`  desc LIMIT 10 [ RunTime:0.000260s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_course_category` [ RunTime:0.000499s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`cate_name` FROM `gz_course_category` WHERE  `closed` = 0 ORDER BY orderby desc [ RunTime:0.000174s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_adv_item` [ RunTime:0.000563s ]
+[ sql ] [ SQL ] SELECT `photopath`,`link` FROM `gz_adv_item` WHERE  `adv_id` = 3  AND `closed` = 0 ORDER BY id desc [ RunTime:0.000188s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000192s ] mysql:dbname=qusukj;host=localhost;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_show_switch` [ RunTime:0.000615s ]
+[ sql ] [ SQL ] SELECT `is_showask` FROM `gz_show_switch` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.000165s ]
+
+---------------------------------------------------------------
+[ 2018-02-09T23:55:48+08:00 ] 172.21.0.3 123.206.84.18 GET /api/index/index
+[ log ] 123.206.84.18/api/index/index [运行时间：0.024662s][吞吐率：40.55req/s] [内存消耗：3,184.81kb] [文件加载：42]
+[ info ] [ LANG ] /home/wwwroot/lamp-2.4/domain/qusu/web/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'Index',
+    2 => 'getindex',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'accept' => '*/*',
+  'host' => '123.206.84.18',
+)
+[ info ] [ PARAM ] array (
+  'action' => 'index',
+)
+[ info ] [ RUN ] app\api\controller\Index->getIndex[ /home/wwwroot/lamp-2.4/domain/qusu/web/application/api/controller/Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000225s ] mysql:dbname=qusukj;host=localhost;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_rebate_config` [ RunTime:0.000692s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_rebate_config` WHERE  `closed` = 0 LIMIT 1 [ RunTime:0.000195s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_course` [ RunTime:0.000609s ]
+[ sql ] [ SQL ] SELECT `cid`,`uid`,`title`,`face`,`desc`,`banner`,`price`,`content`,`subscribe_num`,`virtual_amount` FROM `gz_course` WHERE  `audit` = 1  AND `closed` = 0 ORDER BY `orderby`  desc LIMIT 0,10 [ RunTime:0.000592s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_user` [ RunTime:0.000672s ]
+[ sql ] [ SQL ] SELECT `uid`,`uname`,`face`,`info`,`realname`,`follow` FROM `gz_user` WHERE  `uid` IN (0,0,0,0,0,0,0,0,0,0)  AND `closed` = 0 [ RunTime:0.000222s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_config` [ RunTime:0.000627s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_config` WHERE  `id` = 1  AND `closed` = 0 LIMIT 1 [ RunTime:0.000244s ]
+
+---------------------------------------------------------------
+[ 2018-02-09T23:55:48+08:00 ] 172.21.0.3 123.206.84.18 GET /api/config/index
+[ log ] 123.206.84.18/api/config/index [运行时间：0.018889s][吞吐率：52.94req/s] [内存消耗：2,769.12kb] [文件加载：39]
+[ info ] [ LANG ] /home/wwwroot/lamp-2.4/domain/qusu/web/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'Config',
+    2 => 'getindex',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'accept' => '*/*',
+  'host' => '123.206.84.18',
+)
+[ info ] [ PARAM ] array (
+  'action' => 'index',
+)
+[ info ] [ RUN ] app\api\controller\Config->getIndex[ /home/wwwroot/lamp-2.4/domain/qusu/web/application/api/controller/Config.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000193s ] mysql:dbname=qusukj;host=localhost;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_config` [ RunTime:0.000754s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_config` WHERE  `closed` = 0 LIMIT 1 [ RunTime:0.000311s ]
+
+---------------------------------------------------------------
+[ 2018-02-09T23:55:48+08:00 ] 172.21.0.3 123.206.84.18 GET /api/mulitcourse/index
+[ log ] 123.206.84.18/api/mulitcourse/index [运行时间：0.011144s][吞吐率：89.74req/s] [内存消耗：1,603.54kb] [文件加载：28]
+[ info ] [ LANG ] /home/wwwroot/lamp-2.4/domain/qusu/web/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'mulitcourse',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'accept' => '*/*',
+  'host' => '123.206.84.18',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LOG ] INIT File
+
+---------------------------------------------------------------
+[ 2018-02-09T23:55:48+08:00 ] 172.21.0.3 184.3.45.191 POST /
+[ log ] 123.206.84.18/ [运行时间：0.084508s][吞吐率：11.83req/s] [内存消耗：2,967.75kb] [文件加载：44]
+[ info ] [ LANG ] /home/wwwroot/lamp-2.4/domain/qusu/web/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'PHPSESSID=8jjdp582hik2ukrfn8qighi0tinlvbmo',
+  'cache-control' => 'no-cache',
+  'host' => '123.206.84.18',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; rv:11.0) like Gecko',
+  'content-type' => 'application/x-www-form-urlencoded',
+  'content-length' => '372',
+)
+[ info ] [ PARAM ] array (
+  'Q/FXk4zIbYvwnJn2MRretmmQI66TX4sANOXjDHbuyUOg/u6scGmSOBDBTBaXPyHfvj3MSD4v2yQynguZEGoUbT1MPCJKZ/GeP4kp0IbgjssHVsco86vrYOS6/V7b3L7NHpblkg4sR3hRdj_0h30Em26VW_HCKn2TY6flTaq4MfNhKSXyZGrnz/fzsCOmniGvXGb1mQoPV5N3XuPFvwd_t6t07MnA/FdWRDQgCWcLjStYL8rrXrHV6Xa5A9DnHNEJU4lqwNRQmEGUfRPPuni9raFqS_m3ZMdBiz3xVy4fNrfcxUOTip7nTWisIGNFcjz/zCmlEcxnELU3nVYQ0OzUpEVWf8d4rZD2VRAdl3qANpkxIHvlKIM' => '',
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /home/wwwroot/lamp-2.4/domain/qusu/web/application/index/controller/Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] ./template/mulit/pc/index/index.html [ array (
+  0 => 'course',
+  1 => 'config',
+  2 => 'adv_item',
+  3 => 'cate',
+) ]
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000195s ] mysql:dbname=qusukj;host=localhost;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_config` [ RunTime:0.000671s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_config` WHERE  `closed` = 0 LIMIT 1 [ RunTime:0.000271s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_course` [ RunTime:0.000591s ]
+[ sql ] [ SQL ] SELECT `cid`,`banner`,`price`,`title`,`desc` FROM `gz_course` WHERE  `closed` = 0  AND `audit` = 1 ORDER BY `cid`  desc LIMIT 10 [ RunTime:0.000251s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_course_category` [ RunTime:0.000473s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`cate_name` FROM `gz_course_category` WHERE  `closed` = 0 ORDER BY orderby desc [ RunTime:0.000167s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_adv_item` [ RunTime:0.000525s ]
+[ sql ] [ SQL ] SELECT `photopath`,`link` FROM `gz_adv_item` WHERE  `adv_id` = 3  AND `closed` = 0 ORDER BY id desc [ RunTime:0.000155s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000163s ] mysql:dbname=qusukj;host=localhost;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_show_switch` [ RunTime:0.000521s ]
+[ sql ] [ SQL ] SELECT `is_showask` FROM `gz_show_switch` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.000147s ]
+
+---------------------------------------------------------------
+[ 2018-02-09T23:57:49+08:00 ] 172.21.0.3 123.206.84.18 GET /api/index/index
+[ log ] 123.206.84.18/api/index/index [运行时间：0.026038s][吞吐率：38.41req/s] [内存消耗：3,184.81kb] [文件加载：42]
+[ info ] [ LANG ] /home/wwwroot/lamp-2.4/domain/qusu/web/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'Index',
+    2 => 'getindex',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'accept' => '*/*',
+  'host' => '123.206.84.18',
+)
+[ info ] [ PARAM ] array (
+  'action' => 'index',
+)
+[ info ] [ RUN ] app\api\controller\Index->getIndex[ /home/wwwroot/lamp-2.4/domain/qusu/web/application/api/controller/Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000236s ] mysql:dbname=qusukj;host=localhost;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_rebate_config` [ RunTime:0.000675s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_rebate_config` WHERE  `closed` = 0 LIMIT 1 [ RunTime:0.000191s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_course` [ RunTime:0.000580s ]
+[ sql ] [ SQL ] SELECT `cid`,`uid`,`title`,`face`,`desc`,`banner`,`price`,`content`,`subscribe_num`,`virtual_amount` FROM `gz_course` WHERE  `audit` = 1  AND `closed` = 0 ORDER BY `orderby`  desc LIMIT 0,10 [ RunTime:0.000639s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_user` [ RunTime:0.000649s ]
+[ sql ] [ SQL ] SELECT `uid`,`uname`,`face`,`info`,`realname`,`follow` FROM `gz_user` WHERE  `uid` IN (0,0,0,0,0,0,0,0,0,0)  AND `closed` = 0 [ RunTime:0.000206s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_config` [ RunTime:0.000612s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_config` WHERE  `id` = 1  AND `closed` = 0 LIMIT 1 [ RunTime:0.000241s ]
+
+---------------------------------------------------------------
+[ 2018-02-09T23:57:49+08:00 ] 172.21.0.3 123.206.84.18 GET /api/config/index
+[ log ] 123.206.84.18/api/config/index [运行时间：0.018157s][吞吐率：55.08req/s] [内存消耗：2,769.12kb] [文件加载：39]
+[ info ] [ LANG ] /home/wwwroot/lamp-2.4/domain/qusu/web/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'Config',
+    2 => 'getindex',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'accept' => '*/*',
+  'host' => '123.206.84.18',
+)
+[ info ] [ PARAM ] array (
+  'action' => 'index',
+)
+[ info ] [ RUN ] app\api\controller\Config->getIndex[ /home/wwwroot/lamp-2.4/domain/qusu/web/application/api/controller/Config.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000225s ] mysql:dbname=qusukj;host=localhost;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_config` [ RunTime:0.000784s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_config` WHERE  `closed` = 0 LIMIT 1 [ RunTime:0.000277s ]
+
+---------------------------------------------------------------
+[ 2018-02-09T23:57:49+08:00 ] 172.21.0.3 123.206.84.18 GET /api/mulitcourse/index
+[ log ] 123.206.84.18/api/mulitcourse/index [运行时间：0.010491s][吞吐率：95.32req/s] [内存消耗：1,603.54kb] [文件加载：28]
+[ info ] [ LANG ] /home/wwwroot/lamp-2.4/domain/qusu/web/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'mulitcourse',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'accept' => '*/*',
+  'host' => '123.206.84.18',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LOG ] INIT File
+
+---------------------------------------------------------------
+[ 2018-02-09T23:57:49+08:00 ] 172.21.0.3 184.3.45.191 POST /
+[ log ] 123.206.84.18/ [运行时间：0.084794s][吞吐率：11.79req/s] [内存消耗：2,967.81kb] [文件加载：44]
+[ info ] [ LANG ] /home/wwwroot/lamp-2.4/domain/qusu/web/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'PHPSESSID=8jjdp582hik2ukrfn8qighi0tinlvbmo',
+  'cache-control' => 'no-cache',
+  'host' => '123.206.84.18',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; rv:11.0) like Gecko',
+  'content-type' => 'application/x-www-form-urlencoded',
+  'content-length' => '420',
+)
+[ info ] [ PARAM ] array (
+  'Eaddx9/PYPB6UqwH/oD9YadSn0jMvdIIk/e7kLzCH_TuWIzZcaIu8NaZ359VzSX8t/kf2MV3_PJ9rmIMTgbFOMICwEKBReaJVHcH5wnZNlpg2oUadTmTXM_lig2t4aDGtwFmj1y3l6Re7_0_c7GAwBLfAY6kIPRe/TD1QmKNPaextdGlhIN3q3lnf/4Uf8eiSEUfhCiUgUaXFhYyJU1lJbgg1GnFhlk5ERQPuCet6bbmAU6iuOWk0RP1BMobQSMGC7lX0lojvxvTAVACjB22J7nWRc2s578YQDgzYdivYFm/KdohqCCsLAh2CgLur_rUrwtpa2j1cGMV1ED/3LijTfVJfr19kHymW2dOm2Z56wP6kpKGSMgYz2IWWOONd9KP4PvypPo/3hLTrK2zMKgh2TTrrlRM/XC6yyY' => '',
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /home/wwwroot/lamp-2.4/domain/qusu/web/application/index/controller/Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] ./template/mulit/pc/index/index.html [ array (
+  0 => 'course',
+  1 => 'config',
+  2 => 'adv_item',
+  3 => 'cate',
+) ]
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000199s ] mysql:dbname=qusukj;host=localhost;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_config` [ RunTime:0.000646s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_config` WHERE  `closed` = 0 LIMIT 1 [ RunTime:0.000257s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_course` [ RunTime:0.000571s ]
+[ sql ] [ SQL ] SELECT `cid`,`banner`,`price`,`title`,`desc` FROM `gz_course` WHERE  `closed` = 0  AND `audit` = 1 ORDER BY `cid`  desc LIMIT 10 [ RunTime:0.000246s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_course_category` [ RunTime:0.000462s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`cate_name` FROM `gz_course_category` WHERE  `closed` = 0 ORDER BY orderby desc [ RunTime:0.000159s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_adv_item` [ RunTime:0.000466s ]
+[ sql ] [ SQL ] SELECT `photopath`,`link` FROM `gz_adv_item` WHERE  `adv_id` = 3  AND `closed` = 0 ORDER BY id desc [ RunTime:0.000159s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000193s ] mysql:dbname=qusukj;host=localhost;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_show_switch` [ RunTime:0.000538s ]
+[ sql ] [ SQL ] SELECT `is_showask` FROM `gz_show_switch` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.000142s ]
+
+---------------------------------------------------------------
+[ 2018-02-09T23:59:50+08:00 ] 172.21.0.3 123.206.84.18 GET /api/index/index
+[ log ] 123.206.84.18/api/index/index [运行时间：0.028731s][吞吐率：34.81req/s] [内存消耗：3,184.81kb] [文件加载：42]
+[ info ] [ LANG ] /home/wwwroot/lamp-2.4/domain/qusu/web/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'Index',
+    2 => 'getindex',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'accept' => '*/*',
+  'host' => '123.206.84.18',
+)
+[ info ] [ PARAM ] array (
+  'action' => 'index',
+)
+[ info ] [ RUN ] app\api\controller\Index->getIndex[ /home/wwwroot/lamp-2.4/domain/qusu/web/application/api/controller/Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000288s ] mysql:dbname=qusukj;host=localhost;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_rebate_config` [ RunTime:0.001015s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_rebate_config` WHERE  `closed` = 0 LIMIT 1 [ RunTime:0.000265s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_course` [ RunTime:0.000889s ]
+[ sql ] [ SQL ] SELECT `cid`,`uid`,`title`,`face`,`desc`,`banner`,`price`,`content`,`subscribe_num`,`virtual_amount` FROM `gz_course` WHERE  `audit` = 1  AND `closed` = 0 ORDER BY `orderby`  desc LIMIT 0,10 [ RunTime:0.000770s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_user` [ RunTime:0.000877s ]
+[ sql ] [ SQL ] SELECT `uid`,`uname`,`face`,`info`,`realname`,`follow` FROM `gz_user` WHERE  `uid` IN (0,0,0,0,0,0,0,0,0,0)  AND `closed` = 0 [ RunTime:0.000265s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_config` [ RunTime:0.000945s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_config` WHERE  `id` = 1  AND `closed` = 0 LIMIT 1 [ RunTime:0.000370s ]
+
+---------------------------------------------------------------
+[ 2018-02-09T23:59:50+08:00 ] 172.21.0.3 123.206.84.18 GET /api/config/index
+[ log ] 123.206.84.18/api/config/index [运行时间：0.023923s][吞吐率：41.80req/s] [内存消耗：2,769.12kb] [文件加载：39]
+[ info ] [ LANG ] /home/wwwroot/lamp-2.4/domain/qusu/web/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'Config',
+    2 => 'getindex',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'accept' => '*/*',
+  'host' => '123.206.84.18',
+)
+[ info ] [ PARAM ] array (
+  'action' => 'index',
+)
+[ info ] [ RUN ] app\api\controller\Config->getIndex[ /home/wwwroot/lamp-2.4/domain/qusu/web/application/api/controller/Config.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000260s ] mysql:dbname=qusukj;host=localhost;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_config` [ RunTime:0.000799s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_config` WHERE  `closed` = 0 LIMIT 1 [ RunTime:0.000282s ]
+
+---------------------------------------------------------------
+[ 2018-02-09T23:59:50+08:00 ] 172.21.0.3 123.206.84.18 GET /api/mulitcourse/index
+[ log ] 123.206.84.18/api/mulitcourse/index [运行时间：0.011711s][吞吐率：85.39req/s] [内存消耗：1,603.54kb] [文件加载：28]
+[ info ] [ LANG ] /home/wwwroot/lamp-2.4/domain/qusu/web/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'api',
+    1 => 'mulitcourse',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'accept' => '*/*',
+  'host' => '123.206.84.18',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LOG ] INIT File
+
+---------------------------------------------------------------
+[ 2018-02-09T23:59:50+08:00 ] 172.21.0.3 184.3.45.191 POST /
+[ log ] 123.206.84.18/ [运行时间：0.097868s][吞吐率：10.22req/s] [内存消耗：2,967.81kb] [文件加载：44]
+[ info ] [ LANG ] /home/wwwroot/lamp-2.4/domain/qusu/web/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'PHPSESSID=8jjdp582hik2ukrfn8qighi0tinlvbmo',
+  'cache-control' => 'no-cache',
+  'host' => '123.206.84.18',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; rv:11.0) like Gecko',
+  'content-type' => 'application/x-www-form-urlencoded',
+  'content-length' => '400',
+)
+[ info ] [ PARAM ] array (
+  'RaIIlY/ObakM0cXDgRPLt7eXRM4lPTWLc5O0WyxD5WH9icU31ENZQSmlqLg4/JMRYQ/h6guAXz5FIXOCaiW2O/ChVQFQEz5FojuP37zRMsMuoE15MNx6eU3REXG_zHACPKoXMaA2TMwzCYZtBnyzuMpdE/H9Y/BDOQ1CwaHE13Q73OUjkYRJMophvowo21nHcFD9ZhQxzxbYLka7FrQIy3RJWgA3E6PyCvzA4yuXQbVQzMmr9qonM1/XoVrc_GqpeOR82PQMm/ivKvZaaTdyrqGl04gE7QGJI08plog/9DUneiCsMow6wPQ2PN6NVDu7tpz4dQUFnM2c_OR10KxMcBuj7PTHcWP8yf53PSKbFajUsFvUiO0ESZ8bBD/z3cVM_sB9DbCvTAmJ7O8' => '',
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ /home/wwwroot/lamp-2.4/domain/qusu/web/application/index/controller/Index.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] ./template/mulit/pc/index/index.html [ array (
+  0 => 'course',
+  1 => 'config',
+  2 => 'adv_item',
+  3 => 'cate',
+) ]
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000203s ] mysql:dbname=qusukj;host=localhost;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_config` [ RunTime:0.000717s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_config` WHERE  `closed` = 0 LIMIT 1 [ RunTime:0.000272s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_course` [ RunTime:0.000662s ]
+[ sql ] [ SQL ] SELECT `cid`,`banner`,`price`,`title`,`desc` FROM `gz_course` WHERE  `closed` = 0  AND `audit` = 1 ORDER BY `cid`  desc LIMIT 10 [ RunTime:0.000284s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_course_category` [ RunTime:0.000546s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`cate_name` FROM `gz_course_category` WHERE  `closed` = 0 ORDER BY orderby desc [ RunTime:0.000171s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_adv_item` [ RunTime:0.000516s ]
+[ sql ] [ SQL ] SELECT `photopath`,`link` FROM `gz_adv_item` WHERE  `adv_id` = 3  AND `closed` = 0 ORDER BY id desc [ RunTime:0.000161s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000198s ] mysql:dbname=qusukj;host=localhost;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_show_switch` [ RunTime:0.000584s ]
+[ sql ] [ SQL ] SELECT `is_showask` FROM `gz_show_switch` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.000146s ]
+
+---------------------------------------------------------------

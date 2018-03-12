@@ -1,0 +1,102 @@
+{include file="common/header" /}
+<body>
+<div class="article_manage">
+	<div class="right-side-header clearfix">
+	        <span>题库管理</span>
+	        {include file="common/admin" /}
+   </div>
+   <style>
+   p img{
+       width: 20px;
+       height:20px;
+   }
+   </style>
+   <div class="right_side_content">
+   		<div  style=' padding: 10px 10px 10px 10px; border-bottom: 1px solid rgba(0,0,0,.08);position: relative;'>
+            <a href='{:url("testitembank/index")}'>题库</a>
+            /
+            <span>习题管理</span>
+          </div>
+	   <div class="course_right_main ">
+	         <div class="operation_div">
+	            <span class="span_add btn span_add_course goto" data-src='{:url("testitemlist/create")}?bank_id={$bank_id}'>添加习题</span>
+	             <span class="span_batch_import btn modal-catch" data-params='{"content":".batch-add","act":"{:url("exceltestitem/import")}", "title":"批量导入","type":"1","area":"480px,360px"}'>批量导入</span>
+				<span class="download_template"><a href="/testitemTpl.xlsx">下载模板</a></span>
+<!-- 		        <div class="select_search " > -->
+<!-- 	                <form class="layui-form" action='{:url("index")}'> -->
+<!-- 	                    <input class="search_btn" type="image" src="/public/gzadmin/images/gray_search@2x20.png" lay-submit name="submit" lay-filter="search" align="" > -->
+<!-- 	                    <div class="layui-form"> -->
+<!-- 	                        <div class="layui-inline"> -->
+<!-- 	                            <div class="layui-input-inline"> -->
+<!-- 	                                <input class="layui-input" name="key" placeholder="搜索试题标题"> -->
+<!-- 	                            </div> -->
+<!-- 	                        </div> -->
+<!-- 	                    </div> -->
+<!-- 	                </form> -->
+<!-- 	            </div> -->
+	            <div class="clearfix"></div>
+	         </div>
+	         <div id="list" class="layui-form">
+	         </div> 
+			 <div class="text-right" id="page"></div>
+	 
+	      </div>
+   	</div>
+</div>
+<script id="list-tpl" type="text/html" data-params='{"url":"{:url("testitemlist/index",["bank_id"=>"$bank_id"])}","pageid":"#page"}'>
+    <table id="example" class="layui-table" lay-skin="line">
+        <thead>
+         <tr>
+           <th>题目标题</th>
+    	   <th>正确选项</th>
+    	   <th>试题类型</th>
+			<th>试题难度</th>
+    	   <th>添加时间</th>
+    	   <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{# layui.each(d.list, function(index, item){ }}
+        <tr>
+             <td style='width: 510px;'>{{ item.name}}</td>
+			 <td>{{ item.correct_option}}</td>
+			 <td>{{ item.type_name}}</td>
+			 <td>{{ item.level_name}}</td>
+			 <td>{{ item.create_time}}</td>
+			 <td style="position: relative">
+				<i class="i_edit goto" data-src='{:url("testitemlist/edit")}?id={{ item.id}}'>编辑</i>
+				<i class="i_delete ajax" data-params='{"url": "{:url("testitemlist/delelte")}","data":"id={{ item.id}}&bank_id={{ item.bank_id}}","confirm":"true"}'>删除</i>
+                
+             </td>
+        </tr>
+        {{# }); }}
+        </tbody>
+    </table>
+</script>
+<div class="batch-add" style="display: none">
+    <form id="form3" class="layui-form layui-form-pane" action='{:url("exceltestitem/import")}'>
+        <div class="layui-form-item">
+            <label class="layui-form-label">上传excel</label>
+            <input type='hidden' name='bank_id' value='{$bank_id}'>
+            <div class="layui-input-block">
+                <input type="file" name="file" class="layui-upload-file" lay-title="上传文件"  id="upload-excel">
+                <input type="hidden" name="excel_path" error-id="img-error">
+            </div>
+            <div><p id="img-error" class="error"></p></div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" jq-submit jq-filter="submit">确定</button>
+            </div>
+        </div>
+    </form>
+</div>
+{include file="common/version" /}
+<script src="/public/gzadmin/js/clipboard.min.js"></script>
+<script>
+    layui.use('list');
+   
+</script>
+</body>
+</html>
+

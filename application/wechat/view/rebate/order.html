@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <title>{$title}</title>
+    <link rel="stylesheet" href="/public/mobile/css/mui.min.css"/>
+    <link rel="stylesheet" href="/public/mobile/css/globla.css"/>
+    <link rel="stylesheet" href="/public/mobile/css/threeLevelMarketing.css"/>
+</head>
+
+<body class="bg_FAFAFA">
+<div class="allorder_nav">
+    <ul class="allorder_ul">
+        <li><a href='{:url("order",["type"=>"1"])}' {if $type == 1}class="active"{/if}>全部订单</a></li>
+        <li><a href='{:url("order",["type"=>"2"])}' {if $type == 2}class="active"{/if}>直销</a></li>
+        <li><a href='{:url("order",["type"=>"3"])}' {if $type == 3}class="active"{/if}>下级</a></li>
+        <li><a href='{:url("order",["type"=>"4"])}' {if $type == 4}class="active"{/if}>下2级</a></li>
+    </ul>
+</div>
+<div id="pullrefresh" class="mui-scroll-wrapper" style="top:50px;">
+    <div class="mui-scroll">
+        <div class="mui-row">
+            <div class="allorder_main">
+                <div class="order_list_div">
+                    <ul class="order_list_ul">
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{include file="common/menu" /}
+<script src="/public/mobile/js/jquery-3.2.1.min.js"></script>
+<script src="/public/mobile/js/mui.min.js"></script>
+<script src="/public/mobile/js/globla.js"></script>
+</body>
+<script>
+    $(function() {
+        var page = 1;
+        var type = '{$type}';
+        var size = 10;
+        var uid = '{$userinfo.uid}';
+        data = {
+            type:type,
+            page:1,
+            uid:uid,
+            size:size
+        };
+        toList(data,1);
+        mui.init({
+            pullRefresh: {
+                container: '#pullrefresh',
+                up : {
+                    //height:50,//可选.默认50.触发上拉加载拖动距离
+                    //auto:true,//可选,默认false.自动上拉加载一次
+                    contentrefresh : "正在加载...",//可选，正在加载状态时，上拉加载控件上显示的标题内容
+                    contentnomore:'没有更多数据了',//可选，请求完毕若没有更多数据时显示的提醒内容；
+                    callback :pullupRefresh //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+                }
+
+            }
+        });
+        function pullupRefresh() {
+            setTimeout(function() {
+                page++;//翻下一页
+                data={
+                    uid:uid,
+                    type:type,
+                    page:page,
+                    size:size
+                };
+                toList(data,2);//具体取数据的方法
+            }, 100);
+        }
+
+        function toList(data,type) {
+            $.ajax({
+                url:host + 'rebate/order',
+                data:data,
+                type:'GET', //GET
+                async:true,    //或false,是否异步
+                timeout:5000,    //超时时间
+                dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+                success:function(result,textStatus,jqXHR){
+                    if(result.code==1){
+                        var rebate = result.data.rebate;
+                        var list = "";
+                        $.each(rebate,function(j,item){
+                            list += '<li> <p> <i>'+item.course_name+'</i>' +
+                                '<time>'+item.create_time+'</time> </p>' +
+                                '<div><p><span><i>订单金额</i><i>¥'+item.order_money+'</i></span>' +
+                                '<span><i>订单类型</i><i>'+item.fxlevel+'分销(分成'+item.scale+'%)</i></span>' +
+                                '<span><i>订单编号</i><i>'+item.order_sn+'</i></span></p>' +
+                                '<em>收入¥'+item.money+'</em>' +
+                                '</div>' +
+                                '</li>';
+                        });
+                        if(type == 1){
+                            mui('#pullrefresh').pullRefresh().refresh(true);
+                            $(".order_list_ul").html(list);
+                            mui('#pullrefresh').pullRefresh().endPulldownToRefresh();
+                        }else{
+                            if(result.data.rebate.length == 0){
+                                mui('#pullrefresh').pullRefresh().endPullupToRefresh(true);
+                                setTimeout(function(){
+                                    mui('#pullrefresh').pullRefresh().disablePullupToRefresh();
+                                }, 1000);
+                            }else{
+                                setTimeout(function(){
+                                    $(".order_list_ul").append(list);
+                                }, 1000);
+                                mui('#pullrefresh').pullRefresh().endPullupToRefresh();
+                            }
+                        }
+//                            mui('#pullrefresh').pullRefresh().endPullupToRefresh(true);
+                    }
+                    mui('.mui-slider').slider({
+                        interval: 3000
+                    });
+
+                }
+            });
+
+        }
+    });
+
+</script>
+</html>

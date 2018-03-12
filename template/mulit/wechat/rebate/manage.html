@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <title>我的管理</title>
+   <link rel="stylesheet" href="/public/mobile/css/mui.min.css">
+   <link rel="stylesheet" href="/public/mobile/css/global.css" />
+   <link rel="stylesheet" href="/public/mobile/css/threeLevelMarketing.css">
+   <script src="/public/mobile/js/jquery-3.2.1.min.js"></script>
+   <script src="/public/mobile/js/mui.min.js"></script>
+   <script src="/public/mobile/js/globla.js"></script>
+</head>
+<body>   
+    <div id="tab-item"  class="my_jinkuang_nav">
+      <a href='{:url("index")}'>近况</a>
+      <a href='{:url("record")}'>数据</a>
+      <a href='{:url("manage")}' class="active">管理</a>
+  	</div>
+   <div class="fenxiao_main">
+   		<ul class="iterm-box">
+			<li>
+				<a href='{:url("order",["type"=>"1"])}'>					
+					<div class="iterm-content">
+						<span>全部订单</span>
+						<div class="iterm-right-img">
+							<img src="/public/mobile/img/icon/gray_arrow_right@2x24.png" alt="链接箭头">
+						</div>						
+					</div>	
+				</a> 
+			</li>
+			<li>
+				<a href='{:url("order",["type"=>"2"])}'>					
+					<div class="iterm-content">
+						<span>直销订单</span>
+						<div class="iterm-right-img">
+							<img src="/public/mobile/img/icon/gray_arrow_right@2x24.png" alt="链接箭头">
+						</div>						
+					</div>	
+				</a> 
+			</li>
+			<li>
+				<a href='{:url("order",["type"=>"3"])}'>					
+					<div class="iterm-content">
+						<span>下级订单</span>
+						<div class="iterm-right-img">
+							<img src="/public/mobile/img/icon/gray_arrow_right@2x24.png" alt="链接箭头">
+						</div>						
+					</div>	
+				</a> 
+			</li>
+			<li>
+				<a href='{:url("order",["type"=>"1"])}'>					
+					<div class="iterm-content">
+						<span>下二级订单</span>
+						<div class="iterm-right-img">
+							<img src="/public/mobile/img/icon/gray_arrow_right@2x24.png" alt="链接箭头">
+						</div>						
+					</div>	
+				</a> 
+			</li>
+			<li>
+				<a href='{:url("withdraw")}'>					
+					<div class="iterm-content">
+						<span>收入提现</span>
+						<div class="iterm-right-img">
+							<img src="/public/mobile/img/icon/gray_arrow_right@2x24.png" alt="链接箭头">
+						</div>						
+					</div>	
+				</a> 
+			</li>
+			<li class="phone-bind">
+				<a href='{:url("bind_account")}'>					
+					<div class="iterm-content">
+						<span>手机支付绑定</span>
+						<div class="iterm-right-img">
+							<img src="/public/mobile/img/icon/gray_arrow_right@2x24.png" alt="链接箭头">
+						</div>						
+					</div>	
+				</a> 
+			</li>
+			<li>
+				<a href="{:url('sharecourse')}">					
+					<div class="iterm-content" style="box-shadow: none;">
+						<span>分享课程</span>
+						<div class="iterm-right-img">
+							<img src="/public/mobile/img/icon/gray_arrow_right@2x24.png" alt="链接箭头">
+						</div>						
+					</div>	
+				</a> 
+			</li>
+			<li>
+				<a href="{:url('promoter')}">					
+					<div class="iterm-content">
+						<span>下级推广员</span>
+						<div class="iterm-right-img">
+							<img src="/public/mobile/img/icon/gray_arrow_right@2x24.png" alt="链接箭头">
+						</div>						
+					</div>	
+				</a> 
+			</li>
+			<li>
+				<a href="{:url('rule')}">					
+					<div class="iterm-content">
+						<span>分销规则</span>
+						<div class="iterm-right-img">
+							<img src="/public/mobile/img/icon/gray_arrow_right@2x24.png" alt="链接箭头">
+						</div>						
+					</div>	
+				</a> 
+			</li>
+		</ul>
+   <div class="contact_platform">
+      <a href="tel:{$phone}">联系平台</a>
+   </div>
+</div>
+
+
+<script>
+    var uid = '{$userinfo.uid}';
+    var isbind = '{$userinfo.is_bind}';
+    $('.mui-table-view li').find('img').eq(4).attr('src', '/public/mobile/img/icon/4a.png');
+    $('.mui-table-view li').find('.navcontent').removeClass('NavActive');
+    $('.mui-table-view li').find('.navcontent').eq(4).addClass('NavActive');
+</script>
+<script src="/public/mobile/js/bindmobile.js"></script>
+</body>
+</html>

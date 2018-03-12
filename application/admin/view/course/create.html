@@ -1,0 +1,56 @@
+{include file="common/header" /}
+<style type="text/css">
+    .mincode_img{
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        background-color: #fff;
+        width:250px;
+        height: 250px;
+        -webkit-transform: translateX(-50%) translateY(-50%);
+        border:solid 1px #292B3;
+        padding: 23px;
+    }
+    .mincode_img img{
+
+    }
+</style>
+<body>
+<div class="article_manage">
+	<div class="right-side-header clearfix">
+	        <span>知识管理</span>
+	        {include file="common/admin" /}
+   </div>
+   <div class="right_side_content">
+   		<div class="add_article_main ">	
+   			<div class="breadcrumb">
+	              <a href='{:url("course/index")}'>课程列表</a>
+	              /
+	              <span>添加课程</span>
+	         </div>
+	        <div class="add_article_step">
+	            <div class="step-liucheng">
+	                <ul class="step-liucheng-ul clearFloat">
+	                    <li {if $step==1} class="active" {/if}><i>1</i>添加课程</li>
+	                    <li {if $step==2} class="active" {/if}><i>2</i>添加视频</li>
+	                    <li {if $step==3} class="active" {/if}><i>3</i>pc介绍</li>
+	                    <li {if $step==4} class="active" {/if}><i>4</i>完成</li>
+	                </ul>
+	            </div>
+	        </div>
+	        <div class="articleInfo_fill">
+	            {if $step==1}
+	            {include file="course/course_basic" /}
+	            {elseif $step==4}
+	            {include file="course/course_finish" /}
+	            {/if}
+	        </div>
+	    </div>
+    </div>
+</div>
+{include file="common/version" /}
+<script>
+    layui.use('course');
+</script>
+</body>
+</html>

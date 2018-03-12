@@ -1,0 +1,57 @@
+{include file="common/header" /}
+<body>
+<div class="article_manage">
+    <div class="course_right_top">
+        <div class="tag_group">
+            <p class="title">广告</p>
+            {include file="common/admin" /}
+            <div class="clearfix"></div>
+        </div>
+        <div class="system_guanli_div">
+            <p class="p_href_wrap"><i class="goto" data-src='{:url("ad/index")}'>广告列表</i>  / <i class="goto" data-src='{:url("ad/index",["id"=>$advInfo["id"]])}'>{$advInfo['title']}广告位</i></p>
+        </div>
+        <div class="success_tip displayNone">已完成</div>
+    </div>
+    <div class="course_right_main ">
+        <div class="operation_div">
+            <span class="span_add btn goto" data-src='{:url("add_adv",["id"=>$id])}'>添加广告</span>
+            <span class="span_delete btn ajax-all" data-name="checkbox" data-params='{"url": "{:url("batch_adv")}","data":"","confirm":"true"}'>删除</span>
+            <div class="clearfix"></div>
+        </div>
+        <div id="list" class="layui-form"></div>
+        <div class="text-right" id="page"></div>
+    </div>
+</div>
+<script id="list-tpl" type="text/html" data-params='{"url":"{:url("adv_item",["id"=>$id])}","pageid":"#page"}'>
+    <table id="example" class="layui-table" lay-skin="line">
+        <thead>
+        <tr>
+            <th style="width: 6%"><input type="checkbox" id="checkall" data-name="checkbox" lay-filter="check" lay-skin="primary"></th>
+            <th>轮播图</th>
+            <th>标题</th>
+            <th>排序</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{# layui.each(d.list, function(index, item){ }}
+        <tr>
+
+            <td>
+                <input type="checkbox" name="checkbox" value="{{ item.id}}" lay-skin="primary">
+            </td>
+            <td><img class="img_cover" src="{{ item.photopath}}" height="60" alt="封面"></td>
+            <td>{{ item.title}}</td>
+            <td class="icon"><i class="rise ajax" data-params='{"url": "{:url("ad/moveUpDown")}","data":"id={{ item.id}}&updown=up"}'></i><i class="drop ajax" data-params='{"url": "{:url("ad/moveUpDown")}","data":"id={{ item.id}}&updown=down"}'></i></td>
+            <td><i class="i_edit goto" data-src='{:url("edit_adv")}?id={{ item.id }}'>编辑</i>／<i class="i_delete ajax" data-params='{"url": "{:url("del_adv")}","data":"id={{ item.id}}","confirm":"true"}'>删除</i></td>
+        </tr>
+        {{# }); }}
+        </tbody>
+    </table>
+</script>
+{include file="common/version" /}
+<script>
+    layui.use('list');
+</script>
+</body>
+</html>

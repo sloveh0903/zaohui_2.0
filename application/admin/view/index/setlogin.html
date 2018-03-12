@@ -1,0 +1,59 @@
+{include file="common/header" /}
+<body>
+<div class="article_manage">
+	<div class="right-side-header clearfix">
+	        <span>系统设置</span>
+	        {include file="common/admin" /}
+   	</div>
+   <div class="right_side_content">
+   <div class="system_guanli_div">
+	 		<ul class="system_guanli_ul">
+                <li><a href="javascript:void(0)" class="goto" data-src='{:url("user/index")}'>后台用户管理</a></li>
+                <li><a href="javascript:void(0)" class="goto" data-src='{:url("role/index")}'>角色管理</a></li>
+                <li><a href="javascript:void(0)" class="active  goto" data-src='{:url("index/setlogin")}'>登录配置</a></li>
+                <li><a href="javascript:void(0)" class="goto" data-src='{:url("message/remind")}'>公告</a></li>
+           </ul>
+		</div>
+		<div class="success_tip displayNone">已完成</div>
+        <div class="articleInfo_fill" style='margin-top:0px;'>
+	        <div class="layui-form-item ">
+	         <section class="panel panel-padding">
+	         <div class="layui-form-item" style="margin-top:10px;height: 60px;color: #8282D9; background:rgba(0,182,242,.13);border-radius: 2px;line-height: 60px">
+	            <div style="line-height: 60px;font-size: 16px;padding-left: 20px; width: 94%;float: left">
+	                开启后，未绑定手机号的用户微信扫码（授权）后需绑定手机号才能登录
+	            </div>
+	           
+	        </div>
+	                <form class="layui-form" action='{:url("index")}'>
+	                 <label class="layui-form-label"  style='padding:0 0 0 0;width: 120px;margin-right: 40px;'>pc端手机号验证</label>
+	                <div class="layui-input-block">
+	                <input type="checkbox" name="pcmobileswitch" lay-skin="switch" lay-text="" {if $is_pcmobile==1} checked="checked" {/if} lay-filter="ajax" data-params='{"url":"{:url("index/setlogin")}","confirm":"true","data":""}'>
+	                
+	                <br><br>
+	                </div>
+	                <label class="layui-form-label"  style='padding:0 0 0 0;width: 128px;margin-right: 32px;'>微信端手机号验证</label>
+	                <div class="layui-input-block">
+	                <input type="checkbox" name="wxmobileswitch" lay-skin="switch" lay-text="" {if $is_wxmobile==1} checked="checked" {/if} lay-filter="ajax" data-params='{"url":"{:url("index/setlogin")}","confirm":"true","data":""}'>
+	                
+	                <br><br><br>
+	                </div>
+	                
+	                </form>
+	        </div>
+	        <div class="clearfix"></div>
+	  	</div>
+	        <div id="list" class="layui-form">
+	         </div> 
+	 
+	</div>
+
+</div>
+
+{include file="common/version" /}
+<script src="/public/gzadmin/js/clipboard.min.js"></script>
+<script>
+    layui.use('adv');
+</script>
+</body>
+</html>
+

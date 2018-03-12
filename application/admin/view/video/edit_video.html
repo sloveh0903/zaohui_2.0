@@ -1,0 +1,209 @@
+{include file="common/header" /}
+<link rel="stylesheet" href="/public/qiniu/css/bootstrap.css">
+<link rel="stylesheet" href="/public/qiniu/css/main.css">
+<link rel="stylesheet" href="/public/qiniu/css/highlight.css">
+<body>
+<div class="article_manage mCustomScrollbar">
+    <div class="course_right_top">
+        <div class="tag_group">
+            <p class="title">课程管理</p>
+            {include file="common/admin" /}
+            <div class="clearfix"></div>
+        </div>
+        <div class="system_guanli_div">
+            <p class="p_href_wrap"><i class="goto" data-src='{:url("course/index")}'>课程列表</i> / <i class="goto" data-src='{:url("course/detail",["id"=>$video.cid])}'>课程详情</i> / <i>添加视频</i>
+        </div>
+        <div class="success_tip displayNone">已完成</div>
+    </div>
+    <div class="add_article_main ">
+        <div class="articleInfo_fill">
+            <section class="panel panel-padding">
+                <form id="form1" class="layui-form layui-form-pane" action="{:url('edit_video')}">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">章节*</label>
+                        <div class="layui-input-block">
+                            <select name="tid" jq-verify="required" jq-error="请选择章节" lay-filter="verify">
+                                <option value=""></option>
+                                {if !empty($chapter)}
+                                {foreach name="$chapter" item="vo"}
+                                <option value="{$vo.id}" {if condition="$video.tid eq $vo.id"}selected{/if}>{$vo.cate_name}</option>
+                                {/foreach}
+                                {/if}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">标题*</label>
+                        <input type="hidden" name="id" value="{$video.id}">
+                        <input type="hidden" name="cid" value="{$video.cid}">
+                        <div class="layui-input-block">
+                            <input type="text" name="title" required jq-verify="required" value="{$video.title}" jq-error="请输入标题" placeholder="请输入标题" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">视频*</label>
+                        <div class="layui-input-block">
+                            <input type="hidden" id="domain" value="{$domain}">
+                            <input type="hidden" id="uptoken_url" value="{$token}">
+                            <div id="container">
+                                <a class="btn btn-default btn-lg " id="pickfiles" href="#" >
+                                    <i class="glyphicon glyphicon-plus"></i>
+                                    <span>上传视频</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <table class="table"   style="margin-top:10px;display:none">
+                            <tbody id="fsUploadProgress">
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">是否试看*</label>
+                        <div class="layui-input-block">
+                            <input type="radio" name="free" title="否" value="0" {if condition="$video['free'] eq 0"}checked{/if} />
+                            <input type="radio" name="free" title="是" value="1" {if condition="$video['free'] eq 1"}checked{/if} />
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">视频描述</label>
+                        <div class="layui-input-block">
+                            <textarea name="desc" class="layui-textarea" placeholder="请输入视频描述">{$video.desc}</textarea>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <button class="layui-btn" jq-submit lay-filter="submit">立即提交</button>
+                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                        </div>
+                    </div>
+                </form>
+            </section>
+
+        </div>
+    </div>
+</div>
+{include file="common/version" /}
+<!--<script type="text/javascript" src="https://code.jquery.com/jquery-latest.js"></script>-->
+<script type="text/javascript" src="/public/qiniu/plupload/moxie.js"></script>
+<script type="text/javascript" src="/public/qiniu/plupload/plupload.dev.js"></script>
+<script type="text/javascript" src="/public/qiniu/plupload/i18n/zh_CN.js"></script>
+<script type="text/javascript" src="/public/qiniu/dist/qiniu.js"></script>
+<script type="text/javascript" src="/public/qiniu/dist/highlight.js"></script>
+<script type="text/javascript" src="/public/qiniu/dist/ui.js"></script>
+<script type="text/javascript" src="/public/qiniu/dist/bootstrap.min.js"></script>
+<script type="text/javascript">hljs.initHighlightingOnLoad();</script>
+<script>
+    layui.use('course');
+</script>
+<script>
+    $(function() {
+        var uploader = Qiniu.uploader({
+            runtimes: 'html5,flash,html4',
+            browse_button: 'pickfiles',
+            container: 'container',
+            drop_element: 'container',
+            flash_swf_url: '/public/qiniu/plupload/js/Moxie.swf',
+            dragdrop: true,
+            chunk_size: '4mb',
+            multi_selection: !(mOxie.Env.OS.toLowerCase()==="ios"),
+            uptoken: $('#uptoken_url').val(),
+            filters : {
+                max_file_size : '300mb',
+                prevent_duplicates: true,
+                //Specify what files to browse for
+                mime_types: [
+                    // {title : "mp4 files", extensions : "mkv"}
+                    // {title : "flv files", extensions : "flv,jpg"}
+                    //{title : "Video files", extensions : "flv,mpg,mpeg,avi,wmv,mov,asf,rm,rmvb,mkv,m4v,mp4"}
+                    {title : "Video files", extensions : "avi,mp4,wmv,mpg,mov,flv,mkv,mpeg"}
+                    // {title : "Image files", extensions : "jpg,gif,png"}
+                    // {title : "Zip files", extensions : "zip"}
+                ]
+            },
+            //uptoken:
+            // uptoken_func: function(){
+            //     var ajax = new XMLHttpRequest();
+            //     ajax.open('GET', $('#uptoken_url').val(), false);
+            //     ajax.setRequestHeader("If-Modified-Since", "0");
+            //     ajax.send();
+            //     if (ajax.status === 200) {
+            //         var res = JSON.parse(ajax.responseText);
+            //         console.log('custom uptoken_func:' + res.uptoken);
+            //         return res.uptoken;
+            //     } else {
+            //         console.log('custom uptoken_func err');
+            //         return '';
+            //     }
+            // },
+            domain: $('#domain').val(),
+            get_new_uptoken: false,
+            // downtoken_url: '/downtoken',
+            unique_names: true,
+            //save_key: true,
+            // x_vars: {
+            //     'id': '1234',
+            //     'time': function(up, file) {
+            //         var time = (new Date()).getTime();
+            //         // do something with 'time'
+            //         return time;
+            //     },
+            // },
+            auto_start: true,
+            log_level: 5,
+            init: {
+                'FilesAdded': function(up, files) {
+                    $('table').show();
+                    plupload.each(files, function(file) {
+                        var progress = new FileProgress(file, 'fsUploadProgress');
+                        progress.setStatus("等待...");
+                        progress.bindUploadCancel(up);
+                    });
+                },
+                'BeforeUpload': function(up, file) {
+                    /*var progress = new FileProgress(file, 'fsUploadProgress');
+                     var chunk_size = plupload.parseSize(this.getOption('chunk_size'));
+                     if (up.runtime === 'html5' && chunk_size) {
+                     progress.setChunkProgess(chunk_size);
+                     }*/
+                },
+                'UploadProgress': function(up, file) {
+                    var progress = new FileProgress(file, 'fsUploadProgress');
+                    var chunk_size = plupload.parseSize(this.getOption('chunk_size'));
+                    progress.setProgress(file.percent + "%", file.speed, chunk_size);
+                },
+                'UploadComplete': function() {
+                },
+                'FileUploaded': function(up, file, info) {
+                    var progress = new FileProgress(file, 'fsUploadProgress');
+                    progress.setComplete(up, info);
+                },
+                'Error': function(up, err, errTip) {
+                    /*$('table').show();
+                     var progress = new FileProgress(err.file, 'fsUploadProgress');
+                     progress.setError();
+                     progress.setStatus(errTip);*/
+                },
+                /*'Key': function(up, file) {
+                 console.log(file);
+                 var key = file.name;
+                 return key;
+                 /!*var key = "aa.jpg";
+                 return key;*!/
+                 }*/
+            }
+        });
+
+        uploader.bind('FileUploaded', function() {
+            console.log('hello man,a file is uploaded');
+        });
+
+
+
+
+    });
+
+</script>
+</body>
+</html>

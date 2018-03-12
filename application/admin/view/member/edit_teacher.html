@@ -1,0 +1,70 @@
+{include file="common/header" /}
+<body>
+<div class="article_manage mCustomScrollbar">
+    <div class="course_right_top">
+        <div class="tag_group">
+            <p class="title">用户管理</p>
+            <img src="/public/gzadmin/images/head@2x30.png" alt="自身头像">
+            <i class="phoneNum">15812348289</i>
+            <div class="clearfix"></div>
+        </div>
+        <div class="system_guanli_div">
+            <p class="p_href_wrap"><i class="goto" data-src='{:url("member/teacher")}'>老师列表</i> / <i data-src="add_article">编辑老师</i></p>
+        </div>
+        <div class="success_tip displayNone">已完成</div>
+    </div>
+    <div class="add_article_main ">
+        <div class="articleInfo_fill">
+            <section class="panel panel-padding">
+                <form id="form1" class="layui-form layui-form-pane" action="{:url('edit_teacher')}">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">头像*</label>
+                        <div class="layui-input-block">
+                            <input type="file" name="file" class="layui-upload-file">
+                            <input type="hidden" name="face" value="{$itemInfo.face}" jq-verify="required" jq-error="请上传头像" error-id="photo-error">
+                            <p class="upload-info">建议尺寸：180*180 支持格式：JPG PNG</p>
+                            <p id="photo-error" class="error"></p>
+                        </div>
+                        <div class="layui-input-block">
+                            <div class="imgbox">
+                                <img src="{$itemInfo.face}" name="face" alt="..." class="img-thumbnail">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">老师称呼*</label>
+                        <div class="layui-input-block">
+                            <input type="hidden" name="uid" value="{$itemInfo.uid}">
+                            <input type="text" name="realname" value="{$itemInfo.realname}" style="width: 40%" required jq-verify="required" jq-error="请输入老师称呼" placeholder="请输入老师称呼" autocomplete="off" class="layui-input ">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">老师微信*</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="wechat" value="{$itemInfo.wechat}" style="width: 40%" required jq-verify="required" jq-error="请输入老师微信" placeholder="请输入老师微信" autocomplete="off" class="layui-input ">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">老师介绍*</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="info" value="{$itemInfo.info}" style="width: 40%" required jq-verify="required" jq-error="请输入老师介绍" placeholder="请输入老师介绍" autocomplete="off" class="layui-input ">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <button class="layui-btn" jq-submit lay-filter="submit">立即提交</button>
+                        </div>
+                    </div>
+                </form>
+            </section>
+
+        </div>
+    </div>
+</div>
+{include file="common/version" /}
+<script>
+    layui.use('course');
+</script>
+
+</body>
+</html>

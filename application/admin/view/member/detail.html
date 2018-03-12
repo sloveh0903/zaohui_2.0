@@ -1,0 +1,431 @@
+{include file="common/header" /}
+<link rel="stylesheet" href="/public/gzadmin/css/member_detail.css">
+<style>
+.bp-top {
+  margin-top: 18px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.bp-top .bpdot-icon {
+  display: inline-block;
+  vertical-align: middle;
+  width: 8px;
+  height: 8px;
+  background: url("/public/pc/images/bp-dot.png") no-repeat center / cover;
+  margin-right: 5px;
+}
+.bp-top .bp-info {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+.bp-top .bp-remain {
+  margin-right: 30px;
+}
+.bp-top .bp-remain,
+.bp-top .bp-total {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.bp-top .bp-remain > span:nth-child(2), 
+.bp-top .bp-total > span:nth-child(2) {
+  font-size: 14px;
+  line-height: 14px;
+  color: rgba(41, 43, 51, .4);
+  margin-right: 2px;
+}
+.bp-top .bp-remain > span:nth-child(3),
+.bp-top .bp-total > span:nth-child(3) {
+  font-size: 16px;
+  line-height: 16px;
+  color: rgba(41, 43, 51, .8);
+}
+.bp-top .bp-filter {
+  width: 170px;
+  height: 40px;
+  border: 1px solid #eee;
+  border-radius: 3px;
+  position: relative;
+  cursor: pointer;
+}
+.bp-top .bp-filter .bp-filtershow,
+.bp-top .bp-filter .bp-filteritem {
+  padding: 8px 5px 8px 15px;
+}
+.bp-top .bp-filter .bp-filtershow {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+.bp-filter .bp-filtershow p {
+  font-size: 14px;
+  line-height: 24px;
+  color: rgba(41, 43, 51, .8);
+} 
+.bp-filter .bp-filtershow .bp-filtericon {
+  width: 24px;
+  height: 24px;
+  background: url("/public/pc/images/zhedie_down@2x24.png") no-repeat center / cover;
+}
+.bp-filter .bp-filtershow.open .bp-filtericon {
+  background-image: url("/public/pc/images/zhedie_up@2x24.png");
+}
+.bp-top .bp-filter .bp-filterslide {
+  position: absolute;
+  z-index: 9;
+  width: 100%;
+  top: 45px;
+  left: 0;
+  padding-top: 5px;
+  background-color: #fff;
+  -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, .06);
+          box-shadow: 0 3px 6px rgba(0, 0, 0, .06);
+  border: 1px solid #eee;
+  border-radius: 3px;
+  display: none;
+}
+.bp-filter .bp-filterslide .bp-filteritem {
+  width: 100%;
+  height: 40px;
+  cursor: pointer;
+}
+.bp-filter .bp-filterslide .bp-filteritem:hover {
+  background-color: #f5f5f5
+}
+.bp-filter .bp-filterslide .bp-filteritem p {
+  font-size: 14px;
+  line-height: 24px;
+  color: rgba(41, 43, 51, .5);
+}
+</style>
+    <body>
+    <div class="article_manage">
+      <!-- 9.13 替换右侧头部 -->
+      <div class="right-side-header clearfix">
+        <span>用户管理</span>
+           {include file="common/admin" /}
+        </div>
+        <div class="success_tip displayNone">已完成</div>
+      </div>
+      <!-- 替换右侧头部 结束 -->
+      <!--内容开始-->
+      <div class="right_side_content"> 
+        <!--标题-->
+        <div class="system_guanli_div">
+            <ul class="system_guanli_ul user_edit">
+                <li><a href="javascript:void(0)" class="active" data-src="user_list">用户管理</a><span>&nbsp;/&nbsp;详情</span></li>
+            </ul>
+        </div>
+        <!--用户信息详情-->
+        <div class="user_details">
+            <!--头像昵称-->
+            <div class="person">
+                <img src="{$userinfo.face}" alt=""/>
+                <div class="nikname_box">
+                    <p class="nikname">{$userinfo.nickname}
+                    {if $vip == 1 || $vip == 2}<span>VIP</span>
+                    </p>
+                    {/if}
+                    {if $vip == 2}
+                    <p class="vip_state">终身会员</p>
+                    {/if}
+                    {if $vip == 1}
+                    <p class="vip_state">会员 {php}echo date('Y-m-d',$userinfo['expire_time']){/php}到期</p>
+                    {/if}
+                </div>
+            </div>
+            <!--用户信息-->
+            <div class="person_details">
+                <div class="key">
+                    <span>性别</span>
+                    <span>手机号</span>
+                    <span>创建时间</span>
+
+                </div>
+                <div class="value1" style="margin:0px;">
+                    <p>{$userinfo.sex}</p>
+                    <p>{if $userinfo.mobile == ''} 无 {else /} {$userinfo.mobile} {/if}</p>
+                    <p>{$userinfo.create_time}</p>
+                </div>
+            </div> 
+            <!--购买信息-->
+            <div class="buy_details">
+                <ul>
+                    <li class="cour_price">
+                        <p>￥{$order_sum}</p>
+                        <span>总额</span>
+                    </li>
+                    <li class="jifen">
+                        <p>{$userinfo.now_integral}</p>
+                        <span>积分</span>
+                    </li>
+                    <li class="buy_course">
+                        <p><a href="{:url('/admin/order/index')}?uid={$userinfo.uid}">{$order_count}</a></p>
+                        <span><a href="{:url('/admin/order/index')}?uid={$userinfo.uid}">购买课程</a></span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!--用户管理选项卡-->
+          <div class="system_guanli_div user_div" style="margin: 20px;">
+              <ul class="system_guanli_ul user_edit_ul">
+                <li><a href="{:url('member/detail',['uid'=>$uid])}" class="{if $type == 1}active{/if}" data-src="">学习记录</a></li>
+                <li><a href="{:url('member/detail',['uid'=>$uid,'type'=>2])}"  class="{if $type == 2}active{/if}" data-src="">做题记录</a></li>
+              	<li><a href="{:url('member/detail',['uid'=>$uid,'type'=>3])}"  class="{if $type == 3}active{/if}" data-src="">积分明细</a></li>
+              </ul>
+          </div>
+        <div class="user_right_main ">
+            
+            <!--选项卡详情--> 
+            <ul class="tab_main">
+                {if $type == 1}
+                <!--学习记录-->
+                <li  class="study cur">
+                    <table class="user_table">
+                        <thead>
+                            <tr>
+                                <th class="course_width">课程</th>
+                                <th class="num_width">已观看/视频数量</th>
+                                <th class="progress_width">学习进度</th>
+                                <th class="time_width">报名时间</th>
+                                <th class="last_width">最后学习时间</th>
+                                <th class="">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {volist name='list' id='item'}
+                        <tr>
+                            <td class="course_width" title="{$item.title}" style="cursor:pointer">{$item.title}</td>
+                            <td class="num_width">{$item.study_video_count} / {$item.count_video}</td>
+                            <td class="progress_width">{$item.percent}%</td>
+                            <td class="time_width">{$item.order_time}</td>
+                            <td class="last_width">{$item.update_time}</td>
+                            <td class="video_detail" data-cid="{$item.cid}" data-title="{$item.title}" style="cursor:pointer">详情</td>
+                        </tr>
+                        {/volist}
+                        </tbody>                    
+                    </table>
+                </li>
+                {elseif $type==2}
+                <!--做题记录-->
+                <li  class="quiz" style="display: block">
+                    <table  class="user_table">
+                        <thead>
+                            <tr>
+                                <th class="quiz_time_w">做题时间</th>
+                                <th class="name_w">题库名称</th>
+                                <th class="about_w">关联课程</th>
+                                <th class="quiz_num_w">做题数</th>
+                                <th class="false_w">错题数</th>
+                                <th class="true_w">正确率</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {volist name='list' id='item'}
+                            <tr>
+                                <td class="quiz_time_w">{php} echo date('Y-m-d H:i:s',$item['update_time']) {/php}</td>
+                                <td class="name_w">{$item.name}</td>
+                                <td class="about_w">{$item.course_name}</td>
+                                <td class="quiz_num_w">{$item.recore_count}</td>
+                                <td class="false_w">{$item.recore_wrong}</td>
+                                <td class="true_w">{$item.proportion}%</td>
+                            </tr>
+                            {/volist}
+                        </tbody>
+                    </table>
+                </li>
+                {else}
+                <!--积分明细-->
+                <li  class="quiz" style="display: block">
+                <div class="bp-top">
+			        <div class="bp-info">
+			          <div class="bp-remain">
+			            <i class="bpdot-icon"></i>
+			            <span>剩余积分</span>
+			            <span class="bp-remain-num">{$userinfo.now_integral}</span>
+			          </div>
+			          <div class="bp-total">
+			            <i class="bpdot-icon"></i>
+			            <span>总积分</span>
+			            <span class="bp-total-num">{$userinfo.integral_count}</span>
+			          </div>
+			        </div>
+			        <div class="bp-filter">
+			          <div class="bp-filtershow" >
+			            <p>{if $seach_id==1}获取{elseif $seach_id==2}使用{else}全部{/if}</p>
+			            <i class="bp-filtericon"></i>
+			          </div>
+			          <div class="bp-filterslide" >
+			            <div class="bp-filteritem" data-select-id="0">
+			              <p>全部</p>
+			            </div>
+			            <div class="bp-filteritem" data-select-id="1">
+			              <p>获取</p>
+			            </div>
+			            <div class="bp-filteritem" data-select-id="2">
+			              <p>使用</p>
+			            </div>
+			          </div>
+			        </div>
+			      </div>
+			      <table  class="user_table">
+                        <thead>
+                            <tr>
+                                <th class="quiz_time_w">积分来源</th>
+                                <th class="name_w">积分变化</th>
+                                <th class="quiz_time_w">时间</th>
+                                <th class="quiz_time_w">备注</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {volist name='list' id='item'}
+                            <tr>
+                                <td class="quiz_time_w">{$item.config_name}</td>
+                                <td class="name_w">{if $item.integral>=0}+{/if}{$item.integral}</td>
+                                <td class="quiz_time_w">{php} echo date('Y-m-d H:i:s',$item['create_time']) {/php}</td>
+                                <td class="quiz_time_w">{$item.remark}</td>
+                            </tr>
+                            {/volist}
+                        </tbody>
+                    </table>
+                </li>
+                {/if}
+            </ul>
+      
+            <div class="mt100 mb20 page" >
+                <ul  class="course_pager_ul">
+                    {$page_lists->render()}
+                </ul>
+                <div class="clearfix"></div>
+            </div> 
+        </div>
+
+      </div>
+      <!-- 内容结束-->
+   </div>
+   <!--         弹出视频学习情况 -->
+	        <div class="user_data_list">
+		    	<div class="data_list_content">
+		    		<img class="data_list_close" src="/public/gzadmin/images/close@2x.png" alt="关闭"/>
+		    		<h3></h3>
+		    		<input type='hidden' class="cid" name='cid' value=''>
+		    		<input type='hidden' class="allpage" name='allpage' value=''>
+		    		<table class="data_list_table user_table">
+		    			<thead>
+		    				<tr>
+		    					<th width="150px">章节名称</th>
+		    					<th width="150px">视频名称</th>
+		    					<th width="100px">观看状态</th>
+		    					<th width="150px">最后观看时间</th>
+		    				</tr>
+		    			</thead>
+		    			<tbody>
+		    				
+		    			</tbody>
+		    		</table>
+		    		<div class="mt20 mb0 page" >
+			            <ul  class="video_pager_ul">
+			               
+			            </ul>
+			            <div class="clearfix"></div>
+			        </div>  
+		    	</div>
+		    	
+	    	</div>
+   {include file="common/version" /}
+   <script type="text/javascript">
+   var uid = "{$uid}";
+//         $(function(){
+			$("body").on("click",function(){
+				$('.bp-filterslide').hide();
+			});
+			$('.bp-filtershow').on("click",function(e){
+				e.stopPropagation();
+				$('.bp-filterslide').show();
+			});
+			$('.bp-filteritem').on("click",function(e){
+				var seach_id = $(this).attr('data-select-id');
+				var seach_url = "{:url('member/detail')}?uid={$uid}&type={$type}&seach_id="+seach_id;
+				console.log(seach_url);
+				window.location.href = seach_url;
+			});
+        	$(".video_detail").on("click",function(){
+        		$('.user_data_list .user_table tbody').html('');
+        		$(".user_data_list").css("display","flex");
+        		var cid = $(this).attr('data-cid');
+        		$('.cid').val(cid);
+        		var title = "”"+$(this).attr("data-title")+"“"+'学习详情';
+        		$(".data_list_content h3").html(title);
+				console.log(cid);
+				console.log(uid);
+        		page = 1;
+        		var nextpage = page+1;
+        		var allpage = ' <li data-page="1"><a href="javascript:void(0)">上一页</a></li>'+
+        					  '<li data-page="'+nextpage+'"><a href="javascript:void(0)">下一页</a></li>';
+        		$(".video_pager_ul").html(allpage);
+        		changelist(cid,uid,1);
+        	});
+        	$(".video_pager_ul").on("click","li",function(){
+        		console.log('start');
+        		var cid = $('.cid').val();	
+                var page = $(this).attr("data-page");
+                var allpage =$('.allpage').val();	
+                if(page !=0 && page<=allpage){
+                	changelist(cid,uid,page);
+                	var prepage = parseInt(page)-1;
+                	var nextpage = parseInt(page)+1;
+                	var allpage = ' <li data-page="'+prepage+'"><a href="javascript:void(0)">上一页</a></li>'+
+        			  '<li data-page="'+nextpage+'"><a href="javascript:void(0)">下一页</a></li>';
+        			$(".video_pager_ul").html(allpage);
+                }
+        		
+        		
+        	})
+        	//点击close按钮弹框消失
+        	$(".user_data_list").on("click",".data_list_close",function(){
+        		$(".user_data_list").hide()
+        	})
+
+        	function changelist(cid,uid,page){
+        		 var returndata = {};
+        			$.get("/admin/member/videodetail?cid="+cid+"&uid="+uid+"&page="+page, function(result){
+        				console.log(result);
+        				var bodyhtml = '';
+        				var data = result.data.lists;
+        				for(var i=0;i<data.length;i++){
+        					bodyhtml = bodyhtml+'<tr>'+
+        					'<td width="150px">'+
+        					data[i].cate_name+
+        					'</td>'+
+        					'<td width="150px" >'+data[i].title+'</td>'+
+        					'<td width="100px">'+data[i].status_text+'</td>'+
+        					'<td width="150px">'+data[i].update_date+'</td>'+
+        					'</tr>';
+        					
+        				} 
+        			   $('.user_data_list .user_table tbody').html(bodyhtml);
+        			   var allpage = result.data.allpage;
+        			   $('.allpage').val(allpage);
+        			  // var pagehtml = '<i>上一页</i><i>下一页</i>';
+        			   //$('.page_bt').html(pagehtml);
+        			});
+        			
+        	    }
+//         })
+    </script>
+    </body>
+</html>

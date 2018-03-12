@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>课程答疑</title>
+    <link rel="stylesheet" type="text/css" href="/public/pc/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/public/pc/css/all.css">
+    <!--[if lt IE 9]> 您的IE浏览器版本太低，请升级浏览器！<![endif]-->
+    <style>
+        #upload {
+            width: 50px;
+            height: 50px;
+            position: relative;
+            left: -60px;
+            top: 10px;
+            opacity: 0;
+            cursor: pointer
+        }
+        .course_answering_right p{
+            width: 200px;
+            word-break: break-all;
+            text-overflow: ellipsis;
+            display: -webkit-box; /** 对象作为伸缩盒子模型显示 **/
+            -webkit-box-orient: vertical; /** 设置或检索伸缩盒对象的子元素的排列方式 **/
+            -webkit-line-clamp: 2; /** 显示的行数 **/
+            overflow: hidden;  /** 隐藏超出的内容 **/
+            font-weight:500;
+        }
+    </style>
+</head>
+{include file="common/head" /}
+<body class="bg_F5F5F5">
+<div class="course_answering mt70">
+    <div class="w940">
+        <div class="course_answering_left">
+            <div class="course_list_div">
+                <ul class="youren_top_navul course_list_ul" id="myTab">
+                    {volist name="category" id="data"}
+                    <li><a href="#course_{$data.cid}" data-cid="{$data.cid}" data-toggle="tab" {if
+                           condition=" $cid == $data.cid " }class="default292B33" {/if}>{$data.title}</a></li>
+                    {/volist}
+                </ul>
+            </div>
+            <div class="tab-content">
+
+                <!-- start -->
+                {if condition=" !empty($category) "}
+                <div class="course_jianghui " id="course_{$cid}">
+                    <div class="course_tiwen">
+                        <div class="comment_frame_div">
+                            <textarea class="comment_info" name="comment_info" maxlength="200"
+                                      placeholder='输入关于课程"{$cname}"的问题..'></textarea>
+                        </div>
+                        <div class="div_publish tiwen_div">
+                            <div class="upload_list">
+                            </div>
+                            <div class="upload_img_input">
+                               <img src="/public/pc/images/upload_img@2x.png" alt="上传" class="img50 upload_img">
+                               <input type="file" name="" class="inputFill" value="" accept="image/*">
+                            </div>
+                            
+                           <!--  <img src="/public/pc/images/upload_img@2x.png" alt="上传" class="img50 upload_img">
+                            <input id="upload" name="file" accept="image/*" type="file"/> -->
+                            <div class="tiwen_group">
+                                <span class="word_num">0</span><i>/200</i>
+                                <span class="span_tiwen">提问</span>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                    {volist name="ask" id="data"}
+                    <div class="course_answering_left_main">
+                        <a href="{:url('ask/detail',['id'=>$data.id])}">
+                            <div class="teacher_publish_content">
+                                <img src="{$data.face}" alt="{$data.nickname}" class="teacherHead_img30 leftFloat">
+                                {if condition=" $data.anonymous == 1"}
+                                 <span class="">匿名</span>
+                                {else /}
+                                 <span class="">{$data.nickname}</span>
+                                {/if}
+                                <i>{$data.create_time}</i>
+
+                                <div class="clearfix"></div>
+                                <p>{$data.title}</p>
+
+                                <div class="img90_group mt30">
+                                    {volist name="data.photopath" id="img"}
+                                    <img src="{$img}" class="img90">
+                                    {/volist}
+                                    <style>
+                              .img90_group .img90{
+                                 position: relative;
+                                 width: 90px;height: 90px;transform: translate(0px,0px);
+                                 -ms-transform: translate(0px,0px);
+                                 -webkit-transform: translate(0px,0px) ;
+
+                              }
+                              .img90_group .img90{ transition: all 1s ease-in 1s ; -ms-transition:all 1s ease-in 1s; -webkit-transition:all 1s ease-in 1s;}
+                              .img90_group  .active{
+                                 width: 200px;height: 200px;position: relative;z-index: 1;
+                                 transform: translate(100px,0px);
+                                 -ms-transform: translate(100px,0px);
+                                 -webkit-transform: translate(100px,0px);
+                              }
+                              .img90_group .active{ transition: all 1s ease-in 1s ; -ms-transition:all 1s ease-in 1s; -webkit-transition:all 1s ease-in 1s;}
+                           </style>
+                                </div>
+                            </div>
+                        </a>
+
+                        <div class="comment_text">
+                            <!-- 未登录输入框start -->
+                            {if condition=" !$uid "}
+                            <div class="mt20 nologin_div ">
+                                <img src="/public/pc/images/no_login@2x.png" alt="未登陆" class="img_nologin">
+                           <span class="needlogin">
+                              <a href="javascript:void(0)" class="a_needlogin">登陆</a><i>后发表评论</i>
+                           </span>
+                            </div>
+                            {/if}
+                            <!-- 未登录输入框end -->
+                            <!-- 登录后输入框start -->
+                            {if condition=" $uid "}
+                            <div class="login_div mt20 displayNone">
+                                <img src="/public/pc/images/head@2x30.png" alt="回复头像" class="repeat_alert_img">
+                                <input type="type" name="repeat_who_info" class="repeat_who_info" maxlength="200"
+                                       placeholder="输入评论..">
+                                <a href="javascript:void(0)" class="a_repeat_user"><img
+                                        src="/public/pc/images/gou@2x40.png" alt="回复用户图片"></a>
+                            </div>
+                            {/if}
+                            <!--登录后输入框end  -->
+                            {if condition=" !empty($data.answer)"}
+                            <div class="commentNum_div"><span
+                                    class="comment_num color292B33 font14">{$data.comments}</span><i
+                                    class="color292B33 font14">评论</i></div>
+                            {/if}
+                        </div>
+
+                        {if condition=" empty($data.answer)"}
+                        <div class="no_comment" style="margin-top: 10px">暂无评论</div>
+                        {/if}
+                        {if condition=" !empty($data.answer)"}
+                        <div class="comment_detail borderNone mt10">
+                            <div class="comment_group">
+                                <div class="leftFloat comment_head">
+                                    <img src="{$data.answer.face}" alt="">
+                                </div>
+                                <div class="leftFloat ml15 relative repeat_div">
+                                    <div class="repeat_name leftFloat">
+                                        <i class="before_name">{$data.answer.nickname}</i>
+                                        {if condition="$data.answer.puid > 0 && $data.answer.uid != $data.answer.uid"}
+                                        <i>回复</i><i class="after_name">{$data.answer.pnickname}</i><i>:</i>
+                                        {/if}
+                                    </div>
+                                    <div class="repeat_time rightFloat ">{$data.answer.create_time}</div>
+                                    <div class="clearfix"></div>
+                                    <a href="{:url('ask/detail',['id'=>$data.id])}"><p class=" comment_content ">
+                                        {$data.answer.content}</p></a>
+
+                                    <div class="leftFloat img_thumb relative">
+                                        {if condition="$data.answer.has_likes > 0"}
+                                        <a href="javascript:void(0)" class="a_thumb" data-zan="1">
+                                            <img src="/public/pc/images/thumb_blue@2x.png" alt="大拇指">
+                                        </a>
+                                        {else}
+                                        <a href="javascript:void(0)" class="a_thumb" data-id="{$data.answer.id}"
+                                           data-zan="0">
+                                            <img src="/public/pc/images/thumb_gray@2x.png" alt="大拇指">
+                                        </a>
+                                        {/if}
+                                        <i class="thumb_num font14 opacity40 color292B33 ">{$data.answer.likes}</i>
+                                    </div>
+                                    <div class="rightFloat img_thumb relative">
+                                        <a href="javascript:void(0)" class="a_repeat" data-repeat="0">
+                                            <img src="/public/pc/images/comment_gray@2x16.png" alt="回复">
+                                            <i class="repeat_word  ">回复</i>
+                                        </a>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="repeat_alert displayNone">
+                                    <img src="{php} echo session('face'){/php}" alt="回复头像" class="repeat_alert_img">
+                                    <input type="type" name="repeat_who_info" class="repeat_who_info" maxlength="200"
+                                           placeholder="">
+                                    <a href="javascript:void(0)" data-aid="{$data.id}" data-pid="{$data.answer.id}"
+                                       data-puid="{$data.answer.uid}" class="a_repeat_user"><img
+                                            src="/public/pc/images/gou@2x40.png" alt="回复用户图片"></a>
+                                </div>
+                                <div class="cutline "></div>
+                            </div>
+                        </div>
+                        {/if}
+                        <div class="seeAllComment displayNone"><span>查看全部评论</span></div>
+                    </div>
+                    {/volist}
+                </div>
+
+                {/if}
+                <!-- end -->
+                <div class="tcdPageCode"></div>
+            </div>
+
+        </div>
+        <div class="course_answering_right">
+            <span class="cream"><i>精华</i><i class="kuohao">{php}echo $hot_count{/php}</i></span>
+            {volist name="hot_ask" id="data"}
+            <a href="{:url('ask/detail',['id'=>$data.id])}" title="{$data.title}"><p>{$data.title}</p></a>
+            {/volist}
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+{include file="common/bottom" /}
+<script src="/public/pc/js/jquery-1.11.0.min.js"></script>
+<script src="/public/pc/js/bootstrap.min.js"></script>
+<script src="/public/jqadmin/js/layui/layui.js"></script>
+<script src="/public/pc/js/public_PC.js"></script>
+<script src="/public/pc/js/placeholder.js"></script>
+<script src="/public/pc/js/jquery.page.js"></script>
+<script type="text/javascript">
+    var layer;
+    layui.use('layer', function(){
+        layer = layui.layer;
+
+    });
+    $(function () {
+        var imgnum = 0;
+        var upload_arr = [];
+        var uid = "{$uid}";
+        var cid = "{$cid}";
+        var token = "{$token}";
+        var buy = "{$buy}";
+        if(buy == 0){
+          $('textarea').attr('placeholder','购买课程后提问');
+          $('textarea').attr('disabled','disabled');
+          $('textarea').css('background','#fff');
+        }
+        $(".inputFill").on("change", function () {
+            if (!uid) {
+                $(".weixin_QRcord_alert_outside").show();
+                return false;
+            }
+            var  length = $(".upload_list .uploadImg_div").length;
+            if(length >=3 ){
+                return false;
+            }
+            // if (imgnum >= 3) {
+            //     return false;
+            // }
+            var file = this.files[0];
+            var objUrl = getObjectURL(file); //获取图片的路径，该路径不是图片在本地的路径
+            var reader = new FileReader();
+            var result = reader.readAsDataURL(file);
+            reader.onload = function (e) {
+                if (objUrl) {
+                    $.post(host + 'ask/uploadfile', {img: e.target.result}, function (ret) {
+                        // console.log(ret)
+                        //console.log(ret);
+                        if (ret.img == "") {
+                            layer.msg('图片上传失败');
+                            return;
+                        } else {
+                            img_inner =
+                                    '<div class="uploadImg_div uploadimg_' + imgnum + '" data-i="' + imgnum + '" ><span >' +
+                                    '<img src="' + objUrl + '" alt="图片" class="img50" >' +
+                                    '<img src="/public/pc/images/delete_img@2x.png" alt="删除" class="delete_img24">' +
+                                    '</span></div>';
+                            $('.upload_list').append(img_inner);
+                            // upload_arr[imgnum] = (ret.img);
+                            // imgnum += 1;
+                            upload_arr.push( ret.img );
+                            // console.log(upload_arr);
+                        }
+                    }, 'json');
+                }
+            };
+
+        });
+
+        $(document).on('click', "img.delete_img24", function () {
+            // var data_i = $(this).attr('data-i');
+            // $(".uploadimg_" + data_i).remove();
+            // upload_arr[data_i] = "";
+            // imgnum -= 1;
+            var currIndex = $(this).closest(".uploadImg_div").index();
+            $(".uploadImg_div").eq(currIndex).remove();
+            upload_arr.splice(currIndex,1);
+            // console.log( upload_arr );
+        })
+        $('.span_tiwen').click(function () {
+            var imgpath = '';
+            for (var i = 0; i < upload_arr.length; i++) {
+                if (upload_arr[i] != '') {
+                    imgpath += upload_arr[i] + ',';
+                }
+            }
+            var content = $('.comment_info').val();
+            if (!uid) {
+                $(".weixin_QRcord_alert_outside").show();
+                return false;
+            }
+            if (content == "") {
+                layer.msg("内容为空");
+                return false;
+            }
+            $.post(host + "/ask/submit", {
+                uid: uid,
+                cid: cid,
+                content: content,
+                title: content,
+                imgpath: imgpath,
+                token:token,
+            }, function (result) {
+                if (result.code == -3) {
+                    layer.msg(result.message);
+                    location.reload();
+                }
+                if (result.code == 1) {
+                    layer.msg('提交成功');
+                    location.reload();
+                    return;
+                } else {
+                    layer.msg(result.message);
+                }
+            });
+        })
+
+        $('.comment_info').on("keyup", function () {
+            $('.word_num').text($('.comment_info').val().length);//这句是在键盘按下时，实时的显示字数
+            if ($('.comment_info').val().length > 0) {
+                $('.a_publish').find('img').css('opacity', 1);
+            } else {
+                $('.a_publish').find('img').css('opacity', 0.4);
+            }
+            if ($('.comment_info').val().length > 200) {
+                $('.word_num').text(200);//长度大于100时0处显示的也只是100
+                $('.comment_info').val($('.comment_info').val().substring(0, 200));//长度大于100时截取钱100个字符
+            }
+        });
+
+
+    });
+
+    //建立一個可存取到該file的url
+    function getObjectURL(file) {
+        var url = null;
+        if (window.createObjectURL != undefined) { // basic
+            url = window.createObjectURL(file);
+        } else if (window.URL != undefined) { // mozilla(firefox)
+            url = window.URL.createObjectURL(file);
+        } else if (window.webkitURL != undefined) { // webkit or chrome
+            url = window.webkitURL.createObjectURL(file);
+        }
+        return url;
+    }
+</script>
+<script>
+    //分页
+    $(".tcdPageCode").createPage({
+        pageCount: Number("{$ask_count}"),
+        current: Number("{$page}"),
+        backFn: function (p) {
+            console.log(p);
+            var host = '/index/ask/index.html?cid={$cid}&page=' + p;
+            window.location.href = host;
+        }
+    });
+
+</script>
+<script>
+    $(function () {
+        var uid = "{$uid}";
+        var cid = "{$cid}";
+		var tmpTag = 'https:' == document.location.protocol ? false : true;
+		if(tmpTag){
+			var protocol = 'http';
+		}else{
+			var protocol = 'https';
+		}
+        var host = protocol+'://' + window.location.host + '/api/';
+
+        //课程切换
+        $('#myTab a:first').tab('show');
+        $('#myTab a').click(function (e) {
+            $("#myTab a").removeClass('default292B33');
+            $(this).addClass('default292B33')
+            e.preventDefault();
+            $(this).tab('show');
+        })
+        //未登陆点击回复，赞，登陆弹出登录框
+        $(".nologin_div,.a_repeat,.a_thumb").click(function () {
+            if (!uid) {
+                $(".weixin_QRcord_alert_outside").show();
+                return false;
+            }
+        })
+
+        //大拇指点赞
+        $(".a_thumb").on("click", function () {
+            var that = $(this);
+            var dataZan = that.attr("data-zan");
+            var itemid = that.attr("data-id");
+            var num = that.next().text();
+            var data = {
+                itemid: itemid,
+                uid: uid,
+                typeid: 2
+            }
+            
+      
+            if (0 == parseInt(dataZan) && uid) {
+                $.post(host + "like/add", data, function (result) {
+                    if (result.code == 1) {
+                        that.attr("data-zan", 1); //设置开关为1
+                        that.find("img").attr("src", "/public/pc/images/thumb_blue@2x.png");
+                        if ("" != num && num >= 0) {
+                            that.next().html(parseInt(num) + 1)
+                        }
+                    }
+                });
+
+            } else if (0 != parseInt(dataZan) && uid) {
+                // that.removeClass("blueZan").addClass("zan");
+                /* that.find("img").attr("src","/public/pc/images/thumb_gray@2x.png");
+                 that.attr("data-zan",0);   //设置开关为0
+                 if(""!=num && num>-1){
+                 that.find("i").text( parseInt(num) -1 );
+                 }*/
+            }
+        })
+        //点击回复
+        function getCurrTime() {
+            var objYMD = {};
+            var d = new Date();
+            var year = d.getFullYear();
+            var month = d.getMonth() + 1;
+            var day = d.getDate();
+            if (month < 10) {
+                month = "0" + month;
+            }
+            if (day < 10) {
+                day = "0" + day;
+            }
+            objYMD = {year: year, month: month, day: day};
+            return objYMD;
+        }
+
+        //提交后台信息
+        $(".comment_detail").on("click", ".a_repeat", function () {
+            var that = $(this);
+            if (!uid) {
+                return false;
+            }
+            var buy = "{$buy}";
+            if(buy == 0){
+                layer.msg('购买后可回复');
+                return false;
+            }
+            var str1 = "取消回复";
+            var str2 = "回复";
+            var dataRepeat = that.attr("data-repeat");
+            var repeat_alert = that.closest('.repeat_div').next().next(".repeat_alert");
+            var before_name = that.closest(".repeat_div").find(".before_name").text();
+            var after_name = that.closest(".repeat_div").find(".after_name").text();
+            if (0 == parseInt(dataRepeat)) {
+                that.attr("data-repeat", 1); //设置开关为1
+                repeat_alert.find(".repeat_who_info").attr("placeholder", "回复" + before_name + "");
+                //此处获取回复者的img src 路径
+                repeat_alert.show();
+                that.find(".repeat_word").text(str1);
+            } else {
+                repeat_alert.hide();
+                that.attr("data-repeat", 0);    //设置开关为0
+                that.find(".repeat_word").text(str2);
+            }
+        })
+        //点击 .a_repeat_user images/gou@2x40.png 显示页面
+        $(".comment_detail").on("click", ".a_repeat_user", function () {
+            var that = $(this);
+            var before_name = "";
+            var after_name = "";
+            var repeat_alert = that.closest('.comment_detail').find(".repeat_alert");  //repeat_alert 元素
+            // console.log(  repeat_alert )
+            var repeat_div = that.closest('.comment_detail').find(".repeat_div");  //repeat_div 元素
+            var comment_detail = repeat_alert.closest(".comment_detail"); // comment_detail 元素
+            var comment_content = that.prev(".repeat_who_info").val(); //当前评论内容
+            //此处获取回复者的头像src
+            //var repeatImgsrc = that.closest(".repeat_alert").find("img.repeat_alert_img").attr("src");
+            //获取前后名字
+            //before_name = that.closest('.comment_detail').find("i.before_name").html();
+            before_name = "{php} echo session('nickname'){/php}";
+            after_name = that.closest('.comment_detail').find("i.after_name").html();
+            var currTime = getCurrTime();
+            var currTimeStr = currTime.year + "/" + currTime.month + "/" + currTime.day;
+            var repeatHtml = "";
+
+            if (comment_content == "") {
+                layer.msg('回复内容为空');
+                return false;
+            }
+
+            var aid = $(this).attr('data-aid');
+            var anonymous = 0;
+            var puid = $(this).attr('data-puid');
+            ;
+            var pid = $(this).attr('data-pid');
+            ;
+            var root_id = 0;
+            var data = {
+                uid: uid,
+                aid: aid,
+                anonymous: anonymous,
+                content: comment_content,
+                puid: puid,
+                pid: pid,
+                root_id: root_id
+            }
+            $.post(host + "answer/add", data, function (result) {
+                if (result.code == 1) {
+                    layer.msg('回复成功');
+                    location.reload();
+                    return true;
+                } else {
+                    layer.msg('回复失败');
+                }
+            });
+
+        })
+    })
+
+    $('.course_list_ul li a').click(function () {
+        var cid = $(this).attr('data-cid');
+        var url = "{:url('ask/index')}?cid=" + cid;
+        window.location.href = url
+    })
+
+
+</script>
+</body>
+</html>

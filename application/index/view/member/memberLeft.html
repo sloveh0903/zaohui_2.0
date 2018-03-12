@@ -1,0 +1,40 @@
+<div class="leftFloat myStudy_nav">
+    <ul class="myStudy_nav_ul">
+        <li>
+            <a href='{:url("index")}' class="a_myStudy a_asynload">
+                <img {if condition="($action == 'index')" }src="/public/pc/images/myStudy_blue@2x36.png"
+                     {else}src="/public/pc/images/myStudy_gray@2x36.png" {/if} alt="我的学习" class="img_mytab">
+                <span {if condition="($action == 'index')" }class="span_study" {/if}>学习</span>
+                <img src="/public/pc/images/img_leftArrow@2x.png" alt="向左箭头" {if condition="($action == 'index')"
+                     }class="img_leftArrow" {else}class="img_leftArrow displayNone" {/if}>
+            </a>
+        </li>
+        <li>
+            <a href='{:url("message")}' class="a_myMessage a_asynload">
+                <img {if condition="($action == 'message')" }src="/public/pc/images/myMessage_blue@2x36.png"
+                     {else}src="/public/pc/images/myMessage_gray@2x36.png" {/if} alt="我的消息" class="img_mytab">
+                <span {if condition="($action == 'message')" }class="span_study" {/if}>消息</span>
+                <img src="/public/pc/images/img_leftArrow@2x.png" alt="向左箭头" {if condition="($action == 'message')"
+                     }class="img_leftArrow" {else}class="img_leftArrow displayNone" {/if}>
+            </a>
+        </li>
+        <li>
+            <a href='{:url("ask")}' class="a_myMessage a_asynload">
+                <img {if condition="($action == 'ask')" }src="/public/pc/images/myAsk_blue@2x.png"
+                     {else}src="/public/pc/images/myAsk_gray@2x.png" {/if} alt="我的答疑" class="img_mytab">
+                <span {if condition="($action == 'ask')" }class="span_study" {/if}>答疑</span>
+                <img src="/public/pc/images/img_leftArrow@2x.png" alt="向左箭头" {if condition="($action == 'ask')"
+                     }class="img_leftArrow" {else}class="img_leftArrow displayNone" {/if}>
+            </a>
+        </li>
+        <li>
+            <a href='{:url("order")}' class="a_myOrder a_asynload">
+                <img {if condition="($action == 'order')" }src="/public/pc/images/myOrder_blue@2x36.png"
+                     {else}src="/public/pc/images/myOrder_gray@2x36.png" {/if} alt="我的订单" class="img_mytab">
+                <span {if condition="($action == 'order')" }class="span_study" {/if}>订单</span>
+                <img src="/public/pc/images/img_leftArrow@2x.png" alt="向左箭头" {if condition="($action == 'order')"
+                     }class="img_leftArrow" {else}class="img_leftArrow displayNone" {/if}>
+            </a>
+        </li>
+    </ul>
+</div>

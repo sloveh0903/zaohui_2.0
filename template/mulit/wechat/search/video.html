@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>搜索</title>
+		<link rel="stylesheet" href="/public/mobile/css/mui.min.css" />
+		<link rel="stylesheet" href="/public/mobile/css/global.css" />
+		<link rel="stylesheet" href="/public/mobile/css/search.css" />
+	</head>
+	<style>
+		#pullrefresh{
+			padding: 0 0 50px 0;
+			margin-top: 50px;
+		}
+	</style>
+	{include file="common/share" /}
+	<body>
+		<div class="mui-row seachOne-seach">
+			<input placeholder="搜索视频" />
+			<i class="mui-icon mui-icon-search"></i>
+		</div>
+		<div id="pullrefresh" class="mui-scroll-wrapper" style="padding-bottom: 50px">
+		<div class="mui-scroll">
+		<div class="seachOne-num font-color-6 video-count">0相关视频</div>
+		<div class="mui-row list-content-one">
+			<ul class="navigate-ul">
+				
+			</ul>
+		</div>
+		</div>
+		</div>
+		<script type="text/javascript" src="/public/mobile/js/jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="/public/mobile/js/mui.min.js"></script>
+		<script type="text/javascript" src="/public/mobile/js/globla.js"></script>
+	</body>
+	<script>
+		//var host = 'https://api.fuwangdian.com/api/';
+		var keyword = '{$keyword}';
+		var page = 1;
+		var size = 10;
+		var data = {
+			'page':page,
+			'size':size,
+			'keyword':keyword
+		};
+		getlist(data);
+		function getlist(data){
+			$.ajax({
+				url:host+"search/index",
+				type:'GET',
+				async:false,
+				data:data,
+				success: function(result){
+			      	console.log(result);
+					if(page > 1){
+						mui('#pullrefresh').pullRefresh().endPullupToRefresh();
+					}
+			      	if(result.code == 1){
+			      		var video = result.data.video;
+			      		var video_count = result.data.video_count;
+			      		var video_innser = '';
+			      		for(var i=0;i<video.length;i++){
+							video_innser +=
+							'<li data-id="'+video[i].cid+'"><embed src="/public/mobile/img/icon/play-icon@2x.png" width="40" height="40" type="image/svg+xml" /></embed>'+
+								'<div class="navigate-ul-div">'+
+									'<span class="font-color-8">'+video[i].title+'</span>'+
+									'<span class="font-color-4">'+video[i].lenght+'</span>'+
+								'</div>'+
+							'</li>';
+						}
+			      		if(page == 1){
+			      			$('.video-count').html(video_count+'相关视频');
+			      			$('.navigate-ul').html(video_innser);
+			      		}else{
+			      			if(video_count > 0){
+			      				$('.navigate-ul').append(video_innser);
+			      			}
+			      		}
+			     	}else{
+			      		mui.alert('数据请求失败');
+			        }
+		   		}
+			});
+		}
+
+		mui(".navigate-ul").on('tap', '.navigate-ul li', function (event) {
+			var cid = $(this).attr('data-id');
+			var url = "{:url('wechat/course/detail')}";
+			window.location.href=url+'?cid='+cid;
+		});
+		
+		
+		//点搜索按钮
+		mui(".mui-row").on('tap', '.mui-icon-search', function (event) {
+		    keyword = $('.seachOne-seach input').val();
+		    page = 1;
+			if(keyword != ""){
+				var data = {
+					'keyword':keyword,
+					'page':page,
+					'size':size,
+				};
+				getlist(data);
+			}
+		});
+
+		mui.init({
+            pullRefresh: {
+                container: '#pullrefresh',
+                up : {
+                    //height:50,//可选.默认50.触发上拉加载拖动距离
+                    //auto:true,//可选,默认false.自动上拉加载一次
+                    contentrefresh : "",//可选，正在加载状态时，上拉加载控件上显示的标题内容
+                    contentnomore:'',//可选，请求完毕若没有更多数据时显示的提醒内容；
+                    callback :pullupRefresh //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+                }
+
+            }
+        });
+
+
+		function pullupRefresh() {
+		console.log('下拉');
+            setTimeout(function() {
+                page++;//翻下一页
+                var data = {
+					'keyword':keyword,
+					'page':page,
+					'size':size,
+				};
+               getlist(data);
+            }, 100);
+        }
+
+
+	</script>
+	<script src="/public/mobile/js/bindmobile.js"></script>
+</html>

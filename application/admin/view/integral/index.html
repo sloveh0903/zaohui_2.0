@@ -1,0 +1,120 @@
+{include file="common/header" /}
+<style>
+span {
+color: #292B33;
+    opacity: .8;
+}
+</style>
+<body>
+<div class="article_manage">
+	<div class="right-side-header clearfix">
+	        <span>积分营销</span>
+	        {include file="common/admin" /}
+   </div>
+   <div class="right_side_content">
+	   	 <div class="system_guanli_div">
+            <ul class="system_guanli_ul">
+                <li><a href="javascript:void(0)" class="active goto" data-src='{:url("integral/index")}'>获取积分设置</a></li>
+                <li><a href="javascript:void(0)" class="goto" data-src='{:url("integral/cash")}'>积分抵现</a></li>
+            </ul>
+        </div>
+		<div class="success_tip displayNone">已完成</div>
+	    <div class="course_right_main ">
+	        <section class="panel panel-padding">
+	            <form id="form1" class="layui-form layui-form-pane" action="{:url('index')}">
+	                <div class="layui-form-item ">
+	                    <label class="layui-form-label">注册赠送</label>
+	                    <div class="layui-input-inline">
+	                        <input type="text" name="integral[1]"  value="{$integral[1]}" jq-verify="number"  style="width: 80px" autocomplete="off" class="layui-input ">
+	                    </div>
+	                    <label class="layui-form-label"  style="width: auto">积分</label>
+	                </div>
+	                <div class="layui-form-item ">
+	                    <label class="layui-form-label">签到赠送</label>
+	                    <div class="layui-input-inline">
+	                        <input type="text" name="integral[2]"  value="{$integral[2]}" jq-verify="number" style="width: 80px" autocomplete="off" class="layui-input ">
+	                    </div>
+	                    <label class="layui-form-label"  style="width: auto">积分</label>
+	                </div>
+	                <div class="layui-form-item ">
+	                    <label class="layui-form-label">每连续签到</label>
+	                    <div class="layui-input-inline">
+	                        <input type="text" name="sign_days[6]" value="{$sign_days[6]}" jq-verify="number" style="width: 80px" autocomplete="off" class="layui-input ">
+	                    </div>
+	                    <label class="layui-form-label"  style="width: auto">天，额外奖励&nbsp;&nbsp;</label>
+	                    <div class="layui-input-inline">
+	                        <input type="text" name="integral[6]" value="{$integral[6]}" jq-verify="number" style="width: 80px" autocomplete="off" class="layui-input ">
+	                    </div>
+	                    <label class="layui-form-label"  style="width: auto">积分</label>
+	                </div>
+	                <div class="layui-form-item ">
+	                    <label class="layui-form-label">单笔消费</label>
+	                    <div class="layui-input-inline">
+	                        <input type="text" name="consume_money[7]" value="{$consume_money[7]}"  jq-verify="number" style="width: 80px" autocomplete="off" class="layui-input ">
+	                    </div>
+	                    <label class="layui-form-label"  style="width: auto">元，&nbsp;&nbsp;&nbsp;赠送&nbsp;&nbsp;&nbsp;&nbsp;</label>
+	                    <div class="layui-input-inline">
+	                        <input type="text" name="integral[7]" value="{$integral[7]}" jq-verify="number" style="width: 80px" autocomplete="off" class="layui-input ">
+	                    </div>
+	                    <label class="layui-form-label"  style="width: auto">积分</label>
+	                </div>
+	                <p style="color:rgb(41,43,51);opacity: 0.4;font-size: 14px;padding-left: 110px;">例：满100元送10积分，如学员单次消费200元则送20积分<br><br></p>
+	                <div class="layui-form-item ">
+	                    <label class="layui-form-label">课程评价</label>
+	                    <div class="layui-input-inline">
+	                        <input type="text" name="integral[3]" value="{$integral[3]}" jq-verify="number" style="width: 80px" autocomplete="off" class="layui-input ">
+	                    </div>
+	                    <label class="layui-form-label"  style="width: auto">积分</label>
+	                </div>
+	                <div class="layui-form-item ">
+	                    <label class="layui-form-label">提问赠送</label>
+	                    <div class="layui-input-inline">
+	                        <input type="text" name="integral[4]"  value="{$integral[4]}" jq-verify="number" style="width: 80px" autocomplete="off" class="layui-input ">
+	                    </div>
+	                    <label class="layui-form-label"  style="width: auto">积分，每人每日最多赠送&nbsp;&nbsp;</label>
+	                    <div class="layui-input-inline">
+	                        <input type="text" name="maxmum[4]" value="{$maxmum[4]}"  jq-verify="number" style="width: 80px" autocomplete="off" class="layui-input ">
+	                    </div>
+	                    <label class="layui-form-label"  style="width: auto">次</label>
+	                </div>
+	                 <div class="layui-form-item ">
+	                    <label class="layui-form-label">回答赠送</label>
+	                    <div class="layui-input-inline">
+	                        <input type="text" name="integral[5]" value="{$integral[5]}" jq-verify="number" style="width: 80px" autocomplete="off" class="layui-input ">
+	                    </div>
+	                    <label class="layui-form-label"  style="width: auto">积分，每人每日最多赠送&nbsp;&nbsp;</label>
+	                    <div class="layui-input-inline">
+	                        <input type="text" name="maxmum[5]" value="{$maxmum[5]}"  jq-verify="number" style="width: 80px" autocomplete="off" class="layui-input ">
+	                    </div>
+	                    <label class="layui-form-label"  style="width: auto">次</label>
+	                </div>
+	                <div class="layui-form-item ">
+	                    <label class="layui-form-label">每学完一节视频</label>
+	                    <div class="layui-input-inline">
+	                         <input type="radio" name="status[10]" title="不同时长视频统一赠送积分" value="0" {if $status[10]==0} checked {/if}/>
+	                       <br>
+	                       	<input type="radio" name="status[10]" title="视频分钟数积分 （每分钟对应一积分）" value="1" {if $status[10]==1} checked {/if}/>
+	                    </div>
+	                    <div class="layui-input-inline" style="margin-left: -99px;">
+	                        <input type="text" name="integral[10]"  value="{$integral[10]}" jq-verify="number" style="width: 80px" autocomplete="off" class="layui-input ">
+	                    </div>
+	                    <label class="layui-form-label"  style="width: auto;margin-left: -10px;">积分</label>
+	                </div>
+	                <div class="line"></div>
+	                <div class="layui-form-item">
+	                    <div class="layui-input-block">
+	                        <button class="layui-btn" jq-submit lay-filter="submit">保存</button>
+	                    </div>
+	                </div>
+	            </form>
+	        </section>
+	    </div>
+	 </div>
+</div>
+
+{include file="common/version" /}
+<script>
+    layui.use('course');
+</script>
+</body>
+</html>

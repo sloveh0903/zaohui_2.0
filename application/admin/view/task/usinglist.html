@@ -1,0 +1,79 @@
+{include file="common/header" /}
+<body>
+<div class="article_manage mCustomScrollbar">
+    <div class="course_right_top">
+        <div class="tag_group">
+            <p class="title">任务大厅</p>
+            <img src="/public/gzadmin/images/head@2x30.png" alt="自身头像">
+            <i class="phoneNum">15812348289</i>
+            <div class="clearfix"></div>
+        </div>
+        <div class="system_guanli_div">
+            <ul class="system_guanli_ul">
+                <li><a href="javascript:void(0)" class="goto" data-src='{:url("task/index")}'>基础设置</a></li>
+                <li><a href="javascript:void(0)" class="goto" data-src='{:url("task/rule")}'>拉新奖励</a></li>
+                <li><a href="javascript:void(0)" class="active goto" data-src='{:url("task/coinList")}'>奖励发放</a></li>
+            </ul>
+        </div>
+        <div class="success_tip displayNone">已完成</div>
+    </div>
+    <div class="add_article_main ">
+        <div class="operation_div">
+            <div style="float: left">
+                <div class="s_menu">
+                    <ul>
+                        <li class="goto" data-src='{:url("task/coinList")}'>使用虚拟币</li>
+                        <li class="active goto" data-src='{:url("task/usingList")}'>使用记录</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="select_search" style="width: 190px">
+                <form class="layui-form" action='{:url("usingList")}'>
+                    <input class="search_btn" type="image" src="/public/gzadmin/images/gray_search@2x20.png" lay-submit name="submit" lay-filter="search" align="" >
+                    <div class="layui-form">
+                        <div class="layui-inline">
+                            <div class="layui-input-inline">
+                                <input class="layui-input" name="key" placeholder="关键字">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <div id="list" class="layui-form"></div>
+        <div class="text-right" id="page"></div>
+    </div>
+</div>
+<script id="list-tpl" type="text/html" data-params='{"url":"{:url("task/usinglist")}","pageid":"#page"}'>
+    <table id="example" class="layui-table" lay-skin="line">
+        <thead>
+        <tr>
+            <th>用户</th>
+            <th>使用虚拟币</th>
+            <th style="width: 16%">使用时间</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{# layui.each(d.list, function(index, item){ }}
+        <tr>
+            <td>
+                <img class="commenter" src="{{ item.face}}" alt="{{ item.nickname}}">
+                <i class="userNick">{{ item.nickname}}</i>
+            </td>
+            <td><i title>{{ item.coin}}</i></td>
+            <td>
+                <i title>{{ item.create_time}}</i>
+            </td>
+        </tr>
+        {{# }); }}
+        </tbody>
+
+    </table>
+</script>
+{include file="common/version" /}
+<script>
+    layui.use('list');
+</script>
+</body>
+</html>

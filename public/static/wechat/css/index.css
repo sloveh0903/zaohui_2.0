@@ -1,0 +1,153 @@
+
+.class-list {
+    width: 100%;
+    margin-bottom: 1px;
+}
+
+.class-items {
+    background-color: #fff;
+    margin-bottom: 1px;
+}
+
+.class-items a {
+    width: 100%;
+    height: 1rem;
+    display: block;
+    padding: 20px 15px;
+}
+
+.class-items img {
+    float: left;
+    width: 0.6rem;
+    height: 0.6rem;
+    border-radius: 10px;
+}
+
+.class-items .class-body {
+    float: left;
+    padding-left: .15rem;
+}
+
+.class-body .class-title {
+    margin: 0;
+    font-size: .18rem;
+    color: #000;
+    height: 0.25rem;
+}
+
+.class-body .class-desc {
+    color: rgba(0, 0, 0, .4);
+    font-size: .12rem;
+    height: 0.17rem;
+    line-height: 0.17rem;
+}
+
+.class-body .class-price {
+    display: block;
+    height: 0.16rem;
+    line-height: 0.16rem;
+    font-size: .12rem;
+    color: #00B6F2;
+}
+
+.support {
+    height: 0.4rem;
+    line-height: 0.4rem;
+    background-color: #F5F5F5;
+    text-align: center;
+    font-size: .12rem;
+    color: hsla(228, 20%, 20%, .4)
+}
+
+.mui-bar-tab {
+    height: 0.5rem;
+    background-color: #fff;
+    
+}
+
+.mui-bar-tab .tab-icon {
+    display: inline-block;
+    width: .16rem;
+    height: .16rem;
+}
+
+.mui-tab-item .icon-class {
+    background: url("../images/bottom-tab-icon1.png") no-repeat center/cover;
+}
+
+
+.mui-tab-item.mui-active .icon-class {
+    background: url("../images/bottom-tab-icon1-checked.png") no-repeat center/cover;
+}
+
+.mui-tab-item .icon-purchased {
+    background: url("../images/bottom-tab-icon2.png") no-repeat center/cover;
+}
+
+.mui-tab-item.mui-active .icon-purchased {
+    background: url("../images/bottom-tab-icon2-checked.png") no-repeat center/cover;
+}
+
+.mui-bar-tab .mui-tab-label {
+    display: block;
+}
+
+#purchased {
+    padding: .15rem;
+}
+
+#purchased .purchased-items {
+    width: 100%;
+    height: 2.63rem;
+    margin-bottom: .15rem;
+    background-color: #fff;
+}
+
+.purchased-items img {
+    width: 100%;
+    height: 1.93rem;
+}
+
+.purchased-items .purchased-items-desc {
+    padding: .15rem;
+}
+
+.purchased-items-desc .purchased-items-title {
+    display: inline-block;
+    width: 2.57rem;
+    height: 0.22rem;
+    margin: 0;
+    font-size: .16rem;
+    font-weight: 400;
+    color:rgba(0, 0, 0, .8);
+}
+
+.purchased-items .purchased-items-progress {
+    font-size: .12rem;
+    color: #24B6F7;
+}
+
+.purchased-items .purchased-items-order {
+    font-size: .12rem;
+    color: rgba(0, 0, 0, .3);
+}
+#purchased .no-purchase {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 2.28rem;
+    left: 1.46rem;
+    display: none;
+}
+
+.no-purchase img {
+    height: 54px;
+    width: 54px;
+}
+
+.no-purchase p {
+    font-size: .14rem;
+    color: rgba(0, 0, 0, .3);
+}

@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+   <title>课程详情</title>
+   <link rel="stylesheet" href="/public/mulitpc/css/common.css">
+   <link rel="stylesheet" href="/public/mulitpc/css/coursedetail.css">
+   <!--[if lt IE 9]> 您的IE浏览器版本太低，请升级浏览器<![endif]-->
+</head>
+<body>
+  <!-- header -->
+   {include file="common/head" /}
+
+  <!-- coursedetail-banner -->
+  <div class="coursedetail-banner">
+    <div class="content-box">
+      <div class="content-page">
+          <div class="content-left">
+            <div class="breadcrumb">
+              <a href="{:url('mulitcourse/index')}">课程</a>
+              <a href="{:url('mulitcourse/index')}?topid={$topid}&pid=0" class="lv1">{$topname}</a>
+              {if $pname}
+              <a href="{:url('mulitcourse/index')}?topid={$topid}&pid={$pid}" class="lv2">{$pname}</a>
+              {/if}
+              <span href="#">{$course.title}</span>
+            </div>
+            <div class="course-shortcut">
+              <div class="img-box">
+                <img src="{$course.banner}">
+              </div>
+              <div class="info-box">
+                <h4 class="course-caption">{$course.title}</h4>
+                <p class="course-desc">{$course.desc}</p>
+                <div class="course-rating">
+                  <p class="rating-num">{$course.score}</p>
+                  <div class="rating-stars">
+                 
+                  </div>
+                  {if $course.virtual_amount == 0}
+                  <i class="study-count">{$study_count}人在学</i>
+                  {else}
+                  <i class="study-count">{$course.virtual_amount}人在学</i>
+                  {/if}
+                </div>
+                 
+              </div>
+            </div>
+          </div>
+          <div class="content-right">
+            <div class="qrcode-area">
+              <div class="weixin-box">
+                <i class="icon weixin-icon"></i>
+                <div class="qrcode-box">
+                  <img src="/public/mulitpc/images/weixin_QRcord@2x.png" alt="weixin_img">
+                  <p>公众号</p>
+                </div>
+              </div>
+              <div class="weapp-box">
+                <i class="icon weapp-icon"></i>
+                <div class="qrcode-box">
+                  <img src="/public/mulitpc/images/weixin_QRcord@2x.png" alt="weapp_img">
+                  <p>小程序</p>
+                </div>
+              </div>
+            </div>
+            <div class="purchase-area">
+            {if $course.price==0.00}
+	            {if $buy}
+	            <i class="purchase-btn btn" id="freestudy" data-cid='0'>立即学习</i>
+	            {else}
+	            <i class="purchase-btn btn" id="freebuy" data-cid='{$course.cid}'>立即报名</i>
+	            {/if}
+            {else}
+              <p class="price">¥{$course.price}</p>
+                {if $vip > 0}
+                <i class="vip-btn btn">
+                    <i class="vip-icon icon">VIP</i>
+                    <p>会员免费看</p>
+                </i>
+                {else}
+                
+                {if condition="!$buy"}
+                <i class="purchase-btn btn" id="cousebuy" data-cid='{$course.cid}'>购买</i>
+                {else}
+                <i class="purchase-btn btn purchased"> 已购买</i>
+                {/if}
+                {/if}
+              {/if}
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="filter-div"></div>
+  <!-- coursedetail-main -->
+  <div class="coursedetail-main-box">
+    <div class="content-page coursedetail-main">
+      <div class="content-left">
+        <div class="upper">
+          <div class="tablist">
+            <i class="intro-tab active">课程介绍</i>
+            <i class="chapter-tab">课程章节</i>
+          </div>
+          {if $is_testitemshop==1 && !empty($testitem_qrcode)}
+          <div class="atOnce_buy" style="margin-right: 30px; background-color: #fff; position: relative;">
+           	<span class=" course_testitem">练习</span>
+           	<div class='course_testewm'>
+           		<img src="{$testitem_qrcode}" alt="微信二维码" style='width:150px;height:150px;'>
+           		<p style="text-align: center;">扫码进入微信端做题</p>
+          	</div>
+          </div>
+          {/if}
+          <a href="{:url('ask/index')}">答疑</a>
+        </div>
+        <div class="lower">
+          <div class="intro-box" >
+            <div class="nav">
+              <ul class="navlist">
+              	{volist name="course_introduce" id="data"}
+                <li class="navitem " data-id='{$data.id}' data-cid='{$cid}'>{$data.title}</li>
+                {/volist}
+              </ul>
+            </div>
+            <div class="intro-content">
+              
+            </div>
+          </div>
+          <div class="chapter-box">
+            <div class="chapter-nav">
+              <ul class="chapter-list">
+              {volist name="video_category" id="chater"}
+                <li class="chapter-item" data-chaterid="{$chater['id']}" title="{$chater.cate_name}">
+                  	{$chater.cate_name}
+                </li>
+                {/volist}
+              </ul>
+            </div>
+            <div class="course-box">
+                  <ul class="courselist">
+				  	
+				  </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="content-right">
+      {if $iscomment ==0}
+          {if condition="$uid && $buy"}
+<!--            && $speed > 30 -->
+            <div class="course_manyidu ">
+                <!-- 完成评价蒙板start  -->
+                <div class="comment_finish_alert displayNone">
+                    <span>已评价!</span>
+                </div>
+                <!-- 完成评价蒙板end -->
+                <div class="manyidu_star" id="startone">
+                    <i>课程满意度：</i>
+                  <span class=" opacity40">
+                     <a href="javascript:void(0)"></a>
+                     <a href="javascript:void(0)"></a>
+                     <a href="javascript:void(0)"></a>
+                     <a href="javascript:void(0)"></a>
+                     <a href="javascript:void(0)"></a>
+                  </span>
+
+                    <div class="cover_star"></div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="user_comment">
+                    <textarea name="" placeholder="输入您的评价.." maxlength="100" readonly="true"></textarea>
+                </div>
+                <div class="btn_manyidu_div">
+                    <span><i class="comment_strnum">0</i><i>/100</i></span>
+                    <a href="javascript:void(0)" class="a_manyidu_submit opacity40"></a>
+
+                    <div class="cover_submit"></div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+            {/if}
+         {/if}   
+          <div class="user_comment_list">
+             <ul class="user_comment_list_ul">
+             
+                
+              
+             </ul>
+             <div class="textRight">
+                <span class="more_comment">更多</span>
+             </div>   
+          </div>
+         <!--  <div class="studentNum">
+            <i>{$study_count}</i>
+            <i>学员</i>
+          </div>
+          <div class="student_head">
+              {volist name="student_user" id="data"}
+                {if condition=" empty($data.face)"}
+                <img src="/public/pc/images/no_login@2x.png" alt="">
+                {else}
+                <img src="{$data.face}" alt="">
+                {/if}
+                {/volist}
+          </div> -->
+      </div>
+    </div>
+  </div>
+
+  <!-- footer -->
+  <div class="footer">
+    <p>{$config_data.copyright}&nbsp;&nbsp;&nbsp;&nbsp;
+	  <!--<a href="http://www.grazy.cn/" target="_blank">格子匠技术支持 GRAZY.CN</a>-->
+	</p>
+  </div>
+
+<!-- 评论弹出框分页加滚动条 start -->
+<div class="userComment_alertOutside displayNone">
+    <div class="userComentPager">
+        <div class="userComentPager_top">
+            <i>课程评价</i>
+            <img src="/public/pc/images/delete@2x.png" alt="关闭" class="img_close">
+            <span class="clearfix"></span>
+        </div>
+        <div class="userCommentPager_content mCustomScrollbar">
+            <ul class="user_comment_list_ul userCommentListUl">
+            </ul>
+        </div>
+        <div class="userComentPager_footer">
+            <div class="tcdPageCode" style="margin-top:-20px"></div>
+        </div>
+    </div>
+</div>
+<!-- 评论弹出框分页加滚动条 end -->
+<!-- 购买提示 start -->
+<div class="courseBuy_tip displayNone">
+    <div class="w1180">
+        <i>提醒&nbsp;&nbsp;播放视频需要购买该视频</i>
+        <img src="/public/pc/images/close_white@2x40.png" alt="关闭" class="img_close">
+        <a href="{:url('mulitcourse/payment',['cid'=>$cid])}">购买</a>
+        <span class="clearfix"></span>
+    </div>
+</div>
+<!-- 购买提示 end -->
+<script src="/public/mulitpc/js/jquery-1.11.0.min.js"></script>
+<script src="/public/mulitpc/js/bootstrap.min.js"></script>
+<script src="/public/mulitpc/js/public_PC.js"></script> 
+<script src="/public/mulitpc/js/jquery.page.js"></script>
+<script src="/public/jqadmin/js/layui/layui.js"></script>
+<script>
+var cid = "{$cid}";
+var uid = "{$uid}";
+var buy = "{$buy}";
+var qrcode = "{$qrcode}";
+var minqrcode = "{$minqrcode}";
+var page = 1;
+var size = 100;
+var introdice_id = "{$introdice_id}";
+var chaterid = "{$chaterid}";
+var layer;
+var course_price = "{$course['price']}";
+var title = "{$course['title']}";
+layui.use('layer', function(){
+    layer = layui.layer;
+});
+var bg_url = "{$course.banner}";
+$(function () {
+	$('<style>.coursedetail-banner .content-box::after{background-image: url("'+ bg_url +'")}</style>').appendTo('head');
+	$('.weixin-box .qrcode-box img').attr('src',qrcode);//公众号
+	$('.weapp-box .qrcode-box img').attr('src',minqrcode);//小程序
+	
+	var tmpTag = 'https:' == document.location.protocol ? false : true;
+	if(tmpTag){
+		var protocol = 'http';
+	}else{
+		var protocol = 'https';
+	}
+    var host = protocol+'://' + window.location.host + '/api/';
+    
+	if(introdice_id !=0){
+		introdice(introdice_id);
+		$('.navitem')[0].classList.add('active');
+	}
+	else{
+		
+		temphtml ='<div class="nocourse"><div><img src="/public/mulitpc/images/nocontent.png"></div><span>小编正努力上传课程中..</span></div>';
+		$('.intro-box').css('justify-content:center;');
+		$('.intro-box').html(temphtml);
+	}
+	if(chaterid !=0){
+		chaptervideo(chaterid);
+		$('.chapter-item')[0].classList.add('active');
+	}
+	//显示前三个评论
+	function get_index_comment(){
+		$.get(host + "comment/index?cid=" + cid + "&page=1&size=3", function (result) {
+			var comment_list_ul_html = '';
+			if (result.code == 1) {
+				var comment = result.data.comment;
+				if(comment.length>0){
+					for (var i = 0; i < comment.length; i++) {
+						var star_inner = '';
+		                   var star = comment[i].star;
+		                   for(var j=0; j<star;j++){
+		                       star_inner = star_inner + '<img src="/public/pc/images/gray_fullStar@2x14.png" alt="评级星星">';
+		                   }
+		                   var empty_star = '';
+		                   if(star < 5){
+		                       var empty_length = 5-star;
+		                       for(var k=0;k<empty_length;k++){
+		                           empty_star = empty_star + '<img src="/public/pc/images/gray_emptyStar@2x14.png" alt="评级星星">';
+		                       }
+		                   }
+		                   star_inner = star_inner+empty_star;
+		                   comment_list_ul_html = comment_list_ul_html+
+		                   						'<li><img src="' + comment[i].face + '" alt="用户头像" class="userHead_img30">'+
+		                   						'<div class="user_comment_detail"><i class="dan">' + comment[i].nickname + '</i>'+
+		                   						'<span>'+star_inner+'</span>'+
+		                   						'<p class="dot-ellipsis dot-height-50">' + comment[i].content + '</p>'+
+		                   						'<p class="teacher_ans">' + comment[i].reply + '</p>'+
+		                   						'</div><div class="clearfix"></div>'+
+		                   						'</li>';
+					}
+					$('.user_comment_list_ul').html(comment_list_ul_html);
+					$('.textRight').html(' <span class="more_comment">更多</span>');
+				}else{
+					var empty_html ='<div class="empty-comment"><div><img src="/public/mulitpc/images/empty_comment.png" alt="图片"><p>暂无评价</p></div></div>';
+					$('.textRight').html(empty_html);
+				}
+				
+				
+			}
+			
+		 });
+	}
+	get_index_comment();
+	//评价列表
+   getcomment();
+   function getcomment() {
+       $.get(host + "comment/index?cid=" + cid + "&page=" + page + "&size=" + size, function (result) {
+           if (result.code == 1) {
+               var comment = result.data.comment;
+               var inner = "";
+               for (var i = 0; i < comment.length; i++) {
+                   var star_inner = '';
+                   var star = comment[i].star;
+                   for(var j=0; j<star;j++){
+                       star_inner = star_inner + '<img src="/public/pc/images/gray_fullStar@2x14.png" alt="评级星星">';
+                   }
+                   var empty_star = '';
+                   if(star < 5){
+                       var empty_length = 5-star;
+                       for(var k=0;k<empty_length;k++){
+                           empty_star = empty_star + '<img src="/public/pc/images/gray_emptyStar@2x14.png" alt="评级星星">';
+                       }
+                   }
+                   star_inner = star_inner+empty_star;
+                   inner +=
+                           '<li>' +
+                           '<img src="' + comment[i].face + '" alt="" class="userHead_img30">' +
+                           '<div class="user_comment_detail userCommentDetail">' +
+                           '<i class="dan">' + comment[i].nickname + '</i>' +
+                           '<span>' +star_inner+'</span>' +
+                           '<p class="dot-ellipsis dot-height-50">' + comment[i].content + '</p>' +
+      						'<p class="teacher_ans">' + comment[i].reply + '</p>'+
+                           '</div>' +
+                           '<div class="clearfix"></div>' +
+                           '</li>';
+               }
+               $(".userCommentListUl").html(inner);
+           }
+       });
+   }
+	//星星评分
+    star_inner = '';
+    var star_num = Number("{$course.star}")
+    var showStarSrc = showstar(star_num);
+    for (var i = 1; i < showStarSrc.length; i++) {
+        star_inner += '<img src="' + showStarSrc[i] + '" alt="评价星星">';
+    }
+    $('.rating-stars').html(star_inner);
+
+    //星星显示数量
+    function showstar(star) {
+        var starNum = parseInt(star)
+        var numType = starNum % 2
+        var stars = starNum / 2
+        console.log(numType + starNum)
+        var starImg = [];
+        for (var i = 1; i < 6; i++) {
+            if (i <= stars) {
+                starImg[i] = '/public/mulitpc/images/white_fullStar@2x14.png'
+            } else {
+                if (numType == 1 && i == parseInt(stars) + 1) {
+                    starImg[i] = '/public/mulitpc/images/white_halfStar@2x14.png'
+                } else {
+                    starImg[i] = '/public/mulitpc/images/white_emptyStar@2x14.png'
+                }
+            }
+        }
+        return starImg;
+    }
+    if (uid) {
+        loginAfter(); //登陆购买之后调用此方法
+    }
+    function loginAfter() {
+        //如果用户登陆，然后购买之后右边满意度正常效果
+        $(".manyidu_star span").removeClass("opacity40");
+        $(".user_comment textarea").attr("readonly", false);
+        $(".a_manyidu_submit").removeClass("opacity40");
+        $(".cover_star").hide();
+        $(".cover_submit").hide();
+    }
+    
+  //点击购买
+    $("#cousebuy").click(function () {
+        if (!uid) {
+            $(".weixin_QRcord_alert_outside").show();
+            return false;
+        }
+        var cid = $(this).attr('data-cid');
+       	var url = "{:url('mulitcourse/payment')}?cid=" + cid;
+        window.location.href = url;  
+    })
+    //点击立即报名 购买
+    $('#freebuy').click(function(){
+    	if (!uid) {
+            $(".weixin_QRcord_alert_outside").show();
+            return;
+        }
+    	$.post(host+"order/add",{uid:uid,cid:cid,source:'pc',title:title,coupon_code:''},function(res){
+            if(res.code == 1){
+                if(res.data.pay_status == 1){
+                    var url = "{:url('index/mulitcourse/detail')}";
+                    window.location.href=url+'?cid='+cid;
+                }
+            }
+        });
+    });
+    //点击立即学习
+    $('#freestudy').click(function(){
+    	$('.intro-tab').removeClass('active');
+		$('.chapter-tab').addClass('active');
+		$('.intro-box').hide();
+		$('.chapter-box').css('display','flex');
+    });
+  //评论提交按钮事件
+    var commentSubmitObj = {};  //提交数据
+    $(".a_manyidu_submit").click(function () {
+        if (!uid) {
+            $(".weixin_QRcord_alert_outside").show();
+            return false;
+        }
+        var textareaValue = $(".user_comment textarea").val();
+        commentSubmitObj.textareaValue = textareaValue;
+        if(commentSubmitObj.starNum != undefined){
+        	my_star = commentSubmitObj.starNum;
+        }else{
+        	my_star =5;
+        }
+        if ("" != textareaValue) {
+            $.post(host + "comment/add", {
+                uid: uid,
+                cid: cid,
+                content: textareaValue,
+                star: my_star
+            }, function (result) {
+                if (result.code == 1) {
+                    $(".comment_finish_alert").show();
+                    $(".course_manyidu").hide(3000);
+                    //location.reload() ;
+                    if(result.data.integral_code==1){
+    					var alert_str = '提交成功'+'积分+'+result.data.integral;
+    				}else{
+    					var alert_str = '提交成功';
+    				}
+            	    layer.msg(alert_str);
+                  //重新获取评价列表
+                   get_index_comment();
+                    getcomment();
+                } else if (result.code == -1) {
+                    layer.msg(result.message);
+                }
+            });
+        }
+    })
+    //用户评论点星星
+        $(".manyidu_star span a").click(function () {
+            var currIndex = $(this).index() + 1;
+            $(".manyidu_star span a").removeClass("imghover")
+            $(".manyidu_star span a:lt(" + currIndex + ")").addClass("imghover");
+            commentSubmitObj.starNum = currIndex;
+        })
+        
+     //播放视频时提示 先登录再购买
+        $(".courselist li  a,.courselist li .icon .play-icon").click(function () {
+            if (!uid) {
+                $(".weixin_QRcord_alert_outside").show();
+                return;
+            }
+            if (!buy) {
+                $(".courseBuy_tip").show();
+                return;
+            }
+        })   
+    //pc介绍
+    $('.navitem').click(function() {
+		var id = $(this).attr('data-id');
+		introdice(id);
+	    
+	});
+    function introdice(id){
+    	$.get(host + "courseintroduce/detail?id="+id, function (result) {
+	           if (result.code == 1) {
+	              		$('.intro-content').html(result.data);
+                    // 课程详情footer样式
+                    if($(window).innerHeight() - $('.coursedetail-main-box') - 368 > 0) {
+                    $('.footer').css({'position': 'absolute', 'bottom': '20px', 'width': '100%'});
+                    } else {
+                    $('.footer').css('position', 'static');
+                    }
+	           }
+	       });
+    }
+    //视频章节选择 
+
+    $('.chapter-item').click(function() {
+		var chaterid = $(this).attr('data-chaterid');
+		chaptervideo(chaterid);
+	});
+    //视频点击 观看
+    $('.courselist').on('click', '.courseitem', function() {
+    	 var that = $(this);
+         if (!uid) {
+             $(".weixin_QRcord_alert_outside").show();
+             return false;
+         }
+         console.log(course_price);
+         var free = $(this).attr('data-free');
+       //试看
+         if(free == 1){
+            if(!buy){
+               var url = "{:url('mulitcourse/free')}?id=" + $(this).attr('data-id') + "#" + $(this).attr('data-id');
+            }else{
+               var url = "{:url('mulitcourse/video')}?id=" + $(this).attr('data-id')+'#'+$(this).attr('data-id');
+            }
+            window.open(url);
+            return;
+         }
+         var url = "{:url('mulitcourse/video')}?id=" + $(this).attr('data-id')+'#'+$(this).attr('data-id');
+         if(course_price>0.00){
+        	 if (!buy) {
+                 layer.msg("未购买");
+                 return false;
+              }
+         }
+         window.open(url);
+       
+	});
+    function chaptervideo(chaterid){
+    	$.get(host + "chapter/videolist?id="+chaterid+'&cid='+cid+'&uid='+uid, function (result) {
+	           if (result.code == 1) {
+	        	   var datali = '';
+	        	   var video = result.data;
+	        	   for (var i = 0; i < video.length; i++) {
+	        		   var numb = i+1;
+	        		   var datafree = '';
+	        		   var is_study = video[i].is_study;
+	        		   if(is_study){var studyhtml = '<i class="icon play-icon played"></i>';}else{var studyhtml = '<i class="icon play-icon"></i>';}
+	        		   datali = datali+
+	        			   '<li class="courseitem" data-id="' + video[i].id + '"  data-free="' + video[i].free + '">'+
+	        			   studyhtml+
+	        			   '<a class="course-caption" href="javascript:void(0)">'+numb+'.'+video[i].title;
+     			   if(video[i].free==1){
+     				    datafree = '<em class="free">试看</em>';
+     			   }
+	        		   datali = datali + datafree+'</a><div class="course-duration"><i class="icon time-icon"></i><span class="time">'+
+	        		   video[i].lenght+'</span>'+'</div></li>';  
+	        	   }
+	        	   
+	              $('.courselist').html(datali);
+	              //console.log(datali);
+	           }
+	       });
+    }
+    
+    //评论更多显示
+  $(".user_comment_list").on('click','.more_comment',function(){
+      console.log('ddd');
+      $(".userComment_alertOutside").show();
+  });
+    
+//关闭弹窗
+  $(".img_close").click(function(){
+    $(".userComment_alertOutside").hide();
+    $(".courseBuy_tip").hide();
+  })
+  
+	//textarea 输入框事件:数字变化
+	$(".user_comment textarea").bind("input propertychange",function(){
+	var textareaValue_length = $(this).val().length;
+	$(".comment_strnum").html( textareaValue_length );
+	})
+	  // tab栏切换及点击效果 10.13 v7.2
+	  $('.tablist > i').on('click', function () {
+	    $(this).addClass('active').siblings().removeClass('active');
+	    var length = $(this).attr('class').length;
+	    var tabCLassname =  $(this).attr('class').substr(0, length - 11) + '-box';
+	    $('.' + tabCLassname).css('display', 'flex').siblings().hide();
+	  });
+	  $('.intro-box .navitem, .chapter-box .chapter-item').on('click', function () {
+	    $(this).addClass('active').siblings().removeClass('active');
+	  });
+	  $('.intro-box .navitem, .chapter-box .chapter-item').on('click', function () {
+		    $(this).addClass('active').siblings().removeClass('active');
+		  });
+		  $('.weixin-box, .weapp-box').on('mouseover', function () {
+		    $(this).children('div').show();
+		  }).on('mouseout', function () {
+		    $(this).children('div').hide();
+		  })
+
+})
+	 
+
+	
+</script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+{include file="common/header" /}
+<link rel="stylesheet" type="text/css" href="/public/jqadmin/css/webuploader.css?v=0.1.5" media="all">
+
+<body>
+<div class="container-fluid larry-wrapper">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <section class="panel panel-padding">
+                <form id="form1" class="layui-form layui-form-pane" action="{:url('add_remind')}">
+                    <div class="layui-form-item ">
+                        <label class="layui-form-label">通知内容</label>
+                        <div class="layui-input-block">
+                            <textarea name="content" placeholder="请输入通知内容" class="layui-textarea"></textarea>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <button class="layui-btn" jq-submit lay-filter="submit">立即提交</button>
+                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                        </div>
+                    </div>
+                </form>
+            </section>
+        </div>
+    </div>
+</div>
+</body>
+{include file="common/version" /}
+<script>
+    layui.use('myform');
+</script>
+</html>

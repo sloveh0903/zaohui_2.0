@@ -1,0 +1,218 @@
+<?php
+    $data = $_GET;
+    $data['uname'] = $userinfo['uname'];
+    $url_data = '?'.http_build_query($data);
+    $link = 'http://'.$_SERVER['SERVER_NAME'].$_SERVER['REDIRECT_URL'].$url_data;
+?>
+<!DOCTYPE html>
+<html>
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <title>请点击右上角分享</title>
+   <link rel="stylesheet" href="/public/mobile/css/mui.min.css">
+   <link rel="stylesheet" href="/public/mobile/css/threeLevelMarketing.css">
+   <style type="text/css">
+   .course_describe img{
+      width: 100%;
+   }
+   </style>
+</head>
+<body class="bg_FFF" >
+   <div class="share_link_top">
+      <div class="share_info">
+         <img src="{$parent_user['face']}">
+         <p>
+            {if condition="!empty(input('uname'))"}
+            <i>{$parent_user['nickname']}</i>
+            <i>给您推荐了一门课程</i>
+            {else /}
+            <i>通过我分享的链接购买，</i>
+            <i>可以享受<em>&nbsp;{$course['discount']}&nbsp;</em>折优惠！</i>
+            {/if}
+         </p>
+         <span>
+            <i>¥{$course['share_price']}</i>
+            <i>¥{$course['price']}</i>
+         </span>
+      </div>
+   </div>
+   <div class="share_link_main">
+      <div class="teacher_cover">
+         <img src="{$course['banner']}">
+      </div>
+      <div class="teacher_describe">
+         <i>{$course['title']}</i>
+         <p>{$course['desc']}</p>
+      </div>
+      <div class="course_describe">
+         <i>课程须知</i>
+         <p>{$course['content']}</p>
+      </div>
+   </div>
+   <div class="share_link_footer">
+      <P>
+      {if condition="$course['audit'] == 1"}
+        {if condition="$checkbuy == 0"}
+        <a href="javascript:void(0)" id="buy">¥{$course['share_price']} 优惠购买</a>
+        {else /} 
+        <a href="javascript:void(0)">已购买</a>
+        {/if} 
+      {else /} 
+        <a href="javascript:void(0)">已下架</a>
+      {/if} 
+      </P>
+      <span><a href="{:url('/wechat/course/detail')}?cid={$course['cid']}" class="more">了解更多</a></span>
+   </div>
+      <!-- 购买课程成功弹框start   -->
+    <div class="buy_success_outside" style="display:none;">
+     <div class="buy_success_alert">
+        <div class="alert_content">
+           <h3>购买课程成功</h3>
+           <p>请关注公众号 及时掌握学习进度</p>
+           <img src="{$qrcode}" alt="二维码">
+           <a href="{:url('wechat/course/buysuccess')}?cid={$cid}" class="no-follow">暂不关注</a>
+        </div>
+     </div>
+    </div>
+    <!-- 购买课程成功弹框 end -->
+<script src="/public/mobile/js/jquery-3.2.1.min.js"></script>
+<script src="/public/mobile/js/mui.min.js"></script>
+<script src="/public/mobile/js/globla.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+<script type="text/javascript">
+   // var host = 'http://wxc.grazy.com/api/';
+   var checkbuy ='{$checkbuy}';
+   var uid = '{$userinfo.uid}'; //用户id
+   var openid = '{$userinfo.openid}'; //微信openid
+   var cid = "{$course['cid']}";
+   var title = "{$course['title']}";
+   var subscribe = "{$userinfo.subscribe}"; //1 关注 0 未关注
+
+   //微信支付
+   mui("body").on('tap', '#onBridgeReady,#buy', function (event) {
+      if(checkbuy == 0){
+         $("#BuyDialog").removeClass("buy-dialog-in");
+         $(".mui-popup-backdrop").hide();
+         $.post(host+"order/add",{uid:uid,cid:cid,title:title},function(res){
+            if(res.code == 1){
+               var order_sn = res.data.order_sn;
+               if(res.data.pay_status == 1){
+                  mui.alert('购买成功');
+                  location.reload();
+               }else{
+                  $.get(host+"wxpay/unifiedorder?openid="+openid+"&order_sn="+order_sn, function(res){
+                     console.log(res)
+                     var appId =  String(res.data.appid);
+                     var timeStamp = String(res.data.timeStamp);
+                     var nonceStr = res.data.nonce_str
+                     var package = res.data.package
+                     var paySign = res.data.sign
+                     WeixinJSBridge.invoke(
+                         'getBrandWCPayRequest', {
+                             "appId":appId,     //公众号名称，由商户传入
+                             "timeStamp":timeStamp,  //时间戳，自1970年以来的秒数
+                             "nonceStr":nonceStr, //随机串
+                             "package":package,
+                             "signType":"MD5",  //微信签名方式：
+                             "paySign":paySign //微信签名
+                         },
+                         function(res){
+                             if(res.err_msg == "get_brand_wcpay_request:ok" ) {
+                                 setTimeout(function(){
+                                    if(subscribe == 0){
+                                      $('.buy_success_outside').show();
+                                      return false;
+                                    }else{
+                                      var url = "{:url('wechat/course/buysuccess')}?cid="+cid;
+                                      window.location.href = url;
+                                      return false;
+                                    }
+                                    //location.reload();
+                                 },1000);
+
+                             }
+                             // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。
+                         }
+                     );
+                  });
+
+               }
+            }else{
+               mui.alert('购买失败');
+            }
+         });
+         }
+      });
+      mui("body").on('tap', '.more', function (event) {
+         window.location.href=$(this).attr('href')
+      })
+
+      //微信分享
+      wx.config({
+          debug: false,
+          appId: '<?php echo $signPackage["appId"];?>',
+          timestamp: '<?php echo $signPackage["timestamp"];?>',
+          nonceStr: '<?php echo $signPackage["nonceStr"];?>',
+          signature: '<?php echo $signPackage["signature"];?>',
+          jsApiList: [
+          'onMenuShareTimeline','onMenuShareAppMessage'
+            // 所有要调用的 API 都要加到这个列表中
+          ]
+       });
+       
+      wx.ready(function(){
+          // config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中。
+          //分享给朋友
+          wx.onMenuShareAppMessage({
+              title: "{$course['title']}", // 分享标题
+              desc: "一起学习，独享{$course['discount']}折优惠{$course['title']}", // 分享描述
+              link: "{$link}", // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+              imgUrl: 'http://'+window.location.host+'/public/image/logo@1x.png', // 分享图标
+              type: '', // 分享类型,music、video或link，不填默认为link
+              dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+              success: function () { 
+                  // 用户确认分享后执行的回调函数
+              },
+              cancel: function () { 
+                  // 用户取消分享后执行的回调函数
+              }
+          });
+
+          //分享到朋友圈
+          wx.onMenuShareTimeline({
+              title: "{$course['title']}", // 分享标题
+              link: "{$link}", // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+              imgUrl: 'http://'+window.location.host+'/public/image/logo@1x.png', // 分享图标
+              success: function () { 
+                  // 用户确认分享后执行的回调函数
+              },
+              cancel: function () { 
+                  // 用户取消分享后执行的回调函数
+              }
+          });
+      });
+
+      wx.error(function(res){
+          console.log(res)
+          // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
+      });
+
+      mui(".buy_success_alert").on('tap', '.no-follow', function (event) {
+        console.log($(this).attr('href'))
+        window.location.href = $(this).attr('href');
+      })
+
+      /* 课程购买成功弹窗消失 */
+     $(document).bind("click",function(e){
+        var target = $(e.target),
+            str = ".buy_success_alert",
+            thisParent = target.closest( str );
+        if( !thisParent.is(str)){
+           $(".buy_success_outside").hide();
+        }   
+     })
+</script>
+</body>
+</html>

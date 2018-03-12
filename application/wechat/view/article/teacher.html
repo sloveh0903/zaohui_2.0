@@ -1,0 +1,417 @@
+<!doctype html>
+<html lang="zh-cn">
+<head>
+	<meta name="viewport" content="initial-scale=1, user-scalable=0, minimal-ui" charset="UTF-8">
+	<title>老师信息</title>
+	<link rel="stylesheet" href="/public/mobile/css/mui.min.css" />
+	<link rel="stylesheet" href="/public/mobile/css/globla.css" />
+	<link rel="stylesheet" href="/public/mobile/css/read.css" />
+	<style>
+		*{
+			margin: 0;
+			padding:0;
+			-webkit-tap-highlight-color:rgba(0,0,0,0);
+			-webkit-text-size-adjust:none;
+		}
+		html{
+			font-size:10px;
+		}
+		body{
+			background-color: #f5f5f5;
+			font-size: 1.2em;
+		}
+		.content{
+			padding-bottom: 40px;
+			background-color: #fff;
+		}
+		.tab{
+
+			width: 100%;
+			display: -webkit-box;
+			display: -webkit-flex;
+			display: -ms-flexbox;
+			display: flex;
+			height: 50px;
+			line-height: 50px;
+			border-bottom: 2px solid rgba(41, 43, 51, 0.4);
+			background-color: #FAFAFA;
+		}
+		.tab .item{
+			display: block;
+			-webkit-box-flex: 1;
+			-webkit-flex: 1;
+			-ms-flex: 1;
+			flex: 1;
+			width: 100%;
+			font-size:15px;
+			text-align: center;
+			color: rgba(82, 84, 90, 0.4);
+			text-decoration: none;
+		}
+		.tab .cur{
+			height: 50px;
+			border-bottom: 2px solid rgba(41, 43, 51, 0.8);
+			color: rgba(41, 43, 51, 0.8) !important;
+		}
+		.opacity{
+			-webkit-animation: opacity 0.3s linear;
+			animation: opacity 0.3s linear;
+		}
+		@-webkit-keyframes opacity {
+			0% {
+				opacity:0;
+			}
+			100% {
+				opacity:1;
+			}
+		}
+		@keyframes opacity {
+			0% {
+				opacity:0;
+			}
+			100% {
+				opacity:1;
+			}
+		}
+	</style>
+	<link rel="stylesheet" href="/public/mobile/css/dropload.css">
+</head>
+<body>
+ {include file="common/share" /}
+<div class="mui-row" id="teacher" style="position: fixed;z-index: 100;background: #FFF;top: 0;">
+	<div class="readinfo-p">
+	</div>
+	<div class="dy">
+		<div class="btn-dy">
+			<span><i class="icon-follow"></i><font></font></span>
+		</div>
+	</div>
+	<div class="tab">
+		<a href="javascript:;" class="item cur">课程</a>
+		<a href="javascript:;" class="item">文章</a>
+	</div>
+</div>
+<div class="content">
+	<div class="lists article-list">
+		<ul>
+
+		</ul>
+	</div>
+</div>
+<div class="buy-dialog" id="BuyDialog">
+	<h1 class="font-size-20 font-color-8">加微信</h1>
+	<p class="font-size-16 font-color-6">老师微信号<span id="wxid"></span>在微信查找加好友</p>
+	<div class="buy-dialog-btn">
+		<a id="Cancel">确定</a>
+	</div>
+</div>
+<script type="text/javascript" src="/public/mobile/js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="/public/mobile/js/globla.js"></script>
+<script src="/public/mobile/js/mui.min.js"></script>
+<script type="text/javascript" src="/public/mobile/js/dropload.js"></script>
+<script>
+    // 页数
+    var page = 0;
+    // 每页展示10个
+    var size = 10;
+    var itemIndex = 0;
+    var tid = GetQueryString('tid');
+    var uid = '{$userinfo.uid}';
+    $(function(){
+        $.ajax({
+            url:host+'user/teacher',
+            data:{
+                uid:tid,
+				muid:uid
+            },
+            type:'GET', //GET
+            async:true,    //或false,是否异步
+            timeout:5000,    //超时时间
+            dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+            success:function(data,textStatus,jqXHR){
+                loadCourse();
+                if(data.code==1){
+                    var result = data.data.user;
+                    teacher = '<img src="'+ result.face +'" />' +
+                        '<div class="collection-list-right-p">' +
+                        '<h1 class="font-size-18 font-color-8">'+ result.realname +'</h1>' +
+                        '<span class="collection-list-t font-size-14 font-color-6">'+ result.info +'</span>' +
+                        '<div class="ms font-size-14 font-color-6">' +
+                        '<div style="display: inline-block;">' +
+                        '<span><embed src="/public/mobile/img/icon/points.svg" width="16" height="16" type="image/svg+xml">'+ result.student +'学员</span> ' +
+                        '<span><embed src="/public/mobile/img/icon/points.svg" width="16" height="16" type="image/svg+xml">'+ result.like +'关注</span></div>' +
+                        '</div></div><span class="collection-list-n font-size-14 font-color-8" id="addwx">+微信</span>';
+                    $(".readinfo-p").append(teacher);
+                    o = document.getElementById("teacher");
+                    var h = o.offsetHeight; //高度
+                    $('.content').css('padding-top',h+'px');
+                    $('#wxid').html(result.wechat);
+                    if(result.is_follow == 1){
+                        btn_class = 'icon-dyed';
+                        btn_txt = '已关注';
+                    }else{
+                        btn_class = 'icon-dy';
+                        btn_txt = '关注';
+                    }
+                    $('.btn-dy').find('i').addClass(btn_class);
+                    $('.btn-dy').find('font').html(btn_txt);
+                }
+            }
+        });
+
+
+        $('.tab .item').on('click',function(){
+            dropload.unlock();
+            dropload.noData(false);
+            dropload.resetload();
+            var $this = $(this);
+            itemIndex = $this.index();
+            $this.addClass('cur').siblings('.item').removeClass('cur');
+            //$('.lists').eq(itemIndex).show().siblings('.lists').hide();
+            if(itemIndex == '0'){
+                // 如果数据没有加载完
+                console.log('课程');
+                loadCourse();
+
+            }else if(itemIndex == '1'){
+                console.log('文章');
+                loadArticle();
+            }
+
+        });
+
+
+        function loadCourse() {
+            page = 1;
+            $.ajax({
+                url:host+'course/index',
+                data:{
+                    uid:tid, //Todo:uid获取微信uid
+                    page:page,
+                    size:size
+                },
+                type:'GET', //GET
+                async:true,    //或false,是否异步
+                timeout:5000,    //超时时间
+                dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+                success:function(data,textStatus,jqXHR){
+                    page++;
+                    if(data.code==1){
+                        var list = "";
+                        var course = data.data.course;
+                        $.each(course,function(j,item){
+                            list += '<li><a class="course" data-id="'+item.cid+'"> <img src="'+ item.face +'" />' +
+                                '<div class="collection-list-right">' +
+                                '<h1 class="font-size-18 font-color-8">'+ item.title +'</h1>' +
+                                '<span class="collection-list-i font-color-4 font-size-14">'+ item.info +'</span>' +
+                                '<i class="font-color-4 font-size-12">'+ item.subscribe_num +'人订阅</i></div>' +
+                                '<span class="collection-list-n">'+ item.price +'</span></a></li>';
+                        });
+                        $(".lists").removeClass('article-list');
+                        $(".lists").addClass('collection-list');
+                        $(".lists ul").html(list);
+                    }
+                }
+            });
+
+        }
+
+        function loadArticle() {
+            page = 1;
+            $.ajax({
+                url:host+'article/index',
+                data:{
+                    uid:tid, //Todo:uid获取微信uid
+                    page:page,
+                    size:size
+                },
+                type:'GET', //GET
+                async:true,    //或false,是否异步
+                timeout:5000,    //超时时间
+                dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+                success:function(data,textStatus,jqXHR){
+                    page++;
+                    if(data.code==1){
+                        var article = data.data.article;
+                        console.log(data);
+                        var list = "";
+                        $.each(article,function(j,item){
+
+                            var img = '';
+                            if(item.photopath){
+                                img += '<div class="article-list-img">';
+                                $.each(item.photopath,function (p,photo) {
+                                    img += '<img src="'+ photo +'" />';
+                                });
+                                img += '</div>'
+                            }
+                            list += '<li><a class="article" data-id="'+item.id+'">' +
+                                '<h1 class="font-size-16 font-color-8">'+ item.title +'</h1>' +
+                                '<p>'+ item.desc +'</p>' + img +
+                                '</a><span class="article-list-footer author" data-id="'+item.uid+'">' +
+                                '<img src="'+ item.face +'">' +
+                                '<font>'+ item.realname +'</font>' +
+                                '<i>'+ item.create_time +'</i></span></li>';
+
+                        });
+                        $(".lists").addClass('article-list');
+                        $(".lists").removeClass('collection-list');
+                        $(".lists ul").html(list);
+                    }
+                }
+            });
+        }
+
+        // dropload
+
+    });
+    var dropload = $('.content').dropload({
+        scrollArea : window,
+        autoLoad:false,
+        domDown : {
+            domClass   : 'dropload-down',
+            domRefresh : '<div class="dropload-refresh">↑上拉加载更多</div>',
+            domLoad    : '<div class="dropload-load"><span class="loading"></span>加载中...</div>',
+            domNoData  : '<div class="dropload-noData">暂无数据</div>'
+        },
+        loadDownFn : function(me){
+            // 拼接HTML
+            console.log(page);
+            var result = '';
+            if(itemIndex == 0){
+                $.ajax({
+                    url:host+'course/index',
+                    data:{
+                        uid:tid, //Todo:uid获取微信uid
+                        page:page,
+                        size:size
+                    },
+                    type:'GET', //GET
+                    async:true,    //或false,是否异步
+                    timeout:5000,    //超时时间
+                    dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+                    success:function(data,textStatus,jqXHR){
+
+                        if(data.code==1){
+                            var list = "";
+                            var course = data.data.course;
+                            if(course.length > 0){
+                                page++ ;
+                            }
+                            $.each(course,function(j,item){
+                                list += '<li><a class="course" data-id="'+item.cid+'"><img src="'+ item.face +'" />' +
+                                    '<div class="collection-list-right">' +
+                                    '<h1 class="font-size-18 font-color-8">'+ item.title +'</h1>' +
+                                    '<span class="collection-list-i font-color-4 font-size-14">'+ item.info +'</span>' +
+                                    '<i class="font-color-4 font-size-12">'+ item.subscribe_num +'人订阅</i></div>' +
+                                    '<span class="collection-list-n">'+ item.price +'</span></a></li>';
+                            });
+
+                            setTimeout(function(){
+                                $('.lists ul').append(result);
+                                var h = o.offsetHeight; //高度
+                                $('.content').css('padding-top',h+'px');
+                                // 每次数据插入，必须重置
+                                me.resetload();
+                            },1000);
+
+
+                        }
+                    }
+                });
+            }else{
+                $.ajax({
+                    type: 'GET',
+                    url:host+'article/index',
+                    data:{
+                        uid:tid, //Todo:uid获取微信uid
+                        page:page,
+                        size:size
+                    },
+                    //url: 'http://ons.me/tools/dropload/json.php?page='+page+'&size='+size,
+                    dataType: 'json',
+                    success: function(data){
+
+                        console.log(data);
+                        var arrLen = data.data.article.length;
+                        if(arrLen > 0){
+                            page++ ;
+                            $.each(data.data.article,function(j,item) {
+                                var img = '';
+                                if (item.photopath) {
+                                    img += '<div class="article-list-img">';
+                                    $.each(item.photopath,function (p,photo) {
+                                        img += '<img src="'+ photo +'" />';
+                                    });
+                                    img += '</div>'
+                                }
+                                result += '<li><a class="article" data-id="'+item.id+'">' +
+                                    '<h1 class="font-size-16 font-color-8">'+ item.title +'</h1>' +
+                                    '<p>'+ item.desc +'</p>' + img +
+                                    '</a><span class="article-list-footer author" data-id="'+item.uid+'">' +
+                                    '<img src="'+ item.face +'">' +
+                                    '<font>'+ item.realname +'</font>' +
+                                    '<i>'+ item.create_time +'</i></span></li>';
+                            });
+
+                            // 如果没有数据
+                        }else{
+                            // 锁定
+                            //me.lock();
+                            // 无数据
+                            me.noData();
+							/*setTimeout(function(){
+							 $('.dropload-down').css('display','none');
+							 },1000);*/
+                        }
+                        // 为了测试，延迟1秒加载
+                        setTimeout(function(){
+                            $('.lists ul').append(result);
+                            // 每次数据加载完，必须重置
+                            var h = o.offsetHeight; //高度
+                            $('.content').css('padding-top',h+'px');
+                            // 每次数据插入，必须重置
+                            me.resetload();
+                        },1000);
+
+
+                    },
+                    error: function(xhr, type){
+                        alert('Ajax error!');
+                        // 即使加载出错，也得重置
+                        me.resetload();
+                    }
+                });
+            }
+
+        },
+        threshold : 50
+    });
+    mui('.lists').on('tap','.course', function(){
+        var cid = $(this).attr('data-id');
+        url = "{:url('wechat/course/detail')}";
+        window.location.href = url + '?cid=' + cid;
+    });
+    mui('.lists').on('tap','.article', function(){
+        var id = $(this).attr('data-id');
+        url = "{:url('wechat/article/detail')}";
+        window.location.href = url + '?id=' + id;
+    });
+    mui('.lists').on('tap','.author', function(){
+        var tid = $(this).attr('data-id');
+        url = "{:url('wechat/article/teacher')}";
+        window.location.href = url + '?tid=' + tid;
+    });
+    mui('#teacher').on('tap','#addwx',function () {
+        console.log('111');
+        $("#BuyDialog").addClass("buy-dialog-in");
+        $(".mui-popup-backdrop").show();
+    });
+    mui('#BuyDialog').on('tap','#Cancel',function () {
+        console.log('222');
+        $("#BuyDialog").removeClass("buy-dialog-in");
+        $(".mui-popup-backdrop").hide();
+    });
+</script>
+</body>
+</html>

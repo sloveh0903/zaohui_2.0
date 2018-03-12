@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>视频播放</title>
+    <link rel="stylesheet" href="/public/pc/css/bootstrap.css">
+    <link rel="stylesheet" href="/public/pc/css/jquery.mCustomScrollbar.min.css">
+    <link rel="stylesheet" href="/public/pc/css/all.css">
+    <style type="text/css">
+    #a1{height: 85%}
+    </style>
+</head>
+<body>
+<!-- 提问弹出框start  -->
+<div class="weixin_QRcord_alert_outside v_tiwen_alert_outside ">
+    <div class="weixin_QRcord_alert v_tiwen_alert">
+        <div class="v_tiwen">
+            <div class="user_comment">
+                <textarea name="" placeholder="输入问题.." maxlength="100"></textarea>
+            </div>
+            <div class="btn_manyidu_div">
+                <span><i class="comment_strnum">0</i><i>/100</i></span>
+                <em class="cancel_alert">取消</em>
+                <a href="javascript:void(0)" class="a_manyidu_submit "></a>
+
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 提问弹出框end -->
+<div class="videoPlay">
+    <div class="videoPlay_left">
+        <div class="video_title">
+            <a class="backlink"><img src="/public/pc/images/white_arrow_right@2x20.png" alt="箭头左"></a><i></i><span>{$video.title}</span>
+            <div class="clearfix"></div>
+        </div>
+         <div id="a1"></div>
+    </div>
+
+    <div class="videoPlay_right">
+        <div class="videoPlay_right_top">
+            <img src="{$course.course_detail.face}" alt="老师头像" class="head_img40">
+            <span>
+               <p>{$course.course_detail.title}</p>
+               <img src="/public/pc/images/white_fullStar@2x14.png" alt="白色小星"><i class="pinfen_num">{$course.course_detail.score}</i><i>{$course.course_detail.comment}份评价</i>
+            </span>
+            <a href="javascript:void(0)" class="tiwen">提问</a>
+            <div class="clearfix"></div>
+        </div>
+        <div class="videoPlay_right_main">
+            <ul class="video_ul_tab" id="myTab">
+                <li><a href="javascript:void(0)">目录</a></li>
+            </ul>
+            <div class="v_catalog mCustomScrollbar">
+                <!-- 目录start -->
+                <ul class="catalog_ul">
+                    {php} $k=1;{/php}
+                    {volist name="chapter" id="data"}
+                    <li>
+                        <div class="menu_parent">
+                            <i class="catalog_num">{$k}</i><span>{$data.cate_name}</span><img
+                                src="/public/pc/images/zhedie_down@2x24.png" alt="折叠下">
+                            <div class="clearfix"></div>
+                        </div>
+                        {php}$k++;{/php}
+                        <ul class="menu_child_ul">
+                            {volist name="data.video_list" id="video"}
+                            <li {if condition="$id == $video['id']"} class="active" {/if} id="{$video.id}"   data-id="{$video.id}" data-title="{$video.title}" data-tid="{$video.tid}" data-vpath="{$video.transcoding_path}" data-type="{$video.type}">
+                                <div class="menu_child">
+                                    <img src="/public/pc/images/mayPlay@2x.png">
+                                    <span>{$video.title}</span>
+                                    <i>{$video.lenght}</i>
+
+                                    <div class="clearfix"></div>
+                                </div>
+                            </li>
+                            {/volist}
+                            <!-- <li class="active"> playing@2x24.png
+                                <div class="menu_child">
+                                   <img src="/public/pc/images/mayPlay@2x.png" alt="准备播放">
+                                   <span>怎么创建淘宝店</span>
+                                   <i>06:23</i>
+                                   <div class="clearfix"></div>
+                                </div>
+                             </li>
+                             <li>
+                                <div class="menu_child">
+                                   <img src="/public/pc/images/finish@2x24.png" alt="正在播放">
+                                   <span>交易成功后要求淘宝介入的规</span>
+                                   <i>06:23</i>
+                                   <div class="clearfix"></div>
+                                </div>
+                             </li>-->
+
+                        </ul>
+                    </li>
+                    {/volist}
+                </ul>
+                <!-- 目录end -->
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</div>
+<script src="/public/pc/js/jquery-1.11.0.min.js"></script>
+<!-- <script src="js/bootstrap.min.js"></script> -->
+<script src="/public/jqadmin/js/layui/layui.js"></script>
+<script src="/public/pc/js/jquery.mCustomScrollbar.concat.min.js"></script>
+<script src="/public/pc/js/placeholder.js"></script>
+<script src="/public/pc/js/public_PC.js"></script>
+<script type="text/javascript" src="/public/ckplayer/ckplayer.js" charset="utf-8"></script>
+<script>
+	var tmpTag = 'https:' == document.location.protocol ? false : true;
+	if(tmpTag){
+	    var protocol = 'http';
+	}else{
+		var protocol = 'https';
+	}
+	function flashChecker() {
+		var hasFlash = 0; //是否安装了flash
+		var flashVersion = 0; //flash版本
+		if (document.all) {
+		  var swf = new ActiveXObject('ShockwaveFlash.ShockwaveFlash');
+		  if (swf) {
+			hasFlash = 1;
+			VSwf = swf.GetVariable("$version");
+			flashVersion = parseInt(VSwf.split(" ")[1].split(",")[0]);
+		  }
+		} else {
+		  if (navigator.plugins && navigator.plugins.length > 0) {
+			var swf = navigator.plugins["Shockwave Flash"];
+			if (swf) {
+			  hasFlash = 1;
+			  var words = swf.description.split(" ");
+			  for (var i = 0; i < words.length; ++i) {
+				if (isNaN(parseInt(words[i]))) continue;
+				flashVersion = parseInt(words[i]);
+			  }
+			}
+		  }
+		}
+		return { f: hasFlash, v: flashVersion };
+	  }
+	  var fls = flashChecker();
+	  var s = "";
+	  if (!fls.f) {
+		 alert( "您当前浏览器flash插件版本较低，请尝试使用QQ浏览器或谷歌浏览器？");
+	  }
+    var video_time = 0;
+    var num = 1;
+    var uid = "{$uid}";
+    var id = "{$id}";
+    var vid = "{$id}";
+    var vpath = "{$vpath}";
+    var tid = "{$tid}";
+    var cid = "{$cid}";
+    var token = "{$token}";
+    var logo = protocol+'://'+window.location.host+'/public/image/logo@0x.png';
+    //var vpath = 'http://7xlv47.com1.z0.glb.clouddn.com/xxx004.m3u8';
+    //var vpath = 'http://oqss48edx.bkt.clouddn.com/a';
+    showPlayer(vpath) //视频地址
+	
+	
+    //调用ckplay播放器
+    function showPlayer(src){
+       var flashvars={
+            f : protocol+'://static.guojiang.tv/pc/js/ckplayer/m3u8.swf',
+            a : vpath,
+            c : 0,
+            s:4,
+            p:'1',
+            lv:0, //注意，如果是直播，需设置lv:1
+            loaded:'loadedHandler'
+        };
+
+        var params={bgcolor:'#FFF',allowFullScreen:true,allowScriptAccess:'always',wmode:'transparent'};
+        var video=[vpath];
+        CKobject.embed(protocol+'://static.guojiang.tv/pc/js/ckplayer/ckplayer.swf','a1' ,'ck-video','100%','100%',false, flashvars ,video, params);
+    }
+
+    //监听视频
+    function loadedHandler(){
+        CKobject.getObjectById('ck-video').addListener('play','playHandler');
+        CKobject.getObjectById('ck-video').addListener('ended','endedHandler');
+        if(CKobject.getObjectById('ck-video').getType()){
+          CKobject.getObjectById('ck-video').addListener('time',timeHandler);
+        }else{
+          CKobject.getObjectById('ck-video').addListener('time','timeHandler');
+        }
+    }
+
+    //视频开始
+    function playHandler(){
+         clearTimeout( timer2 );
+         getvideotime();
+    }
+
+    //当前视频时间
+    function timeHandler(t){
+        if(t>-1){
+            video_time = parseInt(t);
+        }
+    }
+
+    //学习时间记录
+    var timer2 = true;
+    function getvideotime() {
+        timer2 = setTimeout(function () {
+            if(video_time > 0){
+                $.post(host + "studyList/update", {uid: uid, vid: vid, status: 1, study_time: video_time}, function (result) { });
+            }
+            getvideotime();
+        }, 3000);
+    }
+
+    //视频结束
+    function endedHandler(){
+        //CKobject.getObjectById('ck-video').removeListener('play','playHandler');
+        $.post(host + "studyList/update", {uid: uid, vid: vid, status: 2, study_time: video_time}, function (result) { });
+        clearTimeout( timer2 );
+    }
+
+    var layer;
+    layui.use('layer', function(){
+        layer = layui.layer;
+    });
+
+    //新增浏览记录
+    $.post(host+"browseRecord/add",{uid:uid,itemid:vid,typeid:2},function(res){
+    });
+    $.post(host + "studyList/add", {uid: uid, vid: vid, status: 1}, function (result) {
+    });
+    $('#' + vid +' img').attr('src', '/public/pc/images/pause@2x.png');
+    $('#'+vid).parent().show();
+    $(".catalog_ul .menu_child_ul li").click(function () {
+        num++;
+        $('#' + vid +' img').attr('src', '/public/pc/images/mayPlay@2x.png');
+        vid = $(this).attr('data-id');
+        $('#' + vid +' img').attr('src', '/public/pc/images/pause@2x.png');
+        $('.video_title span').html($(this).attr('data-title'));
+        tid = $(this).attr('data-tid');
+        vpath = $(this).attr('data-vpath');
+        var type = $(this).attr('data-type');
+        console.log(vpath)
+        $('#' + vid +' img').attr('src', '/public/pc/images/pause@2x.png');
+        $('.menu_child_ul li').css('background','#fff');
+        $('#' + vid).css('background','#00B6F2');
+        showPlayer(vpath) //视频地址
+        //新增浏览记录
+        $.post(host+"browseRecord/add",{uid:uid,itemid:vid,typeid:2},function(res){
+        });
+        $.post(host + "studyList/add", {uid: uid, vid: vid, status: 1}, function (result) {
+        });
+    })
+
+    $('.backlink').click(function(){
+        var url = "{:url('course/course')}?cid="+cid+'&tid='+tid;
+        window.location.href = url;
+    })
+
+    initWidthHight();
+    //目录 展开收起
+    $(".catalog_ul ").on("click", "li .menu_parent", function () {
+        $(".menu_child_ul").slideUp();
+        $(".menu_parent img").attr("src", "/public/pc/images/zhedie_down@2x24.png");
+        var cssDisplay = $(this).next(".menu_child_ul").css("display");
+        if ("none" == cssDisplay) {
+            $(this).next(".menu_child_ul").slideDown();
+            $(this).find("img").attr("src", "/public/pc/images/zhedie_up@2x24.png");
+        } else {
+            $(this).next(".menu_child_ul").slideUp();
+        }
+
+    })
+    $(".catalog_ul").on("click", ".menu_child_ul li", function () {
+        $(".menu_child_ul li").removeClass("active");
+        $(this).addClass("active");
+    })
+
+    //提问弹框显示
+    $(".tiwen").click(function () {
+        $(".v_tiwen_alert_outside").show();
+    })
+    $(".cancel_alert").click(function () {
+        $(".v_tiwen_alert_outside").hide();
+    })
+
+    //视频播放的评论 提交数据
+    var videoCommentObj = {}
+    $(".a_manyidu_submit").click(function () {
+        var textareaValue = $(".user_comment textarea").val();
+        videoCommentObj.textareaValue = textareaValue;
+        if ("" != textareaValue) {
+            console.log("提交");
+            console.log(videoCommentObj);
+            $.post(host + "ask/questions", {
+                uid: uid,
+                cid: cid,
+                content: textareaValue,
+                title: textareaValue,
+                token:token
+            }, function (result) {
+                if (result.code == 1) {
+                    layer.msg('提交成功');
+                    $(".user_comment textarea").val('');
+                    $(".v_tiwen_alert_outside").hide();
+                }else{
+                    layer.msg(result.message);
+                    return false;
+                }
+            });
+        }
+    })
+
+    //textarea 输入框事件:数字变化
+    $(".user_comment textarea").bind("input propertychange", function () {
+        var textareaValue_length = $(this).val().length;
+        $(".comment_strnum").html(textareaValue_length);
+    })
+
+    //美化滚动条
+    $(".mCustomScrollbar").mCustomScrollbar({
+        theme: "minimal-dark"
+    });
+
+    //大拇指点赞
+    $(".span_thumb").on("click", function () {
+        var that = $(this);
+        var dataZan = that.attr("data-zan");
+        var num = that.find("i").text();
+        if (0 == parseInt(dataZan)) {
+            that.attr("data-zan", 1); //设置开关为1
+            // that.removeClass("zan").addClass("blueZan");
+            that.find("img").attr("src", "/public/pc/images/thumb_blue@2x.png");
+            if ("" != num && num >= 0) {
+                that.find("i").text(parseInt(num) + 1)
+            }
+        } else {
+            // that.removeClass("blueZan").addClass("zan");
+            that.find("img").attr("src", "/public/pc/images/thumb_gray@2x.png");
+            that.attr("data-zan", 0);   //设置开关为0
+            if ("" != num && num > -1) {
+                that.find("i").text(parseInt(num) - 1);
+            }
+        }
+    })
+
+
+    //浏览器改变触发该事件
+    $(window).resize(function () {
+        initWidthHight();
+    })
+    //初始化宽度
+    function initWidthHight() {
+        //初始化视频左边宽度
+        var videoPlay_width = $(window).outerWidth();
+        var videoPlay_height = $(window).height();
+        var rightWidth = $(".videoPlay_right").outerWidth();
+        var leftWidth = videoPlay_width - rightWidth;
+        $(".videoPlay_left").outerWidth(leftWidth);
+        //初始化视频右边文本框下边高度
+        var height1 = $(".videoPlay_right_top").outerHeight();
+        var height2 = $(".video_ul_tab").outerHeight();
+        //初始化视频左边高度
+        $(".videoPlay_left").height(videoPlay_height);
+        $(".v_catalog").height(videoPlay_height - height1 - height2);
+    }
+</script>
+</body>
+</html>

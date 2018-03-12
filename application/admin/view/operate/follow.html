@@ -1,0 +1,48 @@
+{include file="common/header" /}
+<style>
+	.layui-form-switch{margin-top: 0;}
+</style>
+<body>
+<div class="article_manage mCustomScrollbar">
+	<div class="right-side-header clearfix">
+	        <span>微信配置</span>
+	        {include file="common/admin" /}
+   	</div>
+   	<div class="right_side_content">
+		<div class="system_guanli_div">
+			<ul class="system_guanli_ul">
+				<li><a href="{:url('operate/index')}" >系统参数</a></li>
+				<li><a href="{:url('customenu/index')}" >自定义菜单</a></li>
+				<li><a href="{:url('operate/subscribereply')}">关注自动回复</a></li>
+				<li><a href="{:url('wechatkeywords/index')}" >关键字回复</a></li>
+				<li><a href="{:url('wechatkeywords/customer')}" >微信客服设置</a></li>
+				<li><a href="{:url('operate/follow')}" class="active">公众号关注引导</a></li>
+			</ul>
+		</div>
+		<div class="success_tip displayNone">已完成</div>
+	    <div class="add_article_main ">
+	    </div>
+        <div class="articleInfo_fill">
+	        <div class="layui-form-item ">
+	         <section class="panel panel-padding">
+				 <form class="layui-form" action='{:url("index")}'>
+					 <label class="layui-form-label"  style='padding:0 0 0 0;width: 120px;margin-right: 20px;'>公众号关注引导</label>
+					 <div class="layui-input-block">
+						 <input type="checkbox" name="is_follow" lay-skin="switch" {if $is_follow==1} checked="checked" {/if} lay-filter="ajax" data-params='{"url":"{:url("operate/follow")}","confirm":"true","data":""}'>
+						 <font style="padding:0 0 0 0;color:#999999;">（开启后，关注公众号以便于下次学习）</font>
+						 <br><br>
+					 </div>
+				 </form>
+	            </section>
+	        </div>
+	      </div>
+	    </div>
+	   
+    </div>
+    
+    {include file="common/version" /}
+    <script>
+        layui.use('adv');
+    </script>     
+</body>
+</html>

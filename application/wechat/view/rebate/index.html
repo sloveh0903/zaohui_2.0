@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>我的近况</title>
+    <link rel="stylesheet" href="/public/mobile/css/mui.min.css">
+    <link rel="stylesheet" href="/public/mobile/css/threeLevelMarketing.css">
+</head>
+<body class="bg_FAFAFA">
+<div class="my_jinkuang_top">
+    <div class="mui-row">
+        <img src="{$userinfo.face}" id="face">
+        <span id="nickname">{$userinfo.nickname}</span>
+        <a href="{:url('wechat/member/index')}">
+            <img src="/public/mobile/img/icon/arrow_left@2x20.png" alt="返回箭头">
+            <i>返回学习模式</i>
+        </a>
+    </div>
+    <ul class="my_jinkuang_nav">
+        <li><a href='{:url("index")}' class="active">近况</a></li>
+        <li><a href='{:url("record")}'>数据</a></li>
+        <li><a href='{:url("manage")}'>管理</a></li>
+    </ul>
+</div>
+<div class="my_jinkuang_main">
+    <div class="my_balance">
+      <span id="account">
+         <i></i>
+         {if $userinfo.alipay}
+         <a href="{:url('draw_apply')}">申请提现</a>
+         {else}
+         <a href="{:url('bind_account')}">申请提现</a>
+         {/if}
+      </span>
+    </div>
+    <div class="nearest_order"></div>
+    <div class="order_list_div">
+        <ul class="order_list_ul">
+        </ul>
+    </div>
+</div>
+{include file="common/menu" /}
+<script src="/public/mobile/js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="/public/mobile/js/globla.js"></script>
+<script>
+    var uid = '{$userinfo.uid}';
+    $('.mui-table-view li').find('img').eq(3).attr('src', '/public/mobile/img/icon/4a.png');
+    $('.mui-table-view li').find('.navcontent').removeClass('NavActive');
+    $('.mui-table-view li').find('.navcontent').eq(3).addClass('NavActive');
+    $.ajax({
+        url: host + 'rebate/index',
+        data: {
+            uid: uid
+        },
+        type: 'GET', //GET
+        async: true,    //或false,是否异步
+        timeout: 5000,    //超时时间
+        dataType: 'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+        success: function (data, textStatus, jqXHR) {
+            if (data.code == -2) {
+                mui.alert('token验证失败');
+                return false;
+            }
+            if (data.code == -3) {
+                location.reload();
+            }
+            if (data.code == 1) {
+
+                var result = data.data;
+                var count = 0;
+                console.log(data);
+                $("#account").find('i').html("账户余额 ￥" + result.money);
+                var list = '';
+                $.each(result.rebate,function(j,item){
+                    list += '<li> <p> <i>'+item.course_name+'</i> <time>'+item.create_time+'</time> </p> <div> <p> <span><i>订单金额</i><i>¥'+item.order_money+'</i></span> <span><i>订单类型</i><i>'+item.fxlevel+'分销(分成'+item.scale+'%)</i></span> <span><i>订单编号</i><i>'+item.order_sn+'</i></span> </p> <em>收入¥'+item.money+'</em> </div> </li>';
+                    count = j+1;
+                });
+                str_order = "最近"+count+"个订单";
+                $(".nearest_order").html(str_order);
+                $(".order_list_ul").html(list);
+            }
+        }
+    })
+</script>
+</body>
+</html>

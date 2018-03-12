@@ -1,0 +1,33 @@
+html, body {
+  background-color: #fff; }
+
+#tab-item {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  background: #fff;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.12);
+  display: flex;
+  z-index: 9; }
+  #tab-item a {
+    flex: 0 1 50%;
+    margin: 0 15px;
+    color: rgba(82, 84, 90, 0.4);
+    border: 0;
+    height: 50px;
+    line-height: 50px;
+    text-align: center; }
+  #tab-item .mui-active, #tab-item .active {
+    border-bottom: 2px solid #00b6f2;
+    color: #00b6f2; }
+
+#pullrefresh {
+  margin-top: 50px; }
+
+.bundle-showbox-div {
+  padding: 0 15px; }
+
+.bundle-content {
+  margin-bottom: 20px; }
+
+/*# sourceMappingURL=my-order.css.map */

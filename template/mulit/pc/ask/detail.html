@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+   <title> 问答详情 - {php}echo str_replace("\n","<br />",$ask['question']['title']);{/php}</title>
+   <link rel="stylesheet" href="/public/mulitpc/css/swiper.min.css">
+   <link rel="stylesheet" type="text/css" href="/public/mulitpc/css/common.css">
+   <link rel="stylesheet" type="text/css" href="/public/mulitpc/css/interlocution_detail-v72.css">
+   <link rel="stylesheet" href="/public/pc/css/jquery.fancybox.css">
+ <style>
+ .main-box .bottom-box {
+    text-align: center;
+    margin-top: 28px;
+  }
+  .main-box .bottom-box .showmore {
+    cursor: pointer;
+    color: #00b6f2;
+  }
+  .showmore2 {
+    cursor: pointer;
+    color: #00b6f2;
+  }
+  .content-box{flex:1;}
+  .fancybox{margin-right: 10px}
+ </style>
+   <!--[if lt IE 9]> 您的IE浏览器版本太低，请升级浏览器<![endif]-->
+</head>
+{include file="common/head" /}
+  <!-- main -->
+  <div class="main-box">
+    <div class="question-box">
+      <div class="content-top">
+        <div class="user-box">
+          
+          {if condition=" $ask.question.anonymous == 1"}
+          <img src="/public/image/anonymity.png" alt="user-avatar" class="user-avatar">
+          <p class="username">匿名</p>
+          {else}
+          <img src="{$ask.question.face}" alt="user-avatar" class="user-avatar">
+          <p class="username">{$ask.question.nickname}</p>
+          {/if}
+          {if condition="$ask.question.hot == 1"}
+          <i class="icon essence"></i>
+          {/if}
+        </div>
+        <p class="time">{$ask.question.create_time}</p>
+      </div>
+      <div class="desc">
+        <p href="#"> 
+        {php}
+           echo str_replace("\n","<br />",$ask['question']['title']);
+        {/php}</p>
+        <div class="img-box img90_group mt30">
+          {volist name="$ask.question.photopath" id="img" }
+          <a href="{$img}" class="fancybox" data-fancybox-group="gallery">
+          {if $ask['question']['photopath_thumb'][$i-1]=='1'}
+          <img src="{$ask['question']['photopath'][$i-1]}" alt="img" class="img90" >
+          {else}
+          <img src="{$ask['question']['photopath_thumb'][$i-1]}" alt="img" class="img90" >
+          {/if}
+          </a>
+          {/volist}
+        </div>
+      </div>
+    </div>
+    <div class="reply-box reply-box1">
+    {php}
+    $uid = session('uid');
+    if($uid){
+        $face = session('face');
+	    if(!$face || empty($face)){
+	      $face = '/public/pc/images/no_login@2x.png';
+	    }
+    }
+    else{
+      $face = '/public/pc/images/no_login@2x.png';
+    }
+
+    {/php}
+      <img src="{$face}" alt="" class="user-avatar">
+      <input type="text" class="reply-area" placeholder="输入回答...">
+      <i class="icon tick-icon"></i>
+    </div>
+    <div class="answer-box">
+      {if $ask.question.comments == 0}
+      <p class="no-answer" style="display: block;">
+          暂无评论
+      </p>
+      {else}
+      <p class="answer-count">
+        <span>{$ask.question.comments}</span>
+        条回答
+      </p>
+      {/if}
+      
+      <div id="answer-list">
+    </div>
+    <div class="bottom-box">
+        <i class="showmore" style="display: none">显示更多</i>
+    </div>
+    </div>
+
+  </div>
+
+
+
+  <!-- footer -->
+  <div class="footer">
+    <p>版权所有：{$config_data['copyright']}&nbsp;&nbsp;&nbsp;&nbsp;
+	  <!--<a href="http://www.grazy.cn/" target="_blank">格子匠技术支持 GRAZY.CN</a>-->
+	</p>
+  </div>
+
+<script src="/public/pc/js/jquery-1.11.0.min.js"></script>
+<script src="/public/pc/js/public_PC.js"></script>
+<script src="/public/mulitpc/js/swiper.jquery.min.js"></script>
+<script src="/public/jqadmin/js/layui/layui.js"></script>
+<script type="text/javascript" src="/public/pc/js/jquery.fancybox.js?v=2.1.5"></script>
+<script type="text/javascript">
+    $('.fancybox').fancybox();
+    var layer;
+    layui.use('layer', function(){
+        layer = layui.layer;
+
+    });
+    var id = '{$id}'; //问题id
+    var uid = '{$uid}';
+    var isBuy = '{$buy}';
+    var page = 1;
+    var cid = 0;
+    var face = '/public/pc/images/no_login@2x.png';
+    if(uid){
+      face = '{php}echo session("face"){/php}';
+    }
+    if(face == ''){
+       face = '/public/pc/images/no_login@2x.png';
+    }
+    getanswer();
+    $('.showmore').click(function(){
+        page++;
+        getanswer();
+    })
+    // v7.2回复按钮点击展开 点赞按钮点击变蓝
+    $('body').on('click','.reply', function () {
+      $(this).find('.reply-icon').toggleClass('active');
+      if (!($(this).find('p').data('content'))) {
+        $(this).find('p').data('content', $(this).find('p').html());
+      }
+      $(this).parent().siblings('.reply-box').toggleClass('flex-box');
+      if ($(this).parent().siblings('.reply-box').hasClass('flex-box')) {
+        $(this).find('p').html('收起回复');
+        $(this).parent().siblings('.replay-list').show();
+      } else {
+        $(this).parent().siblings('.replay-list').hide();
+        $(this).find('p').html($(this).find('p').data('content'));
+      }
+      $(this).parent().siblings('.answer-item').toggleClass('flex-box');
+    });
+
+    //获取回复
+    function getreply(that,data){
+    	$('.footer').css({'position': 'static', 'width': '100%'});
+          var reply_page = Number(that.attr('data-page'));
+          $.get(host+'/answer/indexpc',data,function(res){
+            if(res.code == 1){
+              that.attr('data-page',reply_page+1);
+              that.attr('data-has',1);
+              var reply = res.data.answer;
+             // console.log(reply);
+              var reply_inner = '';
+              //显示更多
+              var more = that.parent().next().next().next();
+              if(reply.length == 6){
+                more.show();
+              }else{
+                more.hide();
+              }
+              for(var i=0;i<reply.length;i++){
+                  if(reply[i].uid == 0){
+                      reply[i].face = '/public/gzadmin/images/admin_img.png';
+                      reply[i].nickname = '老师';
+                  }
+                  if(reply[i].face == ''){
+                      reply[i].face = '/public/pc/images/no_login@2x.png';
+                  }
+                  if(reply[i].root_id > 0){
+                      if(reply[i].puid == 0){
+                        reply[i].pnickname = '老师';
+                      }
+                      var reply_name = '@'+reply[i].pnickname;
+                  }else{
+                      var reply_name = '';
+                  }
+                  if(reply[i].has_likes == 1){
+                      var favo_active = 'active';
+                  }else{
+                      var favo_active = '';
+                  }
+                  if(reply[i].root_id > 0){
+                     var root_id = reply[i].root_id;
+                  }else{
+                     var root_id = reply[i].pid;
+                  }
+                  reply_inner += '<div class="answer-item flex-box">'+
+                        '<div class="img-box">'+
+                          '<img src="'+reply[i].face+'" alt="user-avatar">'+
+                        '</div>'+
+                        '<div class="content-box">'+
+                          '<div class="top">'+
+                            '<h4 class="user-id">'+reply[i].nickname+reply_name+'</h4>'+
+                            '<p class="answer-time">'+reply[i].create_time+'</p>'+
+                          '</div>'+
+                          '<p class="content">'+reply[i].content+'</p>'+
+                          '<div class="bottom">'+
+                            '<div class="favo" >'+
+                              '<i class="icon favo-icon '+favo_active+'" has_likes="'+reply[i].has_likes+'" data-id="'+reply[i].id+'"></i>'+
+                              '<p class="faco-count">'+reply[i].likes+'</p>'+
+                            '</div>'+
+                            '<div class="reply" data-has="0">'+
+                              '<i class="icon reply-icon"></i>'+
+                              '<p class="reply-count">'+
+                                '回复'+
+                              '</p>'+
+                            '</div>'+
+                          '</div>'+
+                          '<div class="reply-box reply-box3">'+
+                            '<img src="'+face+'" alt="user-avatar" class="user-avatar">'+
+                            '<input type="text" class="reply-area" placeholder="回复'+reply[i].nickname+'">'+
+                            '<i class="icon tick-icon" data-aid="'+reply[i].aid+'" data-puid="'+reply[i].uid+'" data-pid="'+reply[i].id+'" data-rootid="'+root_id+'"></i>'+
+                          '</div>'+
+                        '</div>'+
+                      '</div>';
+              }
+              that.parent().next().next().append(reply_inner);
+
+              //回复点赞
+              $('.favo-icon').on('click', function () {
+                if(!uid){
+                   layer.msg('请先登录');
+                   return false;
+                }
+                var that = $(this);
+                var faco_count = Number(that.next().text());
+                var itemid = that.attr("data-id");
+                if(that.attr('has_likes') != 1){
+                  var data = {
+                      itemid: itemid,
+                      uid: uid,
+                      typeid: 2
+                  }
+                  $.post(host + "like/add", data, function (result) {
+                      if (result.code == 1) {
+                        that.attr('has_likes',1) 
+                        that.addClass('active');
+                        that.next().text(faco_count+1);
+                      }
+                  });
+                }
+              })
+
+              //提交回复
+              $('.reply-box3 .tick-icon').click(function(){
+                  var content = $(this).prev().val();
+                  if(!uid){
+                     layer.msg('请先登录');
+                     return false;
+                  }
+                  if(content != ''){
+                      var puid = $(this).attr('data-puid');;
+                      var aid = $(this).attr('data-aid');
+                      var pid = $(this).attr('data-pid');;
+                      var anonymous = 0;
+                      var root_id = $(this).attr('data-rootid');;
+                      var data = {
+                          uid: uid,
+                          aid: id,
+                          anonymous: anonymous,
+                          content: content,
+                          puid: puid,
+                          pid: pid,
+                          root_id: root_id
+                      }
+                      $.post(host + "answer/add", data, function (result) {
+                          if (result.code == 1) {
+                        	  if(result.data.integral_code==1){
+              					var alert_str = result.data.msg;
+              				}else{
+              					var alert_str = '回复成功';
+              				}
+                      	    layer.msg(alert_str);
+                              //layer.msg('回复成功');
+                              location.reload();
+                              return true;
+                          } else if (result.code == -1) {
+                              layer.msg(result.message);
+                          } else {
+                              layer.msg('回复失败');
+                          }
+                      });
+                    }
+              })
+
+            }
+        });
+    }
+
+    //获取回答
+    function getanswer(){
+      $.get(host+'/ask/detailpc',{page:page,id:id,uid:uid},function(res){
+        if(res.code == 1){
+            var answer = res.data.answer;
+            var answer_inner = '';
+            if(answer.length >= 9){
+              $('.showmore').show();
+            }else{
+              $('.showmore').hide();
+            }
+            for(var i=0;i<answer.length;i++){
+                if(answer[i].uid == 0){
+                  answer[i].nickname = '老师';
+                  if(answer[i].face == ''){
+                      answer[i].face = '/public/pc/images/no_login@2x.png';
+                  }
+                   var teacher_icon = '<i class="icon teacher-icon"></i>';
+                }else{
+                  var teacher_icon = '<img src="'+answer[i].face+'" class="icon teacher-icon">';
+                }
+                if(answer[i].has_likes == 1){
+                    var favo_active = 'active';
+                }else{
+                    var favo_active = '';
+                }
+                answer_inner += '<div class="answer-item">'+
+                '<div class="img-box teacher-head">'+teacher_icon+'</div>'+
+                '<div class="content-box">'+
+                  '<div class="top">'+
+                    '<h4 class="user-id">'+answer[i].nickname+'</h4>'+
+                    '<p class="answer-time">'+answer[i].create_time+'</p>'+
+                  '</div>'+
+                  '<p class="content">'+answer[i].content+'</p>'+
+                  '<div class="bottom">'+
+                    '<div class="favo">'+
+                      '<i class="icon favo-icon '+favo_active+'" has_likes="'+answer[i].has_likes+'" data-id="'+answer[i].id+'"></i>'+
+                      '<p class="faco-count">'+answer[i].likes+'</p>'+
+                    '</div>'+
+                    '<div class="reply" data-page="1" data-id="'+answer[i].id+'" data-aid="'+answer[i].aid+'" data-has="0">'+
+                      '<i class="icon reply-icon"></i>'+
+                      '<p class="reply-count">'+
+                        '<span>'+answer[i].comments+'</span>'+
+                        '个回复'+
+                      '</p>'+
+                    '</div>'+
+                  '</div>'+
+                  '<div class="reply-box reply-box2">'+
+                    '<img src="'+face+'" alt="user-avatar" class="user-avatar">'+
+                    '<input type="text" class="reply-area" placeholder="回复'+answer[i].nickname+'">'+
+                    '<i class="icon tick-icon" pid="'+answer[i].id+'" puid="'+answer[i].uid+'" root_id="'+answer[i].id+'" aid="'+answer[i].aid+'"></i>'+
+                  '</div>'+
+                  '<div class="replay-list">'+
+                  '</div>'+
+                  '<div class="bottom-box" style="display:none">'+
+                      '<i class="showmore2">显示更多</i>'+
+                  '</div>'+
+                '</div>'+
+              '</div>';
+            }
+            if(page == 1){
+                $('#answer-list').html(answer_inner);
+            }else{
+                $('#answer-list').append(answer_inner);
+            }
+
+            //点赞
+            $('.content-box .favo-icon').on('click', function () {
+             if(!uid){
+                 layer.msg('请先登录');
+                 return false;
+              }
+              var that = $(this);
+              var faco_count = Number(that.next().text());
+              var itemid = that.attr("data-id");
+              if(that.attr('has_likes') == 0){
+                var data = {
+                    itemid: itemid,
+                    uid: uid,
+                    typeid: 2
+                }
+                $.post(host + "like/add", data, function (result) {
+                    if (result.code == 1) {
+                      that.attr('has_likes',1) 
+                      that.addClass('active');
+                      that.next().text(faco_count+1);
+                    }
+                });
+              }
+            })
+
+            //回复
+            $('.reply-box2 .tick-icon').click(function(){
+                var content = $(this).prev().val();
+                if(!uid){
+                   layer.msg('请先登录');
+                   return false;
+                }
+                if(content != ''){
+                    var puid = $(this).attr('puid');
+                    var aid = $(this).attr('aid');
+                    var pid = $(this).attr('pid');
+                    var anonymous = 0;
+                    //var root_id = $(this).attr('root_id');
+                    var root_id = 0;
+                    var data = {
+                        uid: uid,
+                        aid: id,
+                        anonymous: anonymous,
+                        content: content,
+                        puid: puid,
+                        pid: pid,
+                        root_id: root_id
+                    }
+          
+                    $.post(host + "answer/add", data, function (result) {
+                        if (result.code == 1) {
+                            layer.msg('回复成功');
+                            location.reload();
+                            return true;
+                        } else if (result.code == -1) {
+                            layer.msg(result.message);
+                        } else {
+                            layer.msg('回复失败');
+                        }
+                    });
+                }
+            })
+
+            //回复列表
+            $('.content-box').on('click','.reply', function () {
+              var that = $(this);
+              var has  = $(this).attr('data-has');
+              var answer_id = that.attr('data-id');
+              var aid = that.attr('data-aid');
+              var reply_page = that.attr('data-page');
+              $(this).addClass('active');
+              if(has != 1){
+                var data = {page:reply_page,size:6,pid:answer_id,aid:aid,uid:uid};
+               // console.log(data);
+                  getreply(that,data);
+              }
+            })
+
+            //更多回复
+            $('.showmore2').click(function(){
+              var that = $(this).parent().parent().find('.reply');
+              var answer_id = that.attr('data-id');
+              var aid = that.attr('data-aid');
+              var reply_page = that.attr('data-page');
+              var data = {page:reply_page,size:6,pid:answer_id,aid:aid,uid:uid};
+             // console.log(data);
+              getreply(that,data);
+            })
+        }
+      })
+    }
+
+
+    //提交回答
+    $('.reply-box1 .tick-icon').click(function(){
+        var content = $('.reply-box1 .reply-area').val();
+        if(!uid){
+           layer.msg('请先登录');
+           return false;
+        }
+        if(content != ''){
+              var puid = 0;
+              var aid = $(this).attr('data-aid');
+              var pid = 0;
+              var anonymous = 0;
+              var root_id = 0;
+              var data = {
+                  uid: uid,
+                  aid: id,
+                  anonymous: anonymous,
+                  content: content,
+                  puid: puid,
+                  pid: pid,
+                  root_id: root_id
+              }
+              $.post(host + "answer/add", data, function (result) {
+                  if (result.code == 1) {
+                	  if(result.data.integral_code==1){
+        					var alert_str = result.data.msg;
+        				}else{
+        					var alert_str = '回复成功';
+        				}
+                	    layer.msg(alert_str);
+                      location.reload();
+                      return true;
+                  } else if (result.code == -1) {
+                      layer.msg(result.message);
+                  } else {
+                      layer.msg('回答失败');
+                  }
+              });
+        }
+    })
+</script>
+<script src="/public/mulitpc/js/interlocution_detail-v72.js"></script>
+<script>
+$(function () {
+	   //console.log($(window).innerHeight());console.log($('.main-box').innerHeight());
+	    var tempheight = $(window).innerHeight() - 450 - $('.main-box').innerHeight();
+	    //console.log(tempheight);
+	 	if (tempheight> 0) {
+	      $('.footer').css({'position': 'absolute', 'width': '100%', 'bottom': '20px'})
+	    }else{
+	    	$('.footer').css({'position': 'static', 'width': '100%'})
+	    }
+	});
+</script>
+</body>
+</html>

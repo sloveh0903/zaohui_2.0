@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>VIP会员</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" href="/public/mobile/css/mui.min.css" />
+		<link rel="stylesheet" href="/public/mobile/css/globla.css" />
+		<link rel="stylesheet" type="text/css" href="/public/mobile/css/buyvip-7.3.1.css"/>
+		<link rel="stylesheet" type="text/css" href="/public/mobile/css/buyvip-7.3.2.css"/>
+		<style>
+			.buyvip{position: fixed;bottom: 0px;}
+			.grazy-zhichi{margin-bottom: 60px;height: 50px;  line-height: 50px;}
+			.explain2{padding: 0 10px 10px}
+		</style>
+	</head>
+	{include file="common/share" /}
+	<body>
+		<div class="head_top">
+			<div class="bg" style="background:url({php}echo session('face'){/php}) no-repeat center;background-size:cover;"></div>
+			<div class="head">	
+				<div class="head-blur"></div>
+				<div class="headl">
+					<img src="{php}echo session('face'){/php}" />
+					<div class="headl-right">
+						<p class="nickname" {if $vip == 0}style="margin-top:10px"{/if}>{:session('nickname')}{if $vip > 0}<span class="VIP_logo">VIP</span>{/if}</p>
+						{if $vip == 2}
+						<p class="VIP_con">终身会员</p>
+						{/if}
+						{if $vip == 1}
+						<p class="VIP_con">会员{php} echo date('Y-m-d',$expire_time){/php}到期</p>
+						{/if}
+						{if $vip == -1}
+						<p class="VIP_con">会员{php} echo date('Y-m-d',$expire_time){/php}已到期</p>
+						{/if}
+					</div>				
+				</div>
+			</div>
+		</div>
+
+		{if $vip == -1 || $vip == 1}
+		<p class="vip-explain">续费延长VIP有效期</p>
+		{/if}
+		<div class="vip-content">
+			<ul>
+				{volist name="user_card" id="vo"}
+				<li class="{if $i==1}cur{/if}" data-id="{$vo.id}">
+					<div class="con-left">
+						<p><span>VIP</span>{$vo.title}</p>
+						{if $vo['type'] == 'mouth'}
+						<i>一个月内可观看所有课程</i>
+						{/if}
+						{if $vo['type'] == 'season'}
+						<i>三个月内可观看所有课程</i>
+						{/if}
+						{if $vo['type'] == 'year'}
+						<i>一年内可观看所有课程</i>
+						{/if}
+						{if $vo['type'] == 'life'}
+						<i>可永久观看所有课程</i>
+						{/if}
+					</div>
+					<p class="con-right">￥<span>{$vo.price}</span></p>
+				</li>
+				{/volist}
+			</ul>
+		</div>
+		<div class="explain">
+			<i></i>
+			<p style="padding: 0px;margin-left: 10px">说明</p>
+			<i></i>
+		</div>
+		<p class="explain2">{$user_card[0]['explain']}</p>
+		<div class="grazy-zhichi">
+			<span>格子匠 GRAZY.CN 技术支持</span>
+	    </div>
+    	{if $vip != 2}
+    	<button class="buyvip buy">￥<span>{$user_card[0]['price']}</span>购买</button>
+    	{else}
+		<button class="buyvip" style="background: #f5f5f5;color: rgba(41, 43, 51, .4);border: 0px;">已购买</button>
+    	{/if}
+	</body>
+	<script type="text/javascript" src="/public/mobile/js/jquery-1.8.3.min.js" ></script>
+	<script type="text/javascript" src="/public/mobile/js/mui.min.js"></script>
+	<script type="text/javascript" src="/public/mobile/js/globla.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			var uid = '{$userinfo["uid"]}';
+			var openid = '{$userinfo.openid}'; //微信openid
+			var vip = '{$vip}';
+			$(".vip-content ul li").click(function(){
+				$(this).addClass("cur").siblings().removeClass("cur")
+				if(vip != 2){
+					var money= $('.vip-content ul li.cur>p.con-right>span').text()
+					$(".buyvip>span").text(money)
+				}	
+			})
+
+			//点击购买
+			$('.buy').click(function(){
+				if(vip != 2){
+					var id = $('.cur').attr('data-id');
+					$.post(host+'ucardrecord/create', {card_id:id,uid:uid},function(ret){  
+						if(ret.code == 1){
+							var card_sn = ret.data.card_sn;
+							$.get(host+"wxpay/unifiedorder?openid="+openid+"&card_sn="+card_sn+'&pay_channel=usercard', function(res){
+									var appId =  String(res.data.appid);
+									var timeStamp = String(res.data.timeStamp);
+									var nonceStr = res.data.nonce_str
+									var package = res.data.package
+									var paySign = res.data.sign
+									WeixinJSBridge.invoke(
+								       'getBrandWCPayRequest', {
+								           "appId":appId,     //公众号名称，由商户传入
+								           "timeStamp":timeStamp,  //时间戳，自1970年以来的秒数
+								           "nonceStr":nonceStr, //随机串
+								           "package":package,
+								           "signType":"MD5",  //微信签名方式：
+								           "paySign":paySign //微信签名
+								       },
+								       function(res){
+								           if(res.err_msg == "get_brand_wcpay_request:ok" ) {
+								           		setTimeout(function(){					 
+													url = "{:url('wechat/member/index')}";
+	                								window.location.href = url;
+								           		},1000);
+
+								           }
+								           // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。
+								       }
+								   );
+								});
+
+						}
+						console.log(ret);
+					},'json'); 
+				}
+			})
+		})
+	</script>
+</html>

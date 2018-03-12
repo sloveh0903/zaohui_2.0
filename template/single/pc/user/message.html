@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <title>问答消息</title>
+</head>
+<body class="bg-body-fff">
+  {include file="common/header" /}
+   <div class="personnal-bg-show">
+      <span>
+         <img src="{php}echo session('face'){/php}" >
+         <i>{php}echo session('nickname'){/php}</i>
+      </span>
+   </div>
+   <div class="wenda-info">
+      <div class="wenda-info-wrap ">
+         <div class="wenda-info-left">
+            <ul class="wenda-info-nav-ul">
+               <li class="active"><a href="{:url('/user/message')}">问答消息</a></li>
+               <li><a href="{:url('/user/myanswer')}">我的回答</a></li>
+               <li><a href="{:url('/user/mytiwen')}">我的提问</a></li>
+             <!--   <li><a href="{:url('/user/set')}">设置</a></li> -->
+            </ul>
+         </div>
+         <div class="wenda-info-right">
+            <ul class="myAnswer-ul">
+               {volist name="answer" id="item"}
+               <li>
+                  {if empty($item['face'])}
+                  <img src="/public/avatar/avatar-mid-img.png" >
+                  {else /}
+                  <img src="{$item['face']}" >
+                  {/if}
+                  <div >
+                     <i><a href="javascript:void(0)">{$item.nickname}</a><em>回答我：</em></i>
+                     <a href="javascript:void(0)">{$item.content}</a>
+                     <span><a href="{:url('/question/'.$item.ask_id)}">问题：{$item.title}</a></span>
+                     <p>
+                        <a href="javascript:void(0)" class="dianZan">
+                           <img src="/public/wenda/images/star_empty@2x16.png" ><i>{$item.likes}</i>
+                        </a>
+                        <time>{php} echo date('Y-m-d H:i:s',$item['create_time']){/php}</time>
+                     </p>
+                  </div>
+               </li>
+               {/volist}
+            </ul>
+            <div class="load-img-871">
+               {$page}
+              <!--  <img src="/public/wenda/images/load_img@2x20.png" alt="加载ing"> -->
+            </div>
+            <div class="wenda-pager-list">
+               <ul class="wenda-pager-ul">
+                  {$page}
+               </ul>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="kaitai-word">
+      <span>{include file="common/copyright" /}</span>
+   </div>
+   <!-- 移动端nav列表start -->
+   {include file="common/mobilenav" /}
+<script>
+   //问题回答字数截取
+   function showText(){
+      var a = $(".myAnswer-ul>li>div>a"),
+         text = a.html();
+      if( a.is(a) ){
+         if( text.length>70 ){
+            a.html( text.substring(0,70)+"<span>更多</span>");
+         }
+      } 
+   }
+   $(function(){
+      showText();
+   })
+</script> 
+</body>
+</html>

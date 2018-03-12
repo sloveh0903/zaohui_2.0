@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{$detail.title}</title>
+    <meta name="keywords" content="{$detail.seo_keywords}"/>
+    <meta name="description" content="{$detail.seo_description}"/>
+    <link rel="stylesheet" href="/public/mulitpc/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/public/mulitpc/css/common.css">
+    <link rel="stylesheet" type="text/css" href="/public/mulitpc/css/read_article.css">
+    <!--[if lt IE 9]> 您的IE浏览器版本太低，请升级浏览器<![endif]-->
+    <style>
+        .acticle_detail img {
+            max-width: 100%;
+        }
+    </style>
+</head>
+<body class="bg_FAFAFA">
+{include file="common/head" /}
+<div class="read_article_nav mt70 ">
+    <div class="w620">
+        <div class="read_article_nav_href">
+            <a href="/">首页/</a><a href="/index/article">阅读</a>
+        </div>
+    </div>
+</div>
+<div class="read_article_main pt30">
+    <div class="w620">
+        <div class="article_main_title font24 color292B33 dan">{$detail.title}</div>
+        <div class="read_article_teacher mt10">
+            <div class="leftFloat teacher_publish">
+                <i class="inlineBlock font13 opacity40">{$detail.create_time}</i>
+            </div>
+            <div class="rightFloat img_eye_comment">
+                <img src="/public/pc/images/eye_gray@2x.png" alt="浏览数" class="img_eye16"><i class="font13 opacity40">{$detail.views}</i>
+                <img src="/public/pc/images/comment_gray@2x16.png" alt="评论数" class="img_comment16"><i
+                    class="font13 opacity40">{$detail.comments}</i>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="acticle_detail">
+            {$detail.content}
+        </div>
+        <div class="banquan mt40">
+            <div class="leftFloat href_img">
+                <div class="relative   bdsharebuttonbox" id="share" style="">
+                    <a href="javascript:void(0)" class="bds_weixin  icon_a" data-cmd="weixin" title="分享到微信"></a>
+                    <a href="javascript:void(0)" class="bds_tsina icon_a " data-cmd="tsina" title="分享到新浪微博"></a>
+                </div>
+            </div>
+            <div class="rightFloat font13 opacity40 txt_banquan"> 著作权归作者所有</div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="more_article mt20">
+
+            <div class="rightFloat pt8">
+               
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+<div class="read_article_comment ">
+    <div class="w620 relative">
+        <div class="absolute_div ">
+            <div class="comment_frame_div">
+                <textarea class="comment_info" name="comment_info" maxlength="200" placeholder="输入评论.."></textarea>
+            </div>
+            <div class="div_publish">
+                <span class="word_num font14 color292B33 opacity20">0</span><i class="font14 color292B33 opacity20 ">/200</i>
+                {if condition="session('uid')"}
+                <a href="javascript:void(0)" class='a_publish send'><img src="/public/pc/images/btn_gou@2x.png"
+                                                                         alt="提交"></a>
+                {else}
+                <a href="javascript:void(0)" class='a_publish login'><img src="/public/pc/images/btn_gou@2x.png"
+                                                                          alt="提交"></a>
+                {/if}
+            </div>
+        </div>
+        <div class="comment_num_div"><span class="comment_num color292B33 font14">{$detail.comments}</span><i
+                class="color292B33 font14">评论</i></div>
+        {if $comments}
+        <div class="comment_detail mt10">
+            {foreach $comments as $comment}
+            <div class="comment_group" data-id="{$comment.id}" data-uid="{$comment.uid}">
+                <div class="leftFloat comment_head">
+                    <img src="{$comment.reviewer_face}" alt="{$comment.reviewer}">
+                </div>
+                <div class="leftFloat ml15 relative repeat_div">
+                    <div class="repeat_name leftFloat">
+                        {if $comment.pid}
+                        <i class="before_name">{$comment.reviewer}</i><i>回复</i><i class="after_name">{$comment.be_reviewer}</i><i>:</i>
+                        {else}
+                        <i class="before_name">{$comment.reviewer}</i>
+                        {/if}
+                    </div>
+                    <div class="repeat_time rightFloat ">{$comment.create_time}</div>
+                    <div class="clearfix"></div>
+                    <p class=" comment_content ">{$comment.content}</p>
+
+                    <div class="leftFloat img_thumb relative dolike">
+                        <a href="javascript:void(0)" class="a_thumb">
+                            {if $comment.is_like}
+                            <img src="/public/pc/images/thumb_blue@2x.png" data-flag="1" alt="点赞">
+                            {else}
+                            <img src="/public/pc/images/thumb_gray@2x.png" data-flag="0" alt="点赞">
+                            {/if}
+                            <i class="thumb_num font14 opacity40 color292B33 ">{$comment.likes}</i>
+                        </a>
+                    </div>
+                    <div class="rightFloat img_thumb relative comments">
+                        <a href="javascript:void(0)" class="a_repeat" data-repeat="0">
+                            <img src="/public/pc/images/comment_gray@2x16.png" alt="回复">
+                            <i class="repeat_word">回复</i>
+                        </a>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="repeat_alert" style="height: auto !important; margin-bottom: 0;"></div>
+                <div class="cutline "></div>
+            </div>
+            {/foreach}
+            <div class="customBootstrap">
+                {$page}
+            </div>
+        </div>
+        {/if}
+    </div>
+</div>
+{include file="common/bottom" /}
+<script src="/public/pc/js/jquery-1.11.0.min.js"></script>
+<script src="/public/pc/js/jquery.dotdotdot.min.js"></script>
+<script src="/public/pc/js/share.js"></script>
+<script src="/public/jqadmin/js/layui/layui.js"></script>
+<script src="/public/pc/js/public_PC.js"></script>
+<script src="/public/pc/js/placeholder.js"></script>
+
+<script>
+    var uid = "{:session('uid')}";
+    var face = "{:session('face')}";
+    var nickname = "{:session('nickname')}";
+    var aid = '{$detail.id}';
+    var layer;
+    layui.use('layer', function(){
+        layer = layui.layer;
+
+    });
+
+    $('.comment_info').on("keyup", function () {
+        $('.word_num').text($('.comment_info').val().length);//这句是在键盘按下时，实时的显示字数
+        if ($('.comment_info').val().length > 0) {
+            $('.a_publish').find('img').css('opacity', 1);
+        } else {
+            $('.a_publish').find('img').css('opacity', 0.4);
+        }
+        if ($('.comment_info').val().length > 200) {
+            $('.word_num').text(200);//长度大于100时0处显示的也只是100
+            $('.comment_info').val($('.comment_info').val().substring(0, 200));//长度大于100时截取钱100个字符
+        }
+    });
+    $('.word_num').text($('.comment_info').val().length);//这句是在刷新的时候仍然显示字数
+
+    //大拇指点赞
+    $(".dolike").on("click", function () {
+        var that = $(this);
+        var zanFlag = that.find('img').attr('data-flag');
+        var num = that.find("i").text();
+        var itemid = that.parent().parent().attr('data-id');
+
+        if (0 == parseInt(zanFlag)) {
+            that.find('img').attr("data-flag", 1); //设置开关为1
+            that.find("img").attr("src", "/public/pc/images/thumb_blue@2x.png");
+            $.ajax({
+                url: host + "like/add",
+                data: {typeid: 3, uid: uid, itemid: itemid},
+                dataType: 'json',
+                type: 'POST',
+                success: function (res) {
+                    if (res.code == 1) {
+                        that.find("i").text(parseInt(num) + 1)
+                    } else {
+                        layer.msg('点赞失败');
+                        return false;
+                    }
+                }
+            });
+        }
+    });
+    //点击回复
+    function getCurrTime() {
+        var objYMD = {};
+        var d = new Date();
+        var year = d.getFullYear();
+        var month = d.getMonth() + 1;
+        var day = d.getDate();
+        if (month < 10) {
+            month = "0" + month;
+        }
+        if (day < 10) {
+            day = "0" + day;
+        }
+        objYMD = {year: year, month: month, day: day};
+        return objYMD;
+    }
+
+    $('.comments').on('click', function () {
+        if (uid) {
+            var str = $(this).find(".repeat_word").html();
+            var group_box = $(this).parent().parent();
+            var before_name = group_box.find(".before_name").html();
+            var html = '<img src="' + face + '" alt="' + nickname + '" class="repeat_alert_img">' +
+                    '<input type="type" name="repeat_who_info" class="repeat_who_info" maxlength="200" placeholder=""> ' +
+                    '<a href="javascript:void(0)" class="a_repeat_user"><img  src="/public/pc/images/gou@2x40.png" alt="回复按钮"></a>';
+            if (str == "回复") {
+                group_box.find('.repeat_alert').append(html);
+                group_box.find('.repeat_alert').css('margin-bottom', '20px');
+                $(this).find(".repeat_word").html('取消回复');
+                group_box.find(".repeat_who_info").attr("placeholder", "回复" + before_name + "");
+            } else {
+                group_box.find('.repeat_alert').html("");
+                group_box.find('.repeat_alert').css('margin-bottom', '0px');
+                $(this).find(".repeat_word").html('回复');
+            }
+        } else {
+            $(".weixin_QRcord_alert_outside").show();
+        }
+    });
+
+    $('.send').on('click', function () {
+        var content = $('.comment_info').val();
+        if (content.length <= 0) {
+            layer.msg('评论内容不能为空');
+            return false;
+        }
+        $.ajax({
+            url: host + "article/comment",
+            data: {content: content, uid: uid, aid: aid},
+            dataType: 'json',
+            type: 'POST',
+            success: function (res) {
+                if (res.code == 1) {
+                    location.reload();
+                } else {
+                    layer.msg('评论失败');
+                    return false;
+                }
+            }
+        });
+    });
+
+    $('.login').on('click', function () {
+        $(".weixin_QRcord_alert_outside").show();
+    });
+
+
+    //点击 .a_repeat_user /public/pc/images/gou@2x40.png 显示页面
+    $(".comment_detail").on("click", ".a_repeat_user", function () {
+        var that = $(this);
+        var group_box = that.parent().parent();
+        var pid = group_box.attr('data-id');
+        var puid = group_box.attr('data-uid');
+        var content = that.prev(".repeat_who_info").val();
+        if (content.length <= 0) {
+            layer.msg('评论内容不能为空');
+            return false;
+        }
+        $.ajax({
+            url: host + "article/comment",
+            data: {content: content, uid: uid, aid: aid, pid: pid, puid: puid},
+            dataType: 'json',
+            type: 'POST',
+            success: function (res) {
+                if (res.code == 1) {
+                    location.reload();
+                } else {
+                    layer.msg('评论失败');
+                    return false;
+                }
+            }
+        });
+        console.log(puid);
+
+    });
+</script>
+</body>
+</html>

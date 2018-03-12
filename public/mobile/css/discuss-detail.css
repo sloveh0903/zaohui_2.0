@@ -1,0 +1,74 @@
+html, body {
+  background-color: #F0F3F5; }
+
+.upper-box, .qna-box {
+  background-color: #fff; }
+
+.upper-box, .lower-box {
+  padding-left: 15px; }
+
+.answer-item {
+  display: flex;
+  padding: 20px 15px 15px 0;
+  box-shadow: 0 1px rgba(0, 0, 0, 0.06); }
+  .answer-item .img-box {
+    flex: 0 0 40px;
+    height: 40px;
+    margin-right: 10px; }
+    .answer-item .img-box img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%; }
+  .answer-item .content-box {
+    flex: 1; }
+    .answer-item .content-box .con-top {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 6px; }
+      .answer-item .content-box .con-top .info h4 {
+        font-weight: 600;
+        margin-bottom: 6px; }
+      .answer-item .content-box .con-top .zan-i {
+        width: 24px;
+        height: 24px;
+        vertical-align: sub; }
+      .answer-item .content-box .con-top .zan-num {
+        color: rgba(104, 151, 177, 0.6);
+        margin-right: 3px; }
+    .answer-item .content-box .desc .fs-16 {
+      line-height: 1.7em;
+      margin-bottom: 8px; }
+    .answer-item .content-box .desc .answer-num {
+      color: rgba(104, 151, 177, 0.8); }
+
+.count-para {
+  height: 40px;
+  line-height: 40px;
+  padding-left: 15px;
+  background-color: #f0f3f5; }
+
+.fixed-btn {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  height: 50px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.1);
+  background-color: #fff; }
+  .fixed-btn .reply-btn {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-image: url("/public/mobile/img/icon/reply-btn.png");
+    margin-right: 5px; }
+  .fixed-btn p {
+    color: #00b6f2; }
+
+/*# sourceMappingURL=discuss-detail.css.map */

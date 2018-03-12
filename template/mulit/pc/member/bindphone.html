@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>个人中心</title>
+    <link rel="stylesheet" type="text/css" href="/public/mulitpc/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/public/mulitpc/css/common.css">
+    <link rel="stylesheet" type="text/css" href="/public/mulitpc/css/jquery.mCustomScrollbar.min.css">
+    <link rel="stylesheet" type="text/css" href="/public/mulitpc/css/personal_study.css">
+    <style>
+        .mCustomScrollbar li{margin: 10px;}
+        .mCustomScrollbar li .count{float:right;color: #bbb;font-size: 12px;}
+        .mCustomScrollbar li .course{color: #bbb;}
+        /*绑定手机号*/
+        .phone_box,.phone_already{
+            margin-top: 40px;
+        }
+        .phone_box.limit{
+            display: none;
+        }
+        .phone_box input{
+            height: 40px;
+            line-height: 38px;
+            border: 1px solid #EEEEEE;
+            border-radius: 3px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            color:rgba(41,43,51,.4);
+        }
+        .phone_num {
+            display: block;
+            width: 270px;
+            padding-left: 15px;
+        }
+        .verify_num{
+            display: inline-block;
+            width: 154px;
+            padding-left: 15px;
+        }
+        .get_validate{
+            display: inline-block;
+            width: 101px;
+            margin-left: 12px;
+            text-align: center;
+            background: transparent;
+            line-height: 38px;
+            border-radius: 3px;
+            border: 1px solid #EEEEEE;
+
+        }
+        .confirm_btn {
+            display: block;
+            width: 270px;   
+            height: 40px;
+            line-height: 38px;
+            color: #fff;
+            font-style: normal;
+            text-align: center;
+            background-color: #00B6F2;
+            cursor: pointer;
+        }
+        /*修改手机号*/
+        .phone_already p{
+            font-size: 14px;
+            color: rgba(41,43,51,.8);
+        }
+        .phone_already p span{
+            display: inline-block;
+            margin-left: 15px;
+            color: #00B6F2;
+            cursor: pointer;
+        }
+        .phone_already.limit{
+            display: none;
+        }
+        /*修改手机号弹框*/
+        .dialog {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            z-index: 100;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+        .dialog .bind-box {
+            width: 330px;
+            height: 283px;
+            padding: 30px;
+            background-color: #fff;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 3px;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.05);
+            position: relative;
+        }
+        .dialog .bind-box .cross {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 40px;
+            height: 40px;
+            background: url("/public/pc/images/delete@2x.png") no-repeat center/cover;
+        }
+        .dialog .bind-box .bind-caption {
+            font-size: 20px;
+            line-height: 27px;
+            color: #292b33;
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        .dialog .bind-box .validate_box {
+            margin-bottom: 30px;
+            position: relative;
+        }
+        .dialog .bind-box .validate_box label{
+            font-weight: normal;
+            font-size: 14px;
+            color: rgba(41,43,51,.6);
+            margin-bottom: 15px;
+        }
+        .dialog .bind-box .validate_num {
+            width: 56%;
+            height: 40px;
+            line-height: 38px;
+            padding-left: 15px;
+            border: 1px solid #EEEEEE;
+            border-radius: 3px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            color:rgba(41,43,51,.4);
+        }
+        .dialog .bind-box .error-alert {
+            font-size: 12px;
+            color: #f00;
+            position: absolute;
+            bottom: -21px;
+        }
+        .dialog .bind-box .confirm {
+            display: block;
+            height: 40px;
+            color: #fff;
+            font-style: normal;
+            line-height: 38px;
+            text-align: center;
+            background-color: #00B6F2;
+            border-radius: 3px;
+        }
+
+    </style>
+    <!--[if lt IE 9]> 您的IE浏览器版本太低，请升级浏览器！<![endif]-->
+</head>
+<body class="bg_FAFAFA">
+{include file="common/head" /}
+{include file="member/memberTop"/}
+<div class="userinfo-detail">
+  {include file="member/memberLeft" /}
+  <div class="detail-container" data-nav="4" data-name="set">
+    <div class="detail-title">
+      <p data-toggle="tab" style="font-size: 14px">绑定手机</p>
+    </div>
+    <div class="phone_box" {if $user.user.mobile}style='display:none'{/if}>
+      <div class="validate_box">
+        <input type="hidden" class="operation" value="0">
+        <input type="text" class="phone_num" placeholder="手机号码" id="phoneNumber">
+        <input type="text" class="verify_num" placeholder="验证码" id="verifynum" >
+        <button class="get_validate" id="span_getValidateCode">获取验证码</button>
+      </div>
+      <i class="confirm_btn">确认</i>
+    </div>
+    <div class="phone_already limit" {if $user.user.mobile}style='display:block'{/if}>
+      <p><i>{$user.user.mobile|substr_replace=###,'****',3,4}</i><span class="edit_phone">修改</span></p>
+    </div>
+  </div>
+</div>
+<div class="dialog">
+    <div class="bind-box">
+        <i class="cross"></i>
+        <h4 class="bind-caption">安全验证</h4>
+        <div class="validate_box">
+            <label>请先验证{$user.user.mobile|substr_replace=###,'****',3,4}</label>
+            <input type="hidden" name="old_phone" class="old_phone" value="{$user.user.mobile}">
+            <div class="validate_box">
+                <input type="text" class="validate_num" placeholder="验证码" id="validate_num" >
+                <button class="get_validate" id="getValidateCode">获取验证码</button>
+            </div>
+            <p class="error-alert"></p>
+        </div>
+        <i class="confirm" style="cursor:pointer">确定</i>
+    </div>
+</div>
+{include file="common/bottom" /}
+<!--<script src="/public/pc/js/jquery-1.11.0.min.js"></script>
+<script src="/public/pc/js/bootstrap.min.js"></script>
+<script src="/public/pc/js/jquery.mCustomScrollbar.concat.min.js"></script>
+<script src="/public/pc/js/jqmeter.min.js"></script>
+<script src="/public/pc/js/public_PC.js"></script>-->
+<script src="/public/pc/js/jquery-1.11.0.min.js"></script>
+<script src="/public/jqadmin/js/layui/layui.js"></script>
+<script src="/public/pc/js/public_PC.js"></script>
+<script src="/public/pc/js/placeholder.js"></script>
+<script>
+    $(function () {
+        //var host;
+        var layer;
+        var timeId=null;
+        layui.use('layer', function () {
+            layer = layui.layer;
+
+        });
+
+        $('.phone_box').on('focus', '.validate_num,.phone_num', function () {
+            $(this).css('color', 'rgba(41,43,51,.8)')
+        })
+        $('.phone_box').on('blur', '.validate_num,.phone_num', function () {
+            $(this).css('color', 'rgba(41,43,51,.4)')
+        })
+
+        //点就按钮获取验证码
+        var countdown = 60;
+        $('.phone_box').on('click','#span_getValidateCode',function () {
+            var that = $(this);
+            var phoneNumber = document.getElementById("phoneNumber").value;
+            if (phoneNumber.length == 0) {
+                layer.msg("请输入手机号码");
+                return false;
+            }
+            if (phoneNumber.length != 11 || !(/^1[3|7|4|5|8][0-9]\d{4,8}$/.test(phoneNumber))) {
+                layer.msg("请输入有效的手机号码");
+                return false;
+            }
+            settime(that);
+            sendcode(phoneNumber);
+        });
+
+        //安全验证获取验证码
+        $('.dialog').on('click','#getValidateCode',function () {
+            var that = $(this);
+            var old_phone = $(".old_phone").val();
+            if (old_phone.length == 0) {
+                layer.msg("请输入手机号码");
+                return false;
+            }
+            if (old_phone.length != 11 || !(/^1[3|7|4|5|8][0-9]\d{4,8}$/.test(old_phone))) {
+                layer.msg("请输入有效的手机号码");
+                return false;
+            }
+            settime(that);
+            sendcode(old_phone);
+        });
+
+        //安全验证
+        $('.dialog').on('click','.confirm',function () {
+            var old_phone = $(".old_phone").val();
+            var validate_num = $(".validate_num").val();
+            $.ajax({
+                url: host + 'user/check',
+                data: {
+                    uid: "{:session('uid')}",
+                    phone: old_phone,
+                    code: validate_num
+                },
+                type: 'POST', //GET
+                async: true,    //或false,是否异步
+                timeout: 5000,    //超时时间
+                dataType: 'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+                success: function (data, textStatus, jqXHR) {
+                    console.log(data);
+                    if (data.code == 1) {
+                        $('.operation').val('1');
+                        $('.phone_box').show();
+                        $('.phone_already').hide();
+                        $('.dialog').hide();
+                        cleartime($('#getValidateCode'));
+                    } else {
+                        layer.msg(data.message);
+                    }
+                }
+            });
+        });
+
+        $('.dialog').on('click','.cross',function () {
+            //cleartime($('#getValidateCode'));
+            $('.dialog').hide();
+        });
+
+
+        function sendcode(phone) {
+            $.ajax({
+                url: host + 'user/sendcode',
+                data: {
+                    uid: "{:session('uid')}",
+                    phone: phone
+                },
+                type: 'POST', //GET
+                async: true,    //或false,是否异步
+                timeout: 5000,    //超时时间
+                dataType: 'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+                success: function (data, textStatus, jqXHR) {
+                    console.log(data);
+                    if (data.code == 1) {
+                        codeNumber = data.data;
+                        var str = phone.substr(3, 4);
+                        layer.msg("验证码已免费发送到" + phone.replace(str, "****") + "");
+                    } else {
+                        layer.msg(data.message);
+                    }
+                }
+            });
+        }
+
+        function cleartime(obj) {
+            obj.attr("disabled",false);
+            obj.html("获取验证码");
+            clearTimeout(timeId);
+            countdown = 60;
+        }
+
+        function settime(obj) {
+            if (countdown == 0) {
+                obj.attr("disabled",false);
+                obj.html("获取验证码");
+                obj.removeClass('countDown');
+                obj.addClass('send');
+                countdown = 60;
+                return;
+            } else {
+                obj.attr("disabled",true);
+                obj.html("重新发送(" + countdown + ")");
+                obj.removeClass('send');
+                obj.addClass('countDown');
+                countdown--;
+            }
+            timeId = setTimeout(function() { settime(obj) },1000)
+        }
+
+        //提交拦截
+        $('.phone_box').on('click','.confirm_btn',function () {
+            var phoneNumber = document.getElementById("phoneNumber").value;
+            var validateCode = document.getElementById("verifynum").value;
+            var operation = $('.operation').val();
+            var url = '';
+            if(operation == '0'){
+                url = host + '/user/Checksms';
+            }else if(operation == '1'){
+                url = host + '/user/UpdatePhone';
+            }
+            if(url == ''){
+                layer.msg('参数错误');
+                return false;
+            }
+            $.ajax({
+                url: url,
+                data: {
+                    uid: "{:session('uid')}",
+                    phone: phoneNumber,
+                    mobile: phoneNumber,
+                    code: validateCode
+                },
+                type: 'POST', //GET
+                async: true,    //或false,是否异步
+                timeout: 5000,    //超时时间
+                dataType: 'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+                success: function (data, textStatus, jqXHR) {
+                    if (data.code == 1) {
+                        cleartime($('#span_getValidateCode'));
+                        layer.msg(data.message);
+                        location.reload();
+                        return true;
+                    } else {
+                        layer.msg(data.message);
+                        return false;
+                    }
+                }
+            });
+
+        });
+        $('.phone_already').on('click','.edit_phone',function () {
+            $('.dialog').css('display','flex');
+        })
+    });
+
+</script>
+</body>
+</html>

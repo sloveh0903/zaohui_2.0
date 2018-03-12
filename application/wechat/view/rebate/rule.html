@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <title>分销规则</title>
+   <link rel="stylesheet" href="/public/mobile/css/mui.min.css">
+   <link rel="stylesheet" href="/public/mobile/css/threeLevelMarketing.css">
+</head>
+<body class="bg_FAFAFA" >
+   <div class="distribution_describe">
+      <i>什么是分销？</i>
+      <p>基于微信平台，结合多级裂变分销模式，快速招募分销商为您销售产品，瞬间建立分销体系，抢占移动市场，快人一步。</p>
+   </div>
+   <div class="distribution_rule_main">
+      <div class="nearest_order">常见问题</div>
+      <div class="distribution_question">
+         <ul class="question_list_ul">
+            <li>
+               <div class="menu_parent_div">
+                  <i>如何赚取佣金？</i>
+                  <img src="/public/mobile/img/icon/arrow_drop_down@2x24.png" alt="向下箭头">
+               </div>
+               <p>用户产生任意消费行为后立即成为推广员，可参与推广店铺内的产品，好友通过其分享的推广链接或二维码产生购买行为后，推广员可以获得佣金，最多可获得三级佣金。</p>
+            </li>
+<!--             <li> -->
+<!--                <div class="menu_parent_div"> -->
+<!--                   <i>如何赚取佣金？</i> -->
+<!--                   <img src="/public/mobile/img/icon/arrow_drop_down@2x24.png" alt="向下箭头"> -->
+<!--                </div> -->
+<!--                <p>商家制定推广计划后，用户可通过推广计划页面申请成为推广员，商家审批通过后（设置为不需要审批则会自动通过）该用 -->
+<!-- 户即成为该店铺的推广员，可参与推广该店铺内的商品。</p> -->
+<!--             </li> -->
+         </ul>
+      </div>
+   </div>
+<script src="/public/mobile/js/jquery-3.2.1.min.js"></script>
+<script src="/public/mobile/js/mui.min.js"></script>
+<script>
+   $(".question_list_ul").on("click","li .menu_parent_div",function(){
+      var srcUp = "/public/mobile/img/icon/arrow_drop_up@2x24.png",
+          srcdown = "/public/mobile/img/icon/arrow_drop_down@2x24.png",
+          answer_p = $(this).closest(".menu_parent_div").next("p");
+          display = answer_p.css("display");
+      $(".question_list_ul li>p").slideUp();
+      $(".question_list_ul li .menu_parent_div img").attr("src",srcdown);
+      if( "none" == display ){
+         answer_p.slideDown();
+         $(this).find("img").attr("src", srcUp);
+      }else{
+         answer_p.slideUp();
+      }
+
+
+   })
+</script> 
+</body>
+</html>

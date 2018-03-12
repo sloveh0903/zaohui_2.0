@@ -1,0 +1,73 @@
+{include file="common/header" /}
+<style>
+span {
+color: #292B33;
+    opacity: .8;
+}
+</style>
+<body>
+<div class="article_manage">
+	<div class="right-side-header clearfix">
+	        <span>积分营销</span>
+	        {include file="common/admin" /}
+   </div>
+   <div class="right_side_content">
+	   	 <div class="system_guanli_div">
+            <ul class="system_guanli_ul">
+                <li><a href="javascript:void(0)" class="goto" data-src='{:url("integral/index")}'>获取积分设置</a></li>
+                <li><a href="javascript:void(0)" class="active  goto" data-src='{:url("integral/cash")}'>积分抵现</a></li>
+            </ul>
+        </div>
+		<div class="success_tip displayNone">已完成</div>
+	    <div class="course_right_main ">
+	        <section class="panel panel-padding">
+	            <form id="form1" class="layui-form layui-form-pane" action="{:url('cash')}">
+	                <div class="layui-form-item">
+	                    <label class="layui-form-label">积分抵现</label>
+	                    <div class="layui-input-inline">
+							<input type="checkbox" name="status" class="status" lay-skin="switch" {if $status==1}checked="checked" {/if}>
+	                    </div>
+	                </div>
+	                <div class="rule" {if $status==0}style='display:none'{/if}>
+	                <div class="layui-form-item ">
+	                    <label class="layui-form-label">积分抵现：每</label>
+	                    <div class="layui-input-inline">
+	                        <input type="text" name="deducted_integral" value="{$deducted_integral}" jq-verify="number" style="width: 80px" autocomplete="off" class="layui-input ">
+	                    </div>
+	                    <label class="layui-form-label"  style="width: auto">积分可抵扣1元</label>
+	                </div>
+	                <p style="color:rgb(41,43,51);opacity: 0.4;font-size: 14px;padding-left: 110px;">在结算时，用户可直接用积分抵扣实际付款金额<br><br></p>
+	                <div class="layui-form-item ">
+	                    <label class="layui-form-label">最高积分抵现</label>
+	                    <div class="layui-input-inline">
+	                        <input type="text" name="cash_percent" value="{$cash_percent}" name="number" jq-verify="number" style="width: 80px" autocomplete="off" class="layui-input ">
+	                    </div>
+	                    <label class="layui-form-label"  style="width: auto">%</label>
+	                </div>
+	                <p style="color:rgb(41,43,51);opacity: 0.4;font-size: 14px;padding-left: 110px;">使用积分抵消实际付款金额，最多可抵消课程金额的百分比<br><br></p>
+					</div>
+					<div class="line"></div>
+	                <div class="layui-form-item">
+	                    <div class="layui-input-block">
+	                        <button class="layui-btn" jq-submit lay-filter="submit">保存</button>
+	                    </div>
+	                </div>
+	            </form>
+	        </section>
+	    </div>
+	 </div>
+</div>
+
+{include file="common/version" /}
+<script>
+    layui.use('course');
+    $(document).on("click",'.layui-form-switch',function(){
+        if($(this).hasClass('layui-form-onswitch')){
+			$('.rule').show();
+		}else{
+            $('.rule').hide();
+		}
+	})
+</script>
+</body>
+</html>

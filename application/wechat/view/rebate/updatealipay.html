@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <title>修改支付宝</title>
+   <link rel="stylesheet" href="/public/mobile/css/mui.min.css" />
+   <link rel="stylesheet" href="/public/mobile/css/globla.css" />
+   <link rel="stylesheet" href="/public/mobile/css/member.css" />
+   <link rel="stylesheet" href="/public/mobile/css/threeLevelMarketing.css">
+</head>
+<body class="bg_FAFAFA">
+<div class="first">
+   <div class="mui-row bindFrom">
+      <ul>
+         <li>
+            <i>发送到{$userinfo.mobile}</i>
+            <input type="hidden" class="phone-num" value="{$userinfo.mobile}" placeholder="手机号码"/>
+            <button class="getCode send">获取验证码</button>
+         </li>
+         <li>
+            <input type="text" class="code" placeholder="验证码"/>
+         </li>
+      </ul>
+   </div>
+   <div class="q-btn">
+      <a class="next">下一步</a>
+   </div>
+</div>
+<div class="update_phone_main bindapliay" style="display: none">
+   <div class="identifyingCode_in alipay_fill ">
+      <input type="text" name="account" class="account" placeholder="支付宝账号">
+      <img src="/public/mobile/img/icon/gray_empty@2x20.png" alt="清空">
+   </div>
+   <div class="identifyingCode_in">
+      <input type="text" name="name" class="name" placeholder="真实姓名">
+   </div>
+   <div class="operate mt30">
+      <a href="bind_account.html" class="a_confirmDrawCash">确认</a>
+   </div>
+</div>
+</body>
+<script type="text/javascript" src="/public/mobile/js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="/public/mobile/js/mui.min.js"></script>
+<script type="text/javascript" src="/public/mobile/js/globla.js"></script>
+<script>
+    $(function() {
+        var mobile = '';
+        var uid = '{$userinfo.uid}';
+        mui('.bindFrom').on('tap','.getCode', function(){
+            mobile = $('.phone-num').val();
+            if(!(/^1[34578]\d{9}$/.test(mobile))){
+                mui.alert('手机号码有误', '提示',function(){
+                    $('.phone-num').val('');
+                });
+            }else{
+                settime($(this));
+                $.ajax({
+                    url:host+'user/sendcode',
+                    data:{
+                        uid:uid,
+                        phone:mobile
+                    },
+                    type:'POST', //GET
+                    async:true,    //或false,是否异步
+                    timeout:5000,    //超时时间
+                    dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+                    success:function(data,textStatus,jqXHR){
+                        if(data.code==1){
+                            mui.toast('短信发送成功');
+                        }
+                    }
+                });
+            }
+        });
+        mui('.q-btn').on('tap','.next',function () {
+            var code = $('.code').val();
+            mobile = $('.phone-num').val();
+            if(!(/^\d{4}$/.test(code))){
+                mui.alert('验证码错误', '提示',function(){
+                    $('.code').val('');
+                });
+            }else{
+                $.ajax({
+                    url:host+'user/check',
+                    data:{
+                        uid:uid,
+                        phone:mobile,
+                        code:code,
+                        type:'center'
+                    },
+                    type:'POST', //GET
+                    async:true,    //或false,是否异步
+                    timeout:5000,    //超时时间
+                    dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+                    success:function(data,textStatus,jqXHR){
+                        if(data.code==1){
+                            $('.first').hide();
+                            $('.bindapliay').show();
+                        }
+                    }
+                });
+            }
+        });
+        mui('.operate').on('tap','.a_confirmDrawCash',function () {
+            var account = $('.account').val();
+            var name = $('.name').val();
+            if(!(account) || !(name)){
+                mui.alert('支付宝账号或真实姓名不能为空', '提示',function(){
+                    $('.code').val('');
+                });
+            }else{
+                $.ajax({
+                    url:host+'rebate/BindAlipay',
+                    data:{
+                        uid:uid,
+                        account:account,
+                        name:name
+                    },
+                    type:'POST', //GET
+                    async:true,    //或false,是否异步
+                    timeout:5000,    //超时时间
+                    dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+                    success:function(data,textStatus,jqXHR){
+                        if(data.code==1){
+                            mui.toast('支付宝修改成功');
+                            url = "{:url('wechat/rebate/manage')}";
+                            window.location.href = url;
+                        }else{
+                            mui.alert(data.error, '提示',function(){
+                                $('.account').val('');
+                                $('.name').val('');
+                            });
+                        }
+                    }
+                });
+            }
+        });
+        var countdown=60;
+        function settime(obj) {
+            if (countdown == 0) {
+                obj.attr("disabled",false);
+                obj.html("获取验证码");
+                obj.removeClass('countDown');
+                obj.addClass('send');
+                countdown = 60;
+                return;
+            } else {
+                obj.attr("disabled",true);
+                obj.html("重新发送(" + countdown + ")");
+                obj.removeClass('send');
+                obj.addClass('countDown');
+                countdown--;
+            }
+            setTimeout(function() {
+                    settime(obj) }
+                ,1000)
+        }
+    })
+</script>
+</html>

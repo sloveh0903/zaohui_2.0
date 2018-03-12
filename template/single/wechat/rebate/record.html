@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>我的数据</title>
+    <link rel="stylesheet" href="/public/mobile/css/mui.min.css">
+    <link rel="stylesheet" href="/public/mobile/css/threeLevelMarketing.css">
+    <link rel="stylesheet" href="/public/mobile/css/globla.css" />
+</head>
+<body class="bg_FAFAFA">
+<div class="my_jinkuang_top">
+    <div class="mui-row">
+        <img src="{$userinfo.face}" alt="{$userinfo.nickname}">
+        <span>{$userinfo.nickname}</span>
+        <a href="{:url('wechat/member/index')}">
+            <img src="/public/mobile/img/icon/arrow_left@2x20.png" alt="返回箭头">
+            <i>返回学习模式</i>
+        </a>
+    </div>
+    <ul class="my_jinkuang_nav">
+        <li><a href='{:url("index")}'>近况</a></li>
+        <li><a href='{:url("record")}' class="active">数据</a></li>
+        <li><a href='{:url("manage")}'>管理</a></li>
+    </ul>
+</div>
+<div class="my_jinkuang_main">
+    <div class="my_data_content">
+        <ul class="my_data_ul">
+            <li>
+                <em>已赚佣金</em>
+                <p>
+                    <span class="p11"><i></i><i>元</i><i>今日直销</i></span>
+                    <span class="p12"><i></i><i>元</i><i>今日下级</i></span>
+                    <span class="p13"><i></i><i class="company">元</i><i>总收入</i></span>
+                </p>
+            </li>
+            <li>
+                <em>下级推广员</em>
+                <p>
+                    <span class="p21"><i></i><i>元</i><i>贡献佣金</i></span>
+                    <span class="p22"><i></i><i>人</i><i>今日发展</i></span>
+                    <span class="p23"><i></i><i>人</i><i>合计发展</i></span>
+                </p>
+            </li>
+            <li>
+                <em>下2级推广员</em>
+                <p>
+                    <span class="p31"><i></i><i>元</i><i>贡献佣金</i></span>
+                    <span class="p32"><i></i><i>人</i><i>今日发展</i></span>
+                    <span class="p33"><i></i><i>人</i><i>合计发展</i></span>
+                </p>
+            </li>
+        </ul>
+    </div>
+</div>
+{include file="common/menu" /}
+<script src="/public/mobile/js/jquery-3.2.1.min.js"></script>
+<script src="/public/mobile/js/mui.min.js"></script>
+<script src="/public/mobile/js/globla.js"></script>
+<script>
+    $(function() {
+        var uid = '{$userinfo.uid}'; //用户id
+        var isbind = '{$userinfo.is_bind}';
+        $('.mui-table-view li').find('img').eq(2).attr('src', '/public/mobile/img/icon/4a.png');
+        $('.mui-table-view li').find('.navcontent').removeClass('NavActive');
+        $('.mui-table-view li').find('.navcontent').eq(2).addClass('NavActive');
+        $.ajax({
+            url: host + 'rebate/data',
+            data: {
+                uid: uid
+            },
+            type: 'GET', //GET
+            async: true,    //或false,是否异步
+            timeout: 5000,    //超时时间
+            dataType: 'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+            success: function (data, textStatus, jqXHR) {
+                if (data.code == -2) {
+                    mui.alert('token验证失败');
+                    return false;
+                }
+                if (data.code == -3) {
+                    location.reload();
+                }
+                if (data.code == 1) {
+                    var result = data.data;
+                    var total_money = Number(result.total_money);
+                    if(total_money > 10000){
+                        $('.company').text('千元');
+                        total_money = total_money/1000;
+                        total_money = total_money.toFixed(1);
+                        $('.p13').find('i').eq(0).html(total_money);
+                    }else{
+                        $('.p13').find('i').eq(0).html(total_money);
+                    }
+                    $('.p11').find('i').eq(0).html(result.my_day_money);
+                    $('.p12').find('i').eq(0).html(result.partner_day_money);
+                    $('.p21').find('i').eq(0).html(result.p1_money);
+                    $('.p22').find('i').eq(0).html(result.day_p1_count);
+                    $('.p23').find('i').eq(0).html(result.p1_count);
+                    $('.p31').find('i').eq(0).html(result.p2_money);
+                    $('.p32').find('i').eq(0).html(result.p2_count);
+                    $('.p33').find('i').eq(0).html(result.day_p2_count);
+                }
+            }
+        })
+    });
+</script>
+<script src="/public/mobile/js/bindmobile.js"></script>
+</body>
+</html>

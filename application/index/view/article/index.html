@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>阅读</title>
+    <link rel="stylesheet" href="/public/pc/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/public/pc/css/all.css">
+</head>
+<body class="bg_FAFAFA">
+{include file="common/head" /}
+<div class=" read_main mt70 pb20">
+    <div class="w940">
+        <div class="read_main_lunbo mt30">
+            <div data-ride="carousel" class="carousel slide" id="carousel-example-generic">
+                <ol class="carousel-indicators">
+                    {volist name="advs" id="vo" key="k"}
+                    <li class="{$k==1 ? 'active' : ''}" data-slide-to='{$k}' data-target='#carousel-example-generic'></li>
+                    {/volist}
+                </ol>
+                <div role="listbox" class="carousel-inner">
+                    {volist name="advs" id="ao" key="key"}
+                    <div class="item {$key==1 ? 'active' : ''} ">
+                        <a href='{$ao.link}'><img src="{$ao.photopath}" alt="{$ao.title}"></a>
+                    </div>
+                    {/volist}
+                </div>
+            </div>
+        </div>
+        <div class="mt30 read_main_middle">
+            <div class="read_main_left leftFloat">
+                <div class="read_main_left_list mt20 ">
+                    {foreach $articles as $article}
+                    <div class="list_group">
+                        <a href='{:url("detail",["id"=>$article.id])}' target="_blank" class="list_group_href">
+                            <div class="list_left leftFloat">
+                                <img src="{$article.banner}" alt="{$article.title}">
+                            </div>
+                            <div class="list_right leftFloat">
+                                <span class="list_right_p1 color292B33 font24  dot-ellipsis dot-height-40" style="height: 1.6em; overflow: hidden; text-overflow: ellipsis; word-wrap: break-word; white-space: nowrap;display: block">{$article.title}</span>
+                                <p class="font14 color292B33 opacity60" style="height: 62px;">{$article.desc}</p>
+
+                                <div class=" list_right_footer ">
+                                    <div class="leftFloat">
+                                        <img src="/public/pc/images/eye_gray@2x.png" alt="浏览数" class="img_eye16"><i
+                                            class="font13 opacity40">{$article.views}</i>
+                                        <img src="/public/pc/images/comment_gray@2x16.png" alt="评论数"
+                                             class="img_comment16"><i class="font13 opacity40">{$article.comments}</i>
+                                    </div>
+                                    <div class="rightFloat "><i class="time_show font13 opacity40">{$article.create_time}</i>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </a>
+                    </div>
+                    {/foreach}
+                    <div class="customBootstrap">
+                        {$page}
+                    </div>
+                </div>
+            </div>
+            <div class="read_main_right leftFloat">
+                <div class="mall_div">
+                    <ul class="mall_ul">
+                        {foreach $categorys as $category}
+                        <li>
+                            <a href='{:url("article",["cid"=>$category.id])}' target="_blank">
+                                <img src="{$category.small_photo}" alt="{$category.cate_name}">
+                            </a>
+                        </li>
+                        {/foreach}
+                    </ul>
+
+                </div>
+                <div class="use_xcx mt30">
+                    <p class="opacityWhite">使用小程序</p>
+                    <p class="opacityWhite">课程随时学</p>
+                    <a href="javascript:void(0)" target="_blank" class="a_get textCenter mt10">获取</a>
+                    <div class="rightFloat youren_main2_smallCX ml20 relative pt10">
+                        <div class="smallCX displayNone" style="top: -302px;">
+                            <div class="close" style="position: absolute;right: 0;top: 0;"><img src="/public/pc/images/delete@2x.png" width="30" height="30"></div>
+                            <div class="smallCX_QRcord">
+                                <img src="/public/pc/images/gh_5238cc8f786e_344.jpg" alt="小程序二维码">
+                            </div>
+                            <div class="smallCX_img textCenter">
+                                <span class="color292B33 opacity60 inlineBlock">小程序<br>手机微信扫一扫</span>
+                            </div>
+                        </div>
+                        <!-- </div> -->
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+    {include file="common/bottom" /}
+</div>
+<script src="/public/pc/js/jquery-1.11.0.min.js"></script>
+<script src="/public/pc/js/jquery.dotdotdot.min.js"></script>
+<script src="/public/pc/js/bootstrap.min.js"></script>
+<script src="/public/pc/js/public_PC.js"></script>
+<script>
+    $(".a_get").on('click',function () {
+        $(".smallCX").show();
+    });
+    $(".close,.smallCX").on('click',function () {
+        $(".smallCX").hide();
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>搜索</title>
+		<link rel="stylesheet" href="/public/mobile/css/mui.min.css" />
+		<link rel="stylesheet" href="/public/mobile/css/globla.css" />
+		<link rel="stylesheet" href="/public/mobile/css/seach.css" />
+		<style>
+			#pullrefresh{
+				padding: 0 0 50px 0;
+				margin-top: 50px;
+			}
+		</style>
+		<style type="text/css">
+		.list{display: none}
+		.clearfix::after {
+		   content: ".";
+		   display: block;
+		   height: 0;
+		   clear: both;
+		   visibility: hidden;
+		}
+		.list-content .mui-table-view li img {
+    		width: 60px;
+    	}
+	</style>
+	</head>
+	{include file="common/share" /}
+	<body>
+		<div class="clearfix" style="margin-top: 10px;">
+			<input type="text" placeholder="搜索课程与视频" style="width: 80%;margin-left: 20px" />
+			<i class="mui-icon mui-icon-search" style="margin-left: 10px"></i>
+		</div>
+		
+<!-- 		<div class="mui-row seachOne-seach"> -->
+<!-- 			<input placeholder="搜索课程" /> -->
+<!-- 			<i class="mui-icon mui-icon-search"></i> -->
+<!-- 		</div> -->
+		<div id="pullrefresh" class="mui-scroll-wrapper" style="padding-bottom: 50px">
+		<div class="mui-scroll">
+		<div class="seachOne-num font-color-6 course-count">0相关课程</div>
+		<div class="mui-row list-content">
+			<ul class="mui-table-view">
+
+			
+			</ul>
+		</div>
+		<div>
+		</div>
+		<script type="text/javascript" src="/public/mobile/js/jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="/public/mobile/js/mui.min.js"></script>
+		<script type="text/javascript" src="/public/mobile/js/globla.js"></script>
+	</body>
+	<script>
+		//var host = 'https://api.fuwangdian.com/api/';
+        var uid = '{$userinfo.uid}'; //用户id
+        var isbind = '{$userinfo.is_bind}';
+		var keyword = '{$keyword}';
+		var page = 1;
+		var size = 10;
+		var data = {
+			'page':page,
+			'size':size,
+			'keyword':keyword
+		};
+		getlist(data);
+		function getlist(data){
+			$.ajax({
+				url:host+"search/index",
+				type:'GET',
+				async:false,
+				data:data,
+				success: function(result){
+			      	console.log(result);
+					if(page > 1){
+						mui('#pullrefresh').pullRefresh().endPullupToRefresh();
+					}
+			      	if(result.code == 1){
+			      		var course = result.data.course;
+			      		var course_count = result.data.course_count;
+			      		var course_innser = '';
+			      		for(var i=0;i<course.length;i++){
+			      		    course_innser += 
+							'<li data-id="'+course[i].cid+'"><a>'+
+								'<img src="'+course[i].face+'" />'+
+								'<div class="content">'+
+									'<h1>'+course[i].title+'</h1>'+
+									'<span>'+course[i].info+'</span>'+
+									'<i>'+course[i].studycount+'人在学</i>'+
+								'</div>'+
+								'<span class="price">'+
+								'￥'+course[i].price+
+							'</span></a></li>';
+			      		}
+			      		if(page == 1){
+			      			$('.course-count').html(course_count+'相关课程');
+			      			$('.mui-table-view').html(course_innser);
+			      		}else{
+			      			if(course_count > 0){
+			      				$('.mui-table-view').append(course_innser);
+			      			}
+			      		}
+			     	}else{
+			      		mui.alert('数据请求失败');
+			        }
+		   		}
+			});
+		}
+
+		mui(".mui-row").on('tap', '.mui-table-view li', function (event) {
+			var cid = $(this).attr('data-id');
+			var url = "{:url('wechat/course/detail')}";
+			window.location.href=url+'?cid='+cid;
+		});
+		
+		
+		//点搜索按钮
+		mui(".clearfix").on('tap', '.mui-icon-search', function (event) {
+		    keyword = $('.clearfix input').val();
+		    console.log(keyword);
+		    page = 1;
+			if(keyword != ""){
+				var data = {
+					'keyword':keyword,
+					'page':page,
+					'size':size,
+				};
+				getlist(data);
+			}
+		});
+
+		mui.init({
+            pullRefresh: {
+                container: '#pullrefresh',
+                up : {
+                    //height:50,//可选.默认50.触发上拉加载拖动距离
+                    //auto:true,//可选,默认false.自动上拉加载一次
+                    contentrefresh : "",//可选，正在加载状态时，上拉加载控件上显示的标题内容
+                    contentnomore:'',//可选，请求完毕若没有更多数据时显示的提醒内容；
+                    callback :pullupRefresh //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+                }
+
+            }
+        });
+
+
+		function pullupRefresh() {
+		console.log('下拉');
+            setTimeout(function() {
+                page++;//翻下一页
+                var data = {
+					'keyword':keyword,
+					'page':page,
+					'size':size,
+				};
+               getlist(data);
+            }, 100);
+        }
+
+
+	</script>
+	<script src="/public/mobile/js/bindmobile.js"></script>
+</html>

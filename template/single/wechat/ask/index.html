@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>问答</title>
+		<link rel="stylesheet" href="/public/mobile/css/mui.min.css" />
+		<link rel="stylesheet" href="/public/mobile/css/globla.css" />
+		<link rel="stylesheet" href="/public/mobile/css/interlocution.css" />
+		<link rel="stylesheet" href="/public/mobile/css/read.css" />
+		<link rel="stylesheet" href="/public/mobile/js/wsiper/swiper.min.css" />
+		<link rel="stylesheet" href="/public/mobile/js/imgpreview/dialog.css" />
+		<link rel="stylesheet" href="/public/mobile/js/imgpreview/mobile-photo-preview.css" />
+		<script src="/public/mobile/js/compatible.js"></script>
+		<style>
+			#pullrefresh{
+				padding: 0 0 50px 0;
+				margin-top: 50px;
+			}
+		</style>
+	</head>
+	{include file="common/share" /}
+	<body>
+		<div class="wrap">
+	          <div class="QA-nav">
+	            <p class="QA-nav-title">{$catname}</p>
+	            <i class="QA-nav-filter">筛选</i>
+	          </div>
+	          <div id="pullrefresh" class="mui-scroll-wrapper" style='margin-top:50px;'>
+				<div class="mui-scroll">
+					<div class="swiper-slide" style="background: #FFF">
+						<div class="content-slide ask-content">
+	
+						</div>
+					</div>
+				</div>
+			</div>
+	        {include file="common/menu" /}
+		   <div class="ask-add"><a class="icon-add" style="bottom: 70px;"></a></div>
+    	</div>
+ 		 <div class="dialog">
+	      <div class="filter-box">
+	        <h4>课程筛选</h4>
+	        <ul class="filter-list">
+	         <li {if condition=" $cid == 0"}class="filter-items selected" {else} class="filter-items" {/if}  data-id='0'>
+	          		全部
+	          	</li>
+	        	 {volist name="category" id="data"}
+	            <li {if condition=" $cid == $data.cid "}class="filter-items selected" {else} class="filter-items" {/if}  data-id='{$data.cid}'>
+	          		{$data.title}
+	          	</li>
+	        	{/volist}
+	        </ul>
+<!-- 	        <div class="tip"> -->
+<!-- 	          <p>付费课程需</p> -->
+<!-- 	          <a class="buy" href="{:url('/wechat/index')}">购买</a> -->
+<!-- 	          <p>后提问</p> -->
+<!-- 	        </div> -->
+	      </div>
+	      <div class="alert-box">
+	        <h4>需要购买课程</h4>
+	        <p>购买课程学习后即可提问</p>
+	        <div class="operation">
+	          <i class="cancel">取消</i>
+	          <a class="buy" href="{:url('/wechat/course/detail')}?cid={$turn_cid}">购买课程</a>
+	        </div>
+	      </div>
+	     
+	      {if $pay_category}
+	       <div class="post-box">
+	        <h4>选择课程</h4>
+	        <ul class="filter-list">
+	        	 {volist name="pay_category" id="data"}
+	            <li {if condition=" $cid == $data.cid "}class="filter-items selected" {else} class="filter-items" {/if}  data-id='{$data.cid}'>
+	          		{$data.title}
+	          	</li>
+	        	{/volist}
+	        </ul>
+	        {if $canask}
+	        <div class="tip">
+	          <p>付费课程需</p>
+	          <a class="buy" href="{:url('/wechat/index')}">购买</a>
+	          <p>后提问</p>
+	        </div>
+	        {/if}
+	       </div>
+	     {else}
+	      <div class="alert-box" style="display: flex;">
+	        <h4>需要购买课程</h4>
+	        <p>购买课程学习后即可提问</p>
+	        <div class="operation">
+	          <i class="cancel">取消</i>
+	          <a class="buy" href="{:url('/wechat/index')}">购买课程</a>
+	        </div>
+	      </div>
+<!-- 	     <h4>提示</h4> -->
+<!-- 	     <div class="tip"> -->
+<!-- 	          <span>很抱歉，您暂时无法提问，</span> -->
+<!-- 	          <a class="buy" href="{:url('/wechat/index')}">购买</a> -->
+<!-- 	           <span>课程后可立即提问~</span> -->
+<!-- 	        </div> -->
+	     {/if}
+	      
+	    </div>
+		<script src="/public/mobile/js/jquery-3.2.1.min.js"></script>
+		<script src="/public/mobile/js/mui.min.js"></script>
+		<script type="text/javascript" src="/public/mobile/js/globla.js"></script>
+		<script type="text/javascript" src="/public/mobile/js/wsiper/idangerous.swiper.min.js"></script>
+		<script type="text/javascript" src="/public/mobile/js/imgpreview/dialog.min.js"></script>
+		<script type="text/javascript" src="/public/mobile/js/imgpreview/mobile-photo-preview.min.js"></script>
+		<script type="text/javascript">
+			$('.preview-list').MobilePhotoPreview({
+				trigger: '.preview',
+			});
+
+			$(function() {
+				$("#intNav li").click(function() {
+					$(this).addClass("mui-active");
+					$(this).siblings().removeClass("mui-active");
+        });
+        // 弹窗
+        var isBuy = true;
+        $('.QA-nav-filter').on('tap', function () {
+          $(this).addClass('focus');
+          $('.wrap').addClass('blur');
+          $('.dialog')
+          .css('display', 'flex')
+          .find('.filter-box')
+          .css('display', 'flex')
+          .siblings()
+          .hide();
+        });
+        $('.dialog, .alert-box .cancel').on('tap', function (e) {
+          $('.dialog').hide();
+          $('.wrap')
+          .removeClass('blur')
+          .end()
+          .find('.QA-nav-filter')
+          .removeClass('focus');
+        }).children('div').on('tap', function (e) {
+          e.stopPropagation();
+        });
+        $('.icon-add').on('tap', function (e) {
+          if(!isBuy) {
+            $('.wrap')
+            .addClass('blur')
+            .end()
+            .find('.dialog')
+            .css('display', 'flex')
+            .find('.alert-box')
+            .css('display', 'flex')
+            .siblings()
+            .hide();
+          } else {
+            $('.wrap')
+            .addClass('blur')
+            .end()
+            .find('.dialog')
+            .css('display', 'flex')
+            .find('.post-box')
+            .css('display', 'flex')
+            .siblings()
+            .hide();
+          }
+          
+        })
+        
+      });
+		</script>
+		<script>
+		//选择课程
+		$(".filter-box .filter-items").on("click", function () {
+			  var that = $(this);
+              var itemid = that.attr("data-id");
+              var url = "{:url('wechat/ask/index')}?cid="+itemid;
+				window.location.href=url;
+        });
+		//提问
+		$(".post-box .filter-items").on("click", function () {
+			  var that = $(this);
+            var itemid = that.attr("data-id");
+            var url = "{:url('wechat/ask/answer')}?cid="+itemid;
+				window.location.href=url;
+      })
+		</script>
+		<script type="text/javascript">
+			var page = 1;
+			var size = 10;
+			var cid= {$cid};
+            var uid = '{$userinfo.uid}'; //用户id
+            var isbind = '{$userinfo.is_bind}';
+			$.get(host+"index/index", function(result){
+				console.log(result.data.course);
+				if(result.code == 0){
+					alert('获取数据失败');return;
+				}
+				
+				var course = result.data.course;
+				var inner = '';
+				
+				getask(cid,page,size);
+
+			});
+
+			//去提问
+// 			mui(".ask-add").on('tap', '.icon-add', function (event) {
+// 				$.get(host+"course/checkbuy?uid="+uid+'&cid='+cid, function(result){
+// 					if(result.code == 1){
+// 						var url = "{:url('wechat/ask/answer')}";
+// 						window.location.href=url+'?cid='+cid;
+// 					}else{
+// 						mui.alert(result.message);
+// 					}
+// 				});
+
+// 			})
+
+			mui(".ask-content").on('tap', '.zan', function (event) {
+				var id = this.getAttribute("data-aid");
+				var has_likes = this.getAttribute("has_likes");
+				var that = this;
+				var likes = Number($(that).find('font').html());
+				if(has_likes == 0){
+					$.post(host+"like/add",{uid:uid,itemid:id,typeid:2},function(res){
+						if(res.code == 1){
+							$(that).attr('has_likes','1');
+							$(that).find('.icon-zan').css('display','none');
+							$(that).find('.icon-zaned').css('display','block');
+							$(that).find('font').html(likes+1);
+						}else{
+							mui.alert('点赞失败');
+						}
+					});
+				}
+
+			});
+
+
+			//获取问答
+			function getask(cid,page,size){
+				$.get(host+"ask/index?cid="+cid+'&uid='+uid+'&page='+page+'&size='+size, function(result){
+					var ask = result.data.ask;
+					var inner = '';
+					//console.log(ask);
+				
+					for(var i=0;i<ask.length;i++){
+						var has_likes = ask[i].answer.has_likes;
+						//has_likes = 1;
+						if(has_likes == 1){
+							var zan_inner = '<i class="icon-zan" style="display:none"></i><i class="icon-zaned"></i>';
+						}else{
+							var zan_inner = '<i class="icon-zan"></i><i class="icon-zaned" style="display: none;"></i>';
+						}
+
+						if(ask[i].comments > 0){
+							var answer_innser =
+							
+							'<div class="QA-3" >'+
+							'<span class="font-size-12 font-color-4 ">'+ask[i].comments+'条解答</span>'+
+							'<span class="icon-huifu-cz">'+ask[i].catname+'</span>'+
+							'</div>';
+							;
+						}else{
+							var answer_innser =
+							'<div class="QA-3" >'+
+									'<span class="font-size-12 font-color-4  data-id="'+ask[i].id+'">暂无解答</span>'+
+									'<span class="icon-huifu-cz">'+ask[i].catname+'</span>'+
+									'</div>';
+						}
+					
+
+						var img_inner = '<div style="clear:both"></div><div class="preview-list">';
+						var photopath = ask[i].photopath;
+						for(var k=0;k<photopath.length;k++){
+							img_inner+='<a href="'+photopath[k]+'" class="preview"><img src="'+photopath[k]+'"></a>';
+
+						}
+						img_inner += '</div>';
+						if(ask[i].anonymous == 1){
+							ask[i].nickname = '匿名';
+						}
+						//精华
+						var ask_hot =  '';
+						if(ask[i].hot==1){
+							 ask_hot = '<img src="/public/mobile/img/icon/ess.png" alt="ess">';
+						}
+						 
+						inner += '<div class="QA go_detail" data-id="'+ask[i].id+'" >'+
+									'<a href="qaInfo.html" class="go_detail" data-id="'+ask[i].id+'">'+
+										'<img src="'+ask[i].face+'" class="hp">'+
+										'<div class="name"><span class="font-size-16 font-color-8">'+ask[i].nickname+ask_hot+'</span>'+ask[i].create_time+'</div>'+
+										'<p class="font-size-16 font-color-8">'+ask[i].title+'</p>'+
+									'</a>'+img_inner+answer_innser+'</div>';
+					}
+					if(page == 1){
+					    if(ask.length == 0){
+                            $('.content-slide').html(nodata);
+						}else{
+                            $('.content-slide').html(inner);
+						}
+						mui('#pullrefresh').pullRefresh().endPulldownToRefresh();
+					}else{
+                        $('.content-slide').append(inner);
+						mui('#pullrefresh').pullRefresh().endPullupToRefresh();
+					}
+					$('.swiper-container').css('overflow','inherit');
+					//$('.swiper-container').append(inner);
+				});
+
+			}
+
+
+			mui.init({
+                pullRefresh: {
+                    container: '#pullrefresh',
+                    up : {
+                        //height:50,//可选.默认50.触发上拉加载拖动距离
+                        //auto:true,//可选,默认false.自动上拉加载一次
+                        contentrefresh : "",//可选，正在加载状态时，上拉加载控件上显示的标题内容
+                        contentnomore:'',//可选，请求完毕若没有更多数据时显示的提醒内容；
+                        callback :pullupRefresh //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+                    }
+
+                }
+            });
+
+
+			function pullupRefresh() {
+			console.log('下拉');
+                setTimeout(function() {
+                    page++;//翻下一页
+                    data={
+                        page:page,
+						size:10
+                    };
+                   getask(cid,page,size);
+                }, 100);
+            }
+
+			mui('.ask-content').on('tap', '.go_detail', function (event) {
+				var url = "{:url('wechat/ask/detail')}";
+				var id = this.getAttribute("data-id");
+				window.location.href=url+'?id='+id;
+			});
+
+
+		</script>
+		
+		<script src="/public/mobile/js/bindmobile.js"></script>
+	</body>
+
+</html>

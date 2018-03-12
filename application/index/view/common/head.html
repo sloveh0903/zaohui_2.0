@@ -1,0 +1,289 @@
+<!-- 微信登录start -->
+{php}
+$request = request();
+$controller = $request->controller();
+$api_url = $_SERVER['SERVER_NAME'].'/api/config/index';
+$curl_data = json_decode(doCurlGetRequest($api_url),true);
+$config_data = $curl_data['data']['config'];
+$backurl = urlencode($_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+$redirect_uri = urlencode("http://".$_SERVER['HTTP_HOST']."/api/wechat/scanlogin?backurl=".$backurl);
+$curl_data = apiget('course/index');
+$course_data = $curl_data['data']['course'];
+{/php}
+<script src="/public/pc/js/jquery-1.11.0.min.js"></script>
+<div class="weixin_QRcord_alert_outside displayNone">
+    <div class="weixin_QRcord_alert">
+        <div class="delete_div">
+            <a href="javascript:void(0)" class="a_close">
+                <img src="/public/pc/images/delete@2x.png" alt="关闭">
+            </a>
+        </div>
+        <div class="weixin_QRcord_top mt20">
+            <img src="{$config_data['logo']}" alt="logo图片" class="logo_img pt0">
+        </div>
+        <div class="weixin_QRcord_div" id="login_container">
+            <!--<img src="/public/pc/images/weixin_QRcord@2x.png" alt="微信二维码">-->
+        </div>
+        <div class="" style="display: none">
+            <span class="font14 opacity60">使用手机微信扫码登录</span>
+        </div>
+        <span class=" use_AccountLogin" style="margin-top:10px;">使用账号登录</span>
+    </div>
+</div>
+<!-- 微信登录end -->
+<!-- 账号登录 start -->
+<div class="account_alert_outside displayNone">
+    <div class="weixin_QRcord_alert">
+        <div class="delete_div">
+            <a href="javascript:void(0)" class="a_close">
+                <img src="/public/pc/images/delete@2x.png" alt="关闭">
+            </a>
+        </div>
+        <div class="weixin_QRcord_top mt20">
+            <img src="{$config_data['logo']}" alt="logo图片" class="logo_img pt0">
+        </div>
+        <div class="accountLogin_info">
+            <input type="type" name="phoneNum" placeholder="手机号码" id="phoneNum">
+            <input type="password" name="phonePassword" class="phonePassword mt20" placeholder="密码" id="phonePassword">
+
+            <div class="mt10 textLeft">
+                <i class="rightFloat showErrorWord" id="showErrorWord"></i>
+
+                <div class="clearfix"></div>
+            </div>
+            <a href="javascript:void(0)" class="a_accountLogin">登录</a>
+
+            <div class="mt10 font13 opacity40 color292B33 textLeft">首次登录请先使用微信扫码登录</div>
+        </div>
+        <span class="use_weixinLogin">使用微信登录</span>
+    </div>
+</div>
+<!-- 账号登录 end -->
+<div class="w1280">
+    <div class="youren_top relative boxShadowBottom">
+        <a href="javascript:void(0)">
+            <div class="logo_div leftFloat relative">
+                <a href="{:url('/')}"><img src="{$config_data['logo']}" alt="logo图片" class="logo_img"></a>
+            </div>
+        </a>
+
+        <div class="youren_top_navDiv leftFloat">
+
+            <!-- <div class="study_flatform_div displayNone">
+               <ul class="study_flatform_ul " >
+                  {volist name="course_data" id="data"}
+                  <li>
+                     <a href="{:url('course/index',['cid'=>$data.cid])}">
+                        <div class="inlineBlock tou_div">
+                           <img src="{$data.face}" alt="课程老师头像">
+                        </div>
+                        <div class=" teacher_product">
+                           <div class="teacher_name dan">{$data.title}</div>
+                        </div>
+                     </a> 
+                  </li>
+                  {/volist}
+               </ul>
+            </div> -->
+
+            <ul class="youren_top_navul">
+                <li><a href="{:url('/')}" {if condition="($controller == 'Index')" }class="default_navA" {/if}>首页</a>
+                </li>
+                <li name="study_flatform">
+                    <a href="{:url('course/index')}" {if condition="(isset($course_introduce))" }class="default_navA" {/if}>课程介绍</a>
+                    <div class="course_introduce displayNone">
+                        <ul class="course_introduce_ul">
+                            {volist name="course_data" id="data"}
+                            <li onclick="link({$data.cid})">
+                                <div class="div_href">
+                                    <img src="{$data.face}" alt="课程老师头像">
+
+                                    <p>
+                                        <i class="dan">{$data.title}</i>
+                                    </p>
+
+                                    <div class="clearfix"></div>
+                                </div>
+                            </li>
+                            {/volist}
+                        </ul>
+                    </div>
+                </li>
+                <li><a href="{:url('course/course')}" {if
+                       condition="($controller == 'Course' && !isset($course_introduce))" }class="default_navA" {/if}>学习平台</a>
+                </li>
+                <li><a href="{:url('ask/index')}" {if condition="($controller == 'Ask')" }class="default_navA" {/if}>课程答疑</a>
+                </li>
+                <li><a href="{:url('article/index')}" {if condition="($controller == 'Article')" }class="default_navA" {/if}>阅读</a>
+                </li>
+            </ul>
+        </div>
+        {if condition="session('uid')"}
+        <a href="javascript:void(0)" class="">
+            <div class="youren_top_arrowDownImg rightFloat basicTop relative pl34 drop_menu_a">
+                <img src="/public/pc/images/arrowDown_gray@2x.png" alt="向下箭头">
+            </div>
+            <div class="youren_top_myselfImg rightFloat basicTop relative  ml10">
+                <a href='{:url("member/index")}'><img src="{php}echo session('face'){/php}"
+                                                      alt="{php}echo session('nickname'){/php}"></a>
+            </div>
+            <div class="youren_top_name basicTop rightFloat ">
+                <a href='{:url("member/index")}'><span class="opacity80">{php}echo session('nickname'){/php}</span></a>
+            </div>
+        </a>
+        <a href='{:url("member/message")}' class="a_message">
+            <div class="youren_top_messageDiv rightFloat relative">
+                <span class="youren_top_messageSpan opacity40">{php}echo session('msg_num'){/php}</span>
+            </div>
+            <div class="youren_top_messageImg rightFloat relative">
+                <img src="/public/pc/images/myMessage_gray@2x.png" alt="消息铃铛">
+            </div>
+        </a>
+        {else /}
+        <div class="rightFloat basicTop loginDiv">
+            <a href="javascript:void(0)" class="a_login">登录</a>
+        </div>
+        <div class="clearfix"></div>
+        {/if}
+
+
+        <!-- 下拉隐藏菜单 start -->
+        <div class="youren_top_dropMenu_div displayNone">
+            <ul class="youren_top_dropMenu_ul">
+                <li>
+                    <a href='{:url("member/index")}'>
+                        <img src="/public/pc/images/myStudy_gray@2x.png" alt="学习" data-name="study">
+                        <i class="">学习</i>
+                    </a>
+                </li>
+                <li>
+                    <a href='{:url("member/order")}'>
+                        <img src="/public/pc/images/myOrder_gray@2x.png" alt="订单" data-name="order">
+                        <i class="">订单</i>
+                    </a>
+                </li>
+                {if condition="(session('bind') == '0')"}
+                <li>
+                    <a href='{:url("member/bindphone")}'>
+                        <img src="/public/pc/images/myinfo_gray@2x.png" alt="信息" data-name="bindphone">
+                        <i class="">信息</i>
+                    </a>
+                </li>
+                {else}
+                <li>
+                    <a href='{:url("member/editpsw")}'>
+                        <img src="/public/pc/images/mypsw_gray@2x.png" alt="密码" data-name="password">
+                        <i class="">密码</i>
+                    </a>
+                </li>
+                {/if}
+                <li>
+                    <a href="javascript:void(0)" id="loginout">
+                        <img src="/public/pc/images/loginout_gray@2x.png" alt="退出" data-name="outloign">
+                        <i class="">退出</i>
+                    </a>
+                </li>
+            </ul>
+         </div>
+         <!-- 下拉隐藏菜单 end --> 
+         <div class="clearfix"></div>
+      </div>
+      {if condition="!session('uid') || empty(session('uid'))"}
+      <script src="https://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js"></script>
+      <script type="text/javascript">
+      var redirect_uri = "{$redirect_uri}";
+      var appid = "{$config_data['wx_open_appid']}";
+      var obj = new WxLogin({
+         id:"login_container", 
+         appid: appid, 
+         scope: "snsapi_login", 
+         redirect_uri: redirect_uri,
+         href:"https://api.fuwangdian.com/public/pc/css/qrcode.css"
+      });
+
+        var int = setInterval(function () {
+            obj = false;
+        }, 2000)
+    </script>
+    {/if}
+    <script type="text/javascript">
+        function link(cid) {
+            var url = "{:url('course/index')}" + '?cid=' + cid;
+            window.location.href = url
+        }
+
+        var personalObj = {};
+
+        //点击登录按钮
+        $(".a_accountLogin").click(function () {
+            //个人账号
+            var phoneNum, showErrorWord, txtUserName;
+            phoneNum = document.getElementById("phoneNum");    //文本框
+            showErrorWord = document.getElementById("showErrorWord");  //span提示
+            txtUserName = phoneNum.value;
+            if (txtUserName != "") {
+                if (/^[0-9a-zA-Z_]{1,}$/.test(txtUserName) == false) {
+                    //showErrorWord.innerHTML = "没有此账号";
+                    $('#showErrorWord').html('没有此账号');
+                    console.log('没有此账号');
+                    return false;
+                }
+                var mobileValid = /^(0|86|17951)?(13[0-9]|15[0-9]|17[0678]|18[0-9]|14[57])[0-9]{8}$/;
+                if (!mobileValid.test(txtUserName)) {
+                    showErrorWord.innerHTML = "请输入有效的手机号码";
+                    console.log('请输入有效的手机号码')
+                    return false;
+                }
+                personalObj.phoneNum = txtUserName;
+                showErrorWord.innerHTML = "";
+            } else {
+                showErrorWord.innerHTML = "请输入手机号码";
+                return false;
+            }
+
+            var phonePassword, showErrorWord, txtPassword;
+            phonePassword = document.getElementById("phonePassword");    //文本框
+            showErrorWord = document.getElementById("showErrorWord");  //span提示
+            txtPassword = phonePassword.value;
+            if (txtPassword != "") {
+                if (txtPassword.length < 6) {
+                    showErrorWord.innerHTML = "密码长度6-16位";
+                    return false;
+                }
+                var reg = /^[\w]{6,16}$/;
+                if (reg.test(txtPassword) == false) {
+                    showErrorWord.innerHTML = "请输入正确的密码";
+                    return false;
+                }
+                personalObj.passwordNum = txtPassword;
+                showErrorWord.innerHTML = "";
+            } else {
+                showErrorWord.innerHTML = "请输入密码";
+                return false;
+            }
+
+
+            //比较后台的用户名和密码 ajax调用
+            var txtUserName = $('#phoneNum').val();
+            var txtPassword = $('#phonePassword').val();
+            $.ajax({
+                        url: host + "user/login",
+                        data: {mobile: txtUserName, password: txtPassword},
+                        dataType: 'json',
+                        type: 'POST',
+                        success: function (res) {
+                            if (res.code == 1) {
+                                location.reload();
+                            } else {
+                                var showErrorWord = document.getElementById("showErrorWord");  //span提示
+                                showErrorWord.innerHTML = res.message;
+                                return false;
+                            }
+                        }
+                    }
+            );
+        });
+
+
+    </script>
+     

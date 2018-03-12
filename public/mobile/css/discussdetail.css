@@ -1,0 +1,217 @@
+.wrap-box {
+  padding-bottom: 50px;
+}
+.upper-box {
+  padding: 0 15px;
+  background-color: #FAFAFA;
+  box-shadow: 0 1px hsla(228, 20%, 20%, .1);
+}
+/* 头部课程介绍 start */
+.upper-box .course-info {
+  width: 100%;
+  height: 70px;
+  padding: 15px 0;
+  display: flex;
+  box-shadow: 0 1px rgba(0, 0, 0, .1);
+}
+.course-info .img-box {
+  flex: 0 0 40px;
+  margin-right: 10px;
+  display: flex;
+}
+.course-info .img-box img {
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+}
+.course-info .desc-box {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.course-info .desc-box h4 {
+  max-width: 250px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 16px;
+  font-weight: 400;
+  color: hsla(228, 20%, 20%, .8);
+}
+.course-info .desc-box p {
+  max-width: 250px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 12px;
+  color: hsla(228, 20%, 20%, .6);
+}
+.course-info .price-box {
+  flex: 0 0 40px;
+}
+.course-info .price-box span {
+  display: block;
+  width: 100%;
+  font-size: 14px;
+  line-height: 24px;
+  color: #00B6F2;
+}
+/* 头部课程介绍 end */
+
+/* 问题部分 start */
+.upper-box .question-box {
+  padding: 15px 0;
+}
+.question-box > div:not(:last-of-type) {
+  margin-bottom: 5px;
+}
+.question-box .info {
+  display: flex;
+  align-items: center;
+}
+.question-box .info .user-logo {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  margin-right: 15px;
+}
+.question-box .info .user-id {
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 14px;
+  color: rgba(41, 43, 51, .8);
+}
+.question-box .info .date {
+  flex: 1;
+  text-align: right;
+  font-size: 12px;
+  color: hsla(228, 20%, 20%, .4);
+}
+.question-box .desc p {
+  font-size: 16px;
+  line-height: 28px;
+  color: rgba(41, 43, 51, .8);
+}
+.question-box .pic {
+  display: flex;
+}
+.question-box .pic img {
+  width: 108px;
+  height: 108px;
+}
+.question-box .pic img:not(:last-of-type) {
+  margin-right: 10px;
+}
+/* 问题部分 end */
+
+/* 回复部分 start */
+.lower-box .answer-box {
+  padding: 20px 0 0;
+}
+.answer-box .answer-count {
+  display: flex;
+  align-items: center;
+  padding-left: 15px;
+  color: rgba(41, 43, 51, .4);
+}
+.answer-count p {
+  font-size: 14px;
+  color: hsla(228, 20%, 20%, .4);
+}
+.answer-box .answer-item {
+  width: 100%;
+  display: flex;
+  padding: 20px 15px;
+  box-shadow: 0 1px hsla(228, 20%, 20%, .1);
+}
+.answer-item .img-box {
+  flex: 0 0 40px;
+  margin-right: 15px;
+}
+.img-box img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+.answer-item .content-box {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.answer-item .content-box .info {
+  height: 23px;
+  display: flex;
+  align-items: center;
+}
+.answer-item .content-box .info h4 {
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 14px;
+  color: rgba(41, 43, 51, .8);
+}
+.answer-item .content-box .info p {
+  font-size: 14px;
+  line-height: 14px;
+  color: rgba(41, 43, 51, .4);
+}
+.answer-item .content-box .info .reply-date {
+  flex: 1;
+  text-align: right;
+  font-size: 12px;
+  color: hsla(228, 20%, 20%, .4);
+}
+.answer-item .content-box .desc p{
+  font-size: 14px;
+  line-height: 28px;
+  color: rgba(41, 43, 51, .8);
+}
+.operation {
+  display: flex;
+  justify-content: flex-end;
+}
+.operation > div:not(:last-child) {
+  margin-right: 22px;
+}
+.operation > div {
+  display: flex;
+  align-items: center;
+}
+.operation > div p {
+  font-size: 14px;
+  color: hsla(228, 20%, 20%, .4);
+}
+.gezi-btn {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  margin-right: 2px;
+}
+.favo-btn {
+  background: url("../img/icon/zan.png") no-repeat center/cover;
+}
+.tapped.favo-btn {
+  background: url("../img/icon/zaned.png") no-repeat center/cover;
+}
+.reply-btn {
+  background: url("../img/icon/qa.png") no-repeat center/cover;
+}
+/* 回复部分 end */
+
+/* 贴底回复按钮 start */
+.bottom-fixed {
+  position: fixed;
+  background-color: #fff;
+  bottom: 0;
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 -1px 2px rgba(0, 0, 0, .08);
+}
+.bottom-fixed p {
+  font-size: 14px;
+  color: rgba(41, 43, 51, .4);
+}
+/* 贴底回复按钮 end */
+

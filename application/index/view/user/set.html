@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <title>设置</title>
+</head>
+<body class="bg-body-fff">
+       {include file="common/header" /}
+   <div class="personnal-bg-show">
+      <span>
+         <img src="{php}echo session('face'){/php}" >
+         <i>{php}echo session('nickname'){/php}</i>
+      </span>
+   </div>
+   <div class="wenda-info ">
+      <div class="wenda-info-title-wrap">
+         <div class="wenda-info-title">
+            <span>设置</span>
+         </div>
+      </div>
+      <div class="wenda-info-wrap">
+         <div class="wenda-info-left">
+            <ul class="wenda-info-nav-ul">
+               <li><a href="{:url('/user/message')}">问答消息</a></li>
+               <li><a href="{:url('/user/myanswer')}">我的回答</a></li>
+               <li><a href="{:url('/user/mytiwen')}">我的提问</a></li>
+              <!--  <li class="active"><a href="{:url('/user/set')}">设置</a></li> -->
+            </ul>
+         </div>
+         <div class="wenda-info-right">
+            <div class="set-info">
+               <ul class="set-info-ul">
+                  <li>
+                     <i>头像</i>
+                     <div>
+                        <img src="{php}echo session('face'){/php}" ><br>
+                        <label for="select-img">
+                           <input type="file" name="" id="select-img">
+                        </label><br>
+                        <em>图片要求尺寸大于180x180像素 格式为 jpg png</em>
+                     </div>
+                  </li>
+                  <li>
+                     <i>昵称</i>
+                     <div>
+                        <input type="text" value="{php}echo session('nickname'){/php}">
+                        <i>3个月内只能修改一次</i>
+                     </div>
+                  </li>
+       <!--            <li>
+                     <i>账号</i>
+                     <div>
+                        <p class="validated"><span>yehq@outlook.com</span><a class="a_modify_email" href="javascript:void(0)">修改</a></p>
+                        <p class="no-validate"><span>yehq@outlook.com</span><a class="a_modify_email" href="javascript:void(0)">(未验证) 发送验证邮件</a></p>
+                     </div>
+                  </li> -->
+               <!--    <li>
+                     <i>密码</i>
+                     <div>
+                        <a class="a_modify_password" href="javascript:void(0)">修改</a>
+                     </div>
+                  </li>
+                  <li>
+                     <i>社交账号</i>
+                     <div>
+                        <a href="javascript:void(0)">绑定微信</a>  
+                        <p>
+                           <span>yehengqi</span><i>解绑</i>
+                        </p>
+                     </div>
+                  </li> -->
+               </ul>
+               <div class="operation-tag mt30">
+                  <a href="javascript:void(0)">保存</a>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="kaitai-word active">
+      <span>{include file="common/copyright" /}</span>
+   </div>
+   <!-- 移动端nav列表start -->
+    {include file="common/mobilenav" /}
+   <!-- 修改密码,验证邮箱,修改邮箱 -->
+   <div class="forget-password-outside " style="display:none;" >
+      <!-- 修改密码 -->
+      <div class="public-alert  modify-password-alert " >
+         <img class="img-close" src="images/close_ring@2x40.png" alt="关闭">
+         <span>
+            <i>修改密码</i>
+            <img class="img-gray_close" src="images/gray_close@2x40.png" alt="关闭">
+         </span>
+         <ul class="forget-password-fill-info-ul mt20">
+            <li>   
+               <p>
+                  <i>新密码</i>
+                  <input type="text" name="" placeholder="请输入新密码">
+               </p>
+            </li>
+            <li>   
+               <p>
+                  <i>确认密码</i>
+                  <input type="text" name="" placeholder="确认新密码">
+               </p>
+               <p>
+                  <i></i><span>两次密码不一致</span>   
+               </p>
+            </li>
+         </ul>
+         <div class="operation-tag mt40">
+            <a href="javascript:void(0)">确定</a>
+         </div>
+      </div>
+      <!-- 验证邮箱 -->
+      <div class="public-alert  validate-email-alert  " >
+         <img class="img-close" src="images/close_ring@2x40.png" alt="关闭">
+         <span>
+            <i>验证邮箱</i>
+            <img class="img-gray_close" src="images/gray_close@2x40.png" alt="关闭">
+         </span>
+         <p><i>验证码已发送邮件至yehq@outlook.com</i><span>59重新发送</span><a href="javascript:void(0)">重新发送</a></p>
+         <ul class="forget-password-fill-info-ul mt20">
+            <li>   
+               <p>
+                  <i>验证码</i>
+                  <input type="text" name="" placeholder="请输入验证码">
+               </p>
+               <p>
+                  <i></i><span>验证码错误</span>   
+               </p>
+            </li>
+         </ul>
+         <div class="validate-code ">
+            
+         </div>
+         <div class="operation-tag mt40">
+            <a class="a_nextstep" href="javascript:void(0)">下一步</a>
+         </div>
+      </div>
+      <!-- 修改邮箱 -->
+      <div class="public-alert  modify-email-alert  "  >
+         <img class="img-close" src="images/close_ring@2x40.png" alt="关闭">
+         <span>
+            <i>修改邮箱</i>
+            <img class="img-gray_close" src="images/gray_close@2x40.png" alt="关闭">
+         </span>
+         <ul class="forget-password-fill-info-ul mt20">
+            <li>   
+               <p>
+                  <i>邮箱</i>
+                  <input type="text" name="" placeholder="请输入邮箱地址">
+               </p>
+            </li>
+            <li>   
+               <p>
+                  <i>验证码</i>
+                  <input type="text" name="" placeholder="输入验证码">
+                  <em>59</em>
+                  <a href="javascript:void(0)">发送验证码</a>
+               </p>
+               <p>
+                  <i></i><span>验证码错误</span>   
+               </p>
+            </li>
+         </ul>
+         <div class="operation-tag mt40">
+            <a class="" href="javascript:void(0)">确定</a>
+         </div>
+      </div>
+   </div>
+   <!-- 操作提示 -->
+   <div class="opreate-success-tip " style="display:none;">
+      <span>已重置密码，请登录。</span>
+   </div>
+   <!-- PC、mobile 提问弹窗 -->
+    <div class="pc-mobile-tiwen-outside "  style="display:none;">
+      <div class=" pc-mobile-tiwen-alert" >
+         <img class="img-close" src="images/close_ring@2x40.png" alt="关闭">
+         <span>
+            <p>
+               <i>提问</i>
+               <em>精确描述的问题更容易得到解答</em>
+            </p>
+            <img class="img-gray_close" src="images/gray_close@2x40.png" alt="关闭">
+         </span>
+         <div class="textarea-wenti-title">
+            <textarea class="textarea-common mt20" name="" placeholder="问题标题"></textarea>
+            <i class="error-prompt">请输入问题标题</i>
+         </div>
+         <div class="mt20 wrap-textarea">
+            <textarea class="textarea-common" name="" placeholder="问题描述(可选)"></textarea>
+         </div>
+         <div class="tiwen-alert-wrap-tag ">
+            <div class="select-wenti-classify ">
+               <select name=""  >
+                  <option value="0" selected="true" disabled="disabled">选择分类</option>
+                  <option value="1">淘宝开店</option>
+                  <option value="2">店铺装修</option>
+                  <option value="3">淘宝运营</option>
+                  <option value="4">淘宝推广</option>
+                  <option value="5">淘宝活动</option>
+                  <option value="6">手机淘宝</option>
+                  <option value="7">淘宝特色市场</option>
+               </select>
+               <i class="error-prompt">请选择分类</i>
+            </div>
+            <div class="fill-img ">
+               <span>
+                  <img class="delete-img" src="images/delete_img@2x24.png" >
+                  <img src="images/img1@2x.png" >
+               </span>
+            </div>
+            <div class="input-upload ">
+               <label for="input-upload-file">
+                  <input type="file" name="" class="input-upload-file " id="input-upload-file">
+               </label>
+            </div>
+            <span class="nike-name-tag">
+               <label for="nickName" class="checked" >
+                  <input type="checkbox" id="nickName" checked="checked">
+               </label>
+            </span>
+            <a href="javascript:void(0)" class="btn-tiwen ml15" ></a>
+         </div>
+      </div>
+   </div>
+<script>
+   //验证邮箱
+   $("a.a_modify_email").click(function(){
+      $(".forget-password-outside").show();
+      $(".validate-email-alert").show();
+   })
+   //修改密码
+   $("a.a_modify_password").click(function(){
+      $(".forget-password-outside").show();
+      $(".modify-password-alert").show();
+   })
+</script>  
+</body>
+</html>

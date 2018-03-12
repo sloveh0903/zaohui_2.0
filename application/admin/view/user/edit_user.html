@@ -1,0 +1,98 @@
+{include file="common/header" /}
+<body>
+<div class="article_manage mCustomScrollbar">
+    <div class="right-side-header clearfix">
+        <span>店铺管理</span>
+        {include file="common/admin" /}
+    </div>
+    <div class="right_side_content">
+
+        <div class="add_article_main ">
+            <div class="breadcrumb">
+                <a href='{:url("user/index")}'>后台用户管理</a>
+                /
+                <span>编辑用户</span>
+            </div>
+            <div class="ad_operation_div">
+                <div class="add_article_step">
+                    <ul class="editCourse-nav-ul clearFloat">
+
+                    </ul>
+                </div>
+            </div>
+            <div class="articleInfo_fill">
+                <section class="panel panel-padding">
+                    <form id="form1" class="layui-form layui-form-pane" action='{:url("user/edit_user")}'>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">登录名*</label>
+                            <div class="layui-input-inline">
+                                <input type="hidden" name="id" value="{$user.id}">
+                                <input type="text" name="username" {if $user.username == 'admin'} readonly="readonly" {/if} value="{$user.username}" style="width: 100%" required jq-verify="required" jq-error="" placeholder="请输入登录名" autocomplete="off" class="layui-input ">
+                            </div>
+                        </div>
+                        <!--                     <div class="layui-form-item">
+                                                <label class="layui-form-label">头像*</label>
+                                                <div class="layui-input-block">
+                                                    <input type="file" name="file" class="layui-upload-file">
+                                                    <input type="hidden" name="face" value="{$user.face}" jq-verify="required" jq-error="请上传头像" error-id="photo-error">
+                                                    <p class="upload-info">建议尺寸：60*60 支持格式：JPG PNG</p>
+                                                    <p id="photo-error" class="error"></p>
+                                                </div>
+                                                <div class="layui-input-block">
+                                                    <div class="imgbox">
+                                                        <img src="{$user.face}" name="face" alt="..." class="img-thumbnail">
+                                                    </div>
+                                                </div>
+                                            </div> -->
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">姓名</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="realname" value="{$user.realname}" style="width: 100%" placeholder="姓名" autocomplete="off" class="layui-input ">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">角色</label>
+                            <div class="layui-input-inline">
+                                <select name="groupid"  lay-verify="required">
+                                    <option value="">请选择</option>
+                                    {if !empty($role)}
+                                    {foreach name="role" item="vo"}
+                                    <option value="{$vo.id}" {if condition="$user['groupid'] eq $vo['id']"}selected{/if}>{$vo.title}</option>
+                                    {/foreach}
+                                    {/if}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">密码*</label>
+                            <div class="layui-input-inline">
+                                <input type="password" name="passwd" style="width: 100%" required jq-error="请输入密码" autocomplete="off" class="layui-input ">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">状态</label>
+                            <div class="layui-input-inline">
+                                <input type="radio" name="closed" title="启用" value="0" {if condition="$user['closed'] eq 0"}checked{/if} />
+                                <input type="radio" name="closed" title="禁用" value="1" {if condition="$user['closed'] eq 1"}checked{/if} />
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-input-block">
+                                <button class="layui-btn" jq-submit jq-filter="submit">确定</button>
+                            </div>
+                        </div>
+                    </form>
+                </section>
+
+            </div>
+        </div>
+    </div>
+</div>
+{include file="common/version" /}
+<script>
+    layui.use('course');
+</script>
+
+
+</body>
+</html>

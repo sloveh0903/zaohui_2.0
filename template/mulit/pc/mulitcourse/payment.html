@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>付款</title>
+    <link rel="stylesheet" href="/public/pc/css/all.css">
+    <link rel="stylesheet" href="/public/pc/css/payment.css">
+</head>
+<div class="weixin_pay_outside">
+    <div class="weixin_pay_alert">
+         <span class="closeSpan">
+            <img src="/public/pc/images/delete@2x.png" alt="关闭" class="img_close">
+         </span>
+        <span class="shaomiao_QRcord" style="margin-top:-5px"><img src="/public/pc/images/pay30x135@2x.png" height="25px"></span>
+         <span class="spanPay_QRcord">
+            <img src="" alt="微信支付二维码">
+         </span>
+         <span style="font-size: 12px;"><img src="/public/pc/images/sao20x20@2x.png" height="20px" style="position:relative;top:5px">&nbsp;&nbsp;打开微信扫一扫支付</span>
+    </div>
+</div>
+<body>
+{include file="common/head" /}
+<div class="paymentbg">
+    <div class="paymentbg-inner">
+        <p>付款</p>
+    </div>
+</div>
+
+<div class="payment-content">
+  <div class="payment-display">
+    <div class="payment-info">
+      <h2>订单</h2>
+      <p>购买后1年内有效</p>
+    </div>
+    <div class="payment-goods">
+      <img src="{$course.banner}" class="goods-cover">
+      <p class="goods-title">{$course.title}</p>
+      <p class="goods-price">￥{$course.price}</p>
+    </div>
+  </div>
+  <div class="payment-operation">
+    <div class="coupon" data-coupon="0">
+      <p class="column-title">优惠码</p>
+      <div class="coupon-unused">
+        <input type="text" placeholder="输入优惠码" class="coupon-input">
+        <i class="coupon-addbtn">添加</i>
+        <p class="coupon-error"></p>
+      </div>
+    </div>
+    <div class="bp" style="{if $checkData.status == '0'}display:none{/if}" >
+      <p class="column-title">积分抵扣</p>
+      <div class="bp-operation">
+        <p class="bp-usable">{$checkData.deducted_integral}积分可用</p>
+        <div class="bp-switch" data-point="{$checkData.deducted_integral}">
+          <div class="circle"></div>
+        </div>
+      </div>
+    </div>
+    <div class="totalprice-box">
+      <h2 class="column-title">实付金额</h2>
+      <p class="total-price">￥{$course.price}</p>
+    </div>
+    <p class="bill-info" style="{if $checkData.status == '0'}display:none{/if}">付款后可获得<span class="bp-get">{$checkData.consume_integral}</span>积分</p>
+    <div class="bill-confirmbox">
+      <i class="bill-confirmbtn" data-coupon-code="">提交订单</i>
+    </div>
+  </div>
+</div>
+
+    
+<script src="/public/pc/js/jquery-1.11.0.min.js"></script>
+<script src="/public/jqadmin/js/layui/layui.js"></script>
+<script src="/public/pc/js/public_PC.js"></script>
+<script>
+$(function(){
+  var price = '{$course.price}';
+	var cid = '{$cid}';
+    var uid = "{$uid}";
+    var title = "{$course.title}";
+	// 点击优惠码确定，验证，若通过则展示优惠信息
+  $('.coupon-addbtn').on('click', function () {
+    // 验证
+    var coupon_code = $('.coupon-input').val().trim();
+    if($('.bp-switch').hasClass('active')){
+    	is_switch = 1
+    }else{
+    	is_switch = 0
+    }
+    //var order_id = $(this).attr('data-o-id');
+    // TODO：传递参数改变
+    $.get(host + "couponcode/check_code?coupon_code=" + coupon_code+'&price='+price+'&cid='+cid+"&order_type=course"+"&is_switch="+is_switch, function (data) {
+    	var message = data.message;
+      if(data.code==1){
+        var conpon_data = data.data;
+        $('.btn_order').attr('data-coupon-code',conpon_data.coupon_code);
+        var order_price = conpon_data.order_price;
+        var couponStr = '<div class="coupon-used">' +
+                          '<p class="coupon-type">' + data.data.tip + '</p>' +
+                          '<p class="coupon-discount">' + data.data.minus + '元</p>' +
+                          '<i class="coupon-deletebtn"></i>' +
+                        '</div>';
+        $('.coupon-input').val('');
+        $('.coupon-unused').hide();
+        $('.coupon').append($(couponStr));
+        $('.coupon .coupon-used').css('display','flex');
+        $('.total-price').html(order_price);
+        $('.coupon').attr('data-coupon',conpon_data.coupon_minus);
+        $('.bp-get').html(conpon_data.checkData.consume_integral);
+        $('.bill-confirmbtn').attr('data-coupon-code',coupon_code);
+        if(conpon_data.checkData.deducted_integral == 0){
+            $('.bp-switch').attr('data-point','0');
+            $('.bp-usable').html('0积分可用');
+        }
+        // TODO:最终价格改变
+      }else{
+        // 验证码出错则报错
+        $('.coupon-error').show().html(message);
+      }
+    });
+  })
+
+  // 删除优惠码，重新显示输出框和确定
+  $('.coupon').on('click','.coupon-deletebtn', function () {
+      var status = 0;
+    $('.coupon').find('.coupon-used').remove();
+    $('.coupon-unused').show();
+    $('.total-price').text('￥' + price);
+      $('.coupon-error').hide().html('');
+      $('.bill-confirmbtn').attr('data-coupon-code','');
+      if($(".bp").css("display")=='none'){
+          status = 0;
+      }else{
+        if($('.bp-switch').hasClass('active')){
+            status = 1;
+        }else{
+            status = 0;
+        }
+      }
+      $.get(host + "couponcode/integralCode?uid=" + uid+'&price='+price+'&status='+status, function (data) {
+          $('.bp-get').html(data.data.consume_integral);
+          $('.coupon').attr('data-coupon',0);
+          $('.total-price').html('￥'+data.data.order_price);
+          if(data.data.deducted_integral > 0){
+            $('.bp-switch').attr('data-point',data.data.deducted_integral);
+            $('.bp-usable').html(data.data.deducted_integral+'积分可用');
+          }
+      });
+  })
+
+  // 点击使用积分开关
+  $('.bp-switch').on('click', function () {
+      var point = $(this).attr('data-point');
+      var coupon_minus = $('.coupon').attr('data-coupon');
+      var status = 0;
+      if($(this).hasClass('active')){
+          status = 0
+      }else{
+          status = 1
+      }
+      $.get(host + "couponcode/integralCode?uid=" + uid+'&price='+price+'&status='+status+'&coupon_minus='+coupon_minus, function (data) {
+          $('.bp-get').html(data.data.consume_integral);
+          if(data.data.deducted_integral > 0){
+              $('.bp-switch').attr('data-point',data.data.deducted_integral);
+              if(status == 1){
+                  $('.bp-usable').html(data.data.deducted_integral+'积分可用'+' -'+data.data.deducted_money+'元');
+              }else{
+                  $('.bp-usable').html(data.data.deducted_integral+'积分可用');
+              }
+              $('.total-price').html('￥'+data.data.order_price);
+          }
+      });
+      $(this).toggleClass('active');
+  });
+    $('.bill-confirmbtn').click(function () {
+        var data_status = $(this).attr('data-status');
+        if(data_status == 1){
+            $(this).text('正在提交');
+            return false;
+        }
+        $(this).attr('data-status',1);
+        var coupon_code  = $(this).attr('data-coupon-code');
+        if($('.bp-switch').hasClass('active')){
+            status = 1
+        }else{
+            status = 0
+        }
+        $.post(host+"order/add",{uid:uid,cid:cid,source:'pc',title:title,coupon_code:coupon_code,is_switch:status},function(res){
+            $('.bill-confirmbtn').attr('data-status',0);
+            $('.bill-confirmbtn').text('提交订单');
+            if(res.code == 1){
+                if(res.data.pay_status == 1){
+                    var url = "{:url('index/mulitcourse/detail')}";
+                    window.location.href=url+'?cid='+cid;
+                }else{
+                    order_sn = res.data.order_sn
+                    $.get(host + "wxpay/navtive?order_sn=" + order_sn+'&coupon_code='+coupon_code, function (res2) {
+                        if (res2.code == -1) {
+                            layer.msg(res2.message);
+                            return;
+                        }
+                        if (res2.code == 2) {
+                            layer.msg('购买成功');
+                            var intergral = $('.bp-get').html();
+                            layer.msg('+'+intergral+'积分');
+                            var url = "{:url('mulitcourse/detail',['cid'=>$cid])}";
+                            window.location.href = url;
+                            return false;
+                        }
+                        if (res2.code == 1) {
+                            order_sn = res2.data.order_sn;
+                            var wxurl = 'http://paysdk.weixin.qq.com/example/qrcode.php?data=' + res2.data.url;
+                            $('.spanPay_QRcord img').attr('src', wxurl);
+                            $(".weixin_pay_outside").show();
+                            var t = setInterval(function () {
+                                $.get(host + "order/detail?order_sn=" + order_sn, function (res3) {
+                                	//console.log('res3',res3);
+                                    if (res3.code == 1) {
+                                        if (res3.data.pay_status == 1) {
+                                        	$.get(host + "wxpay/pcbackpay?order_sn=" + order_sn, function (res4) {
+                                        		//console.log('res4',res4);
+                                                if (res4.code == 1) {
+                                                	layer.msg('支付成功');
+                                                    var url = "{:url('mulitcourse/detail',['cid'=>$cid])}";
+                                                    window.location.href = url;
+                                                    return false;
+                                                }
+                                            });
+                                            
+                                        }
+                                    }
+                                });
+                            }, 3000);
+
+                            //关闭二维码
+                            $(".img_close").click(function () {
+                                clearInterval(t)
+                                $(".weixin_pay_outside").hide();
+                                location.reload();
+                            })
+                        }
+                    });
+                }
+            }
+        });
+    })
+
+})
+</script>
+</body>
+</html>

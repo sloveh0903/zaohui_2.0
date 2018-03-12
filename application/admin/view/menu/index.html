@@ -1,0 +1,146 @@
+{include file="common/header" /}
+<body>
+<div class="article_manage mCustomScrollbar">
+    <div class="course_right_top">
+        <div class="tag_group">
+            <p class="title">系统管理</p>
+            {include file="common/admin" /}
+            <div class="clearfix"></div>
+        </div>
+        <div class="system_guanli_div">
+            <ul class="system_guanli_ul">
+                <li><a href="javascript:void(0)" class="goto" data-src='{:url("user/index")}'>后台用户管理</a></li>
+                <li><a href="javascript:void(0)" class="goto" data-src='{:url("role/index")}'>角色管理</a></li>
+                <li><a href="javascript:void(0)" class="active goto" data-src='{:url("menu/index")}'>菜单管理</a></li>
+                <li><a href="javascript:void(0)" class="goto" data-src='{:url("ad/index")}'>广告管理</a></li>
+                <li><a href="javascript:void(0)" class="goto" data-src='{:url("index/config")}'>网站配置</a></li>
+            </ul>
+        </div>
+        <div class="success_tip displayNone">已完成</div>
+    </div>
+    <div class="course_right_main ">
+        <div class="operation_div">
+            <span class="span_add btn modal-catch" data-params='{"content":".add-subcat","act":"{:url("add_menu")}", "title":"添加菜单","type":"1","area":"500px,360px"}'>添加菜单</span>
+            <span class="span_delete btn ajax-all" data-name="checkbox" data-params='{"url": "{:url("delAll_menu")}","data":"","confirm":"true"}'>删除</span>
+            <div class="clearfix"></div>
+        </div>
+        <div id="list" class="layui-form"></div>
+        <div class="text-right" id="page"></div>
+    </div>
+</div>
+<div class="add-subcat">
+    <form id="form1" class="layui-form layui-form-pane" action='{:url("add_menu")}'>
+        <div class="layui-form-item">
+            <label class="layui-form-label">上级菜单</label>
+            <div class="layui-input-inline">
+                <select name="pid"  lay-verify="required">
+                    <option selected="selected" value="0">默认顶级</option>
+                    {foreach name="admin_rule" item="v"}
+                    {if $v.lvl < 3}
+                    <option value="{$v.id}">{if $v.pid eq 0}{else}{if $v.lvl eq 2}　├{/if}{/if}{$v.title}</option>
+                    {/if}
+                    {/foreach}
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">菜单名*</label>
+            <div class="layui-input-inline">
+                <input type="text" name="title" style="width: 100%" jq-verify="required" jq-error="请输入菜单名" placeholder="请输入菜单名" autocomplete="off" class="layui-input ">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">节点*</label>
+            <div class="layui-input-inline">
+                <input type="text" name="name" style="width: 100%" jq-verify="required" jq-error="请输入节点"  placeholder="模块/控制器/方法" autocomplete="off" class="layui-input ">
+            </div>
+            <label style="display:inline-block;width: 75%;font-size: 12px;margin-left: 110px;">如：admin/user/adduser (一级节点添加“#”即可)</label>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" jq-submit jq-filter="submit">确定</button>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="edit-subcat" style="display: none">
+    <form id="form2" class="layui-form layui-form-pane" action='{:url("edit_menu")}'>
+        <div class="layui-form-item">
+            <label class="layui-form-label">上级菜单</label>
+            <div class="layui-input-inline">
+                <select name="pid"  lay-verify="required">
+                    <option selected="selected" value="0">默认顶级</option>
+                    {foreach name="admin_rule" item="v"}
+                    {if $v.lvl < 3}
+                    <option value="{$v.id}">{if $v.pid eq 0}{else}{if $v.lvl eq 2}　├{/if}{/if}{$v.title}</option>
+                    {/if}
+                    {/foreach}
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">菜单名*</label>
+            <div class="layui-input-inline">
+                <input type="text" name="title" style="width: 100%" jq-verify="required" jq-error="请输入菜单名" placeholder="请输入菜单名" autocomplete="off" class="layui-input ">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">节点*</label>
+            <div class="layui-input-inline">
+                <input type="text" name="name" style="width: 100%" jq-verify="required" jq-error="请输入节点"  placeholder="模块/控制器/方法" autocomplete="off" class="layui-input ">
+            </div>
+            <label style="display:inline-block;width: 75%;font-size: 12px;margin-left: 110px;">如：admin/user/adduser (一级节点添加“#”即可)</label>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" jq-submit jq-filter="submit">确定</button>
+            </div>
+        </div>
+    </form>
+</div>
+<script id="list-tpl" type="text/html" data-params='{"url":"{:url("menu/index")}","pageid":"#page"}'>
+    <table id="example" class="layui-table" lay-skin="line">
+        <thead>
+        <tr>
+            <th style="width: 6%"><input type="checkbox" id="checkall" data-name="checkbox" lay-filter="check" lay-skin="primary"></th>
+            <th>权限名称</th>
+            <th>节点</th>
+            <th style="text-align:center">添加时间</th>
+            <th style="width: 18%">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{# layui.each(d.list, function(index, item){ }}
+        <tr>
+            <td>
+                <input type="checkbox" name="checkbox" value="{{ item.id}}" lay-skin="primary">
+            </td>
+            <td>
+                {{ strRepeat('&nbsp;&nbsp;&nbsp;&nbsp;',item.leftpin)}} {{# if(item.leftpin>1){ }} ├&nbsp;&nbsp; {{# } }} {{ item.title}}
+
+            </td>
+            <td>{{ item.name}}</td>
+            <td>{{ item.create_time}}</td>
+            <td>
+                <i class="modal-catch i_edit" data-params='{"content": ".edit-subcat","act":"{:url("edit_menu")}","title":"编辑角色","data":"id={{ item.id}}&title={{ item.title}}&name={{ item.name}}&pid={{ item.pid}}","type":"1","area":"500px,360px"}'>编辑</i>／<i class="i_delete ajax" data-params='{"url": "{:url("del_menu")}","act":"{:url("del_menu")}","data":"id={{ item.id}}","confirm":"true"}'>删除</i>
+            </td>
+        </tr>
+        {{# }); }}
+        </tbody>
+
+    </table>
+</script>
+{include file="common/version" /}
+<script>
+    layui.use('list');
+    function strRepeat(str, count) {
+        var ret = "";
+        var j = count/35;
+        for (var i = 0; i < j; i++) {
+            ret += str;
+        }
+        return ret;
+    }
+</script>
+</body>
+</html>

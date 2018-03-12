@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>我的分销</title>
+    <link rel="stylesheet" href="/public/mobile/css/mui.min.css">
+    <link rel="stylesheet" href="/public/mobile/css/global.css" />
+    <link rel="stylesheet" href="/public/mobile/css/threeLevelMarketing.css">
+    <script type="text/javascript" src="/public/mobile/js/mui.min.js"></script>
+    <script src="/public/mobile/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="/public/mobile/js/globla.js"></script>
+</head>
+<body>	
+	<div id="tab-item" >
+      <a href='{:url("index")}' class="active">近况</a>
+      <a href='{:url("record")}'>数据</a>
+      <a href='{:url("manage")}'>管理</a>
+  	</div>
+	<div class=" fenxiao_main">
+		<div class="my_balance">
+	      <span id="account">
+	         <i></i>
+	         {if $userinfo.alipay}
+	         <a href="{:url('draw_apply')}">提现</a>
+	         {else}
+	         <a href="{:url('bind_account')}">提现</a>
+	         {/if}
+	      </span>
+	    </div>
+	    <div class="nearest_order"></div>
+	    <div class="order_list_div">
+	        <ul class="order_list_ul">
+	        	<!--<li>
+	        		<div class="order-list-left">
+	        			<h4></h4>
+	        			<p><span class="iterm-name"></span><span class="iterm-con"></span></p>
+	        			<p><span class="iterm-name"><span class="iterm-con"></span></p>
+	        			<p><span class="iterm-name"><span class="iterm-con"></span></p>
+	        			<p class="iterm-time"></p>
+	        		</div>
+	        		<p class="order-list-right"></p>
+	        	</li>-->
+	        </ul>
+	    </div>
+    </div>       
+	
+	<div class="grazy-copyright bottom-fixed ">
+		<i>格子匠 GRAZY.CN 技术支持</i>
+	</div>
+<!--{include file="common/menu" /}-->
+
+<script>
+	//tab切换
+	
+    var uid = '{$userinfo.uid}';
+    var isbind = '{$userinfo.is_bind}';
+    $('.mui-table-view li').find('img').eq(4).attr('src', '/public/mobile/img/icon/4a.png');
+    $('.mui-table-view li').find('.navcontent').removeClass('NavActive');
+    $('.mui-table-view li').find('.navcontent').eq(4).addClass('NavActive');
+    $.ajax({
+        url: host + 'rebate/index',
+        data: {
+            uid: uid
+        },
+        type: 'GET', //GET
+        async: true,    //或false,是否异步
+        timeout: 5000,    //超时时间
+        dataType: 'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+        success: function (data, textStatus, jqXHR) {
+            if (data.code == -2) {
+                mui.alert('token验证失败');
+                return false;
+            }
+            if (data.code == -3) {
+                location.reload();
+            }
+            if (data.code == 1) {
+
+                var result = data.data;
+                var count = 0;
+                console.log(data);
+                $("#account").find('i').html("账户余额 ￥" + result.money);
+                var list = '';
+                $.each(result.rebate,function(j,item){
+                	list +='<li><div class="order-list-left"><h4>'+item.course_name+'</h4><p><span class="iterm-name">课程价格</span><span class="iterm-con">¥'+item.order_money+'</span></p><p><span class="iterm-name">类型</span><span class="iterm-con">'+item.fxlevel+'分销(分成'+item.scale+'%)</span></p><p><span class="iterm-name">订单号</span><span class="iterm-con">'+item.order_sn+'</span></p><p class="iterm-time">'+item.create_time+'</p></div><p class="order-list-right"><span>+</span>¥'+item.money+'</p></li>';
+                   
+                    count = j+1;
+                });
+                if(count==0){
+                	str_order = "";
+                    $(".nearest_order").html(str_order);
+                }else{
+                	str_order = "最近"+count+"个订单";
+                    $(".nearest_order").html(str_order);
+                }
+                
+                $(".order_list_ul").html(list);
+                if(list==""){
+                	emptylist ='<div class="emptypage-wrapper"><div class="empty-box"> <img class="empty-img" src="/public/mobile/img/icon/order-empty.png"> <p class="empty-text">还没有订单</p></div></div>';
+					$('.order_list_div').after(emptylist);
+                }
+                
+            }
+        }
+    })
+</script>
+<script src="/public/mobile/js/bindmobile.js"></script>
+</body>
+</html>

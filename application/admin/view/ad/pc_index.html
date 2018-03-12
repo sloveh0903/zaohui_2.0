@@ -1,0 +1,72 @@
+{include file="common/header" /}
+<body>
+<div class="article_manage">
+    <div class="right-side-header clearfix">
+	        <span>系统管理</span>
+	        {include file="common/admin" /}
+   </div>
+   <div class="right_side_content">
+	   <div class="system_guanli_div">
+	 		<ul class="system_guanli_ul">
+                <li><a href="javascript:void(0)" class="active goto" data-src='{:url("ad/index")}'>广告管理</a></li>
+           </ul>
+		</div>
+		<div class="success_tip displayNone">已完成</div>
+	     <div class="add_article_main ">
+	        <div class="ad_operation_div">
+	            <div class="add_article_step">
+	            	<ul class="editCourse-nav-ul clearFloat">
+	                	<li data-src='{:url("ad/index")}?id=1'class="goto"><i data-name="index">小程序首页</i></li>
+	                	<li data-src='{:url("ad/index")}?id=3' class="goto active" ><i data-name="pc_index">pc首页</i></li>
+<!-- 	                	<li data-src='{:url("ad/index")}?id=2' class="goto" ><i data-name="pc_detail">pc文章详情</i></li> -->
+	            	</ul>
+	        	</div>
+	        </div>
+	         <div class="articleInfo_fill">
+	            <section class="panel panel-padding">
+	                <form id="form1" class="layui-form layui-form-pane" action="{:url('pc_index')}">
+	                    <div class="layui-form-item">
+	                        <div class="layui-input-block" style="height:auto;display: flex;margin-left: 0;">
+	                            <input type="file" name="file" class="layui-upload-file">
+	                            <input type="hidden" name="photopath" value="{$pc_url}" jq-verify="required" jq-error="请上传图片" error-id="img-error">
+	                            <p id="img-error" class="error"></p>
+	                        </div>
+	                        <div class="layui-input-block" style='height:auto;display: flex;margin-left: 0;'>
+	                            <div class="imgbox" style='height:auto;'>
+	                                <img src="{$pc_url}" alt="..." class="img-thumbnail" style="width:800px;height:auto;">
+	                            </div>
+	                        </div>
+	                    </div>
+	                   
+	                    <div class="layui-form-item">
+	                        <div class="layui-input-block" style="height:auto;display: flex;margin-left: 0;">
+	                            <button class="layui-btn" jq-submit lay-filter="submit">立即提交</button>
+	                        </div>
+	                    </div>
+	                </form>
+	            </section>
+	        </div>
+	    </div>
+	</div>
+</div>
+{include file="common/version" /}
+<script>
+    layui.use('adv');
+    function add_item_id(ret, options, $) {
+        console.log(ret);
+        layui.use(['form'], function(){
+            $('form').find('select[name=item_id]').html('<option>==请选择==</option>');
+            var form = layui.form();
+            if(ret.length > 0){
+                $.each(ret, function (i, n) {
+                    var proHtml = '<option value="' + n.id + '">' + n.title + '</option>';
+                    $('form').find('select[name=item_id]').append(proHtml);
+                });
+            }
+            form.render();
+        });
+    }
+</script>
+
+</body>
+</html>

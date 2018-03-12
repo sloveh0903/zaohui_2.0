@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>个人中心</title>
+    <link rel="stylesheet" type="text/css" href="/public/mulitpc/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/public/mulitpc/css/common.css">
+    <link rel="stylesheet" type="text/css" href="/public/mulitpc/css/jquery.mCustomScrollbar.min.css">
+    <link rel="stylesheet" type="text/css" href="/public/mulitpc/css/personal_study.css">
+    <style>
+        .mCustomScrollbar li{margin: 10px;}
+        .mCustomScrollbar li .count{float:right;color: #bbb;font-size: 12px;}
+        .mCustomScrollbar li .course{color: #bbb;}
+    </style>
+    <!--[if lt IE 9]> 您的IE浏览器版本太低，请升级浏览器！<![endif]-->
+</head>  
+<body class="bg_FAFAFA">
+{include file="common/head" /}
+{include file="member/memberTop"/}
+<div class="userinfo-detail">
+  {include file="member/memberLeft" /}
+  <div class="detail-container" data-nav="0" data-name="study">
+      <ul class="tab_nav_ul" id="myTab_study">
+        <li><a href="{:url('member/ask?type=1')}"  {if $type == 1}class="defaultTab_a"{/if}>我的提问</a></li>
+        <li><a href="{:url('member/ask?type=2')}"  {if $type == 2}class="defaultTab_a"{/if}>我的回答</a></li>
+      </ul>
+      {if $type == 1}
+      <div class="myStudy_group mCustomScrollbar">
+          {if !($lists->isEmpty())}
+        {foreach $lists as $v}
+          <a href="{:url('ask/detail',['id'=>$v.id])}">
+            <li>{$v.title} </li>
+            <li><span class="course">相关课程:{$v.ctitle}</span><span class="count">{$v.comments}条回答</span></li>
+          </a>
+        {/foreach}
+        <div class="page">{$page}</div>
+          {else}
+          <div class="empty_box" style="width: 100%;top:1px;height: 500px"> <div><img src="/public/mulitpc/images/empty_comment.png" width="72px" alt="为空"><p>暂无内容哦~</p> </div></div>
+          {/if}
+      </div>
+      {/if}
+
+
+      {if $type == 2}
+      <div class="myStudy_group mCustomScrollbar">
+          {if !($list_answer->isEmpty())}
+          {foreach $list_answer as $v}
+            <a href="{:url('ask/detail',['id'=>$v.aid])}">
+              <li>问题：{$v.ask_title} </li>
+              <li>{$v.content} </li>
+              <li><span class="course">相关课程:{$v.title}</span></li>
+            </a>
+          {/foreach}
+          <div class="page">{$page_answer}</div>
+          {else}
+          <div class="empty_box" style="width: 100%;top:1px;height: 500px"> <div><img src="/public/mulitpc/images/empty_comment.png" width="72px" alt="为空"><p>暂无内容哦~</p> </div></div>
+          {/if}
+      </div>
+      {/if}
+
+  </div>
+</div>
+{include file="common/bottom" /}
+<script src="/public/pc/js/jquery-1.11.0.min.js"></script>
+<script src="/public/pc/js/bootstrap.min.js"></script>
+<script src="/public/pc/js/jquery.mCustomScrollbar.concat.min.js"></script>
+<script src="/public/pc/js/jqmeter.min.js"></script>
+<script src="/public/pc/js/public_PC.js"></script>
+<script>
+  
+</script>
+</body>
+</html>

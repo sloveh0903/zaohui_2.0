@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>用户评价</title>
+		<link rel="stylesheet" href="/public/mobile/css/mui.min.css" />
+		<link rel="stylesheet" href="/public/mobile/css/globla.css" />
+		<link rel="stylesheet" href="/public/mobile/css/comment.css" />
+	</head>
+	{include file="common/share" /}
+	<body>
+		<!--<header id="header" class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-arrowthinleft mui-pull-left"></a>
+			<h1 class="mui-title">用户评价</h1>
+		</header>-->
+		<div id="pullrefresh" class="mui-scroll-wrapper">
+		<div class="mui-scroll">
+		<div class="mui-row pf">
+			<div class="mui-col-xs-2 font-size-20 font-color-6 average">10</div>
+			<div class="mui-col-xs-8 star">
+			
+			</div>
+			<div class="mui-col-xs-2 font-size-14 font-color-6">
+				<font class="comment_count">0</font>
+				<a class="icon-reply"></a>
+			</div>
+		</div>
+		<div class="mui-row btn-pj myComment">
+			
+		</div>
+		<div class="mui-row com">
+			<span class="com-t font-size-14 font-color-4">0条评价</span>
+		
+			<ul class="com-ul">
+			
+			</ul>
+		</div>
+		</div>
+		</div>
+		<script type="text/javascript" src="/public/mobile/js/jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="/public/mobile/js/mui.min.js"></script>
+		<script type="text/javascript" src="/public/mobile/js/globla.js"></script>
+	</body>
+	<script>
+		var cid = GetQueryString('cid'); //课程id
+		var page = 1;
+		var size = 10;
+        var uid = '{$userinfo.uid}'; //用户id
+        var isbind = '{$userinfo.is_bind}';
+		var is_comment = 0; //0未评价 1评价
+		
+		data={
+			page:page,
+			size:size
+		};
+		toList(data,1);//具体取数据的方法
+		mui.init({
+			pullRefresh: {
+				container: '#pullrefresh',
+				down:{
+					auto:false,//可选,默认false.自动下拉刷新一次
+					contentdown : "下拉可以刷新",//可选，在下拉可刷新状态时，下拉刷新控件上显示的标题内容
+					contentover : "释放立即刷新",//可选，在释放可刷新状态时，下拉刷新控件上显示的标题内容
+					contentrefresh : "正在刷新...",//可选，正在刷新状态时，下拉刷新控件上显示的标题内容
+					callback: pulldownRefresh
+				},
+				up : {
+					//height:50,//可选.默认50.触发上拉加载拖动距离
+					//auto:true,//可选,默认false.自动上拉加载一次
+					contentrefresh : "正在加载...",//可选，正在加载状态时，上拉加载控件上显示的标题内容
+					contentnomore:'没有更多数据了',//可选，请求完毕若没有更多数据时显示的提醒内容；
+					callback :pullupRefresh //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+				}
+
+			}
+		});
+		
+		
+		function pulldownRefresh() {
+		console.log('刷新');
+			setTimeout(function() {
+				page = 1;//刷新并显示第一页
+				data={
+					page:page,
+					size:10
+				};
+				type=1;//代表下拉刷新
+				toList(data,type);//具体取数据的方法
+
+			}, 100);
+		}
+		
+		function pullupRefresh() {
+		console.log('下拉');
+			setTimeout(function() {
+				page++;//翻下一页
+				data={
+					page:page,
+					size:10
+				};
+				type=2;//代表上拉加载
+				toList(data,type);//具体取数据的方法
+			}, 100);
+		}
+		
+		function toList(data,type) {
+			$.ajax({
+				url:host+"comment/index?cid="+cid+"&uid="+uid,
+				data:data,
+				type:'GET', //GET
+				async:true,    //或false,是否异步
+				timeout:5000,    //超时时间
+				dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+				success:function(result,textStatus,jqXHR){
+					console.log(result);
+					if(result.code != 1){
+						mui.alert('获取数据失败');return false;
+					} 
+					var comment = result.data.comment;
+					$('.comment_count').html(result.data.comment_count);
+					$('.com-t').html(result.data.comment_count+'条评价');
+					$('.average').html(result.data.average);
+					is_comment = result.data.is_comment;
+					if(is_comment == 0){
+						var url = "{:url('wechat/course/subcomment')}";
+						$('.myComment').html('<a href="'+url+'?cid='+cid+'" class="subcomment">评价</a>');
+					}
+					var inner = '';
+					for(var i=0;i<comment.length;i++){
+						var star = '';
+						var comment_star = comment[i].star;
+						for(var j=0;j<5;j++){
+							if(j<comment_star){
+								star+='<embed src="/public/mobile/img/icon/star.svg" width="12" height="12" type="image/svg+xml" />';	
+							}
+							else{
+								star+='<embed src="/public/mobile/img/icon/star_empty.svg" width="12" height="12" type="image/svg+xml" />';
+							}
+						}
+						inner+='<li>'+
+							'<img src="'+comment[i].face+'">'+
+							'<div>'+
+								'<b class="font-size-16 font-color-10">'+comment[i].nickname+'</b>'+
+								'<span class="font-size-14 font-color-6">'+comment[i].content+'</span>'+
+							'</div>'+
+							'<div class="com-star">'+star+'</div>'+
+						'</li>';
+					}
+					var showStarSrc = showstar(result.data.star);
+					var star_inner = '';
+					for(var i =1;i<showStarSrc.length;i++){
+						star_inner += '<embed src="'+showStarSrc[i]+'" width="24" height="24" type="image/svg+xml" />';
+					}
+					$('.star').html(star_inner);
+					if(type == 1){
+						$('.com-ul').html('');
+						mui('#pullrefresh').pullRefresh().endPulldownToRefresh();
+					}else{
+						mui('#pullrefresh').pullRefresh().endPullupToRefresh();
+					}
+					$('.com-ul').append(inner);
+					mui('.mui-slider').slider({
+						interval: 3000
+					});
+				}
+			})
+				
+			
+		}
+		
+		mui("body").on('tap', '.subcomment', function (event) {
+			var url = "{:url('wechat/course/subcomment')}";
+			window.location.href=url+'?cid='+cid;
+		});
+		
+	
+		//星星显示数量
+		function showstar(star) {
+			var starNum = parseInt(star)
+			var numType = starNum % 2
+			var stars = starNum / 2
+			console.log(numType+starNum)
+		
+			var starImg = [];
+			for (var i = 1; i < 6; i++) {
+			  if (i <= stars) {
+				starImg[i] = '/public/images/gray_fullStar.svg'
+			  } else {
+				if (numType == 1 && i == parseInt(stars) + 1) {
+				  starImg[i] = '/public/images/gray_halfStar.svg'
+				} else {
+				  starImg[i] = '/public/images/gray_emptyStar.svg'
+				}
+			  }
+			}
+			return starImg;
+		}
+		
+		function GetQueryString(name)
+		{
+			var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+			var r = window.location.search.substr(1).match(reg);
+			if(r!=null)return  unescape(r[2]); return null;
+		}
+	</script>
+	<script src="/public/mobile/js/bindmobile.js"></script>
+</html>

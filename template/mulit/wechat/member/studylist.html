@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>学习记录</title>
+		<link rel="stylesheet" href="/public/mobile/css/mui.min.css" />
+		<link rel="stylesheet" href="/public/mobile/css/global.css" />
+		<link rel="stylesheet" href="/public/mobile/css/member.css" />
+		<!--<link rel="stylesheet" href="/public/mobile/css/study-list.css" />-->
+		<style type="text/css">
+			html,body{
+				background: #fff;
+			}
+		</style>
+	</head>
+    {include file="common/share" /}
+	<body>
+		<div class="mui-row timeline">
+			<ul id="studylist">
+			</ul>
+		</div>
+	<div class="buy-dialog" id="BuyDialog">
+		<div class="alert-box">
+			<h1 class="fs-20 fc-8">提示</h1>
+			<p class="fs-16 fc-6">是否要清除全部学习记录？</p>
+			<div class="buy-dialog-btn">
+				<a class="Cancel">取消</a> <a id="onBridgeReady" class="onBridgeReady">确定</a>
+			</div>
+		</div>
+	</div>
+	<a class="btn hollow btn-clear" href=''>清除</a>
+		<script type="text/javascript" src="/public/mobile/js/jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="/public/mobile/js/mui.min.js"></script>
+		<script type="text/javascript" src="/public/mobile/js/globla.js"></script>
+		<script>
+            var uid = '{$userinfo.uid}';
+            var isbind = '{$userinfo.is_bind}';
+            $.ajax({
+                url:host+'studyList/recordList',
+                data:{
+                    uid:uid
+                },
+                type:'GET', //GET
+                async:true,    //或false,是否异步
+                timeout:5000,    //超时时间
+                dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+                success:function(data,textStatus,jqXHR){
+                    if(data.code==1){
+                        //console.log(data);
+                        var list = "";
+                        var result = data.data;
+                        if(result.browse_record.length == 0){
+                            var empty = '<div class="emptypage-wrapper"><div class="empty-box"> <img class="empty-img" src="/public/mobile/img/icon/purchase-empty.png"> <p class="empty-text">还没有学习记录</p></div></div>';
+                                $(".mui-row").html(empty);
+                                $('.btn-clear').hide();
+                        }
+                        $.each(result.browse_record,function(i,item){
+                            var courseNow = 0;
+                            var courseNum = Object.getOwnPropertyNames(item).length;  //获取课程数
+                            list += '<li><dl><dd><span class="timeline-time fs-12 fc-6">'+ i +'</span>';
+                            $.each(item,function (j,course) {
+                                console.log(course);
+                                list += '<h1 class="timeline-time-t fc-10 fs-16">'+ j +'</h1>';
+                                $.each(course,function (z,video) {
+                                    list += '<p><span class="timeline-info fs-14 fc-10" data-id="'+ video.cid +'">'+ video.video_title +'</span></p>'
+                                });
+                                if(courseNow == courseNum-1){
+                                    //如果是否到最后一个课程
+                                    list += '</dd>';
+								}else{
+                                    list += '</dd><dd>';
+								}
+                                courseNow++;
+                            });
+                            list += '</dl><i class="timeline-dian"></i></li>';
+                        });
+                        $("#studylist").append(list);
+                    }
+                }
+            });
+            mui('#studylist').on('tap','h1',function () {
+                var cid = $(this).next().find('.timeline-info').attr('data-id');
+                url = "{:url('wechat/course/detail')}";
+                window.location.href = url + '?cid=' + cid;
+            });
+            mui('#studylist').on('tap','.timeline-info',function () {
+                var cid = $(this).attr('data-id');
+                url = "{:url('wechat/course/detail')}";
+                window.location.href = url + '?cid=' + cid;
+            });
+            mui('body').on('tap','.btn-clear',function () {
+            	$("#BuyDialog").addClass("buy-dialog-in");
+                
+            });
+            mui("body").on('tap', '.Cancel', function (event) {
+				$("#BuyDialog").removeClass("buy-dialog-in");
+			})
+			mui("body").on('tap', '#onBridgeReady', function (event) {
+                $.ajax({
+			        url:host + 'StudyList/clean_studylist/',
+			        data:{
+			            uid:uid
+			        },
+			        type:'GET', //GET
+			        async:true,    //或false,是否异步
+			        timeout:5000,    //超时时间
+			        dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+			        success:function(data,textStatus,jqXHR){
+						if(data.code==1){
+							url = "{:url('wechat/member/studylist')}";
+							window.location.href = url;
+						}
+			        }
+			    })
+			})
+		</script>
+		<script src="/public/mobile/js/bindmobile.js"></script>
+	</body>
+</html>

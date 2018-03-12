@@ -1,0 +1,259 @@
+@charset "UTF-8";
+
+/*阅读start*/
+.bg_FAFAFA {
+  background: #FAFAFA;
+}
+
+.bg_FFFFFF {
+  background: #FFFFFF;
+}
+
+.bg_F5F5F5 {
+  background: #F5F5F5;
+}
+
+.read_main {
+  background: #fff;
+  width: 100%;
+  height: auto;
+  padding-top: 30px;
+}
+
+.w940 {
+  width: 940px;
+  height: 100%;
+  margin: 0 auto;
+}
+
+.read_main_lunbo .item img {
+  width: 940px;
+  height: 300px;
+  vertical-align: middle;
+  border-radius: 2px;
+}
+
+.carousel-indicators {
+  left: auto;
+  right: 3%;
+  bottom: 10px;
+  width: 30%;
+  text-align: right;
+}
+.carousel-indicators li {
+  width: 6px;
+  height: 6px;
+  background-color: rgba(255, 255, 255, 0.4);
+}
+.carousel-indicators .active {
+  width: 8px;
+  height: 8px;
+  background-color: white;
+}
+
+.read_main_left {
+  width: auto;
+  max-width: 700px;
+  height: auto;
+}
+
+.read_main_left_head {
+  width: auto;
+  width: 700px;
+  height: auto;
+}
+
+.borderColor_00B6F2 {
+  border: 3px solid #00B6F2;
+}
+
+.read_teacher_head img {
+  width: 40px;
+  height: 40px;
+  vertical-align: middle;
+  border-radius: 20px;
+}
+
+p.read_teacher_name {
+  font-size: 12px;
+  opacity: 0.6;
+}
+
+.read_main_left_head_ul {
+  width: auto;
+  width: 700px;
+  height: auto;
+  padding-right: 0px;
+}
+.read_main_left_head_ul li {
+  margin-left: 30px;
+  display: inline-block;
+}
+.read_main_left_head_ul li:first-child {
+  margin-left: 0;
+}
+
+.read_main_left_list {
+  border-top: 1px solid rgba(41, 43, 51, 0.1);
+  width: 100%;
+  max-width: 700px;
+  height: 100%;
+  padding-bottom: 20px;
+}
+
+.list_group {
+  width: auto;
+  height: 100%;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(41, 43, 51, 0.1);
+  margin-top: 20px;
+}
+
+.list_group_href {
+  width: auto;
+  height: auto;
+  cursor: pointer;
+}
+
+.list_left {
+  max-width: 180px;
+  height: auto;
+}
+.list_left img {
+  width: 180px;
+  height: 120px;
+  vertical-align: middle;
+  border-radius: 1px;
+}
+
+.list_right {
+  margin-left: 20px;
+  max-width: 500px;
+  max-height: 120px;
+}
+.list_right > p {
+  width: 500px;
+  color: #292B33;
+}
+.list_right > p:first-child {
+  font-size: 24px;
+}
+.list_right > p:nth-child(2) {
+  font-size: 14px;
+}
+.list_right i {
+  color: rgba(41, 43, 51, 0.8);
+}
+.list_right .list_right_footer {
+  margin-top: 17px;
+}
+.list_right_p1{height: 1.6em; overflow: hidden; text-overflow: ellipsis; display: block; word-wrap: break-word; white-space: normal;}
+.list_right_p1:hover{border-bottom: 1px solid #B5B6B9}
+
+.read_main_right {
+  width: auto;
+  max-width: 220px;
+  height: auto;
+  margin-left: 20px;
+}
+
+.mall_ul {
+  width: auto;
+  height: 100%;
+}
+.mall_ul li {
+  margin-bottom: 10px;
+}
+.mall_ul li a {
+  display: inline-block;
+  width: 220px;
+  height: auto;
+}
+.mall_ul li img {
+  width: 220px;
+  height: 60px;
+  vertical-align: middle;
+}
+.mall_ul li img:hover {
+  opacity: 0.8;
+}
+
+.use_xcx {
+  width: auto;
+  height: 100%;
+  min-height: 146px;
+  background: #00B6F2;
+  border-radius: 2px;
+  padding: 30px;
+}
+.use_xcx .a_get {
+  display: block;
+  width: 80px;
+  height: 32px;
+  line-height: 28px;
+  border-radius: 16px;
+  color: #FFFFFF;
+  border: 2px solid #FFFFFF;
+}
+
+/*阅读end*/
+img.img_eye16 {
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
+}
+
+img.img_comment16 {
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
+  margin-left: 12px;
+}
+
+.acticle-type {
+  width: 220px;
+  height: auto;
+}
+.acticle-type > h4 {
+  margin: 0;
+  font-weight: bold;
+  font-size: 14px;
+  color: #292B33;
+  padding: 0 0 10px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.acticle-type-ul {
+  padding: 6px 0 0 0;
+}
+.acticle-type-ul li {
+  margin: 10px 0 0 0;
+  position: relative;
+}
+.acticle-type-ul li > i {
+  width: 3px;
+  height: 3px;
+  border-radius: 3px;
+  color: rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.1);
+  position: absolute;
+  top: 9px;
+  left: 0;
+  z-index: 1;
+}
+.acticle-type-ul li a {
+  display: inline-block;
+  max-width: 220px;
+  font-size: 14px;
+  color: #292B33;
+  opacity: .6;
+  padding: 0px 0 0px 13px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.acticle-type-ul li a:hover {
+  opacity: .8;
+}
+
+/*# sourceMappingURL=read-v72.css.map */

@@ -1,0 +1,136 @@
+
+.mui-slider-indicator .mui-indicator {
+	width: 4px;
+	height: 4px;
+	margin: 1px 6px;
+	background: rgba(255,255,255,0.4);
+}
+.mui-slider-indicator .mui-active.mui-indicator{
+	height: 6px;
+	width: 6px;
+	background: rgba(255,255,255,1);
+}
+.seach {
+	width: 100%;
+	height: 40px;
+	background: #f5f5f5;
+	display: block;
+	text-align: center;
+	line-height: 40px;
+	color: rgba(41,43,51,0.6) !important;
+	font-size: 14px;
+}
+
+.seach embed {
+	margin-top: 8px;
+}
+
+.seach span {
+	font-size: 20px;
+	color: #666 !important;
+	line-height: 40px;
+}
+.list-content{
+	/*padding-bottom: 48px;*/
+}
+.list-content .mui-table-view li {
+	position: relative;
+	height: 120px;
+	padding: 30px 15px 30px 90px;
+	border-bottom: 1px solid #e7e5ea;;
+}
+
+.list-content .mui-table-view li img {
+	height: 60px;
+    width:60px;
+	left: 15px;
+	position: absolute;
+	border-radius: 14px;
+}
+
+.content {
+	width: 100%;
+	float: left;
+
+}
+
+.content h1 {
+	font-size: 18px;
+	margin: 0;
+	margin-bottom: 5px;
+	color: rgba(41,43,51,0.8);
+	word-wrap: break-word;
+    width: 77%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.content span{
+	width: 100%;
+	float: left;
+	font-size: 14px;
+	color: rgba(41,43,51,0.6);
+}
+.content i{
+	width: 100%;
+	float: left;
+	font-size: 14px;
+	font-style: normal;
+	color: rgba(41,43,51,0.4);
+}
+.price{
+	position: absolute;
+	right: 15px; 
+	top: 30px;
+	color: #00B6F2;
+	font-size: 16px;
+}
+/*客服*/
+.img-customerService{
+	    position: fixed;
+    bottom: 65px;
+    right: 15px;
+    z-index: 10;
+    width: 60px;
+    height: 60px;
+    border-radius: 30px;
+    box-shadow: 0 5px 20px rgba(0,0,0,.1);
+}
+.kefudivbuy-dialog{
+			height: 35%;
+			border-radius: 14px;
+			background-color:white;padding: 5%;align-content: center;
+				    margin-top: 50%;
+				    margin-left: 15%;
+				    width: 70%;
+				    
+		}
+		.kefudivbuy-dialog h1{color:black;font-size:14px;text-align: center;}
+		.kefudivbuy-dialog img{width: 50%;margin-top: 2%;}
+		.kefudivbuy-dialog p{color:black;font-size:8px;    float: right;
+		    width: 100%;
+		    margin-top: 0px;
+		    margin-bottom: 0px;
+		    text-align: left;
+		    line-height: 14px;
+		    padding-left: 20%;}
+		.kefubuy-dialog {
+			position: fixed;
+			z-index: 10000;
+			top: 50%;
+			left: 50%;
+			display: none;
+			overflow: hidden;
+			width: 270px;
+			-webkit-transition-property: -webkit-transform, opacity;
+			transition-property: transform, opacity;
+			-webkit-transform: translate3d(-50%, -50%, 0) scale(1.185);
+			transform: translate3d(-50%, -50%, 0) scale(1.185);
+			text-align: center;
+			opacity: 0;
+			color: #000;
+			border-radius: 3px;
+			background: #fff;
+			padding: 20px;
+			border: 1px solid #95989a;
+		}

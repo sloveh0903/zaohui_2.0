@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>所有课程页</title>
+		<link rel="stylesheet" href="/public/mobile/css/mui.min.css" />
+		<link rel="stylesheet" href="/public/mobile/css/globla.css" />
+		<link rel="stylesheet" href="/public/mobile/css/index-v74.css" />
+		<script src="/public/mobile/js/jquery-3.2.1.min.js"></script>
+		<script src="/public/mobile/js/mui.min.js"></script>
+		<script src="/public/mobile/js/globla.js"></script>
+	</head>
+	<style>
+		.mui-slider .mui-slider-group .mui-slider-item img {
+			float: left;
+		}
+		.course_desc{
+	      	overflow: hidden;
+		    text-overflow: ellipsis;
+		    white-space: nowrap;
+	    }
+	    .mui-table-view:after{
+	    	background-color:white;
+	    }
+	    .mui-content{
+	    background-color:#fafafa;
+	    }
+		.grazy_worker{
+		background:#fafafa;
+		}
+	    .grazy-zhichi {
+		    display: flex;
+		    justify-content: center;
+		    padding: 0 15px;
+		    background: #fafafa;
+		    height: 50px;
+			line-height: 50px;
+		    margin-bottom: 50px;
+		}
+		.grazy-zhichi>span {
+		    font-size: 12px;
+		    line-height: 40px;
+		    margin: 5px;
+    		color: #292B33;
+            opacity: .2;
+		}
+	</style>
+	
+<body>
+<!--下拉刷新容器-->
+<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+    <div class="mui-scroll">
+        <!--数据列表-->
+       <div class="search-box">
+        <a class="search" href="">
+           <span class="search-icon">
+          </span>
+           <span class="search-text">搜索...</span>
+        </a>
+      </div>
+<!--       <div class="mui-row list-content withtitle"> -->
+<!--       <ul class="mui-table-view course-list" id="course"> -->
+<!-- 	    </ul> -->
+<!-- 	    </div> -->
+<!-- 		<div class="mui-row searchIndex"> -->
+<!-- 			<a class="seach"> -->
+<!-- 				<span class="mui-icon mui-icon-search"></span>搜索... -->
+<!-- 			</a> -->
+<!-- 		</div> -->
+		<div class="mui-row list-content withtitle">
+			<ul class="mui-table-view course-list" id="course">
+			</ul>
+			<div class="grazy-zhichi">
+      <span>格子匠 GRAZY.CN 技术支持</span>
+    </div>
+		</div>
+		
+    </div>
+</div>
+<script type="text/javascript">
+var page = 1;
+var size = 10;
+var uid = '{$userinfo.uid}'; //用户id
+var isbind = '{$userinfo.is_bind}';
+
+  mui.init
+  ({
+    pullRefresh: 
+    {
+      container: '#pullrefresh',
+      // down: {
+      //   callback: pulldownRefresh
+      // },
+      up: {
+        contentrefresh: '正在加载...',
+        callback: pullupRefresh
+      }
+    }
+  });
+      
+  /*
+   * 下拉刷新具体业务实现
+   */
+  // function pulldownRefresh() 
+  // {
+  //   setTimeout(function() 
+  //   {
+  //     mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
+  //   }, 1500);
+  // }
+      
+  /*
+   * 上拉加载具体业务实现
+   */
+  function pullupRefresh() 
+  {
+    setTimeout(function() {
+     	// mui('#pullrefresh').pullRefresh().endPullupToRefresh((++count > 2)); //参数为true代表没有更多数据了。
+	    page++; //翻下一页
+		data = {
+			page: page,
+			size: size,
+			uid:uid
+		};
+		toList(data); //具体取数据的方法
+    }, 1500);
+  }
+
+  	data = {
+		page: page,
+		size: size,
+		uid:uid
+	};
+	toList(data);
+      
+   function toList(data) {
+				$.ajax({
+					url: host + '/index/index',
+					data: data,
+					type: 'GET', //GET
+					async: true, //或false,是否异步
+					timeout: 5000, //超时时间
+					dataType: 'json', //返回的数据格式：json/xml/html/script/jsonp/text
+					success: function(result, textStatus, jqXHR) {
+						if(result.code == 1) {
+							var is_rebate = result.data.is_rebate;
+							var rebate_status = result.data.rebate_status;
+							var adv = "";
+							var advitem = "";
+							var indicator = "";
+							var list = "";
+							var adv_length = result.data.adv.length;
+							
+                            
+                            //是否推广员
+							if(is_rebate == '1' && rebate_status == '1'){
+                                $.each(result.data.course, function(j, course) {
+                                    list += '<li data-id="' + course.cid + '"><div class="teacher-box"><img src="' + course.face + '" /></div><div class="content"> <h1>' + course.title + '</h1> <span class="course_desc">' + course.desc + '</span> <i style="color:#FF2D55">推广佣金:' + course.share_price + '元</i> </div> <span class="price">￥' + course.price + '</span></li>';
+                                });
+							}else{
+                                $.each(result.data.course, function(j, course) {
+                                    list += '<li data-id="' + course.cid + '"><div class="teacher-box"><img src="' + course.face + '" /></div><div class="content"> <h1>' + course.title + '</h1> <span class="course_desc">' + course.desc + '</span> <i>' + course.studycount + '人在学</i> </div> <span class="price">￥' + course.price + '</span></li>';
+                                });
+							}	
+							
+							if(data.page == 1) {
+								$(".advitem").html(advitem);
+							}
+							if(result.data.course.length > 0){
+								$("#course").append(list);
+							}else{
+								      mui('#pullrefresh').pullRefresh().endPullupToRefresh(true); //参数为true代表没有更多数据了。
+
+							}
+							var gallery = mui('.mui-slider');
+							gallery.slider({
+								interval: 2000
+							});
+						}
+						mui('#pullrefresh').pullRefresh().endPullupToRefresh();
+						//算底部高度
+						//var total_h = $(window).innerHeight();
+						var index = $('#course li').length;
+						if(index<=2){
+							if(index==0){var footer_bottom = -311;}
+							if(index==1){var footer_bottom = -191;}
+							if(index==2){var footer_bottom = -71;}
+							$('.grazy_worker').css({"position":"absolute","bottom":footer_bottom});
+						}
+					}
+				});
+			}
+
+			mui('#course').on('tap', 'li', function() {
+				var cid = $(this).attr('data-id');
+				url = "{:url('wechat/course/detail')}";
+				window.location.href = url + '?cid=' + cid;
+			});
+			mui('.search-box').on('tap', '.search', function() {
+				url = "{:url('wechat/search/index')}";
+				window.location.href = url;
+			});
+
+			mui(".mui-slider").on('tap', '.mui-slider-item', function(event) {
+				var menu = $(this).attr('data-menu');
+				var id = $(this).attr('data-id');
+				var link = '';
+				switch(menu) {
+					case("teacher"):
+						link = "{:url('wechat/article/teacher')}" + '?tid=' + id;
+						break;
+					case("course"):
+						link = "{:url('wechat/course/detail')}" + '?cid=' + id;
+						break;
+					case("article"):
+						link = "{:url('wechat/article/detail')}" + '?id=' + id;
+						break;
+					case("question"):
+						link = "{:url('wechat/ask/detail')}" + '?id=' + id;
+						break;
+				}
+				window.location.href = link;
+			});
+			//客服
+			$('.img-customerService').click(function(){
+				$('#kefu').show();
+			});
+			$('.Cancel').click(function(){
+				$('#kefu').hide();
+			});
+      
+  if (mui.os.plus) {
+    mui.plusReady(function() {
+      setTimeout(function() {
+        mui('#pullrefresh').pullRefresh().pullupLoading();
+      }, 1000);
+
+    });
+  } else 
+  { 
+    mui.ready(function() {
+      mui('#pullrefresh').pullRefresh().pullupLoading();
+    });
+  }
+
+
+
+</script>
+<script src="/public/mobile/js/bindmobile.js"></script>

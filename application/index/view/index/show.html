@@ -1,0 +1,31 @@
+<style>
+
+</style>
+<video id="sound" width="100%" controls="controls" ></video>
+<script src="http://api.fuwangdian.com/public/pc/js/jquery-1.11.0.min.js"></script>
+<script>
+    var url = "http://mpv.videocc.net/5cea6c5252/e/5cea6c5252318701073b1a55832661be_1.mp4";
+    var data = xhr(url);
+    $("#sound").attr("src", data);
+    function xhr(url){
+        //创建XMLHttpRequest对象
+        var xhr = new XMLHttpRequest();
+        //配置请求方式、请求地址以及是否同步
+        xhr.open('GET', url, true);
+        //设置请求结果类型为blob
+        xhr.responseType = 'blob';
+        //请求成功回调函数
+        xhr.onload = function(e) {
+            if (this.status == 200) {
+                //获取blob对象
+                var blob = this.response;
+                //获取blob对象地址，并把值赋给容器
+                $("#sound").attr("src", URL.createObjectURL(blob));
+                return URL.createObjectURL(blob);
+            }else{
+                return false;
+            }
+        };
+        xhr.send();
+    }
+</script>

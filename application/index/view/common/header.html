@@ -1,0 +1,250 @@
+   <link rel="stylesheet" href="/public/wenda/css/bootstrap.min.css">
+   <link rel="stylesheet" href="/public/wenda/css/all.css">
+   <div class="index-header" id="index-header">
+      <div class="container">
+         <div class="row index-header-flex">
+            <div class="a-logo-tag">
+               <a href="http://www.kaitao.cn"><img class="pc-logo" src="/public/wenda/images/pc-logo@2x.png"  alt="pc-logo"></a>
+               <a href="http://www.kaitao.cn"><img class="phone-logo" src="/public/wenda/images/phone-logo@2x.png"  alt="phone-logo"></a>
+            </div>
+            <span>
+               <i>问答</i>
+               <img src="/public/wenda/images/hide_menu@2x20.png" alt="隐藏菜单" >
+            </span>
+            <div class="header-ad">
+               <a href="javascript:void(0)"><img src="/public/wenda/images/ad5.gif" ></a>
+            </div>
+            <div class="wrap-tag">
+               <div class="header-other">
+                  <img class="img-search" src="/public/wenda/images/search@2x20.png" alt="搜索">
+                  {if session('uid')}
+                  <span >
+                     <a href="{:url('/user/message')}"><img class="img-message" src="/public/wenda/images/message@2x20.png" alt="消息"></a>
+                     <img class="img-self img-self-pc" src="{php} echo session('face'){/php}" alt="用户头像">
+                     <img class="img-self img-self-phone" src="{php} echo session('face'){/php}" alt="用户头像">
+                  </span>
+                  {/if}
+                  {if !session('uid') && $browser == 0}
+                  <p>
+                     <a class="pc-login" href="javascript:void(0)" >登录</a><!-- <i> / </i><a class="pc-register" href="register.html" >注册</a> -->
+                  </p>
+                  {/if}
+                  <ul class="personnal-info-ul personnal-info-pc">
+                     <li><a href="{:url('/user/message')}">个人主页</a></li>
+  <!--                    <li><a href="set.html">设置</a></li> -->
+                     <li><a href="javascript:void(0)" class="out">退出账号</a></li>
+                  </ul>
+                  <ul class="personnal-info-ul personnal-info-phone">
+                     <li><a href="{:url('/user/message')}">问答消息</a></li>
+                     <li><a href="{:url('/user/myanswer')}">我的回答</a></li>
+                     <li><a href="{:url('/user/mytiwen')}">我的提问</a></li>
+                  </ul>
+               </div> 
+               <span class="pc-tiwen"><i class="header-tiwen">提问</i></span>
+               <div class="nav-header">
+                  <ul class="nav-header-ul">
+                     <li class="active">
+                        <a href="http://wen.kaitao.cn/">问答</a>
+                     </li>
+                     <li >
+                        <a href="javascript:void(0)">淘宝大学</a>
+                        <div class="taobaoDaXue-type">
+                           <div class="taobaoDaXue-type-wrap-tag">
+                              <ul class="taobaoDaXue-type-ul">
+                                 <li>
+                                    <a href="http://www.kaitao.cn">全部</a>
+                                 </li>
+                                 <li><a href="http://www.kaitao.cn/taobaozixun">淘宝咨询</a></li>
+                                 <li>
+                                    <a href="http://www.kaitao.cn/kaidianzhidao">淘宝开店</a>
+                                    <span class="child-menu-type">
+                                       <a href="http://www.kaitao.cn/guize">淘宝规则</a>
+                                       <a href="http://www.kaitao.cn/taobaokaoshi">淘宝考试</a>
+                                       <a href="http://www.kaitao.cn/mingdian">淘宝名店</a>
+                                    </span>
+                                 </li>
+                                 <li><a href="http://www.kaitao.cn/zhuangxiujingyan">淘宝装修</a></li>
+                                 <li>
+                                    <a href="http://www.kaitao.cn/taobaoyunying">运营策划</a>
+                                    <span class="child-menu-type">
+                                       <a href="http://www.kaitao.cn/taobaotuandui">团队管理</a>
+                                       <a href="http://www.kaitao.cn/dianpuzhenduan">店铺诊断</a>
+                                    </span>
+                                 </li>
+                                 <li>
+                                    <a href="http://www.kaitao.cn/taobaotuiguang">淘宝推广</a>
+                                    <span class="child-menu-type">
+                                       <a href="http://www.kaitao.cn/wangdianseo">网店CEO</a>
+                                       <a href="http://www.kaitao.cn/taoketuiguang">淘宝活动</a>
+                                       <a href="http://www.kaitao.cn/taoketuiguang">淘宝客</a>
+                                       <a href="http://www.kaitao.cn/zhitongche">淘宝直通车</a>
+                                    </span>
+                                 </li>
+                                 <li>
+                                    <a href="http://www.kaitao.cn/taobaojingyan">淘宝经验</a>
+                                    <span class="child-menu-type">
+                                       <a href="http://www.kaitao.cn/shoutao">手机淘宝</a>
+                                       <a href="http://www.kaitao.cn/tmall">天猫商城</a>
+                                       <a href="http://www.kaitao.cn/shuadan">淘宝刷单</a>
+                                       <a href="http://www.kaitao.cn/taobaozatan">淘宝杂谈</a>
+                                    </span>
+                                 </li>
+                                 <li>
+                                    <a href="javascript:void(0)">特色市场</a>
+                                    <span class="child-menu-type">
+                                       <a href="http://www.kaitao.cn/nongcuntaobao">农村淘宝</a>
+                                       <a href="http://www.kaitao.cn/aliexpress">速卖通</a>
+                                       <a href="http://www.kaitao.cn/jd">京东商城</a>
+                                    </span>
+                                 </li>
+                                 <li><a href="http://www.kaitao.cn/weixin">微信教程</a></li>
+                              </ul>
+                           </div> 
+                        </div>
+                     </li>
+                  </ul>
+               </div>
+            </div>
+            <div class="wrap-search">
+               <input type="text" name="" id="search-input" placeholder="搜索.."><i>取消</i>
+               <img  src="/public/wenda/images/green_search@2x20.png" id="search-submit" alt="搜索">
+            </div>
+         </div>
+      </div>
+   </div>
+   <!-- 微信登录弹窗 -->
+   <div class="dialog-box dialog-box1">
+    <div class="wx-login-dialog">
+      <div class="logo-box">
+        <img src="/public/wenda/images/pc-logo@2x.png" alt="pc-logo">
+      </div>
+      <div class="ewm-box">
+        <img title="扫码关注后，自动登录">
+      </div>
+      <div class="tip-box">
+        <div class="tip before-scan">
+          <span>使用手机微信扫码登录</span>
+        </div>
+        <div class="tip after-scan">
+          <p>扫描成功</p>
+          <span>请在手机上点击确认以登录</span>
+        </div>
+      </div>
+    </div>
+   </div>
+
+   <!-- 移动端提问弹窗 -->
+  <div class="dialog-box2" style="display: none;">
+    <div class="wx-mask-main ">
+      <img src="/public/wenda/images/makeup@2x.png" alt="wx-tanchuang">
+      <h4>关注微信： master-123</h4>
+      <span>即可向老师提问</span>
+      <i>好的</i>
+    </div>
+  </div>
+   
+   <script src="/public/wenda/js/jquery-1.11.0.min.js"></script>
+   <script src="/public/wenda/js/bootstrap.min.js"></script>
+   <script type="text/javascript">
+  
+   function S4() {
+      return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
+   }
+   function guid() {
+      return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
+   }
+
+   var uid = "{$uid}";
+   var status = '{$browser}';
+
+   $('.dialog-box2 i').click(function(){
+      $('.dialog-box2').hide();
+   })
+
+   if(!uid){
+      isLogin = false;
+      //获取微信登录二维码
+      var myID = "static" + guid();
+      $.get("http://test.grazy.cn/api/wechat/temporaryqrcode?code="+myID, function(result){
+         if(result.code == 1){
+             var qrcode = result.data;
+             $('.ewm-box img').attr('src',qrcode);
+         }
+      });
+   }else{
+      isLogin = true;
+   }
+
+   var t = setInterval(function () {
+        logincode();
+   }, 2000);
+
+   var logincode = function () {
+      if(!$(".dialog-box").is(":hidden") && status == 0){
+          $.get("http://test.grazy.cn/api/wechat/logincode?code="+myID, function(result){
+            //console.log(result);
+            if(result.code == 1){
+               clearInterval(t);
+               var data = JSON.parse(result.data);
+               //console.log(data.openid);
+               var url = '{:url("/api/user/createuser")}';
+               $.post(url, data, function (res) {
+                  if(res.code != 1){
+                     alert('登录失败');
+                     return false;
+                  }
+                  location.reload();
+               });
+            }
+         });
+      } 
+   }
+
+   //点击登录
+   $('.pc-login').click(function(){
+      if(status == 0){
+          $(".dialog-box").show();
+      }
+      if(status == 1){
+          $(".dialog-box2").show();
+      }
+   })
+
+   //退出登录
+   $('.out').click(function(){
+      var url = '{:url("/api/user/loginout")}';
+      $.post(url, {}, function (res) {
+         location.reload();
+      });
+   })
+   </script>
+   <script src="/public/wenda/js/jquery.dotdotdot.min.js"></script>
+   <script src="/public/wenda/js/public.js" charset="utf-8"></script>
+   <script src="/public/jqadmin/js/layui/layui.js"></script>
+   <script type="text/javascript">
+   var layer;
+   layui.use('layer', function(){
+      layer = layui.layer;
+   });
+   $('.header-tiwen').click(function(){
+      if(uid){
+         var url = "{:url('/publish')}";
+         window.location.href = url;
+         return false;
+      }else{
+         if(status == 0){
+             $(".dialog-box").show();
+         }
+         if(status == 1){
+             $(".dialog-box2").show();
+         }
+      }
+
+   })
+   $('#search-submit').click(function(){
+      var val = $('#search-input').val();
+      var url = 'http://s.kaitao.cn/cse/search?s=15491038084637784056&q='+val;
+      window.open(url);
+   })
+  
+   </script>

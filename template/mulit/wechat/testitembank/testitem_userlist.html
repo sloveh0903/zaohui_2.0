@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>试题分析</title>
+		<link rel="stylesheet" href="/public/mobile/css/mui.min.css" />
+		<link rel="stylesheet" href="/public/mobile/css/global.css" />
+		<link rel="stylesheet" href="/public/mobile/css/quiz-public.css" />
+	</head>
+	<style>
+	p img{
+	max-width: 100%;
+    display: block;
+	}
+	</style>
+	<body>
+    <div class="wrapper">
+      <div class="question-box">
+         
+      </div>
+      <div class="option-box">
+			
+      </div>
+      <div class="analyse-box">
+        
+      </div>
+    <footer class="menu">
+      
+    </footer>
+    </div>
+	<script src="/public/mobile/js/jquery-3.2.1.min.js"></script>
+    <script src="/public/mobile/js/mui.min.js"></script>
+    <script type="text/javascript" src="/public/mobile/js/globla.js"></script>
+    <script>
+        var uid = '{$userinfo.uid}';
+        var isbind = '{$userinfo.is_bind}';
+    $(function () {
+        var bank_id = {$bank_id};
+
+        var view_lists = {$view_lists_json};
+        var count = parseInt({$count});
+        get_allhtml(0);
+        
+        function get_allhtml(i){
+			var num = parseInt(i)+1;
+			var questionboxhtml = '<p class="question-info"><span class="question-id">'+num+'</span>'+
+										'<span class="question-type">'+view_lists[i]['type_name']+'</span>'+
+									'</p>'+
+									'<p class="question-desc">'+view_lists[i]['name']+'</p>';
+			$('.question-box').html(questionboxhtml);
+        	if(view_lists[i]['type']==4){
+        		var optionboxhtml ='<ul class="answer_box">';
+        		for(var selecti=0;selecti<view_lists[i]['select_option'].length;selecti++){
+        			var selectnum = selecti+1;
+        			optionboxhtml = optionboxhtml+'<li><span class="ans_num">'+selectnum+'</span><div><p>'+view_lists[i]['select_option'][selecti]+'</p></div>';
+        		}
+        		optionboxhtml = optionboxhtml+'</ul>';
+        	}else{
+        		var option_arr = view_lists[i]['option'];
+        		var optionboxhtml = '';
+        		console.log(view_lists[i]['select_option']);
+    			for(var key in option_arr){
+    				//console.log(key);
+    				//console.log(view_lists[i]['select_option'].indexOf(key));
+    				var select_html = '';
+    				key = key.toUpperCase();
+    				var selected_mark = '';
+    			
+    				if(view_lists[i]['select_option'].indexOf(key) != -1) {
+    					selected_mark = ' selected';
+    				}
+    				var optionboxhtml = optionboxhtml+ ' <div class="option '+view_lists[i]['type_class']+selected_mark+' "><i class="option-letter letter-a">'+
+    									key+'</i><p class="option-desc">'+option_arr[key]+'</p></div>';
+    			}
+        	}
+			$('.option-box').html(optionboxhtml);
+			var analyseboxhtml ='<div class="top-info">';
+			if(view_lists[i]['is_right']){
+				analyseboxhtml = analyseboxhtml+ '<img src="/public/mobile/img/icon/correct-icon.png" alt="correct-icon">';
+			}else{
+				analyseboxhtml = analyseboxhtml+  '<img src="/public/mobile/img/icon/wrong-icon.png" alt="correct-icon">';
+			}
+			analyseboxhtml = analyseboxhtml+'<h4>正确答案&nbsp;<span class="correct-answer">';
+    		var answer_list = ''; 
+			if(view_lists[i]['type']==4){
+				var answer_list = '<div class="answer_list">';
+				for(var correcti=0;correcti<view_lists[i]['correct_option'].length;correcti++){
+					var myc_num = correcti+1;
+					answer_list= answer_list+'<p>'+myc_num+'.'+view_lists[i]['correct_option'][correcti]+'</p>';
+				}
+				answer_list= answer_list+ '</div>';
+        	}else{
+        		analyseboxhtml = analyseboxhtml+view_lists[i]['correct_option'];
+        	}
+			analyseboxhtml = analyseboxhtml+'</span></h4>'+'<p>难易度&nbsp;<span class="diff">'+view_lists[i]['level_name']+'</span></p>'+'</div>';
+			analyseboxhtml = analyseboxhtml+answer_list;
+			analyseboxhtml = analyseboxhtml+'<div class="lower-desc"><div class="lower_head"><i></i><span>解析</span><i></i></div><p>'+view_lists[i]['parse']+'</p></div>';
+			$('.analyse-box').html(analyseboxhtml);
+			var prenum = parseInt(i)-1;
+			var nextnum =parseInt(i)+1;
+			var menuhtml = '';
+			menuhtml = menuhtml+'<div class="prev-btn  btn" data-id="'+prenum+'">'+'<i class="icon left-arrow"></i><p>上一题</p></div>'+
+			'<a href="{:url('+"/wechat/testitembank/index"+')}">返回题库</a>'+
+			'<div class="next-btn btn" data-id="'+nextnum+'"><p>下一题</p><i class="icon right-arrow"></i></div>';
+			$('.menu').html(menuhtml);
+			if(num==1){$('.prev-btn').addClass('limit');}
+			if(num==count){$('.next-btn').addClass('limit');}
+        }
+        
+        $('.menu').on('click', '.next-btn',function () {
+      	  if ($(this).hasClass('limit')) {
+                return false;
+              }
+      	   var id = $(this).attr('data-id');
+      	   get_allhtml(id);
+           });
+         $('.menu').on('click', '.prev-btn', function () {
+      	   if ($(this).hasClass('limit')) {
+      	          return false;
+      	        }
+      	   var id = $(this).attr('data-id');
+      	   		get_allhtml(id);
+           });
+         
+    })
+    </script>
+    <script src="/public/mobile/js/bindmobile.js"></script>
+	</body>
+</html>

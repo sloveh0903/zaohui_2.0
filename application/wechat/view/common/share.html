@@ -1,0 +1,66 @@
+<?php
+    $data = $_GET;
+    unset($data['code']);
+    $data['uname'] = $userinfo['uname'];
+    $url_data = '?'.http_build_query($data);
+    $link = 'http://'.$_SERVER['SERVER_NAME'].$_SERVER['REDIRECT_URL'].$url_data;
+    $config = find('Config');
+    $logo = $config['logo'];
+?>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+<script type="text/javascript">
+            var logo = '{$logo}';
+            if(logo == ''){
+                logo = '/public/image/logo@1x.png';
+            }
+            wx.config({
+                debug: false,
+                appId: '<?php echo $signPackage["appId"];?>',
+                timestamp: '<?php echo $signPackage["timestamp"];?>',
+                nonceStr: '<?php echo $signPackage["nonceStr"];?>',
+                signature: '<?php echo $signPackage["signature"];?>',
+                jsApiList: [
+                'onMenuShareTimeline','onMenuShareAppMessage'
+                  // 所有要调用的 API 都要加到这个列表中
+                ]
+             });
+             
+            wx.ready(function(){
+                // config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中。
+                //分享给朋友
+                wx.onMenuShareAppMessage({
+                    title: "{$config['sitename']}", // 分享标题
+                    desc: "{$config['introduce']}", // 分享描述
+                    link: "{$link}", // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                    imgUrl: 'http://'+window.location.host+logo, // 分享图标
+                    type: '', // 分享类型,music、video或link，不填默认为link
+                    dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+                    success: function () { 
+                        // 用户确认分享后执行的回调函数
+                    },
+                    cancel: function () { 
+                        // 用户取消分享后执行的回调函数
+                    }
+                });
+
+                //分享到朋友圈
+                wx.onMenuShareTimeline({
+                    title: "{$config['sitename']}", // 分享标题
+                    link: "{$link}", // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                    imgUrl: 'http://'+window.location.host+logo, // 分享图标
+                    success: function () { 
+                        // 用户确认分享后执行的回调函数
+                    },
+                    cancel: function () { 
+                        // 用户取消分享后执行的回调函数
+                    }
+                });
+            });
+
+            wx.error(function(res){
+                console.log(res)
+                // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
+            });
+
+
+</script>

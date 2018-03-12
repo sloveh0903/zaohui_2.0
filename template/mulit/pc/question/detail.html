@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <title>{$ask['title']}</title>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+   <style type="text/css">
+      .social-share{display: none; position: absolute;right: 7%;}
+      {if $browser != 3}
+      .share,.share2{display: none}
+      {/if}
+   </style>
+</head>
+<body class="bg-body-fff"> 
+    {include file="common/header" /}
+   <div class="wendaDetail-nav">
+      <div class="wendaDetail-nav-width">
+         <ul class="wendaDetail-nav-ul">
+            <li><a href="javascript:void(0)">问答</a>／</li>
+            <li><a href="javascript:void(0)">{$ask_category.cate_name}</a>／</li>
+            <li><a href="javascript:void(0)">问题详情</a></li>
+         </ul>
+      </div>
+   </div>
+   <!-- index-mian -->
+   <div class="wrap-main wendaDetail-wrap-main" >
+      <div class="wrap-left">
+         <div class="wentiDetail-one">
+            {if empty($user['face'])}
+            <img src="/public/avatar/avatar-mid-img.png" >
+            {else /}
+            <img src="{$user['face']}" >
+            {/if}
+            <div>
+               <span>
+                  <img src="">
+                  {if $ask['anonymous'] == 0}
+                  <i>{$user['nickname']}</i>
+                  {else /}
+                  <i>匿名</i>
+                  {/if}
+               </span>
+               <h5 title="{$ask['title']}">{$ask['title']}</h5>
+               <p title="{$ask['content']}">{$ask['content']}</p>
+            </div>
+            {php}
+               $photopath = $ask['photopath'];
+               $imgpath = json_decode($photopath,true);
+            {/php}
+         </div>
+         {volist name="imgpath" id="img"}
+            <span>
+               <img src="{$img}">
+            </span>
+            {/volist}
+         <div class="wentiDetail-tag-wrap clearFloat">
+            <a href="javascript:void(0)" title="{$ask_category.cate_name}">{$ask_category.cate_name}</a>
+            <i>{$ask['views']}人浏览</i>
+            <i>{$ask['create_time']}</i>
+            <span>
+               <a href="#input-wenti-answer">回答</a>
+            </span>
+         </div>
+         <div class="wentiAnswer-detail mt55">
+            <i>{$ask['comments']}条回答</i>
+            <ul class="wentiAnswer-detail-ul">
+               {volist name="answer" id="vo"}
+               <li>
+                  <div class="social-share social-share2"></div>
+                  {if empty($vo['face'])}
+                  <img src="/public/avatar/avatar-mid-img.png" >
+                  {else /}
+                  <img src="{$vo['face']}" >
+                  {/if}
+                  <div >
+                     {if $vo['anonymous'] != 0}
+                     <i><a href="javascript:void(0)">匿名:</a></i>
+                     {else /}
+                     <i><a href="javascript:void(0)">{$vo['nickname']}:</a></i>
+                     {/if}
+                     <a href="javascript:void(0)" title="{$vo['content']}">{$vo['content']}</a>
+                     <p>
+                        <a href="javascript:void(0)" class="dianZan" data-id="{$vo.id}" data-has="{$vo.has_like}">
+                           {if $vo.has_like == 0}
+                           <img src="/public/wenda/images/star_empty@2x16.png" ><i>{$vo['likes']}</i>
+                           {else /}
+                           <img src="/public/wenda/images/star_solid@2x16.png" ><i>{$vo['likes']}</i>
+                           {/if}
+                        </a>
+                        <time>{php} echo date('Y-m-d',$vo['create_time']){/php}</time>
+                        <span class="report" data-id="{$vo['id']}">举报</span>
+                        <span class="share2">分享</span>
+                        <span class="repeat">回复</span>
+                     </p>
+                     <div class="repeat-dropdown-alert">
+                        <textarea name="" placeholder="回复{$vo['nickname']}"></textarea>
+                        <p>
+                           <span class="nike-name-tag">
+                              <label for="nickName-repeat1" class="checked" >
+                                 <input type="checkbox" id="nickName-repeat1" checked="checked" value="1">
+                              </label>
+                           </span>
+                           <i>取消</i>
+                           <a href="javascript:void(0)" class="btn-tiwen answer_comment" data-id="{$vo.id}"></a>
+                        </p>
+                     </div>
+                     <ul class="wentiAnswer-detail-child-ul">
+                      {volist name="vo.comments" id="item"}
+                        <li>
+                           {if empty($item['face'])}
+                           <img src="/public/avatar/avatar-mid-img.png" >
+                           {else /}
+                           <img src="{$item['face']}" >
+                           {/if}
+                           <div class="child-wrap">
+                              <span>
+                                 {if $item['anonymous'] != 0}
+                                 <i><a href="javascript:void(0)">匿名:</a></i>
+                                 {else /}
+                                 <i><a href="javascript:void(0)">{$item['nickname']}:</a></i>
+                                 {/if} 
+                                 {if $item.root_id > 0 }
+                                 <i>回复</i><a href="javascript:void(0)">{$item.pnickname}：</a>
+                                 {/if}
+                              </span>
+                              <a href="javascript:void(0)">{$item.content}</a>
+                              <p>
+                                 <time>{php}echo date('Y-m-d',$item['create_time']){/php}</time>
+                                 <span class="share">分享</span>
+                                 <span class="repeat">回复</span>
+                              </p>
+                              <div class="social-share"></div>
+                           </div>
+                           <div class="repeat-dropdown-alert">
+                              <textarea name="" placeholder="回复 {if $item['anonymous'] != 0} 匿名{else /}{$item['nickname']}{/if} "></textarea>
+                              <p>
+                                 <span class="nike-name-tag">
+                                    <label for="nickName-repeat2" class="checked" >
+                                       <input type="checkbox" id="nickName-repeat2" checked="checked" value="1">
+                                    </label>
+                                 </span>
+                                 <i>取消</i>
+                                 <a href="javascript:void(0)" class="btn-tiwen answer_comment" data-id="{$item.id}"></a>
+                              </p>
+                           </div>
+                        </li>
+                        {/volist}
+                     </ul>
+                  </div>
+               </li>
+               {/volist}
+            </ul>
+         </div>
+         <div class="load-more-wrap mt30">
+         {$page}
+         </div>
+         {if !session('uid')}
+         <div class="this-wenti-answer mt60">
+            <img src="/public/wenda/images/no_login_header@2x.png" >
+            <div class="this-wenti-answer-right" id="input-wenti-answer">
+               <textarea  name="" placeholder="输入回答..."></textarea>
+               <span>
+                  <a href="javascript:void(0)" class="login">登录</a><i>后回答问题</i>
+               </span>
+            </div>
+            <p >
+               <span class="nike-name-tag">
+                  <label for="nickName-repeat-wenti" class="checked" >
+                     <input type="checkbox" id="nickName-repeat-wenti" checked="checked">
+                  </label>
+               </span>
+               <i><em class="word_num">0</em>/200</i>
+               <a href="javascript:void(0)" class="btn-tiwen" ></a>
+            </p>
+         </div>
+         {else /}
+         <div class="this-wenti-answer mt60">
+            <img src="{$face}" >
+            <div class="this-wenti-answer-right" id="input-wenti-answer">
+               <textarea  name="" placeholder="输入回答..." id="textarea-wenti-answer"></textarea>
+            </div>
+            <p >
+               <span class="nike-name-tag">
+                  <label for="nickName-repeat-wenti" class="checked" >
+                     <input type="checkbox" id="nickName-repeat-wenti" checked="checked">
+                  </label>
+               </span>
+               <i><em class="word_num">0</em>/200</i>
+               <a href="javascript:void(0)" class="btn-tiwen ask-submit" ></a>
+            </p>
+         </div>
+         {/if}
+      </div>
+      <div class="wrap-right">
+         <div class="newest-article recommend-wenda">
+            <span class="title-type">相关问答</span>
+            <ul class="recommend-wenda-ul">
+               {volist name="relevant_ask" id="item"}
+               <li>
+                  <a href="javascript:void(0)">
+                     {if empty($item['face'])}
+                     <img src="/public/avatar/avatar-mid-img.png" >
+                     {else /}
+                     <img src="{$item['face']}" >
+                     {/if}
+                     <i title="{$item.title}">{$item.title}</i>
+                  </a>
+               </li>
+               {/volist}
+            </ul>
+         </div>
+         <div class="newest-article mt30">
+            <p>
+               <span class="title-type">最新文章</span>
+            </p>
+            <ul class="newest-article-ul">
+               <li><a href="http://www.kaitao.cn/article/20170919100541.htm">双11竟卖出40万个马桶，支付宝还是…</a></li>
+               <li><a href="http://www.kaitao.cn/article/20170919100541.htm">2016淘宝双十二直播将掀起热潮!</a></li>
+               <li><a href="http://www.kaitao.cn/article/20170919100541.htm">2016淘宝双十二直播将掀起热潮!</a></li>
+               <li><a href="http://www.kaitao.cn/article/20170919100541.htm">八旬拾荒老人偷走40件包裹，背后的原因...</a></li>
+               <li><a href="http://www.kaitao.cn/article/20170919100541.htm">八旬拾荒老人偷走40件包裹，背后的原因...</a></li>
+            </ul>
+         </div>
+         <div class="newest-article everybody-search mt30">
+            <span class="title-type">大家都在搜</span>
+            <ul class="everybody-search-ul">
+               {volist name="topic" id="item"}
+               <li><a href="http://s.kaitao.cn/cse/search?s=15491038084637784056&q={$item['title']}" title="{$item['title']}">{php} echo mb_substr($item['title'],0,5){/php}</a></li>
+               {/volist}
+            </ul>
+         </div>
+      </div>
+   </div>
+   <div class="kaitai-word ">
+      <span>{include file="common/copyright" /}</span>
+   </div>
+   <!-- 操作提示 -->
+<!--    <div class="opreate-success-tip " style="display:flex;">
+      <span>已重置密码，请登录。</span>
+   </div> -->
+   <!-- 移动端nav列表start -->
+    {include file="common/mobilenav" /}
+
+   <!-- 指向窗口顶端 -->
+   <div class="link-target" id="link-target" ></div>
+   <a href="#link-target"><img class="img-backTop" src="/public/wenda/images/back_top@2x30.png" ></a>
+   <!-- 修改密码,验证邮箱,修改邮箱 举报-->
+   <div class="pc-mobile-report-outside" style="display:none;"  >
+      <div class="pc-mobile-tiwen-alert">
+         <img class="img-close" src="/public/wenda/images/close_ring@2x40.png" alt="关闭">
+         <span>
+            <p>
+               <i>报告问题</i>
+               <em>发现并报告劣质内容，有助于营造更好的社区。</em>
+            </p>
+            <img class="img-gray_close" src="/public/wenda/images/gray_close@2x40.png" alt="关闭">
+         </span>
+         <div class="checkbox-wrap mt40">
+            <ul class="checkbox-wrap-ul">
+               <li class="pc-login-remember">
+                  <label for="chaoqi" >
+                     <input type="checkbox" id="chaoqi" name="" value="抄袭侵权"><i>抄袭侵权</i>
+                  </label>
+               </li>
+               <li class="pc-login-remember">
+                  <label for="abuse" >
+                     <input type="checkbox" id="abuse" name="" value="侵犯他人（辱骂 歧视 挑衅等）"><i>侵犯他人（辱骂 歧视 挑衅等）</i>
+                  </label>
+               </li>
+               <li class="pc-login-remember">
+                  <label for="rubbish-ad" >
+                     <input type="checkbox" id="rubbish-ad" name="" value="垃圾广告信息"><i>垃圾广告信息</i>
+                  </label>
+               </li>
+               <li class="pc-login-remember">
+                  <label for="other-reason" >
+                     <input type="checkbox" id="other-reason" name="" value="其他原因"><i>其他原因</i>
+                  </label>
+               </li>
+            </ul>
+         </div>
+         <div class="mt40">
+            <a href="javascript:void(0)" class="btn-tiwen report-submit" ></a>
+         </div>
+      </div>
+   </div>
+   <div class="forget-password-outside " style="display:none;" >
+      <!-- 举报问题 -->
+      <div class="public-alert " >
+         <img class="img-close" src="/public/wenda/images/close_ring@2x40.png" alt="关闭">
+         <span>
+            <i>修改密码</i>
+            <img class="img-gray_close" src="/public/wenda/images/gray_close@2x40.png" alt="关闭">
+         </span>
+         <div class="operation-tag mt40">
+            <a href="javascript:void(0)">确定</a>
+         </div>
+      </div>
+   </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/jquery.share.min.js"></script>
+<script>
+   var id = '{$id}';
+   var uid = '{$uid}';
+   var status = '{$browser}';
+   $('.login').click(function(){
+      if(status == 0){
+             $(".dialog-box").show();
+      }
+      if(status == 1){
+         $(".dialog-box2").show();
+      }
+   })
+
+   //textarea 输入框事件:数字变化
+   $(".this-wenti-answer-right>textarea").bind("input propertychange",function(){
+      var  textareaValue_length  = $(this).val().length;
+      $(".word_num").html( textareaValue_length );
+   })
+   //分享
+   $('.share').click(function(){
+      var share = $(this).next().parent().next('.social-share');
+      if(share.is(":hidden")){
+         share.show();
+      }else{
+         share.hide();
+      }
+   })
+
+   $('.share2').click(function(){
+      var share = $(this).parent().parent().prev().prev();
+      if(share.is(":hidden")){
+         share.show();
+      }else{
+         share.hide();
+      }
+   })
+   //回复
+   $('.repeat').click(function(){
+      checklogin();
+   })
+   //点赞
+   $('.dianZan').click(function(){
+      checklogin();
+      var url = '{:url("/api/like/add")}';
+      var that = $(this);
+      var itemid = that.attr('data-id');
+      var has = that.attr('data-has');
+      var num =  Number(that.find('i').text());
+      if(has == 1){
+         return false;
+      }
+      if(!uid){
+         if(status == 0){
+            $(".dialog-box").show();
+         }
+         if(status == 1){
+            $(".dialog-box2").show();
+         }
+         return false;
+      }
+      $.post(url, {uid:uid,itemid:itemid,typeid:2}, function (res) {
+         if(res.code == -1){
+            that.find('img').attr('src','/public/wenda/images/star_empty@2x16.png');
+            layer.msg(res.message);
+            return false;
+         }
+         if(res.code == 1){
+            that.attr('data-has','1');
+            that.find('i').text(num+1);
+            that.find('img').attr('src','/public/wenda/images/star_solid@2x16.png');
+         }
+      });
+   })
+
+   //回答问题
+   $('.ask-submit').click(function(){
+      checklogin();
+      var val = $('#textarea-wenti-answer').val();
+      var checkbox = $(this).parent().find('label').hasClass('checked');
+      if(checkbox){
+         var anonymous = 1;
+      }else{
+         var anonymous = 0;
+      }
+      if(val == ''){
+         layer.msg('回答内容不能为空');
+         return false;
+      }
+      var url = '{:url("/api/answer/add")}';
+      $.post(url, {uid:uid,aid:id,content:val,anonymous:anonymous}, function (res) {
+         if(res.code == -1){
+            layer.msg(res.message);
+            return false;
+         }
+         if(res.code == 1){
+            location.reload();
+         }
+      });
+   })
+
+   function checklogin(){
+      if(!uid){
+         if(status == 0){
+             $(".dialog-box").show();
+         }
+         if(status == 1){
+             $(".dialog-box2").show();
+         }
+         return false;
+      }
+   }
+
+   //回复
+   $('.answer_comment').click(function(){
+      checklogin();
+      var url = '{:url("/api/answer/add")}';
+      var pid = $(this).attr('data-id');
+      var val = $(this).parent().prev('textarea').val();
+      var checkbox = $(this).parent().find('label').hasClass('checked');
+      if(checkbox){
+         var anonymous = 1;
+      }else{
+         var anonymous = 0;
+      }
+      if(val == ''){
+         layer.msg('回复内容不能为空');
+         return false;
+      }
+      $.post(url, {uid:uid,aid:id,content:val,anonymous:anonymous,pid,pid}, function (res) {
+         if(res.code == -1){
+            alert(res.message);
+            return false;
+         }
+         if(res.code == 1){
+            location.reload();
+         }
+      });
+   })
+
+   //举报
+   var tid = 0;
+   var content = '';
+   $('.report').click(function(){
+      tid = $(this).attr('data-id');
+   })
+   $('.report-submit').click(function(){
+      content = '';
+      var chaoqi = $('#chaoqi').val();
+      if($('#chaoqi').parent('label').hasClass('checked')){
+         content+=chaoqi+'、';
+      }
+      var abuse = $('#abuse').val();
+      if($('#abuse').parent('label').hasClass('checked')){
+         content+=abuse+'、';
+      }
+      var rubbish_ad = $('#rubbish-ad').val();
+      if($('#rubbish-ad').parent('label').hasClass('checked')){
+         content+=rubbish_ad+'、';
+      }
+      var other_eason = $('#other-reason').val();
+      if($('#other-reason').parent('label').hasClass('checked')){
+         content+=other_eason+'、';
+      }
+      if(content == ''){
+         layer.msg('请选择报告问题');
+         return false;
+      }
+      var url = '{:url("/api/report/add")}';
+      $.post(url, {uid:uid,tid:tid,content:content,name:'answer'}, function (res) {
+         if(res.code == -1){
+            layer.msg(res.message);
+            return false;
+         }
+         if(res.code == 1){
+            location.reload();
+         }
+      });
+
+   })
+</script>    
+</body>
+</html>

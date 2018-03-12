@@ -1,0 +1,112 @@
+{include file="common/header" /}
+<body>
+<div class="article_manage mCustomScrollbar">
+	<div class="right-side-header clearfix">
+	        <span>系统设置</span>
+	        {include file="common/admin" /}
+   </div>
+   <div class="right_side_content">
+	   <div class="system_guanli_div">
+	 		<ul class="system_guanli_ul">
+		    	 <li><a href="javascript:void(0)" class="goto" data-src='{:url("user/index")}'>后台用户管理</a></li>
+                <li><a href="javascript:void(0)" class="active goto" data-src='{:url("role/index")}'>角色管理</a></li>
+                <li><a href="javascript:void(0)" class="goto" data-src='{:url("index/setlogin")}'>登录配置</a></li>
+                <li><a href="javascript:void(0)" class="goto" data-src='{:url("message/remind")}'>公告</a></li>
+           </ul>
+		</div>
+		<div class="success_tip displayNone">已完成</div>
+	    <div class="course_right_main ">
+	        <div class="operation_div">
+	            <span class="span_add btn modal-catch" data-params='{"content":".add-subcat","act":"{:url("add_role")}", "title":"添加角色","type":"1","area":"500px,300px"}'>添加角色</span>
+	            <span class="span_delete btn ajax-all" data-name="checkbox" data-params='{"url": "{:url("delAll_role")}","data":"","confirm":"true"}'>删除</span>
+	            <div class="clearfix"></div>
+	        </div>
+	        <div id="list" class="layui-form"></div>
+	        <div class="text-right" id="page"></div>
+	    </div>
+	 </div>
+</div>
+<div class="add-subcat">
+    <form id="form1" class="layui-form layui-form-pane" action='{:url("add_role")}'>
+        <div class="layui-form-item">
+            <label class="layui-form-label">角色名</label>
+            <div class="layui-input-inline">
+                <input type="text" name="title" required jq-verify="required" jq-error="请输入角色名称" placeholder="请输入角色名称" autocomplete="off" class="layui-input ">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">状态</label>
+            <div class="layui-input-inline">
+                <input type="radio" name="status" title="启用" value="1" checked />
+                <input type="radio" name="status" title="禁用" value="0" />
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" jq-submit jq-filter="submit">确定</button>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="edit-subcat" style="display: none">
+    <form id="form2" class="layui-form layui-form-pane" action='{:url("edit_role")}'>
+        <div class="layui-form-item">
+            <label class="layui-form-label">角色名称</label>
+            <div class="layui-input-inline">
+                <input type="text" name="title" required jq-verify="required" jq-error="请输入角色名称" placeholder="请输入角色名称" autocomplete="off" class="layui-input ">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">状态</label>
+            <div class="layui-input-inline">
+                <input type="radio" name="status" title="启用" value="1" checked />
+                <input type="radio" name="status" title="禁用" value="0" />
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" jq-submit jq-filter="submit">确定</button>
+            </div>
+        </div>
+    </form>
+</div>
+<script id="list-tpl" type="text/html" data-params='{"url":"{:url("role/index")}","pageid":"#page"}'>
+    <table id="example" class="layui-table" lay-skin="line">
+        <thead>
+        <tr>
+            <th style="width: 6%"><input type="checkbox" id="checkall" data-name="checkbox" lay-filter="check" lay-skin="primary"></th>
+            <th>角色名</th>
+            <th>添加时间</th>
+            <th>更新时间</th>
+            <th>禁用／启用</th>
+            <th style="width: 18%">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{# layui.each(d.list, function(index, item){ }}
+        <tr>
+            <td>
+                <input type="checkbox" name="checkbox" value="{{ item.id}}" lay-skin="primary">
+            </td>
+            <td>{{ item.title}}</td>
+            <td>{{ item.create_time}}</td>
+            <td>{{ item.update_time}}</td>
+            <td><input type="checkbox" name="switch" lay-skin="switch" lay-text="" {{#if (item.status){ }}checked="checked" {{# } }} lay-filter="ajax" data-params='{"url":"{:url("roleStatus")}","confirm":"true","data":"id={{ item.id}}"}'></td>
+            <td>
+                {{# if(item.id>1){ }}
+                    <i class="i_edit goto" data-src="{:url('get_role')}?id={{ item.id}}">分配权限</i>／
+                {{# } }}
+                <i class="modal-catch i_edit" data-params='{"content": ".edit-subcat","act":"{:url("edit_role")}","title":"编辑角色","data":"id={{ item.id}}&title={{ item.title}}&status={{ item.status}}","type":"1","area":"500px,300px"}'>编辑</i>／<i class="i_delete ajax" data-params='{"url": "{:url("del_role")}","data":"id={{ item.id}}","confirm":"true"}'>删除</i>
+            </td>
+        </tr>
+        {{# }); }}
+        </tbody>
+
+    </table>
+</script>
+{include file="common/version" /}
+<script>
+    layui.use('list');
+</script>
+</body>
+</html>

@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>个人中心</title>
+    <link rel="stylesheet" type="text/css" href="/public/pc/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/public/pc/css/jquery.mCustomScrollbar.min.css">
+    <link rel="stylesheet" type="text/css" href="/public/pc/css/all.css">
+    <!--[if lt IE 9]> 您的IE浏览器版本太低，请升级浏览器！<![endif]-->
+    <style>
+        .weixin_pay_outside {
+            display: none;
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 99;
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        .weixin_pay_alert {
+            width: 270px;
+            height: 290px;
+            padding: 0px;
+            background: #FFFFFF;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.05);
+            border-radius: 3px;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            margin-left: -135px;
+            margin-top: -145px;
+            z-index: 100;
+            text-align: center;
+        }
+
+        .closeSpan {
+            width: auto;
+            height: auto;
+            text-align: right;
+            display: block;
+        }
+
+        .closeSpan img {
+            width: 40px;
+            height: 40px;
+            vertical-align: middle;
+            cursor: pointer;
+        }
+
+        .img_close {
+            width: 40px;
+            height: 40px;
+            vertical-align: middle;
+        }
+
+        .shaomiao_QRcord {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            opacity: .8;
+        }
+
+        .spanPay_QRcord {
+            display: block;
+            text-align: center;
+        }
+
+        .spanPay_QRcord img {
+            width: 151px;
+            height: 151px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body class="bg_FAFAFA">
+{include file="common/head" /}
+<div class="personal_study_info mt70">
+    <div class="w980 plr15">
+        <div class="leftFloat personal_head">
+            <img src="{$user.user.face}" alt="{$user.user.nickname}">
+        </div>
+        <div class="leftFloat personal_name">
+            <span class="block opacityWhite">{$user.user.nickname}</span>
+            <span class="block personal_study_time">
+               <i class="mr7">自从{$user.study_begin}学习了{$user.study_day}天</i>
+            </span>
+        </div>
+        <div class=" class_ranking">
+            <span class="class_ranking_num">{$user.ranking}</span>
+            <i>班级排名</i>
+        </div>
+        <div class=" class_ranking  finish_course">
+            <span class="finish_course_num">{$user.study_complete}</span>
+            <i>完成课程</i>
+        </div>
+        <div class=" class_ranking">
+            <span class="integral_num">{$user.user.point}</span>
+            <i>积分</i>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+<div class="personal_study_detail">
+    <div class="w980">
+        <div class="myStudy">
+            {include file="member/memberLeft" /}
+            <div class="leftFloat myStudy_content">
+                <!--我的学习 start-->
+                <div class="myOrder_div my_tab" data-nav="2" data-name="order">
+                    <ul class="tab_nav_ul" id="myOrder">
+                        <li><a href="#unpaid" data-toggle="tab" class="defaultTab_a">待付款订单</a></li>
+                        <li><a href="#orderAll" data-toggle="tab">已付款订单</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane" id="unpaid">
+                            <div class=" unpaid mCustomScrollbar">
+                                {if $disOrder}
+                                <table class="unpaid_table">
+                                    <thead>
+                                    <tr>
+                                        <th class="th_orderid">#</th>
+                                        <th class="th_course_name">课程名称</th>
+                                        <th class="th_orderNum">订单号</th>
+                                        <th class="th_orderPrice">订单金额</th>
+                                        <th class="th_orderState">订单状态</th>
+                                        <th class="th_opeate">操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {foreach name="disOrder" item="vo" key="k" }
+                                    <tr>
+                                        <td>{$k+1}</td>
+                                        <td>{$vo.course_name}</td>
+                                        <td>{$vo.order_sn}</td>
+                                        <td>￥{$vo.price}</td>
+                                        <td>{$vo.pay_name}</td>
+                                        <td>
+                                            <a href="javascript:void(0)" class="a_payment" data-no="{$vo.order_sn}" data-id="{$vo.course_id}" data-oid = {$vo.id}>付款/</a>
+                                        <!--     <a href="javascript:void(0)" class="a_contact">联系客服/</a> -->
+                                            <a href="javascript:void(0)" class="a_delete" data-id="{$vo.id}" data-flag="{$vo.pay_status}">删除</a>
+                                        </td>
+                                    </tr>
+                                    {/foreach}
+                                    </tbody>
+                                </table>
+                                {else}
+                                <div style="padding: 10px 0">没有待付款订单</div>
+                                {/if}
+                            </div>
+                        </div>
+                        <div class="tab-pane messageAll orderAll" id="orderAll">
+                            <div class=" unpaid mCustomScrollbar">
+                                {if $allOrder}
+                                <table class="unpaid_table">
+                                    <thead>
+                                    <tr>
+                                        <th class="th_orderid">#</th>
+                                        <th class="th_course_name">课程名称</th>
+                                        <th class="th_orderNum">订单号</th>
+                                        <th class="th_orderPrice">订单金额</th>
+                                        <th class="th_orderState">订单状态</th>
+                                       <!--  <th class="th_opeate">操作</th> -->
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {foreach name="allOrder" item="od" key="d" }
+                                    <tr>
+                                        <td>{$d+1}</td>
+                                        <td>{$od.course_name}</td>
+                                        <td>{$od.order_sn}</td>
+                                        <td>￥{$od.price}</td>
+                                        <td>{$od.pay_name}</td>
+                                      <!--   <td>
+                                            <a href="javascript:void(0)" class="a_contact">联系客服</a>
+                                        </td> -->
+                                    </tr>
+                                    {/foreach}
+                                    </tbody>
+                                </table>
+                                {else}
+                                <div style="padding: 10px 0">还没有订单</div>
+                                {/if}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--我的学习 end-->
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+<div class="personal_study_footer mt20">
+    copyright youren.edu all right reseverd 2017
+</div>
+<div class="weixin_pay_outside">
+    <div class="weixin_pay_alert">
+         <span class="closeSpan">
+            <img src="/public/pc/images/delete@2x.png" alt="关闭" class="img_close">
+         </span>
+        <span class="shaomiao_QRcord" style="margin-top:-5px"><img src="/public/pc/images/pay30x135@2x.png" height="25px"></span>
+        <span class="spanPay_QRcord">
+            <img src="" alt="微信支付二维码">
+         </span>
+        <span style="font-size: 12px;"><img src="/public/pc/images/sao20x20@2x.png" height="20px" style="position:relative;top:5px">&nbsp;&nbsp;打开微信扫一扫支付</span>
+    </div>
+</div>
+<script src="/public/pc/js/jquery-1.11.0.min.js"></script>
+<script src="/public/pc/js/bootstrap.min.js"></script>
+<script src="/public/pc/js/jquery.mCustomScrollbar.concat.min.js"></script>
+<script src="/public/pc/js/jqmeter.min.js"></script>
+<script src="/public/jqadmin/js/layui/layui.js"></script>
+<script src="/public/pc/js/public_PC.js"></script>
+<script>
+    var layer;
+    layui.use('layer', function(){
+        layer = layui.layer;
+    });
+
+    $(function () {
+        $('#myTab a:first').tab('show');
+        $('#myOrder a:first').tab('show');
+        $(".mCustomScrollbar").mCustomScrollbar({
+            theme: "minimal-dark"
+        });
+    });
+    $("#myOrder a").click(function (e) {
+        $("#myOrder a").removeClass('defaultTab_a');
+        $(this).addClass('defaultTab_a')
+        e.preventDefault();
+        $(this).tab('show');
+    });
+    $(".a_delete").click(function () {
+        var that = $(this);
+        var id = that.attr('data-id');
+        var flag = that.attr('data-flag');
+        if(flag == '1'){
+            layer.msg('已付款订单不能删除');
+            return false;
+        }
+        $.ajax({
+            url: host + 'order/del',
+            data: {
+                uid: "{:session('uid')}",
+                id: id
+            },
+            type: 'POST', //GET
+            async: true,    //或false,是否异步
+            timeout: 5000,    //超时时间
+            dataType: 'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+            success: function (data, textStatus, jqXHR) {
+                if (data.code == 1) {
+                    that.parents("tr").remove();
+                    layer.msg('删除成功');
+                } else {
+                    layer.msg(data.message);
+                }
+            }
+        });
+    });
+    $('.a_payment').click(function () {
+        //var order_sn = $(this).attr('data-no');
+        var cid = $(this).attr('data-id');
+        var oid = $(this).attr('data-oid');
+        $.get(host + "order/detail?id=" + oid, function (res) {
+            order_sn = res.data.order_sn;
+             $.get(host + "wxpay/navtive?order_sn=" + order_sn, function (res2) {
+            // console.log(res2);
+            if (res2.code == -1) {
+                layer.msg(res2.message);
+                return;
+            }
+            if (res2.code == 1) {
+                //layer.msg(res2.data);
+                var wxurl = 'http://paysdk.weixin.qq.com/example/qrcode.php?data=' + res2.data;
+                $('.spanPay_QRcord img').attr('src', wxurl);
+                $(".weixin_pay_outside").show();
+                var t = setInterval(function () {
+                    $.get(host + "order/detail?order_sn=" + order_sn, function (res3) {
+                        if (res3.code == 1) {
+                            if (res3.data.pay_status == 1) {
+                                layer.msg('支付成功');
+                                var url = "{:url('course/course')}?cid=".cid;
+                                window.location.href = url;
+                                return false;
+                            }
+                        }
+                    });
+                }, 3000);
+
+                $(".img_close").click(function () {
+                    $(".weixin_pay_outside").hide();
+                    clearInterval(t);
+                })
+
+            }
+
+        });
+        })
+       
+    })
+
+
+</script>
+</body>
+</html>

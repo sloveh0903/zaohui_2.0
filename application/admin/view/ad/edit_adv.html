@@ -1,0 +1,117 @@
+{include file="common/header" /}
+<body>
+<div class="article_manage mCustomScrollbar">
+	<div class="right-side-header clearfix">
+	        <span>系统管理</span>
+	        {include file="common/admin" /}
+   </div>
+     <div class="right_side_content">
+	   
+	    <div class="add_article_main ">
+	        <div class="breadcrumb">
+	              <a href='{:url("ad/index",["id"=>$advInfo["id"]])}'>广告列表</a>
+	              /
+	              <span>编辑广告</span>
+	         </div>
+	        <div class="ad_operation_div">
+	            <div class="add_article_step">
+	            	<ul class="editCourse-nav-ul clearFloat">
+	                	<!-- <li data-src='{:url("ad/index")}?id=1'class="goto {if $advInfo['id']==1} active {/if}"><i data-name="index">小程序首页</i></li>
+	                	<li data-src='{:url("ad/index")}?id=3' class="goto {if $advInfo['id']==3} active {/if}" ><i data-name="pc_index">pc首页</i></li> -->
+	            	</ul>
+	        	</div>
+	        </div>
+	        <div class="articleInfo_fill">
+	            <section class="panel panel-padding">
+	                <form id="form1" class="layui-form layui-form-pane" action="{:url('edit_adv')}">
+	                    <div class="layui-form-item">
+	                        <label class="layui-form-label">标题*</label>
+	                        <div class="layui-input-inline">
+	                            <input type="hidden" name="id" value="{$itemInfo.id}">
+	                            <input type="hidden" name="adv_id" value="{$itemInfo.adv_id}">
+	                            <input type="text" name="title" value="{$itemInfo.title}" required jq-verify="required" jq-error="请输入标题" placeholder="请输入标题" autocomplete="off" class="layui-input ">
+	                        </div>
+	                    </div>
+	                    <div class="layui-form-item">
+	                        <label class="layui-form-label">上传图片</label>
+	                        <div class="layui-input-block">
+	                            <input type="file" name="file" class="layui-upload-file">
+	                            <input type="hidden" name="photopath" value="{$itemInfo.photopath}" jq-verify="required" jq-error="请上传图片" error-id="img-error">
+	                            <p class="upload-info">图片尺寸：1180*413 支持格式：JPG PNG</p>
+	                            <p id="img-error" class="error"></p>
+	                        </div>
+	                        <div class="layui-input-block">
+	                            <div class="imgbox">
+	                                <img src="{$itemInfo.photopath}" alt="..." class="img-thumbnail">
+	                            </div>
+	                        </div>
+	                    </div>
+	                    {if $advInfo['id']==1}
+	                    <div class="layui-form-item">
+	                        <label class="layui-form-label">课程选择</label>
+	                        <div class="layui-input-inline">
+	                            <select name="item_id"  lay-filter="item_id">
+	                                <option value="">==请选择==</option>
+	                                {if !empty($data)}
+	                                {foreach name="$data" item="vo"}
+	                                <option value="{$vo.id}" {if condition="$vo['id'] eq $itemInfo.item_id"}selected{/if}>{$vo.title}</option>
+	                                {/foreach}
+	                                {/if}
+	                            </select>
+	                        </div>
+	                    </div>
+	                    {else}
+	                    <div class="layui-form-item" >
+	                        <label class="layui-form-label">自定义链接</label>
+	                        <div class="layui-input-inline" style="width: 50%;">
+	                            <input type="text" name="link" required jq-error="请输入完整url链接" value='{$itemInfo.link}'  placeholder="{$itemInfo.link}" autocomplete="off" class="layui-input ">
+	                        </div>
+	                    </div>
+	                    
+	                    {/if}
+	                    <!--<div class="layui-form-item">
+	                        <label class="layui-form-label">启用</label>
+	                        <div class="layui-input-inline">
+	                            <input type="radio" name="closed" value="0" title="是" {if condition="$itemInfo['closed'] eq '0'"}checked{/if}>
+	                            <input type="radio" name="closed" value="1" title="否" {if condition="$itemInfo['closed'] eq '1'"}checked{/if}>
+	                        </div>
+	                    </div>-->
+<!-- 	                    <div class="layui-form-item"> -->
+<!-- 	                        <label class="layui-form-label">排序</label> -->
+<!-- 	                        <div class="layui-input-inline"> -->
+<!-- 	                            <input class="layui-input" type="text" name="orderby" value="{$itemInfo.orderby}" placeholder="排序"  lay-verify="number"> -->
+<!-- 	                        </div> -->
+<!-- 	                    </div> -->
+	                    <div class="layui-form-item">
+	                        <div class="layui-input-block">
+	                            <button class="layui-btn" jq-submit lay-filter="submit">立即提交</button>
+	                        </div>
+	                    </div>
+	                </form>
+	            </section>
+	
+	        </div>
+	     </div>
+    </div>
+</div>
+{include file="common/version" /}
+<script>
+    layui.use('adv');
+    function add_item_id(ret, options, $) {
+        console.log(ret);
+        layui.use(['form'], function(){
+            $('form').find('select[name=item_id]').html('<option>==请选择==</option>');
+            var form = layui.form();
+            if(ret.length > 0){
+                $.each(ret, function (i, n) {
+                    var proHtml = '<option value="' + n.id + '">' + n.title + '</option>';
+                    $('form').find('select[name=item_id]').append(proHtml);
+                });
+            }
+            form.render();
+        });
+    }
+</script>
+
+</body>
+</html>

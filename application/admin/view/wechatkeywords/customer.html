@@ -1,0 +1,54 @@
+{include file="common/header" /}
+<body>
+<div class="article_manage">
+	<div class="right-side-header clearfix">
+	        <span>公众号配置</span>
+	        {include file="common/admin" /}
+   	</div>
+   <div class="right_side_content">
+	   <div class="system_guanli_div">
+		   <ul class="system_guanli_ul">
+			   <li><a href="{:url('operate/index')}">系统参数</a></li>
+			   <li><a href="{:url('customenu/index')}" >自定义菜单</a></li>
+			   <li><a href="{:url('operate/subscribereply')}" >关注自动回复</a></li>
+			   <li><a href="{:url('wechatkeywords/index')}">关键字回复</a></li>
+			   <li><a href="{:url('wechatkeywords/customer')}" class="active">微信客服设置</a></li>
+			   <li><a href="{:url('operate/follow')}">公众号关注引导</a></li>
+		   </ul>
+	   </div>
+		<div class="success_tip displayNone">已完成</div>
+
+	    <div class="add_article_main ">
+	    </div>
+        <div class="articleInfo_fill">
+	        <div class="layui-form-item ">
+	         <section class="panel panel-padding">
+	                <form class="layui-form" action='{:url("index")}'>
+	                 <label class="layui-form-label"  style='padding:0 0 0 0;width:99px;'>开通微信客服</label>
+	                <div class="layui-input-block">
+	                <input type="checkbox" name="switch" lay-skin="switch" lay-text="" {if $is_customer==1} checked="checked" {/if} lay-filter="ajax" data-params='{"url":"{:url("wechatkeywords/customer")}","confirm":"true","data":""}'>
+	                <span style='padding:0 0 0 0;color:#999999;'>（仅认证服务号可在公众平台开通微信客服）</span>
+	                <br><br><br>
+<!-- 	                <span style='color:#999999;'>开启后，无匹配自动回复自动失效，用户微信咨询信息轮流分配并提醒客服人员；微信端课程详情页，显示咨询按钮，用户点击咨询可以识别二维码跳转到公众号咨询客服； -->
+<!-- 	                <br> -->
+<!-- 	                		关闭后，无匹配自动回复自动生效，用户微信咨询信息不会提醒客服人员；</span> -->
+	                </div>
+	                </form>
+	        </div>
+	        <div class="clearfix"></div>
+	  	</div>
+	        <div id="list" class="layui-form">
+	         </div> 
+	 
+	</div>
+
+</div>
+
+{include file="common/version" /}
+<script src="/public/gzadmin/js/clipboard.min.js"></script>
+<script>
+    layui.use('adv');
+</script>
+</body>
+</html>
+

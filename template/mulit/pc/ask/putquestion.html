@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+   <title>问答 - 提问</title>
+   <link rel="stylesheet" type="text/css" href="/public/mulitpc/css/common.css">
+   <link rel="stylesheet" type="text/css" href="/public/mulitpc/css/putquestion-v72.css">
+   <style>
+    .upload_img_input{position: relative;float:left;margin-left:10px;width:50px;height:50px;cursor: pointer;}
+   .inputFill{position: absolute;right: 0;top: 0; opacity: 0;display: block;width:50px;height:50px;} 
+   .upload_img_input:hover{opacity: .8}
+    .uploadImg_div{float:left;width:auto;height:auto;} .img50{width:50px;height:50px; border-radius:2px;background:white;margin-right:10px;}
+  .uploadImg_div span{position: relative;display: block;} 
+  .delete_img24{width:24px;height:24px;border-radius:12px;vertical-align: middle; position: absolute;top:-5px;right:4px;z-index:1;cursor: pointer;}
+  .upload_img{float: left;margin-left:10px;cursor: pointer;} .upload_img:hover{opacity:.8}
+  .upload_img_input{   
+   position: relative;
+    left: -20px;
+  }
+   </style>
+   <!--[if lt IE 9]> 您的IE浏览器版本太低，请升级浏览器<![endif]-->
+</head>
+{include file="common/head" /}
+  <!-- main -->
+  <div class="main-box mulitmain-box-margin">
+    <h4>我要提问</h4>
+    <div class="filter-zone">
+      <div class="filter-modal">
+        <p>选择课程</p>
+      <!--   <i class="icon arrowdown-icon"></i> -->
+      </div>
+      {if $is_canask==1}
+      <p class="tip">仅针对已付费课程和免费课程提问</p>
+      {/if}
+    </div>
+    <div class="text-box">
+      <div class="text-area">
+        <textarea placeholder="问题描述" maxlength="200" onchange="this.value=this.value.substring(0, 200)" onkeydown="this.value=this.value.substring(0, 200)" onkeyup="this.value=this.value.substring(0, 200)"></textarea>
+      </div>
+      <div class="operation">
+        <div class="" id="zfile">
+         <!--  <div class="z_file">
+            <input type="file" name="file"  class="inputFill" accept="image/*"  id="file" value="" accept="image/*" multiple onchange="imgChange('z_photo','z_file');" /> 
+          </div> -->
+          <div class="upload_list">
+           <div class="upload_img_input">
+             <img src="/public/pc/images/upload_img@2x.png" alt="上传" class="img50 upload_img">
+             <input type="file" name="" class="inputFill" value="" accept="image/*">
+          </div>
+          </div>
+         
+        </div>
+        <div class="confirm-btn">
+          <i class="icon tick-icon"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- footer -->
+{include file="common/bottom" /}
+
+ <!-- 选择课程弹窗 -->
+ <div class="dialog">
+  <div class="filter-box">
+    <div class="top">
+      <h4>选择课程</h4>
+      <i class="icon cross"></i>
+    </div>
+        {volist name="course_category" id="vo"}
+      <div class="dialog-item">
+        <h2 class="toplv-caption">{$vo.cate_name}</h2>
+        <div class="course-box">
+  <!--         <h4 class="seclv-caption"></h4> -->
+          <ul class="course-list">
+            {volist name="vo.course" id="v"}
+            <li class="course-item" data-cid="{$v.cid}">{$v.title}</li>
+            {/volist}
+          </ul>
+        </div>
+        {volist name="vo.chirden" id="vo2"}
+        <div class="course-box">
+          <h4 class="seclv-caption">{$vo2.cate_name}</h4>
+          <ul class="course-list">
+            {volist name="vo2.course" id="vo3"}
+            <li class="course-item" data-cid="{$v.cid}">{$vo3.title}</li>
+            {/volist}
+          </ul>
+        </div>
+        {/volist}
+      </div>
+    {/volist}
+
+  </div>
+  
+</div>
+
+<script src="/public/pc/js/jquery-1.11.0.min.js"></script>
+<script src="/public/pc/js/public_PC.js"></script>
+<script src="/public/mulitpc/js/swiper.jquery.min.js"></script>
+<script src="/public/jqadmin/js/layui/layui.js"></script>
+<script type="text/javascript">
+  var layer;
+  layui.use('layer', function(){
+      layer = layui.layer;
+  });
+  var uid = '{$uid}';
+  var cid = 0;
+  var isbuy = 0;
+  var is_canask = "{$is_canask}";
+  //点击筛选课程
+  $('.course-item').click(function(){
+      var that = $(this);
+      cid = $(this).attr('data-cid');
+      if(is_canask==1){
+    	  $.get(host+'course/isbuy',{cid:cid,uid:uid},function(res){
+              if(res.code != 1){
+                layer.msg(res.message);
+                return false;
+              }else{
+                var title = that.text();
+                $('.filter-zone .filter-modal p').text(title);
+                $('.dialog').hide();
+                isbuy = 1;
+              }
+          });
+      }
+      else{
+    	  var title = that.text();
+          $('.filter-zone .filter-modal p').text(title);
+          $('.dialog').hide();
+          isbuy = 1;
+      }
+      
+      $('body').css('overflow','auto');
+  })
+
+  //提交
+  $('.confirm-btn').click(function(){
+      if(!uid){
+         layer.msg('请先登录');
+         return false;
+      }
+      var content = $('textarea').val();
+      if(content == ''){
+        layer.msg('请输入问题描述');
+        return false;
+      }
+      if(cid == 0){
+        layer.msg('请选择课程');
+        return false;
+      }
+      if(isbuy != 1){
+        layer.msg('请购买该课程提问');
+        return false;
+      }
+      var imgpath = '';
+      var imgthumb = '';
+      for (var i = 0; i < upload_arr.length; i++) {
+          if (upload_arr[i] != '') {
+              imgpath += upload_arr[i] + ',';
+          }
+      }
+      for (var i = 0; i < upload_thumb.length; i++) {
+          if (upload_thumb[i] != '') {
+              imgthumb += upload_thumb[i] + ',';
+          }
+      }
+      $.post(host + "/ask/submit", {
+          uid: uid,
+          cid: cid,
+          content: content,
+          title: content,
+          imgpath: imgpath,
+          imgthumb:imgthumb
+      }, function (result) {
+          if (result.code == -3) {
+              layer.msg(result.message);
+              location.reload();
+          }
+          if (result.code == 1) {
+        	  if(result.data.integral_code==1){
+					var alert_str = result.data.msg;
+				}else{
+					var alert_str = '提交成功';
+				}
+        	    layer.msg(alert_str);
+              //layer.msg('提交成功');
+              $('textarea').val('');
+              var url = '{:url("/index/ask/index")}';
+              window.location.href = url;
+              return;
+          } else {
+              layer.msg(result.message);
+          }
+      });
+      console.log(content);
+  })
+
+
+  //建立一個可存取到該file的url
+  function getObjectURL(file) {
+      var url = null;
+      if (window.createObjectURL != undefined) { // basic
+          url = window.createObjectURL(file);
+      } else if (window.URL != undefined) { // mozilla(firefox)
+          url = window.URL.createObjectURL(file);
+      } else if (window.webkitURL != undefined) { // webkit or chrome
+          url = window.webkitURL.createObjectURL(file);
+      }
+      return url;
+  }
+
+  //上传图片
+  var imgnum = 0;
+  var upload_arr = [];
+  var upload_thumb = [];
+  $(".inputFill").on("change", function () {
+      if (!uid) {
+          $(".weixin_QRcord_alert_outside").show();
+          return false;
+      }
+      var  length = $(".upload_list .uploadImg_div").length;
+      if(length >=3 ){
+          return false;
+      }
+      var file = this.files[0];
+      var objUrl = getObjectURL(file); //获取图片的路径，该路径不是图片在本地的路径
+      var reader = new FileReader();
+      var result = reader.readAsDataURL(file);
+      reader.onload = function (e) {
+          if (objUrl) {
+              $.post(host + 'ask/uploadfile', {img: e.target.result}, function (ret) {
+            	  console.log(ret);
+                  if (ret.img == "") {
+                      layer.msg('图片上传失败');
+                      return;
+                  } else {
+                      img_inner =
+                              '<div class="uploadImg_div uploadimg_' + imgnum + '" data-i="' + imgnum + '" ><span >' +
+                              '<img src="' + objUrl + '" alt="图片" class="img50" >' +
+                              '<img src="/public/pc/images/delete_img@2x.png" alt="删除" class="delete_img24">' +
+                              '</span></div>';
+                      $('.upload_list').append(img_inner);
+                      // upload_arr[imgnum] = (ret.img);
+                      // imgnum += 1;
+                      upload_arr.push( ret.img );
+                      upload_thumb.push( ret.thumb );
+                      // console.log(upload_arr);
+                  }
+              }, 'json');
+          }
+      };
+  });
+
+  //删除图片
+  $(document).on('click', "img.delete_img24", function () {
+        var currIndex = $(this).closest(".uploadImg_div").index();
+        $(this).parent().parent().remove();
+        upload_arr.splice(currIndex-1,1);
+        upload_thumb.splice(currIndex-1,1);
+    })
+  
+</script>
+<script src="/public/mulitpc/js/putquestion-v72.js"></script>
+</body>
+</html>

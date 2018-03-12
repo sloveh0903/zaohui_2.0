@@ -1,0 +1,143 @@
+@charset "UTF-8";
+html, body {background-color: #fff;}
+/*头部 start*/
+.paymentbg {margin-top: 70px; height: 155px;width: 100%;background-color: #F0F3F5; -webkit-box-shadow: 0 1px rgba(0, 0, 0, .06); box-shadow: 0 1px rgba(0, 0, 0, .06);}
+.paymentbg-inner {width: 980px; height: 100%; margin: 0 auto;}
+.paymentbg-inner p {height: 100%; line-height: 155px; text-align: left; font-size: 24px; color: #292b33;}
+/*头部 end*/
+
+/* 主体 start */
+.payment-content {width: 980px; margin: 20px auto 0; display: -webkit-box; display: -ms-flexbox; display: flex;}
+.payment-display {-webkit-box-flex: 0;-ms-flex: 0 0 630px;flex: 0 0 630px; display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-orient: vertical; -webkit-box-direction: normal; -ms-flex-direction: column; flex-direction: column; -webkit-box-align: center; -ms-flex-align: center; align-items: center; padding: 0 20px; border: 1px solid rgba(0, 0, 0, .06); border-radius: 2px;  margin-right: 20px;}
+.payment-display .payment-info {height: 45px; width: 100%; display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-pack: justify; -ms-flex-pack: justify; justify-content: space-between; -webkit-box-align: center; -ms-flex-align: center; align-items: center; -webkit-box-shadow: 0 1px rgba(0, 0, 0, .06); box-shadow: 0 1px rgba(0, 0, 0, .06);}
+.payment-display .payment-info h2 {font-weight: 600; font-size: 14px; color: rgba(41, 43, 51, .8);}
+.payment-display .payment-info p {font-size: 12px; color: rgba(41, 43, 51, .4);}
+.payment-display .payment-goods {margin: 20px 0;}
+.payment-display .payment-goods img {width: 300px; height: 168px; border-radius: 10px; margin-bottom: 10px; vertical-align: top;}
+.payment-display .payment-goods .goods-title {font-size: 16px; line-height: 22px; color: rgba(41, 43, 51, .8);}
+.payment-display .payment-goods .goods-price {font-size: 12px; color: #00b6f2;}
+
+.payment-operation {-webkit-box-flex: 0;-ms-flex: 0 0 330px;flex: 0 0 330px; padding: 0 20px 30px; border: 1px solid rgba(0, 0, 0, .06); border-radius: 2px;}
+.payment-operation p.column-title {font-size: 14px; color: rgba(41, 43, 51, .8);}
+.payment-operation h4.column-title {font-size: 16px; color: rgba(41, 43, 51, .8);}
+
+.payment-operation .coupon {min-height: 76px; width: 100%; display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-pack: justify; -ms-flex-pack: justify; justify-content: space-between; -webkit-box-align: center; -ms-flex-align: center; align-items: center; -webkit-box-shadow: 0 1px rgba(0, 0, 0, .06); box-shadow: 0 1px rgba(0, 0, 0, .06);}
+.payment-operation .coupon .coupon-input {width: 150px; height: 32px; padding: 9px 0 9px 10px; font-size: 14px; color: rgba(41, 43, 51, .3); border: 1px solid #eee; border-radius: 3px; margin-right: 5px;}
+.payment-operation .coupon .coupon-addbtn {display: inline-block; width: 50px; height: 32px; font-size: 14px; line-height: 30px; text-align: center; color: #00b6f2; border: 1px solid #00b6f2; border-radius: 3px; cursor: pointer;}
+.payment-operation .coupon .coupon-error {font-size: 12px; color: #f00; display: none;}
+.payment-operation .coupon .coupon-used {display: none; -webkit-box-align: center; -ms-flex-align: center; align-items: center;}
+.coupon .coupon-used .coupon-type {font-size: 14px; color: rgba(41, 43, 51, .4);margin-right: 5px;}
+.coupon .coupon-used .coupon-discount {font-size: 14px; color: #292b33; margin-right: 10px;}
+.coupon .coupon-used .coupon-deletebtn {width: 24px; height: 24px; background: url("/public/pc/images/delete-coupon.png") no-repeat center / cover; cursor: pointer;}
+
+.payment-operation .bp {height: 68px; display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-align: center; -ms-flex-align: center; align-items: center; -webkit-box-pack: justify; -ms-flex-pack: justify; justify-content: space-between; -webkit-box-shadow: 0 1px rgba(0, 0, 0, .06); box-shadow: 0 1px rgba(0, 0, 0, .06);}
+.payment-operation .bp .bp-operation {display: -webkit-box;display: -ms-flexbox;display: flex; -webkit-box-align: center; -ms-flex-align: center; align-items: center;}
+.bp .bp-operation .bp-usable {font-size: 14px; color: rgba(41, 43, 51, .4); margin-right: 10px;}
+.payment-operation .bp .bp-switch {width: 50px; height: 28px; border: 1.5px solid #e5e5e5; border-radius: 15px; cursor: pointer; background-color: #fff; overflow: hidden;}
+.payment-operation .bp .bp-switch.active {border: 0; background-color: #00b6f2;}
+.bp .bp-switch .circle {display: inline-block; width: 25px; height: 25px; background-color: #fff; border: .5px solid rgba(0, 0, 0, .12); border-radius: 50%; -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .2); box-shadow: 0 1px 2px rgba(0, 0, 0, .2);-webkit-transform: translate(0, 0);-ms-transform: translate(0, 0);transform: translate(0, 0);}
+.bp .bp-switch.active .circle {-webkit-transform: translate(23.5px, 1.5px);-ms-transform: translate(23.5px, 1.5px);transform: translate(23.5px, 1.5px);}
+
+.payment-operation .totalprice-box {margin: 20px 0 6px;display: -webkit-box;display: -ms-flexbox;display: flex; -webkit-box-pack: justify; -ms-flex-pack: justify; justify-content: space-between; -webkit-box-align: center; -ms-flex-align: center; align-items: center;}
+.payment-operation .totalprice-box .total-price {font-size: 18px; font-weight: 600; color: #292B33;}
+.payment-operation .bill-info {font-size: 12px; color: rgba(41, 43, 51, .4); line-height: 12px; margin-bottom: 40px;}
+.payment-operation .bill-info span {font-size: 12px; color: rgba(41, 43, 51, .4); line-height: 12px;}
+.payment-operation .bill-confirmbox {text-align: center;}
+.payment-operation .bill-confirmbox .bill-confirmbtn {display: inline-block; width: 290px; height: 36px; font-size: 14px; line-height: 36px; text-align: center; color: #fff; background-color: #00b6f2; border-radius: 20px; cursor: pointer;}
+/* 主体 end */
+/*优惠码开始*/
+.youhui{display: -webkit-box;display: -ms-flexbox;display: flex;border-bottom: 1px solid rgba(0,0,0,.1);}
+.youhui p{-webkit-box-flex: 1;-ms-flex: 1;flex: 1;color: #292B33;font-size: 14px;}
+p.code_name{opacity: .6;-webkit-box-flex: .2;-ms-flex: .2;flex: .2;margin-bottom: 37px;}
+	/*添加按钮*/
+p.add_coupon{color: #00B6F2;margin-top: -7px;-webkit-box-flex: 1;-ms-flex: 1;flex: 1;margin-left: -15px;}
+p.add_coupon span{margin-right: 4px;font-size: 20px;display: inline-block;line-height: 20px;}
+p.add_coupon i{display: inline-block;height: 27px;line-height: 32px;vertical-align: bottom;}
+	/*输入优惠码*/
+.youhui .youhui_form{margin-top: -7px;-webkit-box-flex: 1;-ms-flex: 1;flex: 1;display: none; }
+.youhui input{width:160px ;height:32px ;border: 1px solid #EEEEEE;border-radius: 3px;color: rgba(41, 43, 51, .3);padding: 6px 10px 7px;background: none;margin-right: 15px;margin-bottom: 5px; font-size: 14px;display:block;float: left;}
+.youhui input:focus{outline: none;}
+.youhui .youhui_form button{width: 66px;height: 32px;line-height: 18px;text-align: center;font-size: 14px; color: #00B6F2;border: 1px solid #00B6F2;border-radius: 20px;background: none;outline: none;display: inline-block;float: left;margin-top: 1px;}
+.youhui .youhui_form button.cancel_btn{border: 1px solid transparent;}
+.youhui .youhui_form span{float: left;display: none; color: #FF2D55;font-size: 12px;margin-top: 5px;margin-bottom: 25px;clear: both;}	
+	/*优惠程度*/
+p.youhui_content{-webkit-box-flex: 1;-ms-flex: 1;flex: 1;margin-left: -15px;display: none;}
+p.youhui_content span{display: inline-block;margin-left: 5px;margin-right: 11px;}
+p.youhui_content i{width:20px ;height: 20px;display: inline-block;vertical-align: middle;margin-top: -3px;}
+	/*实付金额*/
+p.payment_num{text-align: right;}
+p.payment_num i{font-size: 14px;color: #292B33;opacity: .6;}
+p.payment_num i.sub_price{opacity: 1;font-size: 18px;}
+
+p.add_coupon:hover{cursor: pointer;}
+.youhui form button:hover{cursor: pointer;}
+.youhui form button.confirm_btn:hover{background: #00B6F2;color: white;}
+p.youhui_content i:hover{cursor: pointer;}
+
+/*优惠码结束*/
+.weixin_pay_outside {
+  display: none;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 99;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.weixin_pay_alert {
+  width: 270px;
+  height: 290px;
+  padding: 0px;
+  background: #FFFFFF;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: 0 5px 30px rgba(0, 0, 0, 0.05);
+          box-shadow: 0 5px 30px rgba(0, 0, 0, 0.05);
+  border-radius: 3px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-left: -135px;
+  margin-top: -145px;
+  z-index: 100;
+  text-align: center;
+}
+
+.closeSpan {
+  width: auto;
+  height: auto;
+  text-align: right;
+  display: block;
+}
+
+.closeSpan img {
+  width: 40px;
+  height: 40px;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.img_close {
+  width: 40px;
+  height: 40px;
+  vertical-align: middle;
+}
+
+.shaomiao_QRcord {
+  display: block;
+  text-align: center;
+  margin-top: 20px;
+  opacity: .8;
+}
+
+.spanPay_QRcord {
+  display: block;
+  text-align: center;
+}
+
+.spanPay_QRcord img {
+  width: 151px;
+  height: 151px;
+  vertical-align: middle;
+}

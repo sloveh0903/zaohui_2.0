@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>收入提现</title>
+    <link rel="stylesheet" href="/public/mobile/css/mui.min.css">
+    <link rel="stylesheet" href="/public/mobile/css/global.css" />
+    <link rel="stylesheet" href="/public/mobile/css/threeLevelMarketing.css">
+</head>
+<body>
+{if empty($userinfo.mobile) OR empty($userinfo.alipay)}
+<div class="drawCash_income_title">
+    <a href="{:url('bind_account')}">
+        <i>提现需要绑定手机和支付宝</i>
+        <img src="/public/mobile/img/icon/white_arrow_right@2x24.png" alt="链接箭头">
+    </a>
+</div>
+{/if}
+<div class="drawCash_income_main">
+    <div class="my_balance">
+         <span>
+            <i>账户余额 ¥{$userinfo.money}</i>
+             {if $userinfo.alipay}
+             <a href="{:url('draw_apply')}">提现</a>
+             {else}
+             <a href="{:url('bind_account')}">提现</a>
+             {/if}
+         </span>
+    </div>
+    <div class="nearest_order" style="margin-top: 10px;">历史提现记录</div>
+    <div id="pullrefresh" class="mui-scroll-wrapper" style="top:176px;">
+        <div class="mui-scroll">
+            <div class="mui-row">
+                <div class="drawCash_record">
+                    <ul class="drawCash_record_ul order_list_ul">
+						<!--<li>
+							<p>
+								<i>¥'+item.money+'</i>
+								<span>'+item.create_time+'</span>
+							</p>
+							<span class="'+item.str_class+'">'+item.str_status+'</span>
+						</li>-->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="grazy-copyright bottom-fixed ">
+	<i>格子匠 GRAZY.CN 技术支持</i>
+</div>
+<script src="/public/mobile/js/jquery-3.2.1.min.js"></script>
+<script src="/public/mobile/js/mui.min.js"></script>
+<script src="/public/mobile/js/globla.js"></script>
+<script>
+    var uid = '{$userinfo.uid}';
+    var isbind = '{$userinfo.is_bind}';
+    $(function() {
+        var page = 1;
+        var size = 10;
+        data = {
+            page:page,
+            uid:uid,
+            size:size
+        };
+        toList(data,1);
+        mui.init({
+            pullRefresh: {
+                container: '#pullrefresh',
+                up : {
+                    //height:50,//可选.默认50.触发上拉加载拖动距离
+                    //auto:true,//可选,默认false.自动上拉加载一次
+                    contentrefresh : "正在加载...",//可选，正在加载状态时，上拉加载控件上显示的标题内容
+                    contentnomore:'没有更多数据了',//可选，请求完毕若没有更多数据时显示的提醒内容；
+                    callback :pullupRefresh //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+                }
+
+            }
+        });
+        function pullupRefresh() {
+            setTimeout(function() {
+                page++;//翻下一页
+                data={
+                    uid:uid,
+                    page:page,
+                    size:size
+                };
+                toList(data,2);//具体取数据的方法
+            }, 100);
+        }
+
+        function toList(data,type) {
+            $.ajax({
+                url:host + 'rebate/withdraw',
+                data:data,
+                type:'GET', //GET
+                async:true,    //或false,是否异步
+                timeout:5000,    //超时时间
+                dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+                success:function(result,textStatus,jqXHR){
+                    if(result.code==1){
+                        var withdraw = result.data.withdraw;
+                        var list = "";
+                        $.each(withdraw,function(j,item){
+                            list += '<li><p><i>¥'+item.money+'</i><span>'+item.create_time+'</span></p><span class="'+item.str_class+'">'+item.str_status+'</span></li>';
+                        });
+                        if(list==""){                        	
+                        	var empty_list = '<div class="emptypage-wrapper"style="top:175px;"><div class="empty-box"  style="margin-top:-80px;"> <img class="empty-img" src="/public/mobile/img/icon/cash-empty.png"> <p class="empty-text">还没有提现记录</p></div></div>';
+                        	$(".mui-scroll-wrapper").html(empty_list);
+                        	return;
+                        }
+                        if(type == 1){
+                            mui('#pullrefresh').pullRefresh().refresh(true);
+                            $(".drawCash_record_ul").html(list);
+                            mui('#pullrefresh').pullRefresh().endPulldownToRefresh();
+                        }else{
+                            if(result.data.withdraw.length == 0){
+                                mui('#pullrefresh').pullRefresh().endPullupToRefresh(true);
+                                setTimeout(function(){
+                                    mui('#pullrefresh').pullRefresh().disablePullupToRefresh();
+                                }, 1000);
+                            }else{
+                                setTimeout(function(){
+                                    $(".drawCash_record_ul").append(list);
+                                }, 1000);
+                                mui('#pullrefresh').pullRefresh().endPullupToRefresh();
+                            }
+                        }
+    //                            mui('#pullrefresh').pullRefresh().endPullupToRefresh(true);
+                    }
+                    mui('.mui-slider').slider({
+                        interval: 3000
+                    });
+
+                }
+            });
+
+        }
+    });
+</script>
+<script src="/public/mobile/js/bindmobile.js"></script>
+</body>
+</html>

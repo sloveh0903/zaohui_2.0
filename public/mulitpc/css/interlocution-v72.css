@@ -1,0 +1,305 @@
+@charset "UTF-8";
+
+html, body {
+  background-color: #F7F7F7;
+}
+
+.main-box {
+  width: 680px;
+  margin: 70px auto 46px;
+  padding-top: 42px;
+  background-color: #F7F7F7;
+}
+.main-box .main-top {
+  width: 100%;
+  height: 68px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  padding: 0 20px;
+  margin-bottom: 20px;
+  border-radius: 3px;
+}
+.main-box .main-top .filter {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  cursor: pointer;
+}
+.main-box .main-top .filter p {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100px;
+  color: #292b33;
+}
+.main-box .main-top .filter .arrowdown-icon {
+  width: 24px;
+  height: 24px;
+  background: url("/public/mulitpc/images/zhedie_down@2x24.png") no-repeat center/cover;
+}
+.main-box .main-top .tiwen-btn {
+  width: 72px;
+  height: 30px;
+  line-height: 30px;
+  color: #fff;
+  border-radius: 3px;
+}
+.main-box .main-content {
+  padding: 0 20px 40px;
+  background-color: #fff;
+  border-radius: 3px;
+}
+.main-box .main-content .content-box {
+  padding: 15px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+.main-box .main-content .content-box .content-top {
+  display: flex;
+  justify-content: space-between;
+}
+.main-box .main-content .content-box .content-top .user-box {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.main-box .main-content .content-box .content-top .user-box img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 15px;
+}
+.main-box .main-content .content-box .content-top .user-box .username {
+  font-size: 13px;
+  color: #292b33;
+  margin-right: 10px;
+}
+.main-box .main-content .content-box .content-top .user-box .essence {
+  width: 18px;
+  height: 17px;
+  background: url("/public/mulitpc/images/ess.png") no-repeat center/cover;
+}
+.main-box .main-content .content-box .content-top .time {
+  font-size: 12px;
+  line-height: 40px;
+  color: rgba(41, 43, 51, 0.4);
+}
+.main-box .main-content .content-box .desc {
+  margin-bottom: 20px;
+}
+.main-box .main-content .content-box .desc a {
+  display: block;
+  color: rgba(41, 43, 51, 0.8);
+  line-height: 24px;
+  margin-bottom: 10px;
+}
+.main-box .main-content .content-box .desc a:hover {
+  text-decoration: underline;
+}
+.main-box .main-content .content-box .desc .img-box {
+  display: flex;
+}
+.main-box .main-content .content-box .desc .img-box img {
+  width: 90px;
+  height: 90px;
+  border-radius: 2px;
+}
+.main-box .main-content .content-box .desc .img-box img:not(:last-child) {
+  margin-right: 10px;
+}
+.main-box .main-content .content-box .info {
+  display: flex;
+  justify-content: flex-end;
+}
+.main-box .main-content .content-box .info .course-name {
+  font-size: 13px;
+  color: rgba(149, 152, 154, 0.65);
+  margin-right: 20px;
+}
+.main-box .main-content .content-box .info .reply-box {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+.main-box .main-content .content-box .info .reply-icon {
+  width: 14px;
+  height: 13px;
+  background: url("/public/mulitpc/images/comment_gray@2x16.png") no-repeat center/cover;
+  margin-right: 8px;
+}
+.main-box .main-content .content-box .info .reply-count {
+  font-size: 13px;
+  color: rgba(41, 43, 51, 0.4);
+}
+.main-box .bottom-box {
+  text-align: center;
+  margin-top: 28px;
+}
+.main-box .bottom-box .showmore {
+  cursor: pointer;
+  color: #00b6f2;
+}
+
+.footer {
+  margin-bottom: 22px;
+}
+.footer p {
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.dialog {
+  position: fixed;
+  z-index: 999;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  overflow: scroll;
+}
+.dialog .filter-box {
+  width: 680px;
+  background-color: #fff;
+  display: none;
+  margin: 90px auto 60px;
+  border-radius: 3px;
+}
+.dialog .filter-box .top {
+  height: 57px;
+  position: relative;
+  border-bottom: 1px solid rgba(41, 43, 51, 0.1);
+}
+.dialog .filter-box .top h4 {
+  height: 100%;
+  width: 100%;
+  line-height: 57px;
+  text-align: center;
+  font-size: 16px;
+  color: #292b33;
+  margin: 0;
+  cursor: default;
+}
+.dialog .filter-box .top .cross {
+  background: url("/public/mulitpc/images/close.png") no-repeat center/cover;
+  position: absolute;
+  top: 20px;
+  right: 34px;
+  cursor: pointer;
+}
+.dialog .filter-all {
+  padding: 20px 0;
+}
+.dialog .filter-all p {
+  color: rgba(41, 43, 51, 0.6);
+  cursor: pointer;
+}
+.dialog .filter-all p:hover {
+  color: #00b6f2;
+}
+.dialog .dialog-item {
+  padding: 23px 20px 13px;
+  border-bottom: 1px solid rgba(41, 43, 51, 0.05);
+}
+.dialog .dialog-item .toplv-caption {
+  font-size: 16px;
+  color: #292b33;
+  margin-bottom: 13px;
+  cursor: default;
+}
+.dialog .dialog-item .seclv-caption {
+  height: 16px;
+  font-size: 12px;
+  line-height: 16px;
+  color: rgba(41, 43, 51, 0.4);
+  margin-bottom: 10px;
+  cursor: default;
+}
+.dialog .dialog-item .course-box:last-child .course-list {
+  margin-bottom: 0;
+}
+.dialog .dialog-item .course-list {
+  width: 100%;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+.dialog .dialog-item .course-list .course-item {
+  display: inline-block;
+  width: 186px;
+  height: 24px;
+  color: rgba(41, 43, 51, 0.6);
+  line-height: 24px;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.dialog .dialog-item .course-list .course-item:hover {
+  color: #00b6f2;
+}
+.dialog .dialog-item .course-list .course-item:not(:nth-of-type(3n)) {
+  margin-right: 20px;
+}
+.dialog .alert-box {
+  width: 400px;
+  height: 230px;
+  position: relative;
+  background-color: #fff;
+  padding: 40px 50px;
+  border-radius: 2px;
+}
+.dialog .alert-box p {
+  color: rgba(0, 0, 0, 0.5);
+  margin-bottom: 60px;
+}
+.dialog .cross {
+  background: url("/public/mulitpc/images/close.png") no-repeat center/cover;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+.dialog h4 {
+  font-size: 20px;
+  color: black;
+  margin-bottom: 12px;
+}
+.dialog .btn {
+  width: 72px;
+  height: 30px;
+  line-height: 30px;
+  color: #fff;
+  border-radius: 3px;
+}
+
+.footer {
+  background-color: #F7F7F7;
+}
+
+/*# sourceMappingURL=interlocution-v72.css.map */
+.empty-box {
+    width: 680px;
+    height: 542px;
+    background-color: #fff;
+    border-radius: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: none;
+	}
+	.empty-box img {
+    display: block;
+    width: 72px;
+    height: 72px;
+	}
+	.empty-box p {
+    font-size: 12px;
+    color: rgba(41, 43, 51, .3);
+    margin-top: 10px;
+	}

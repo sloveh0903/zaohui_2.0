@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>会员中心</title>
+		<link rel="stylesheet" href="/public/mobile/css/mui.min.css" />
+		<link rel="stylesheet" href="/public/mobile/css/globla.css" />
+		<link rel="stylesheet" href="/public/mobile/css/member.css" />
+		<script src="/public/mobile/js/jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="/public/mobile/js/globla.js"></script>
+	</head>
+	{include file="common/share" /}
+	<body>
+		<div class="head1" style="display: none">
+			<img class="face" src="" />
+			<p>
+				<span>
+					<i class="nickname"></i><i class="money">余额¥0</i>
+				</span>
+				<span>
+					<i class="studyinfo"></i>
+					<a href="{:url('wechat/rebate/index')}">进入分销模式</a>
+				</span>
+			</p>
+		</div>
+		<div class="head">
+			<img class="face" src="" />
+			<div class="head-right">
+				<span class="nickname"></span>
+				<span class="studyinfo"></span>
+			</div>
+		</div>
+		<div class="merber-1 mui-row font-color-6">
+			<div>
+				<span>完成课程</span>
+				<span id="coursenum"></span>
+			</div>
+			<div>
+				<span>积分</span>
+				<span id="point"></span>
+			</div>
+			<div>
+				<span>班级排名</span>
+				<span id="ranking"></span>
+			</div>
+		</div>
+		<div class="mui-row merber-2 font-color-6">
+			<ul>
+				<li>
+					<i id="Monday"></i>
+					<span>周一</span>
+				</li>
+				<li>
+					<i id="Tuesday"></i>
+					<span>周二</span>
+				</li>
+				<li>
+					<i id="Wednesday"></i>
+					<span>周三</span>
+				</li>
+				<li>
+					<i id="Thursday"></i>
+					<span>周四</span>
+				</li>
+				<li>
+					<i id="Friday"></i>
+					<span>周五</span>
+				</li>
+				<li>
+					<i id="Saturday"></i>
+					<span>周六</span>
+				</li>
+				<li>
+					<i id="Sunday"></i>
+					<span>周天</span>
+				</li>
+			</ul>
+			<!--<div><span>累计学习时间</span> <b id="studytime"></b></div>-->
+		</div>
+		<div class="mui-row merber-list font-color-8">
+			<ul>
+<!-- 				<li> -->
+<!-- 					<a href="{:url('/wechat/member/favorite')}"> -->
+<!-- 						<span>收藏&nbsp;&nbsp;<em id="favorite"></em></span> -->
+<!-- 						<i class="mui-icon mui-icon-forward"></i> -->
+<!-- 					</a> -->
+<!-- 				</li> -->
+				<li>
+					<a href="{:url('/wechat/member/order')}">
+					<span>已购买&nbsp;&nbsp;<em id="order"></em></span>
+					<i class="mui-icon mui-icon-forward"></i>
+					</a>
+				</li>
+<!-- 				<li> -->
+<!-- 					<a href="{:url('/wechat/member/follow')}"> -->
+<!-- 					<span>关注&nbsp;&nbsp;<em id="follow"></em></span> -->
+<!-- 					<i class="mui-icon mui-icon-forward"></i> -->
+<!-- 					</a> -->
+<!-- 				</li> -->
+				<li>
+					<a href="{:url('/wechat/member/ask')}">
+					<span>我的提问&nbsp;&nbsp;<em id="ask"></em></span>
+					<i class="mui-icon mui-icon-forward"></i>
+					</a>
+				</li>
+				<li>
+					<a href="{:url('/wechat/member/answer')}">
+					<span>我的解答&nbsp;&nbsp;<em id="answer"></em></span>
+					<div class="new-msg">
+					<b id="new_comment"></b>
+					<i class="mui-icon mui-icon-forward"></i>
+					</div>
+					</a>
+				</li>
+				<li>
+					<a href="{:url('/wechat/member/studylist')}">
+					<span>学习记录</span>
+					<i class="mui-icon mui-icon-forward"></i>
+					</a>
+				</li>
+<!-- 				<li>
+					<a href="{:url('/wechat/task/taskhall')}">
+						<span>任务大厅</span>
+						<i class="mui-icon mui-icon-forward"></i>
+					</a>
+				</li>
+				<li>
+					<a href="{:url('/wechat/task/mytask')}">
+						<span>我的任务</span>
+						<i class="mui-icon mui-icon-forward"></i>
+					</a>
+				</li> -->
+
+				<li>
+					<a href="{:url('/wechat/member/setup')}">
+					<span>设置</span>
+					<i class="mui-icon mui-icon-forward"></i>
+					</a>
+				</li>
+			</ul>
+		</div>
+		{include file="common/menu" /}
+	</body>
+<script>
+    var uid = '{$userinfo.uid}';
+    var token = '{$userinfo.token}';
+    $('.mui-table-view li').find('img').eq(3).attr('src','/public/mobile/img/icon/4a.png');
+    $('.mui-table-view li').find('.navcontent').removeClass('NavActive');
+    $('.mui-table-view li').find('.navcontent').eq(3).addClass('NavActive');
+    $.ajax({
+        url:host + 'user/center/index',
+        data:{
+            uid:uid,
+            token:token
+        },
+        type:'GET', //GET
+        async:true,    //或false,是否异步
+        timeout:5000,    //超时时间
+        dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+        success:function(data,textStatus,jqXHR){
+        	if(data.code==-2){
+        		mui.alert('token验证失败');
+        		return false;
+        	}
+        	if(data.code==-3){
+        		location.reload();
+        	}
+            if(data.code==1){
+                var result = data.data;
+                var studyinfo = "自"+result.study_begin+"学习了"+result.study_day+"天";
+                var new_comment = "";
+                console.log(data);
+                if(result.user.is_rebate == 1){
+                	$('.head1').show();
+                	$('.head').hide();
+                }
+                $(".money").text('余额¥'+result.user.money);
+                $(".face").attr('src',result.user.face);
+                $(".nickname").html(result.user.nickname);
+                $(".studyinfo").html(studyinfo);
+                $("#coursenum").html(result.study_complete);
+                $("#point").html(result.user.point);
+                if(result.week.Monday){
+                    $("#Monday").html("<em></em>");
+                    $("#Monday").addClass('active');
+				}
+                if(result.week.Tuesday){
+                    $("#Tuesday").html("<em></em>");
+                    $("#Tuesday").addClass('active');
+                }
+                if(result.week.Wednesday){
+                    $("#Wednesday").html("<em></em>");
+                    $("#Wednesday").addClass('active');
+                }
+                if(result.week.Thursday){
+                    $("#Thursday").html("<em></em>");
+                    $("#Thursday").addClass('active');
+                }
+                if(result.week.Friday){
+                    $("#Friday").html("<em></em>");
+                    $("#Friday").addClass('active');
+                }
+                if(result.week.Saturday){
+                    $("#Saturday").html("<em></em>");
+                    $("#Saturday").addClass('active');
+                }
+                if(result.week.Sunday){
+                    $("#Sunday").html("<em></em>");
+                    $("#Sunday").addClass('active');
+                }
+                $("#ranking").html(result.ranking);
+                $("#studytime").html(result.study_time);
+                //$("#favorite").html(result.favorite_count);//收藏 去除
+                $("#order").html(result.order_count);
+                //$("#follow").html(result.follow);//关注去除
+                $("#ask").html(result.ask_count);
+                $("#answer").html(result.answer_count);
+                // if(result.new_comments > 0){
+                //     new_comment = result.new_comments+"条新回答";
+                //     $("#new_comment").html(new_comment);
+                //     $('#new_comment').next().addClass('red');
+                // }
+
+
+            }
+        }
+    })
+</script>
+</html>

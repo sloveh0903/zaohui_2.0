@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>订单确认</title>
+		<link rel="stylesheet" href="/public/mobile/css/mui.min.css" />
+		<link rel="stylesheet" href="/public/mobile/css/order_submit.css"/>
+		<script src="/public/mobile/js/jquery-3.2.1.min.js"></script>
+		<script src="/public/mobile/js/mui.min.js"></script>
+		<script type="text/javascript" src="/public/mobile/js/globla.js"></script>
+		
+	</head>
+	<body>
+		<div class="order_content">
+			<!--订单信息-->
+			<div class="order_details">
+				<img src="{$course.face}" alt="" title="">
+				<div class="product">
+					<h2>{$course.title}</h2>
+					<p>{$course.desc}</p>
+				</div>
+				<p class="price">￥<span>{$course.price}</span></p>				
+			</div>
+			<!--优惠券-->
+			<div class="coupon iterm">
+				<p>优惠码</p>
+				<p class="add_coupon"><span></span><i style='align-items: center;font-style: normal;'>添加</i></p>
+				<p class="youhui"></p>
+				
+			</div>
+			<!--实付金额-->
+			<div class="sub_money iterm">
+				<p>实付金额</p>
+				<p class="sub">￥<span>{$course.price}</span></p>
+			</div>
+			<!--版权支-->
+			<div class="grazy-zhichi">
+				<span>格子匠 GRAZY.CN 技术支持</span>
+		    </div>
+		    <!--确认支付-->
+		   
+		    	<button class="confirm" data-status="0" data-coupon-code=''>确认支付</button>
+		    
+		</div>
+		<!--弹框-->
+		<div class="box-shadow">
+			<div id="confirm_box" class="confirm_box">
+				<i class="cancel_box" style="background: url(/public/mobile/img/icon/cross.png) no-repeat center/cover;"></i>
+				<img src="../../public/images/coupon.png" title="" alt=""/>
+				<div class='formdiv'>				
+					<input type="text" id='coupon_codeid' value="输入优惠码" onfocus="if(value==defaultValue){ value='';this.style.color='rgba(41, 43, 51, .8)'}" onblur="if(!value){value=defaultValue;this.style.color='rgba(41, 43, 51, .4)'}"/>
+					<span></span>
+					<button class="confirm_btn" type="submit">确认</button>
+				</div>			
+			</div>
+		</div>
+				
+	</body>
+	<script type="text/javascript">
+		$(function(){
+			var cid = "{$cid}";
+			var checkbuy = "{$checkbuy}";
+			if(checkbuy==1){
+				var url = "{:url('wechat/course/detail')}";
+				window.location.href=url+'?cid='+cid;
+				return;
+			}
+			//将盒子定位到中央
+// 			var winW = document.documentElement.clientWidth || document.body.clientWidth;
+// 		    var winH = document.documentElement.clientHeight || document.body.clientHeight;
+// 		    var box = document.getElementById("confirm_box");
+// 		    box.style.position = "absolute";
+// 		    box.style.left = (winW - 280) / 2 + "px";
+// 		    box.style.top = (winH - 270) / 2 + "px";
+			//点击添加弹出弹框
+			$(".add_coupon").click(function(){
+				$(".box-shadow").css("display","flex");
+				$(".youhui").css("display","none");
+				$(".confirm_box").css("display","block");
+				
+			})
+			//点击取消弹框消失
+			$(".cancel_box").click(function(){
+				$(".box-shadow").hide();
+				$(".youhui").hide();
+				//total();
+			})
+			//点击垃圾筐取消优惠码优惠
+			$(".youhui").click('.delete',function(){
+				$(".confirm").attr('data-coupon-code','');
+				$(".youhui").css("display","none");
+				$('.add_coupon').css("display","flex");
+				var couse_price = "{$course.price}";
+				$('.sub').html('<span>'+couse_price+'</span>');
+				$('#coupon_codeid').val('');
+				
+			})
+			
+			//优惠码提交验证
+			$(".confirm_btn").click(function(){
+				var cid = "{$course.cid}";
+				var coupon_code = $('#coupon_codeid').val();
+				if(coupon_code){
+					$.get(host + "couponcode/check_code?coupon_code=" + coupon_code+'&cid='+cid, function (data) {
+						var message = data.message;
+						console.log(data);
+						if(data.code==1){
+							   var conpon_data = data.data;
+							   var tip = conpon_data.tip;
+							   var minus = conpon_data.minus;
+							   var order_price = conpon_data.order_price;
+							   $('.formdiv span').html('');
+							   $('.add_coupon').hide();
+							   $('.confirm_box').hide();
+							   $('.box-shadow').hide();
+							   $(".youhui").show();
+							   $('.youhui').html(tip+'<span>'+minus+'</span><i class="delete" style="background:url(../../public/images/delete.png) no-repeat center/cover ;"></i>');
+	 						   $('.sub').html('<span>'+order_price+'</span>');
+							   //优惠码 赋值  
+							   $(".confirm").attr('data-coupon-code',conpon_data.coupon_code);
+						}else{
+							$('.formdiv span').html(message);
+						}
+						
+					});
+				}
+				
+			})
+			//提交订单
+			$(".confirm").click(function(){
+				var that = $(this);
+				var status = that.attr('data-status');
+				//that.text('正在支付');
+				if(status == 1){
+					return;
+				}
+				that.attr('data-status',1);
+				var checkbuy = "{$checkbuy}";
+				var uid = "{$uid}";
+				var cid = "{$cid}";
+				var openid = '{$userinfo.openid}'; //微信openid
+				var uname = '{$userinfo.uname}';
+				var title = "{$course.title}";
+				var coupon_code =  $(".confirm").attr('data-coupon-code');
+				console.log(checkbuy);//alert(host);
+				if(checkbuy == 0){
+					var source = 'wechat';//微信公众号
+					console.log(source);
+					$.post(host+"order/add",{uid:uid,cid:cid,source:source,title:title,coupon_code:coupon_code},function(res){
+						that.text('确认支付');
+						that.attr('data-status',0);
+						if(res.code == 1){
+							var order_sn = res.data.order_sn;
+							if(res.data.pay_status == 1){
+								var url = "{:url('wechat/course/detail')}";
+								window.location.href=url+'?cid='+cid;
+							}else{
+								$.get(host+"wxpay/unifiedorder?openid="+openid+"&order_sn="+order_sn, function(res){
+									var appId =  String(res.data.appid);
+									var timeStamp = String(res.data.timeStamp);
+									var nonceStr = res.data.nonce_str
+									var package = res.data.package
+									var paySign = res.data.sign
+									WeixinJSBridge.invoke(
+								       'getBrandWCPayRequest', {
+								           "appId":appId,     //公众号名称，由商户传入
+								           "timeStamp":timeStamp,  //时间戳，自1970年以来的秒数
+								           "nonceStr":nonceStr, //随机串
+								           "package":package,
+								           "signType":"MD5",  //微信签名方式：
+								           "paySign":paySign //微信签名
+								       },
+								       function(res){
+								           if(res.err_msg == "get_brand_wcpay_request:ok" ) {
+								           		setTimeout(function(){						      
+								           			if(subscribe == 1 && is_rebate == 1){
+								           				location.reload();
+								           			}
+								           			if(subscribe == 1 && is_rebate == 0){
+								           				//成功购买页面
+								           				var url = "{:url('wechat/course/buysuccess')}?cid="+cid;
+														window.location.href = url; 
+								           			} 
+								           			if(subscribe == 0 && is_rebate == 0){
+								           				//关注二维码
+								           				$('.buy_success_outside').show();
+								           			}
+								           			if(subscribe == 0 && is_rebate == 1){
+								           				location.reload();
+								           			}
+								           		},1000);
+								           		var url = "{:url('wechat/course/detail')}";
+								   				   window.location.href=url+'?cid='+cid;
+								           }else{
+								        	   //alert(res.err_msg);
+								        	   $.get(host+"couponcode/delete_code?coupon_code="+coupon_code+"&order_sn="+order_sn, function(res){
+								        		   var url = "{:url('wechat/course/detail')}";
+								   				   window.location.href=url+'?cid='+cid;
+								        	   });
+								           }
+								           // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。
+								       }
+								   );
+								});
+
+							}
+						}else{
+							mui.alert('购买失败');
+						}
+					});
+
+				}
+			});
+			
+			
+			
+			
+		})
+	</script>
+</html>
