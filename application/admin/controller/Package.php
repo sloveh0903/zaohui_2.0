@@ -32,7 +32,9 @@ class Package extends Base
             $ret_package['id'] = $v['id'];
             $ret_package['title'] = $v['title'];
             $ret_package['price'] = $v['price'];
+            $ret_package['insur_price'] = $v['insur_price'];
             $ret_package['create_time'] = $v['create_time'];
+            $ret_package['insur_switch'] = $v['insur_switch'];
             $ret_package['audit'] = $v['audit'];
             $ret_package['wxminicode'] = $v['wxminicode'];
             $ret_map['cid'] = ['in',json_decode($v['course_id'])];
@@ -143,6 +145,24 @@ class Package extends Base
         {
             $flag = $pg->where(array('id'=>$id))->setField(['audit'=>0]);
             return json(['status'  => $flag['status'], 'data' => '', 'msg' => '下架']);
+        }
+
+    }
+
+    //新增  insur支付开启关闭状态
+    public function package_insur_state(){
+        $id = input('param.id');
+        $pg = new pg();
+        $status = $pg->where(array('id'=>$id))->value('insur_switch');//判断当前状态情况
+        if($status==0)
+        {
+            $flag = $pg->where(array('id'=>$id))->setField(['insur_switch'=>1]);
+            return json(['status' => $flag['status'], 'data' => '', 'msg' => '开启']);
+        }
+        else
+        {
+            $flag = $pg->where(array('id'=>$id))->setField(['insur_switch'=>0]);
+            return json(['status'  => $flag['status'], 'data' => '', 'msg' => '关闭']);
         }
 
     }

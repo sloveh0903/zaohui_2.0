@@ -36,6 +36,22 @@
                 <input type="text" name="price" required jq-verify="required|price" jq-error="请输入价格" placeholder="￥" autocomplete="off" value="{$course['price']}" autocomplete="off" class="layui-input ">
             </div>
         </div>
+        <!--新增insur_price及-->
+        <div class="layui-form-item">
+            <label class="layui-form-label">insur价格*</label>
+            <div class="layui-input-block">
+                <input type="text" name="insur_price" required jq-verify="required|insur_price" jq-error="请输入价格" placeholder="￥" autocomplete="off" value="{$course['insur_price']}" autocomplete="off" class="layui-input ">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">insur开关*</label>
+            <div class="layui-input-inline">
+                <select name="insur_switch" jq-verify="required" data-val="1" lay-filter="verify">
+                    <option value="1">开启</option>
+                    <option value="0">关闭</option>
+                </select>
+            </div>
+        </div>
 	    <div class="layui-form-item">
             <label class="layui-form-label">虚拟人数</label>
             <div class="layui-input-block">

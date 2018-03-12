@@ -61,9 +61,11 @@
 		<tr>
 			<th>套餐名称</th>
 			<th>价格</th>
+			<th>insur价格</th>
 			<th>套餐课程</th>
 			<th>创建时间</th>
-			<th width="13%">上架／下架</th>
+			<th>insur开启／关闭</th>
+			<th width="14%">上架／下架</th>
 			<th width="10%">排序</th>
 			<th width="16%">操作</th>
 		</tr>
@@ -73,11 +75,13 @@
 		<tr class="courselist-tr">
 			<td>{{ item.title}}</td>
 			<td>{{ item.price}}</td>
+			<td>{{ item.insur_price}}</td>
 			<td>{{# layui.each(item.course, function(j, cu){ }}
 				{{ cu.title}}<br>
 				{{# }); }}
 			</td>
 			<td>{{ item.create_time}}</td>
+			<td><input type="checkbox" name="insur_switch" lay-skin="switch" lay-text="" {{#if (item.insur_switch){ }}checked="checked" {{# } }} lay-filter="ajax" data-params='{"url":"{:url("package/package_insur_state")}","confirm":"true","data":"id={{ item.id}}"}'></td>
 			<td><input type="checkbox" name="switch" lay-skin="switch" lay-text="" {{#if (item.audit){ }}checked="checked" {{# } }} lay-filter="ajax" data-params='{"url":"{:url("package/package_state")}","confirm":"true","data":"id={{ item.id}}"}'></td>
 			<td class="icon"><i class="rise ajax" data-params='{"url": "{:url("package/moveUpDown")}","data":"id={{ item.id}}&updown=up"}'></i><i class="drop ajax" data-params='{"url": "{:url("package/moveUpDown")}","data":"id={{ item.id}}&updown=down"}'></i></td>
 			<td style="position: relative"> <i class="i_edit goto" data-src='{:url("package/edit_package")}?id={{ item.id }}'>编辑</i> <i class="btn_wxcode" data-id="{{ item.id}}" style="cursor: pointer">投放&nbsp;</i><i class="i_delete ajax" data-params='{"url": "{:url("package/del_package")}","data":"id={{ item.id}}","confirm":"true"}'>删除</i>

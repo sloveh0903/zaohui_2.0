@@ -32,6 +32,12 @@
 	                    <!--<input class="keyword" type="text" name="key" placeholder="收索..">-->
 	                    <input class="search_btn" type="image" src="/public/gzadmin/images/gray_search@2x20.png" lay-submit name="submit" lay-filter="search" align="" >
 	                    <div class="layui-form">
+							<div class="layui-inline" style="width: 120px">
+								<select name="insur_switch" lay-verify="required">
+									<option value="1">insur开启</option>
+									<option value="0">insur关闭</option>
+								</select>
+							</div>
 	                        <div class="layui-inline" style="width: 100px">
 	                            <select name="audit" lay-verify="required">
 	                                <option value="1">上架</option>
@@ -71,6 +77,8 @@
            <th>封面</th>
     			 <th>名称</th>
     			 <th>价格</th>
+			     <th>insur价格</th>
+			     <th>insur支付开关</th>
     			 <th>上架／下架</th>
     			 <th>排序</th>
     			 <th>操作</th>
@@ -82,6 +90,8 @@
              <td><img class="img_cover" src="{{ item.banner}}" height="30" alt="封面"></td>
 			 <td>{{ item.title}}</td>
 			 <td>{{ item.price}}</td>
+			 <td>{{ item.insur_price}}</td>
+			 <td><input type="checkbox" name="insur_switch" lay-skin="switch" lay-text="" {{#if (item.insur_switch){ }}checked="checked" {{# } }} lay-filter="ajax" data-params='{"url":"{:url("course/course_insur_state")}","confirm":"true","data":"id={{ item.cid}}"}'></td>
 			 <td><input type="checkbox" name="switch" lay-skin="switch" lay-text="" {{#if (item.audit){ }}checked="checked" {{# } }} lay-filter="ajax" data-params='{"url":"{:url("course/course_state")}","confirm":"true","data":"id={{ item.cid}}"}'></td>
 			 <td class="icon"><i class="rise ajax" data-params='{"url": "{:url("course/moveUpDown")}","data":"id={{ item.cid}}&updown=up"}'></i><i class="drop ajax" data-params='{"url": "{:url("course/moveUpDown")}","data":"id={{ item.cid}}&updown=down"}'></i></td>
 			 <td style="position: relative"><i class="i_edit goto" data-src='{:url("course/edit_course")}?cid={{ item.cid }}'>编辑</i> <i class="btn_wxcode" data-id="{{ item.cid}}" style="cursor: pointer">投放</i> <i class="i_delete ajax" data-params='{"url": "{:url("course/del_course")}","data":"id={{ item.cid}}","confirm":"true"}'>删除</i>

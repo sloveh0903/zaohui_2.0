@@ -24,6 +24,7 @@ class Course extends Base
         $end_date = $so['end_date'] = input('end_date');
         $pid = $so['pid'] = input('pid');
         $audit = $so['audit'] = input('audit');
+        $insur_switch = $so['insur_switch'] = input('insur_switch');
         $map = [];
         $map['closed'] = 0;
         if ($key && $key !== "") {
@@ -39,6 +40,11 @@ class Course extends Base
             $map['audit'] = 0;
         } elseif ($audit == '1') {
             $map['audit'] = 1;
+        }
+        if ($insur_switch == '0') {
+            $map['insur_switch'] = 0;
+        } elseif ($insur_switch == '1') {
+            $map['insur_switch'] = 1;
         }
         if ($end_date) {
             $map['create_time'] = $so['create_time '] = ['<',strtotime($end_date)];
@@ -632,6 +638,32 @@ class Course extends Base
             ]);
         }
     }
+
+    /**
+     * [course_insur_state 课程insur支付开启状态]
+     */
+    public function course_insur_state()
+    {
+        $id = input('param.id');
+        $course = new Cr();
+        $status = $course->where(array('cid' => $id))->value('insur_switch'); // 判断当前状态情况
+        if ($status == 0) {
+            $flag = $course->where(array('cid' => $id))->setField(['insur_switch' => 1]);
+            return json([
+                'status' => $flag['status'],
+                'data' => '',
+                'msg' => '开启'
+            ]);
+        } else {
+            $flag = $course->where(array('cid' => $id))->setField(['insur_switch' => 0]);
+            return json([
+                'status' => $flag['status'],
+                'data' => '',
+                'msg' => '关闭'
+            ]);
+        }
+    }
+
 
     /**
      * pc介绍
