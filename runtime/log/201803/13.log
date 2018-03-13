@@ -1,0 +1,1740 @@
+[ 2018-03-13T09:43:37+08:00 ] ::1 ::1 GET /admin/package/index.html
+[ log ] localhost/admin/package/index.html [运行时间：0.176890s][吞吐率：5.65req/s] [内存消耗：3,483.52kb] [文件加载：48]
+[ info ] [ LANG ] C:\php\zaohui_2.0\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'package',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'localhost',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.119 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'referer' => 'http://localhost/admin/index/index.html',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'PHPSESSID=nfkjmedv3jn3ohhvucgid4a2k1',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Package->index[ C:\php\zaohui_2.0\application\admin\controller\Package.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] C:\php\zaohui_2.0/application/admin\view\package\index.html [ array (
+  0 => 'lists',
+  1 => 'Nowpage',
+  2 => 'allpage',
+  3 => 'count',
+  4 => 'course_bread',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.006294s ] mysql:dbname=test;host=localhost;port=3306;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_package` [ RunTime:0.025830s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM `gz_package` WHERE  `closed` = 0 LIMIT 1 [ RunTime:0.000842s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_package` WHERE  `closed` = 0 ORDER BY orderby desc LIMIT 0,10 [ RunTime:0.000955s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_course` [ RunTime:0.024433s ]
+[ sql ] [ SQL ] SELECT `cid`,`title` FROM `gz_course` WHERE  `cid` IN (98,97) [ RunTime:0.000841s ]
+[ sql ] [ SQL ] SELECT `cid`,`title` FROM `gz_course` WHERE  `cid` IN (101,99,100) [ RunTime:0.000768s ]
+[ sql ] [ SQL ] SELECT `cid`,`title` FROM `gz_course` WHERE  `cid` IN (73,75,76,77,78,79,81,82,83,84,85,86,88,89,90,91,93,94,95,96,97,98,100,101) [ RunTime:0.001259s ]
+
+---------------------------------------------------------------
+[ 2018-03-13T09:43:38+08:00 ] ::1 ::1 GET /admin/package/index.html?_=1520905418037
+[ log ] localhost/admin/package/index.html?_=1520905418037 [运行时间：0.232217s][吞吐率：4.31req/s] [内存消耗：3,420.20kb] [文件加载：47]
+[ info ] [ LANG ] C:\php\zaohui_2.0\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'package',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'localhost',
+  'connection' => 'keep-alive',
+  'accept' => 'application/json, text/javascript, */*; q=0.01',
+  'x-requested-with' => 'XMLHttpRequest',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.119 Safari/537.36',
+  'referer' => 'http://localhost/admin/package/index.html',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'PHPSESSID=nfkjmedv3jn3ohhvucgid4a2k1',
+)
+[ info ] [ PARAM ] array (
+  '_' => '1520905418037',
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Package->index[ C:\php\zaohui_2.0\application\admin\controller\Package.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.002416s ] mysql:dbname=test;host=localhost;port=3306;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_package` [ RunTime:0.036133s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM `gz_package` WHERE  `closed` = 0 LIMIT 1 [ RunTime:0.000621s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_package` WHERE  `closed` = 0 ORDER BY orderby desc LIMIT 0,10 [ RunTime:0.000844s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_course` [ RunTime:0.031514s ]
+[ sql ] [ SQL ] SELECT `cid`,`title` FROM `gz_course` WHERE  `cid` IN (98,97) [ RunTime:0.000615s ]
+[ sql ] [ SQL ] SELECT `cid`,`title` FROM `gz_course` WHERE  `cid` IN (101,99,100) [ RunTime:0.001178s ]
+[ sql ] [ SQL ] SELECT `cid`,`title` FROM `gz_course` WHERE  `cid` IN (73,75,76,77,78,79,81,82,83,84,85,86,88,89,90,91,93,94,95,96,97,98,100,101) [ RunTime:0.002195s ]
+
+---------------------------------------------------------------
+[ 2018-03-13T09:44:32+08:00 ] ::1 ::1 GET /admin/course/index.html
+[ log ] localhost/admin/course/index.html [运行时间：0.152771s][吞吐率：6.55req/s] [内存消耗：4,129.85kb] [文件加载：49]
+[ info ] [ LANG ] C:\php\zaohui_2.0\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'course',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'localhost',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.119 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'referer' => 'http://localhost/admin/index/index.html',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'PHPSESSID=nfkjmedv3jn3ohhvucgid4a2k1',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Course->index[ C:\php\zaohui_2.0\application\admin\controller\Course.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] C:\php\zaohui_2.0/application/admin\view\course\index.html [ array (
+  0 => 'lists',
+  1 => 'Nowpage',
+  2 => 'allpage',
+  3 => 'count',
+  4 => 'val',
+  5 => 'catelist',
+  6 => 'course_bread',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.002091s ] mysql:dbname=test;host=localhost;port=3306;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_course_category` [ RunTime:0.024523s ]
+[ sql ] [ SQL ] SELECT `id`,`cate_name`,`pid` FROM `gz_course_category` WHERE  `closed` = 0 ORDER BY orderby desc [ RunTime:0.000767s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_course` [ RunTime:0.024600s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM `gz_course` WHERE  `closed` = 0  AND `step` = 4 LIMIT 1 [ RunTime:0.001074s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_course` WHERE  `closed` = 0  AND `step` = 4 ORDER BY orderby desc LIMIT 0,10 [ RunTime:0.003099s ]
+
+---------------------------------------------------------------
+[ 2018-03-13T09:44:33+08:00 ] ::1 ::1 GET /admin/course/index.html?_=1520905472900
+[ log ] localhost/admin/course/index.html?_=1520905472900 [运行时间：0.248996s][吞吐率：4.02req/s] [内存消耗：4,324.32kb] [文件加载：49]
+[ info ] [ LANG ] C:\php\zaohui_2.0\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'course',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'localhost',
+  'connection' => 'keep-alive',
+  'accept' => 'application/json, text/javascript, */*; q=0.01',
+  'x-requested-with' => 'XMLHttpRequest',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.119 Safari/537.36',
+  'referer' => 'http://localhost/admin/course/index.html',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'PHPSESSID=nfkjmedv3jn3ohhvucgid4a2k1',
+)
+[ info ] [ PARAM ] array (
+  '_' => '1520905472900',
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Course->index[ C:\php\zaohui_2.0\application\admin\controller\Course.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.003541s ] mysql:dbname=test;host=localhost;port=3306;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_course_category` [ RunTime:0.031721s ]
+[ sql ] [ SQL ] SELECT `id`,`cate_name`,`pid` FROM `gz_course_category` WHERE  `closed` = 0 ORDER BY orderby desc [ RunTime:0.000717s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_course` [ RunTime:0.027725s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM `gz_course` WHERE  `closed` = 0  AND `step` = 4 LIMIT 1 [ RunTime:0.000814s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_course` WHERE  `closed` = 0  AND `step` = 4 ORDER BY orderby desc LIMIT 0,10 [ RunTime:0.003670s ]
+
+---------------------------------------------------------------
+[ 2018-03-13T09:44:37+08:00 ] ::1 ::1 GET /admin/index/checkRule?action=%2Fadmin%2Fcourse%2Fcreate.html
+[ log ] localhost/admin/index/checkRule?action=%2Fadmin%2Fcourse%2Fcreate.html [运行时间：0.069516s][吞吐率：14.39req/s] [内存消耗：2,152.21kb] [文件加载：36]
+[ info ] [ LANG ] C:\php\zaohui_2.0\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'checkRule',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'localhost',
+  'connection' => 'keep-alive',
+  'accept' => '*/*',
+  'x-requested-with' => 'XMLHttpRequest',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.119 Safari/537.36',
+  'referer' => 'http://localhost/admin/course/index.html',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'PHPSESSID=nfkjmedv3jn3ohhvucgid4a2k1',
+)
+[ info ] [ PARAM ] array (
+  'action' => '/admin/course/create.html',
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Base->checkRule[ C:\php\zaohui_2.0\application\admin\controller\Base.php ]
+[ info ] [ LOG ] INIT File
+
+---------------------------------------------------------------
+[ 2018-03-13T09:44:37+08:00 ] ::1 ::1 GET /admin/index/checkRule?action=%2Fadmin%2Fcourse%2Fcreate.html
+[ log ] localhost/admin/index/checkRule?action=%2Fadmin%2Fcourse%2Fcreate.html [运行时间：0.080817s][吞吐率：12.37req/s] [内存消耗：2,152.21kb] [文件加载：36]
+[ info ] [ LANG ] C:\php\zaohui_2.0\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'checkRule',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'localhost',
+  'connection' => 'keep-alive',
+  'accept' => '*/*',
+  'x-requested-with' => 'XMLHttpRequest',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.119 Safari/537.36',
+  'referer' => 'http://localhost/admin/course/index.html',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'PHPSESSID=nfkjmedv3jn3ohhvucgid4a2k1',
+)
+[ info ] [ PARAM ] array (
+  'action' => '/admin/course/create.html',
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Base->checkRule[ C:\php\zaohui_2.0\application\admin\controller\Base.php ]
+[ info ] [ LOG ] INIT File
+
+---------------------------------------------------------------
+[ 2018-03-13T09:44:37+08:00 ] ::1 ::1 GET /admin/course/create.html
+[ log ] localhost/admin/course/create.html [运行时间：0.219862s][吞吐率：4.55req/s] [内存消耗：3,777.51kb] [文件加载：50]
+[ info ] [ LANG ] C:\php\zaohui_2.0\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'course',
+    2 => 'create',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'localhost',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.119 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'referer' => 'http://localhost/admin/index/index.html',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'PHPSESSID=nfkjmedv3jn3ohhvucgid4a2k1',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Course->create[ C:\php\zaohui_2.0\application\admin\controller\Course.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ DB ] INIT mysql
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] C:\php\zaohui_2.0/application/admin\view\course\create.html [ array (
+  0 => 'last_cate',
+  1 => 'cate',
+  2 => 'topcate_list',
+  3 => 'course',
+  4 => 'step',
+  5 => 'step_name',
+  6 => 'cid',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.003332s ] mysql:dbname=test;host=localhost;port=3306;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_course` [ RunTime:0.037602s ]
+[ sql ] [ SQL ] SELECT `cid`,`step`,`closed` FROM `gz_course` WHERE  `step` <> 4 ORDER BY cid desc LIMIT 1 [ RunTime:0.001643s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.002841s ] mysql:dbname=test;host=localhost;port=3306;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_course_category` [ RunTime:0.033421s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`cate_name` FROM `gz_course_category` WHERE  `closed` = 0 ORDER BY orderby desc [ RunTime:0.001287s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_course_category` ORDER BY `id`  desc LIMIT 1 [ RunTime:0.000862s ]
+[ sql ] [ SQL ] SELECT `id`,`cate_name` FROM `gz_course_category` WHERE  `closed` = 0  AND `pid` = 0 ORDER BY orderby desc [ RunTime:0.001401s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.003090s ] mysql:dbname=test;host=localhost;port=3306;charset=utf8mb4
+[ sql ] [ SQL ] SELECT * FROM `gz_course` WHERE  `cid` = 0 LIMIT 1 [ RunTime:0.001542s ]
+
+---------------------------------------------------------------
+[ 2018-03-13T09:44:37+08:00 ] ::1 ::1 GET /admin/course/create.html
+[ log ] localhost/admin/course/create.html [运行时间：0.228217s][吞吐率：4.38req/s] [内存消耗：3,777.51kb] [文件加载：50]
+[ info ] [ LANG ] C:\php\zaohui_2.0\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'course',
+    2 => 'create',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'localhost',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.119 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'referer' => 'http://localhost/admin/index/index.html',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'PHPSESSID=nfkjmedv3jn3ohhvucgid4a2k1',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Course->create[ C:\php\zaohui_2.0\application\admin\controller\Course.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ DB ] INIT mysql
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] C:\php\zaohui_2.0/application/admin\view\course\create.html [ array (
+  0 => 'last_cate',
+  1 => 'cate',
+  2 => 'topcate_list',
+  3 => 'course',
+  4 => 'step',
+  5 => 'step_name',
+  6 => 'cid',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001842s ] mysql:dbname=test;host=localhost;port=3306;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_course` [ RunTime:0.023233s ]
+[ sql ] [ SQL ] SELECT `cid`,`step`,`closed` FROM `gz_course` WHERE  `step` <> 4 ORDER BY cid desc LIMIT 1 [ RunTime:0.000921s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.002068s ] mysql:dbname=test;host=localhost;port=3306;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_course_category` [ RunTime:0.023147s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`cate_name` FROM `gz_course_category` WHERE  `closed` = 0 ORDER BY orderby desc [ RunTime:0.000630s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_course_category` ORDER BY `id`  desc LIMIT 1 [ RunTime:0.000470s ]
+[ sql ] [ SQL ] SELECT `id`,`cate_name` FROM `gz_course_category` WHERE  `closed` = 0  AND `pid` = 0 ORDER BY orderby desc [ RunTime:0.000560s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.002717s ] mysql:dbname=test;host=localhost;port=3306;charset=utf8mb4
+[ sql ] [ SQL ] SELECT * FROM `gz_course` WHERE  `cid` = 0 LIMIT 1 [ RunTime:0.000959s ]
+
+---------------------------------------------------------------
+[ 2018-03-13T09:53:23+08:00 ] ::1 ::1 GET /admin/package/index.html
+[ log ] localhost/admin/package/index.html [运行时间：0.138104s][吞吐率：7.24req/s] [内存消耗：3,483.52kb] [文件加载：48]
+[ info ] [ LANG ] C:\php\zaohui_2.0\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'package',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'localhost',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.119 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'referer' => 'http://localhost/admin/index/index.html',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'PHPSESSID=nfkjmedv3jn3ohhvucgid4a2k1',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Package->index[ C:\php\zaohui_2.0\application\admin\controller\Package.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] C:\php\zaohui_2.0/application/admin\view\package\index.html [ array (
+  0 => 'lists',
+  1 => 'Nowpage',
+  2 => 'allpage',
+  3 => 'count',
+  4 => 'course_bread',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.002414s ] mysql:dbname=test;host=localhost;port=3306;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_package` [ RunTime:0.024810s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM `gz_package` WHERE  `closed` = 0 LIMIT 1 [ RunTime:0.000722s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_package` WHERE  `closed` = 0 ORDER BY orderby desc LIMIT 0,10 [ RunTime:0.000825s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_course` [ RunTime:0.024091s ]
+[ sql ] [ SQL ] SELECT `cid`,`title` FROM `gz_course` WHERE  `cid` IN (98,97) [ RunTime:0.000870s ]
+[ sql ] [ SQL ] SELECT `cid`,`title` FROM `gz_course` WHERE  `cid` IN (101,99,100) [ RunTime:0.000806s ]
+[ sql ] [ SQL ] SELECT `cid`,`title` FROM `gz_course` WHERE  `cid` IN (73,75,76,77,78,79,81,82,83,84,85,86,88,89,90,91,93,94,95,96,97,98,100,101) [ RunTime:0.001387s ]
+
+---------------------------------------------------------------
+[ 2018-03-13T09:53:23+08:00 ] ::1 ::1 GET /admin/package/index.html?_=1520906003492
+[ log ] localhost/admin/package/index.html?_=1520906003492 [运行时间：0.169056s][吞吐率：5.92req/s] [内存消耗：3,420.20kb] [文件加载：47]
+[ info ] [ LANG ] C:\php\zaohui_2.0\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'package',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'localhost',
+  'connection' => 'keep-alive',
+  'accept' => 'application/json, text/javascript, */*; q=0.01',
+  'x-requested-with' => 'XMLHttpRequest',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.119 Safari/537.36',
+  'referer' => 'http://localhost/admin/package/index.html',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'PHPSESSID=nfkjmedv3jn3ohhvucgid4a2k1',
+)
+[ info ] [ PARAM ] array (
+  '_' => '1520906003492',
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Package->index[ C:\php\zaohui_2.0\application\admin\controller\Package.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.002008s ] mysql:dbname=test;host=localhost;port=3306;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_package` [ RunTime:0.025956s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM `gz_package` WHERE  `closed` = 0 LIMIT 1 [ RunTime:0.000853s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_package` WHERE  `closed` = 0 ORDER BY orderby desc LIMIT 0,10 [ RunTime:0.000896s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_course` [ RunTime:0.026168s ]
+[ sql ] [ SQL ] SELECT `cid`,`title` FROM `gz_course` WHERE  `cid` IN (98,97) [ RunTime:0.000570s ]
+[ sql ] [ SQL ] SELECT `cid`,`title` FROM `gz_course` WHERE  `cid` IN (101,99,100) [ RunTime:0.000544s ]
+[ sql ] [ SQL ] SELECT `cid`,`title` FROM `gz_course` WHERE  `cid` IN (73,75,76,77,78,79,81,82,83,84,85,86,88,89,90,91,93,94,95,96,97,98,100,101) [ RunTime:0.001130s ]
+
+---------------------------------------------------------------
+[ 2018-03-13T09:53:27+08:00 ] ::1 ::1 GET /admin/course/index.html
+[ log ] localhost/admin/course/index.html [运行时间：0.146983s][吞吐率：6.80req/s] [内存消耗：4,129.85kb] [文件加载：49]
+[ info ] [ LANG ] C:\php\zaohui_2.0\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'course',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'localhost',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.119 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'referer' => 'http://localhost/admin/index/index.html',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'PHPSESSID=nfkjmedv3jn3ohhvucgid4a2k1',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Course->index[ C:\php\zaohui_2.0\application\admin\controller\Course.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] C:\php\zaohui_2.0/application/admin\view\course\index.html [ array (
+  0 => 'lists',
+  1 => 'Nowpage',
+  2 => 'allpage',
+  3 => 'count',
+  4 => 'val',
+  5 => 'catelist',
+  6 => 'course_bread',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.002051s ] mysql:dbname=test;host=localhost;port=3306;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_course_category` [ RunTime:0.022980s ]
+[ sql ] [ SQL ] SELECT `id`,`cate_name`,`pid` FROM `gz_course_category` WHERE  `closed` = 0 ORDER BY orderby desc [ RunTime:0.000821s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_course` [ RunTime:0.025889s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM `gz_course` WHERE  `closed` = 0  AND `step` = 4 LIMIT 1 [ RunTime:0.000970s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_course` WHERE  `closed` = 0  AND `step` = 4 ORDER BY orderby desc LIMIT 0,10 [ RunTime:0.003006s ]
+
+---------------------------------------------------------------
+[ 2018-03-13T09:53:27+08:00 ] ::1 ::1 GET /admin/course/index.html?_=1520906007379
+[ log ] localhost/admin/course/index.html?_=1520906007379 [运行时间：0.195085s][吞吐率：5.13req/s] [内存消耗：4,324.32kb] [文件加载：49]
+[ info ] [ LANG ] C:\php\zaohui_2.0\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'course',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'localhost',
+  'connection' => 'keep-alive',
+  'accept' => 'application/json, text/javascript, */*; q=0.01',
+  'x-requested-with' => 'XMLHttpRequest',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.119 Safari/537.36',
+  'referer' => 'http://localhost/admin/course/index.html',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'PHPSESSID=nfkjmedv3jn3ohhvucgid4a2k1',
+)
+[ info ] [ PARAM ] array (
+  '_' => '1520906007379',
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Course->index[ C:\php\zaohui_2.0\application\admin\controller\Course.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001844s ] mysql:dbname=test;host=localhost;port=3306;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_course_category` [ RunTime:0.028219s ]
+[ sql ] [ SQL ] SELECT `id`,`cate_name`,`pid` FROM `gz_course_category` WHERE  `closed` = 0 ORDER BY orderby desc [ RunTime:0.000646s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_course` [ RunTime:0.026555s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM `gz_course` WHERE  `closed` = 0  AND `step` = 4 LIMIT 1 [ RunTime:0.000705s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_course` WHERE  `closed` = 0  AND `step` = 4 ORDER BY orderby desc LIMIT 0,10 [ RunTime:0.002717s ]
+
+---------------------------------------------------------------
+[ 2018-03-13T09:53:29+08:00 ] ::1 ::1 GET /admin/index/checkRule?action=%2Fadmin%2Fcourse%2Fcreate.html
+[ log ] localhost/admin/index/checkRule?action=%2Fadmin%2Fcourse%2Fcreate.html [运行时间：0.062939s][吞吐率：15.89req/s] [内存消耗：2,152.21kb] [文件加载：36]
+[ info ] [ LANG ] C:\php\zaohui_2.0\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'checkRule',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'localhost',
+  'connection' => 'keep-alive',
+  'accept' => '*/*',
+  'x-requested-with' => 'XMLHttpRequest',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.119 Safari/537.36',
+  'referer' => 'http://localhost/admin/course/index.html',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'PHPSESSID=nfkjmedv3jn3ohhvucgid4a2k1',
+)
+[ info ] [ PARAM ] array (
+  'action' => '/admin/course/create.html',
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Base->checkRule[ C:\php\zaohui_2.0\application\admin\controller\Base.php ]
+[ info ] [ LOG ] INIT File
+
+---------------------------------------------------------------
+[ 2018-03-13T09:53:29+08:00 ] ::1 ::1 GET /admin/index/checkRule?action=%2Fadmin%2Fcourse%2Fcreate.html
+[ log ] localhost/admin/index/checkRule?action=%2Fadmin%2Fcourse%2Fcreate.html [运行时间：0.068851s][吞吐率：14.52req/s] [内存消耗：2,152.21kb] [文件加载：36]
+[ info ] [ LANG ] C:\php\zaohui_2.0\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'checkRule',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'localhost',
+  'connection' => 'keep-alive',
+  'accept' => '*/*',
+  'x-requested-with' => 'XMLHttpRequest',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.119 Safari/537.36',
+  'referer' => 'http://localhost/admin/course/index.html',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'PHPSESSID=nfkjmedv3jn3ohhvucgid4a2k1',
+)
+[ info ] [ PARAM ] array (
+  'action' => '/admin/course/create.html',
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Base->checkRule[ C:\php\zaohui_2.0\application\admin\controller\Base.php ]
+[ info ] [ LOG ] INIT File
+
+---------------------------------------------------------------
+[ 2018-03-13T09:53:29+08:00 ] ::1 ::1 GET /admin/course/create.html
+[ log ] localhost/admin/course/create.html [运行时间：0.211006s][吞吐率：4.74req/s] [内存消耗：3,951.83kb] [文件加载：52]
+[ info ] [ LANG ] C:\php\zaohui_2.0\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'course',
+    2 => 'create',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'localhost',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.119 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'referer' => 'http://localhost/admin/index/index.html',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'PHPSESSID=nfkjmedv3jn3ohhvucgid4a2k1',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Course->create[ C:\php\zaohui_2.0\application\admin\controller\Course.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ DB ] INIT mysql
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] C:\php\zaohui_2.0/application/admin\view\course\create.html [ array (
+  0 => 'last_cate',
+  1 => 'cate',
+  2 => 'topcate_list',
+  3 => 'course',
+  4 => 'step',
+  5 => 'step_name',
+  6 => 'cid',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.003654s ] mysql:dbname=test;host=localhost;port=3306;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_course` [ RunTime:0.029925s ]
+[ sql ] [ SQL ] SELECT `cid`,`step`,`closed` FROM `gz_course` WHERE  `step` <> 4 ORDER BY cid desc LIMIT 1 [ RunTime:0.000935s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001932s ] mysql:dbname=test;host=localhost;port=3306;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_course_category` [ RunTime:0.021866s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`cate_name` FROM `gz_course_category` WHERE  `closed` = 0 ORDER BY orderby desc [ RunTime:0.000665s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_course_category` ORDER BY `id`  desc LIMIT 1 [ RunTime:0.000468s ]
+[ sql ] [ SQL ] SELECT `id`,`cate_name` FROM `gz_course_category` WHERE  `closed` = 0  AND `pid` = 0 ORDER BY orderby desc [ RunTime:0.000555s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001823s ] mysql:dbname=test;host=localhost;port=3306;charset=utf8mb4
+[ sql ] [ SQL ] SELECT * FROM `gz_course` WHERE  `cid` = 0 LIMIT 1 [ RunTime:0.000740s ]
+
+---------------------------------------------------------------
+[ 2018-03-13T09:53:29+08:00 ] ::1 ::1 GET /admin/course/create.html
+[ log ] localhost/admin/course/create.html [运行时间：0.230186s][吞吐率：4.34req/s] [内存消耗：3,777.49kb] [文件加载：50]
+[ info ] [ LANG ] C:\php\zaohui_2.0\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'course',
+    2 => 'create',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'localhost',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.119 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'referer' => 'http://localhost/admin/index/index.html',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'PHPSESSID=nfkjmedv3jn3ohhvucgid4a2k1',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Course->create[ C:\php\zaohui_2.0\application\admin\controller\Course.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ DB ] INIT mysql
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] C:\php\zaohui_2.0/application/admin\view\course\create.html [ array (
+  0 => 'last_cate',
+  1 => 'cate',
+  2 => 'topcate_list',
+  3 => 'course',
+  4 => 'step',
+  5 => 'step_name',
+  6 => 'cid',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.002064s ] mysql:dbname=test;host=localhost;port=3306;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_course` [ RunTime:0.023556s ]
+[ sql ] [ SQL ] SELECT `cid`,`step`,`closed` FROM `gz_course` WHERE  `step` <> 4 ORDER BY cid desc LIMIT 1 [ RunTime:0.000981s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001931s ] mysql:dbname=test;host=localhost;port=3306;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_course_category` [ RunTime:0.022114s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`cate_name` FROM `gz_course_category` WHERE  `closed` = 0 ORDER BY orderby desc [ RunTime:0.000783s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_course_category` ORDER BY `id`  desc LIMIT 1 [ RunTime:0.000653s ]
+[ sql ] [ SQL ] SELECT `id`,`cate_name` FROM `gz_course_category` WHERE  `closed` = 0  AND `pid` = 0 ORDER BY orderby desc [ RunTime:0.000718s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.002029s ] mysql:dbname=test;host=localhost;port=3306;charset=utf8mb4
+[ sql ] [ SQL ] SELECT * FROM `gz_course` WHERE  `cid` = 0 LIMIT 1 [ RunTime:0.000912s ]
+
+---------------------------------------------------------------
+[ 2018-03-13T09:53:58+08:00 ] ::1 ::1 POST /admin/Upload/courseUpload
+[ log ] localhost/admin/Upload/courseUpload [运行时间：0.140043s][吞吐率：7.14req/s] [内存消耗：2,226.55kb] [文件加载：38]
+[ info ] [ LANG ] C:\php\zaohui_2.0\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'Upload',
+    2 => 'courseUpload',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'localhost',
+  'connection' => 'keep-alive',
+  'content-length' => '9624',
+  'cache-control' => 'max-age=0',
+  'origin' => 'http://localhost',
+  'upgrade-insecure-requests' => '1',
+  'content-type' => 'multipart/form-data; boundary=----WebKitFormBoundarygehtBaLjDN5FBOft',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.119 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'referer' => 'http://localhost/admin/course/create.html',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'PHPSESSID=nfkjmedv3jn3ohhvucgid4a2k1',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Upload->courseUpload[ C:\php\zaohui_2.0\application\admin\controller\Upload.php ]
+[ info ] [ LOG ] INIT File
+
+---------------------------------------------------------------
+[ 2018-03-13T09:54:23+08:00 ] ::1 ::1 POST /admin/Upload/courseUpload
+[ log ] localhost/admin/Upload/courseUpload [运行时间：0.079002s][吞吐率：12.66req/s] [内存消耗：2,226.55kb] [文件加载：38]
+[ info ] [ LANG ] C:\php\zaohui_2.0\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'Upload',
+    2 => 'courseUpload',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'localhost',
+  'connection' => 'keep-alive',
+  'content-length' => '9624',
+  'cache-control' => 'max-age=0',
+  'origin' => 'http://localhost',
+  'upgrade-insecure-requests' => '1',
+  'content-type' => 'multipart/form-data; boundary=----WebKitFormBoundarydLDcBzS9inO6D1RZ',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.119 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'referer' => 'http://localhost/admin/course/create.html',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'PHPSESSID=nfkjmedv3jn3ohhvucgid4a2k1',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Upload->courseUpload[ C:\php\zaohui_2.0\application\admin\controller\Upload.php ]
+[ info ] [ LOG ] INIT File
+
+---------------------------------------------------------------
+[ 2018-03-13T10:02:21+08:00 ] ::1 ::1 POST /admin/Upload/courseUpload
+[ log ] localhost/admin/Upload/courseUpload [运行时间：0.083561s][吞吐率：11.97req/s] [内存消耗：2,226.59kb] [文件加载：38]
+[ info ] [ LANG ] C:\php\zaohui_2.0\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'Upload',
+    2 => 'courseUpload',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'localhost',
+  'connection' => 'keep-alive',
+  'content-length' => '9615',
+  'cache-control' => 'max-age=0',
+  'origin' => 'http://localhost',
+  'upgrade-insecure-requests' => '1',
+  'content-type' => 'multipart/form-data; boundary=----WebKitFormBoundaryvYGpnxmtqYDuXO3p',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.119 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'referer' => 'http://localhost/admin/course/create.html',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'PHPSESSID=nfkjmedv3jn3ohhvucgid4a2k1',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Upload->courseUpload[ C:\php\zaohui_2.0\application\admin\controller\Upload.php ]
+[ info ] [ LOG ] INIT File
+
+---------------------------------------------------------------
+[ 2018-03-13T10:07:42+08:00 ] ::1 ::1 POST /admin/course/step_change.html
+[ log ] localhost/admin/course/step_change.html [运行时间：0.460119s][吞吐率：2.17req/s] [内存消耗：3,650.19kb] [文件加载：50]
+[ info ] [ LANG ] C:\php\zaohui_2.0\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'course',
+    2 => 'step_change',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'localhost',
+  'connection' => 'keep-alive',
+  'content-length' => '630',
+  'accept' => 'application/json, text/javascript, */*; q=0.01',
+  'origin' => 'http://localhost',
+  'x-requested-with' => 'XMLHttpRequest',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.119 Safari/537.36',
+  'content-type' => 'application/x-www-form-urlencoded; charset=UTF-8',
+  'referer' => 'http://localhost/admin/course/create.html',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'PHPSESSID=nfkjmedv3jn3ohhvucgid4a2k1',
+)
+[ info ] [ PARAM ] array (
+  'step' => '1',
+  'cid' => '0',
+  'title' => '新的世界',
+  'price' => '205',
+  'insur_price' => '2222',
+  'insur_switch' => '1',
+  'virtual_amount' => '2',
+  'pid' => '17',
+  'file' => '',
+  'diploma' => '/public/uploads/image/course/20180313/8a3d0c859803ee1b98e94da8a531e77a.jpg',
+  'face' => '/public/uploads/image/course/20180313/dc62cc0d99b223f2a50707abd5de5e00.jpg',
+  'banner' => '/public/uploads/image/course/20180313/d4c23d3658e6ce1a240930a04a99459a.jpg',
+  'desc' => '这是一个新的世界，insur保险需要你们',
+  'content' => '<p>insur保险大教堂</p>',
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Course->step_change[ C:\php\zaohui_2.0\application\admin\controller\Course.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.003146s ] mysql:dbname=test;host=localhost;port=3306;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_course_category` [ RunTime:0.023541s ]
+[ sql ] [ SQL ] SELECT `pid` FROM `gz_course_category` WHERE  `closed` = 0  AND `id` = 17 LIMIT 1 [ RunTime:0.000661s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001978s ] mysql:dbname=test;host=localhost;port=3306;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_course` [ RunTime:0.030297s ]
+[ sql ] [ SQL ] SELECT `orderby` FROM `gz_course` ORDER BY orderby desc LIMIT 1 [ RunTime:0.001092s ]
+[ sql ] [ SQL ] INSERT INTO `gz_course` (`step` , `cid` , `title` , `price` , `insur_price` , `insur_switch` , `virtual_amount` , `pid` , `diploma` , `face` , `banner` , `desc` , `content` , `uid` , `child_id` , `main_color` , `orderby` , `audit` , `update_time` , `create_time`) VALUES (1 , 0 , '新的世界' , 205 , 2222 , 1 , 2 , 17 , '/public/uploads/image/course/20180313/8a3d0c859803ee1b98e94da8a531e77a.jpg' , '/public/uploads/image/course/20180313/dc62cc0d99b223f2a50707abd5de5e00.jpg' , '/public/uploads/image/course/20180313/d4c23d3658e6ce1a240930a04a99459a.jpg' , '这是一个新的世界，insur保险需要你们' , '<p>insur保险大教堂</p>' , 0 , 0 , 'rgb(94,152,136)' , 98 , 0 , 1520906862 , 1520906862) [ RunTime:0.001006s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_config` [ RunTime:0.027587s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_config` WHERE  `closed` = 0 LIMIT 1 [ RunTime:0.001648s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_admin_log` [ RunTime:0.030677s ]
+[ sql ] [ SQL ] INSERT INTO `gz_admin_log` (`type` , `list` , `create_time` , `daytime`) VALUES (5 , '{\"cid\":\"125\",\"price\":\"205\"}' , 1520906862 , '2018-03-13 10:07:42') [ RunTime:0.001191s ]
+
+---------------------------------------------------------------
+[ 2018-03-13T10:07:42+08:00 ] ::1 ::1 GET /admin/chapter?cid=125
+[ log ] localhost/admin/chapter?cid=125 [运行时间：0.240051s][吞吐率：4.17req/s] [内存消耗：3,580.49kb] [文件加载：52]
+[ info ] [ LANG ] C:\php\zaohui_2.0\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'chapter',
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'localhost',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.119 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'referer' => 'http://localhost/admin/course/create.html',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'PHPSESSID=nfkjmedv3jn3ohhvucgid4a2k1',
+)
+[ info ] [ PARAM ] array (
+  'cid' => '125',
+)
+[ info ] [ RUN ] app\admin\controller\Chapter->index[ C:\php\zaohui_2.0\application\admin\controller\Chapter.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ DB ] INIT mysql
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] C:\php\zaohui_2.0/application/admin\view\chapter\index.html [ array (
+  0 => 'type',
+  1 => 'cid',
+  2 => 'token',
+  3 => 'domain',
+  4 => 'id',
+  5 => 'chapter',
+) ]
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.004481s ] mysql:dbname=test;host=localhost;port=3306;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_qiniu_account` [ RunTime:0.029174s ]
+[ sql ] [ SQL ] SELECT `money`,`key`,`secret`,`bucket`,`domain` FROM `gz_qiniu_account` LIMIT 1 [ RunTime:0.001016s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001987s ] mysql:dbname=test;host=localhost;port=3306;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_course` [ RunTime:0.026389s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_course` WHERE  `cid` = 125 LIMIT 1 [ RunTime:0.000946s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001926s ] mysql:dbname=test;host=localhost;port=3306;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_video_category` [ RunTime:0.031942s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_video_category` WHERE  `cid` = 125  AND `closed` = 0 ORDER BY orderby asc [ RunTime:0.001286s ]
+
+---------------------------------------------------------------
+[ 2018-03-13T10:07:58+08:00 ] ::1 ::1 POST /admin/chapter/create.html
+[ log ] localhost/admin/chapter/create.html [运行时间：0.147758s][吞吐率：6.77req/s] [内存消耗：3,221.81kb] [文件加载：41]
+[ info ] [ LANG ] C:\php\zaohui_2.0\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'chapter',
+    2 => 'create',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'localhost',
+  'connection' => 'keep-alive',
+  'content-length' => '41',
+  'accept' => '*/*',
+  'origin' => 'http://localhost',
+  'x-requested-with' => 'XMLHttpRequest',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.119 Safari/537.36',
+  'content-type' => 'application/x-www-form-urlencoded; charset=UTF-8',
+  'referer' => 'http://localhost/admin/chapter?cid=125',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'PHPSESSID=nfkjmedv3jn3ohhvucgid4a2k1',
+)
+[ info ] [ PARAM ] array (
+  'title' => '新世界',
+  'cid' => '125',
+)
+[ info ] [ RUN ] app\admin\controller\Chapter->create[ C:\php\zaohui_2.0\application\admin\controller\Chapter.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ DB ] INIT mysql
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.002000s ] mysql:dbname=test;host=localhost;port=3306;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_course` [ RunTime:0.024807s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_course` WHERE  `cid` = 125  AND `closed` = 0 LIMIT 1 [ RunTime:0.000923s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001976s ] mysql:dbname=test;host=localhost;port=3306;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_video_category` [ RunTime:0.026255s ]
+[ sql ] [ SQL ] SELECT `orderby` FROM `gz_video_category` WHERE  `cid` = 125  AND `closed` = 0 ORDER BY orderby desc LIMIT 1 [ RunTime:0.000716s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.003110s ] mysql:dbname=test;host=localhost;port=3306;charset=utf8mb4
+[ sql ] [ SQL ] INSERT INTO `gz_video_category` (`orderby` , `cid` , `cate_name` , `update_time` , `create_time`) VALUES (1 , 125 , '新世界' , 1520906877 , 1520906877) [ RunTime:0.001343s ]
+
+---------------------------------------------------------------
+[ 2018-03-13T10:07:58+08:00 ] ::1 ::1 GET /admin/chapter?cid=125
+[ log ] localhost/admin/chapter?cid=125 [运行时间：0.208126s][吞吐率：4.80req/s] [内存消耗：3,620.78kb] [文件加载：52]
+[ info ] [ LANG ] C:\php\zaohui_2.0\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'chapter',
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'localhost',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.119 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'referer' => 'http://localhost/admin/chapter?cid=125',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'PHPSESSID=nfkjmedv3jn3ohhvucgid4a2k1',
+)
+[ info ] [ PARAM ] array (
+  'cid' => '125',
+)
+[ info ] [ RUN ] app\admin\controller\Chapter->index[ C:\php\zaohui_2.0\application\admin\controller\Chapter.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ DB ] INIT mysql
+[ info ] [ DB ] INIT mysql
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] C:\php\zaohui_2.0/application/admin\view\chapter\index.html [ array (
+  0 => 'type',
+  1 => 'cid',
+  2 => 'token',
+  3 => 'domain',
+  4 => 'id',
+  5 => 'chapter',
+) ]
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.002073s ] mysql:dbname=test;host=localhost;port=3306;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_qiniu_account` [ RunTime:0.023479s ]
+[ sql ] [ SQL ] SELECT `money`,`key`,`secret`,`bucket`,`domain` FROM `gz_qiniu_account` LIMIT 1 [ RunTime:0.000571s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.002126s ] mysql:dbname=test;host=localhost;port=3306;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_course` [ RunTime:0.021493s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_course` WHERE  `cid` = 125 LIMIT 1 [ RunTime:0.000998s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001910s ] mysql:dbname=test;host=localhost;port=3306;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_video_category` [ RunTime:0.024765s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_video_category` WHERE  `cid` = 125  AND `closed` = 0 ORDER BY orderby asc [ RunTime:0.001038s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.003064s ] mysql:dbname=test;host=localhost;port=3306;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_video` [ RunTime:0.024205s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_video` WHERE  `tid` IN (116)  AND `closed` = 0 ORDER BY orderby asc [ RunTime:0.001268s ]
+
+---------------------------------------------------------------
+[ 2018-03-13T10:08:08+08:00 ] ::1 ::1 POST /admin/course/step_change.html
+[ log ] localhost/admin/course/step_change.html [运行时间：0.100619s][吞吐率：9.94req/s] [内存消耗：3,554.30kb] [文件加载：48]
+[ info ] [ LANG ] C:\php\zaohui_2.0\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'course',
+    2 => 'step_change',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'localhost',
+  'connection' => 'keep-alive',
+  'content-length' => '14',
+  'cache-control' => 'max-age=0',
+  'origin' => 'http://localhost',
+  'upgrade-insecure-requests' => '1',
+  'content-type' => 'application/x-www-form-urlencoded',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.119 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'referer' => 'http://localhost/admin/chapter?cid=125',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'PHPSESSID=nfkjmedv3jn3ohhvucgid4a2k1',
+)
+[ info ] [ PARAM ] array (
+  'step' => '2',
+  'cid' => '125',
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Course->step_change[ C:\php\zaohui_2.0\application\admin\controller\Course.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.002006s ] mysql:dbname=test;host=localhost;port=3306;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_video_category` [ RunTime:0.024947s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_video_category` WHERE  `cid` = 125 ORDER BY orderby asc LIMIT 1 [ RunTime:0.000843s ]
+
+---------------------------------------------------------------
+[ 2018-03-13T10:08:08+08:00 ] ::1 ::1 GET /admin/course/introduce?cid=125
+[ log ] localhost/admin/course/introduce?cid=125 [运行时间：0.100087s][吞吐率：9.99req/s] [内存消耗：3,594.77kb] [文件加载：48]
+[ info ] [ LANG ] C:\php\zaohui_2.0\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'course',
+    2 => 'introduce',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'localhost',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.119 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'referer' => 'http://localhost/admin/chapter?cid=125',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'PHPSESSID=nfkjmedv3jn3ohhvucgid4a2k1',
+)
+[ info ] [ PARAM ] array (
+  'cid' => '125',
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Course->introduce[ C:\php\zaohui_2.0\application\admin\controller\Course.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] C:\php\zaohui_2.0/application/admin\view\course\introduce.html [ array (
+  0 => 'cid',
+  1 => 'type',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001950s ] mysql:dbname=test;host=localhost;port=3306;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_course_introduce` [ RunTime:0.025132s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM `gz_course_introduce` WHERE  `closed` = 0  AND `cid` = 125 LIMIT 1 [ RunTime:0.000832s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_course_introduce` WHERE  `closed` = 0  AND `cid` = 125 ORDER BY orderby desc LIMIT 0,10 [ RunTime:0.000950s ]
+
+---------------------------------------------------------------
+[ 2018-03-13T10:08:09+08:00 ] ::1 ::1 GET /admin/course/introduce/cid/125.html?_=1520906888833
+[ log ] localhost/admin/course/introduce/cid/125.html?_=1520906888833 [运行时间：0.153316s][吞吐率：6.52req/s] [内存消耗：3,531.30kb] [文件加载：47]
+[ info ] [ LANG ] C:\php\zaohui_2.0\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'course',
+    2 => 'introduce',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'localhost',
+  'connection' => 'keep-alive',
+  'accept' => 'application/json, text/javascript, */*; q=0.01',
+  'x-requested-with' => 'XMLHttpRequest',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.119 Safari/537.36',
+  'referer' => 'http://localhost/admin/course/introduce?cid=125',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'PHPSESSID=nfkjmedv3jn3ohhvucgid4a2k1',
+)
+[ info ] [ PARAM ] array (
+  '_' => '1520906888833',
+  'cid' => '125',
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Course->introduce[ C:\php\zaohui_2.0\application\admin\controller\Course.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.004481s ] mysql:dbname=test;host=localhost;port=3306;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_course_introduce` [ RunTime:0.038663s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM `gz_course_introduce` WHERE  `closed` = 0  AND `cid` = 125 LIMIT 1 [ RunTime:0.002334s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_course_introduce` WHERE  `closed` = 0  AND `cid` = 125 ORDER BY orderby desc LIMIT 0,10 [ RunTime:0.000968s ]
+
+---------------------------------------------------------------
+[ 2018-03-13T10:08:11+08:00 ] ::1 ::1 GET /admin/index/checkRule?action=%2Fadmin%2Fcourse%2Fadd_intro%2Fcid%2F125%2Ftype%2Fcreate.html
+[ log ] localhost/admin/index/checkRule?action=%2Fadmin%2Fcourse%2Fadd_intro%2Fcid%2F125%2Ftype%2Fcreate.html [运行时间：0.085978s][吞吐率：11.63req/s] [内存消耗：2,152.23kb] [文件加载：36]
+[ info ] [ LANG ] C:\php\zaohui_2.0\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'checkRule',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'localhost',
+  'connection' => 'keep-alive',
+  'accept' => '*/*',
+  'x-requested-with' => 'XMLHttpRequest',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.119 Safari/537.36',
+  'referer' => 'http://localhost/admin/course/introduce?cid=125',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'PHPSESSID=nfkjmedv3jn3ohhvucgid4a2k1',
+)
+[ info ] [ PARAM ] array (
+  'action' => '/admin/course/add_intro/cid/125/type/create.html',
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Base->checkRule[ C:\php\zaohui_2.0\application\admin\controller\Base.php ]
+[ info ] [ LOG ] INIT File
+
+---------------------------------------------------------------
+[ 2018-03-13T10:08:11+08:00 ] ::1 ::1 GET /admin/index/checkRule?action=%2Fadmin%2Fcourse%2Fadd_intro%2Fcid%2F125%2Ftype%2Fcreate.html
+[ log ] localhost/admin/index/checkRule?action=%2Fadmin%2Fcourse%2Fadd_intro%2Fcid%2F125%2Ftype%2Fcreate.html [运行时间：0.090865s][吞吐率：11.01req/s] [内存消耗：2,152.23kb] [文件加载：36]
+[ info ] [ LANG ] C:\php\zaohui_2.0\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'checkRule',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'localhost',
+  'connection' => 'keep-alive',
+  'accept' => '*/*',
+  'x-requested-with' => 'XMLHttpRequest',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.119 Safari/537.36',
+  'referer' => 'http://localhost/admin/course/introduce?cid=125',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'PHPSESSID=nfkjmedv3jn3ohhvucgid4a2k1',
+)
+[ info ] [ PARAM ] array (
+  'action' => '/admin/course/add_intro/cid/125/type/create.html',
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Base->checkRule[ C:\php\zaohui_2.0\application\admin\controller\Base.php ]
+[ info ] [ LOG ] INIT File
+
+---------------------------------------------------------------
+[ 2018-03-13T10:08:11+08:00 ] ::1 ::1 GET /admin/course/add_intro/cid/125/type/create.html
+[ log ] localhost/admin/course/add_intro/cid/125/type/create.html [运行时间：0.135598s][吞吐率：7.37req/s] [内存消耗：3,532.55kb] [文件加载：47]
+[ info ] [ LANG ] C:\php\zaohui_2.0\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'course',
+    2 => 'add_intro',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'localhost',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.119 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'referer' => 'http://localhost/admin/index/index.html',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'PHPSESSID=nfkjmedv3jn3ohhvucgid4a2k1',
+)
+[ info ] [ PARAM ] array (
+  'cid' => '125',
+  'type' => 'create',
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Course->add_intro[ C:\php\zaohui_2.0\application\admin\controller\Course.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] C:\php\zaohui_2.0/application/admin\view\course\add_intro.html [ array (
+  0 => 'cid',
+  1 => 'type',
+) ]
+[ info ] [ LOG ] INIT File
+
+---------------------------------------------------------------
+[ 2018-03-13T10:08:11+08:00 ] ::1 ::1 GET /admin/course/add_intro/cid/125/type/create.html
+[ log ] localhost/admin/course/add_intro/cid/125/type/create.html [运行时间：0.107136s][吞吐率：9.33req/s] [内存消耗：3,532.55kb] [文件加载：47]
+[ info ] [ LANG ] C:\php\zaohui_2.0\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'course',
+    2 => 'add_intro',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'localhost',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.119 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'referer' => 'http://localhost/admin/index/index.html',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'PHPSESSID=nfkjmedv3jn3ohhvucgid4a2k1',
+)
+[ info ] [ PARAM ] array (
+  'cid' => '125',
+  'type' => 'create',
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Course->add_intro[ C:\php\zaohui_2.0\application\admin\controller\Course.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] C:\php\zaohui_2.0/application/admin\view\course\add_intro.html [ array (
+  0 => 'cid',
+  1 => 'type',
+) ]
+[ info ] [ LOG ] INIT File
+
+---------------------------------------------------------------
+[ 2018-03-13T10:08:27+08:00 ] ::1 ::1 POST /admin/course/add_intro.html
+[ log ] localhost/admin/course/add_intro.html [运行时间：0.217164s][吞吐率：4.60req/s] [内存消耗：3,531.41kb] [文件加载：47]
+[ info ] [ LANG ] C:\php\zaohui_2.0\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'course',
+    2 => 'add_intro',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'localhost',
+  'connection' => 'keep-alive',
+  'content-length' => '97',
+  'accept' => 'application/json, text/javascript, */*; q=0.01',
+  'origin' => 'http://localhost',
+  'x-requested-with' => 'XMLHttpRequest',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.119 Safari/537.36',
+  'content-type' => 'application/x-www-form-urlencoded; charset=UTF-8',
+  'referer' => 'http://localhost/admin/course/add_intro/cid/125/type/create.html',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'PHPSESSID=nfkjmedv3jn3ohhvucgid4a2k1',
+)
+[ info ] [ PARAM ] array (
+  'cid' => '125',
+  'type' => 'create',
+  'title' => '世界',
+  'content' => '<p>哈哈哈</p>',
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Course->add_intro[ C:\php\zaohui_2.0\application\admin\controller\Course.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.003167s ] mysql:dbname=test;host=localhost;port=3306;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_course_introduce` [ RunTime:0.035988s ]
+[ sql ] [ SQL ] SELECT `orderby` FROM `gz_course_introduce` WHERE  `cid` = 125 ORDER BY orderby desc LIMIT 1 [ RunTime:0.000969s ]
+[ sql ] [ SQL ] INSERT INTO `gz_course_introduce` (`cid` , `title` , `content` , `orderby` , `update_time` , `create_time`) VALUES (125 , '世界' , '<p>哈哈哈</p>' , 1 , 1520906907 , 1520906907) [ RunTime:0.001147s ]
+
+---------------------------------------------------------------
+[ 2018-03-13T10:08:27+08:00 ] ::1 ::1 GET /admin/course/introduce?cid=125&type=create
+[ log ] localhost/admin/course/introduce?cid=125&type=create [运行时间：0.209106s][吞吐率：4.78req/s] [内存消耗：3,595.45kb] [文件加载：48]
+[ info ] [ LANG ] C:\php\zaohui_2.0\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'course',
+    2 => 'introduce',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'localhost',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.119 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'referer' => 'http://localhost/admin/course/add_intro/cid/125/type/create.html',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'PHPSESSID=nfkjmedv3jn3ohhvucgid4a2k1',
+)
+[ info ] [ PARAM ] array (
+  'cid' => '125',
+  'type' => 'create',
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Course->introduce[ C:\php\zaohui_2.0\application\admin\controller\Course.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] C:\php\zaohui_2.0/application/admin\view\course\introduce.html [ array (
+  0 => 'cid',
+  1 => 'type',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.003736s ] mysql:dbname=test;host=localhost;port=3306;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_course_introduce` [ RunTime:0.033679s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM `gz_course_introduce` WHERE  `closed` = 0  AND `cid` = 125 LIMIT 1 [ RunTime:0.001186s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_course_introduce` WHERE  `closed` = 0  AND `cid` = 125 ORDER BY orderby desc LIMIT 0,10 [ RunTime:0.001118s ]
+
+---------------------------------------------------------------
+[ 2018-03-13T10:08:28+08:00 ] ::1 ::1 GET /admin/course/introduce/cid/125.html?_=1520906908164
+[ log ] localhost/admin/course/introduce/cid/125.html?_=1520906908164 [运行时间：0.176252s][吞吐率：5.67req/s] [内存消耗：3,602.76kb] [文件加载：48]
+[ info ] [ LANG ] C:\php\zaohui_2.0\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'course',
+    2 => 'introduce',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'localhost',
+  'connection' => 'keep-alive',
+  'accept' => 'application/json, text/javascript, */*; q=0.01',
+  'x-requested-with' => 'XMLHttpRequest',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.119 Safari/537.36',
+  'referer' => 'http://localhost/admin/course/introduce?cid=125&type=create',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'PHPSESSID=nfkjmedv3jn3ohhvucgid4a2k1',
+)
+[ info ] [ PARAM ] array (
+  '_' => '1520906908164',
+  'cid' => '125',
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Course->introduce[ C:\php\zaohui_2.0\application\admin\controller\Course.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.002740s ] mysql:dbname=test;host=localhost;port=3306;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_course_introduce` [ RunTime:0.030334s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM `gz_course_introduce` WHERE  `closed` = 0  AND `cid` = 125 LIMIT 1 [ RunTime:0.001108s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_course_introduce` WHERE  `closed` = 0  AND `cid` = 125 ORDER BY orderby desc LIMIT 0,10 [ RunTime:0.000731s ]
+
+---------------------------------------------------------------
+[ 2018-03-13T10:08:30+08:00 ] ::1 ::1 POST /admin/course/step_change.html
+[ log ] localhost/admin/course/step_change.html [运行时间：0.156403s][吞吐率：6.39req/s] [内存消耗：3,634.57kb] [文件加载：50]
+[ info ] [ LANG ] C:\php\zaohui_2.0\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'course',
+    2 => 'step_change',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'localhost',
+  'connection' => 'keep-alive',
+  'content-length' => '14',
+  'accept' => 'application/json, text/javascript, */*; q=0.01',
+  'origin' => 'http://localhost',
+  'x-requested-with' => 'XMLHttpRequest',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.119 Safari/537.36',
+  'content-type' => 'application/x-www-form-urlencoded; charset=UTF-8',
+  'referer' => 'http://localhost/admin/course/introduce?cid=125&type=create',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'PHPSESSID=nfkjmedv3jn3ohhvucgid4a2k1',
+)
+[ info ] [ PARAM ] array (
+  'step' => '3',
+  'cid' => '125',
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Course->step_change[ C:\php\zaohui_2.0\application\admin\controller\Course.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ CACHE ] INIT File
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001839s ] mysql:dbname=test;host=localhost;port=3306;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_course` [ RunTime:0.032101s ]
+[ sql ] [ SQL ] UPDATE `gz_course`  SET `step`=4,`audit`=1,`update_time`=1520906910  WHERE  `cid` = 125 [ RunTime:0.001549s ]
+
+---------------------------------------------------------------
+[ 2018-03-13T10:08:30+08:00 ] ::1 ::1 GET /admin/course/create?step=4&cid=125
+[ log ] localhost/admin/course/create?step=4&cid=125 [运行时间：0.100717s][吞吐率：9.93req/s] [内存消耗：2,400.84kb] [文件加载：38]
+[ info ] [ LANG ] C:\php\zaohui_2.0\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'course',
+    2 => 'create',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'localhost',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.119 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'referer' => 'http://localhost/admin/course/introduce?cid=125&type=create',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'PHPSESSID=nfkjmedv3jn3ohhvucgid4a2k1',
+)
+[ info ] [ PARAM ] array (
+  'step' => '4',
+  'cid' => '125',
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Course->create[ C:\php\zaohui_2.0\application\admin\controller\Course.php ]
+[ info ] [ VIEW ] C:\php\zaohui_2.0/application/admin\view\course\create.html [ array (
+  0 => 'url',
+  1 => 'qrcode',
+  2 => 'step',
+  3 => 'step_name',
+  4 => 'cid',
+) ]
+[ info ] [ LOG ] INIT File
+
+---------------------------------------------------------------
+[ 2018-03-13T10:08:35+08:00 ] ::1 ::1 GET /admin/course/index.html
+[ log ] localhost/admin/course/index.html [运行时间：0.152430s][吞吐率：6.56req/s] [内存消耗：4,114.50kb] [文件加载：49]
+[ info ] [ LANG ] C:\php\zaohui_2.0\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'course',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'localhost',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.119 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'referer' => 'http://localhost/admin/index/index.html',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'PHPSESSID=nfkjmedv3jn3ohhvucgid4a2k1',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Course->index[ C:\php\zaohui_2.0\application\admin\controller\Course.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] C:\php\zaohui_2.0/application/admin\view\course\index.html [ array (
+  0 => 'lists',
+  1 => 'Nowpage',
+  2 => 'allpage',
+  3 => 'count',
+  4 => 'val',
+  5 => 'catelist',
+  6 => 'course_bread',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001986s ] mysql:dbname=test;host=localhost;port=3306;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_course_category` [ RunTime:0.028505s ]
+[ sql ] [ SQL ] SELECT `id`,`cate_name`,`pid` FROM `gz_course_category` WHERE  `closed` = 0 ORDER BY orderby desc [ RunTime:0.002560s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_course` [ RunTime:0.024758s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM `gz_course` WHERE  `closed` = 0  AND `step` = 4 LIMIT 1 [ RunTime:0.000707s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_course` WHERE  `closed` = 0  AND `step` = 4 ORDER BY orderby desc LIMIT 0,10 [ RunTime:0.003064s ]
+
+---------------------------------------------------------------
+[ 2018-03-13T10:08:36+08:00 ] ::1 ::1 GET /admin/course/index.html?_=1520906915895
+[ log ] localhost/admin/course/index.html?_=1520906915895 [运行时间：0.235446s][吞吐率：4.25req/s] [内存消耗：4,300.95kb] [文件加载：49]
+[ info ] [ LANG ] C:\php\zaohui_2.0\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'course',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'localhost',
+  'connection' => 'keep-alive',
+  'accept' => 'application/json, text/javascript, */*; q=0.01',
+  'x-requested-with' => 'XMLHttpRequest',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.119 Safari/537.36',
+  'referer' => 'http://localhost/admin/course/index.html',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'PHPSESSID=nfkjmedv3jn3ohhvucgid4a2k1',
+)
+[ info ] [ PARAM ] array (
+  '_' => '1520906915895',
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Course->index[ C:\php\zaohui_2.0\application\admin\controller\Course.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.002157s ] mysql:dbname=test;host=localhost;port=3306;charset=utf8mb4
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_course_category` [ RunTime:0.037210s ]
+[ sql ] [ SQL ] SELECT `id`,`cate_name`,`pid` FROM `gz_course_category` WHERE  `closed` = 0 ORDER BY orderby desc [ RunTime:0.001042s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `gz_course` [ RunTime:0.030266s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM `gz_course` WHERE  `closed` = 0  AND `step` = 4 LIMIT 1 [ RunTime:0.000661s ]
+[ sql ] [ SQL ] SELECT * FROM `gz_course` WHERE  `closed` = 0  AND `step` = 4 ORDER BY orderby desc LIMIT 0,10 [ RunTime:0.002977s ]
+
+---------------------------------------------------------------

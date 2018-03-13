@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:6:{s:59:"C:\php\zaohui_2.0/application/admin\view\course\create.html";i:1519891268;s:59:"C:\php\zaohui_2.0/application/admin\view\common\header.html";i:1519891268;s:58:"C:\php\zaohui_2.0/application/admin\view\common\admin.html";i:1519891268;s:65:"C:\php\zaohui_2.0/application/admin\view\course\course_basic.html";i:1520844583;s:66:"C:\php\zaohui_2.0/application/admin\view\course\course_finish.html";i:1519891268;s:60:"C:\php\zaohui_2.0/application/admin\view\common\version.html";i:1519891268;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:6:{s:59:"C:\php\zaohui_2.0/application/admin\view\course\create.html";i:1519891268;s:59:"C:\php\zaohui_2.0/application/admin\view\common\header.html";i:1519891268;s:58:"C:\php\zaohui_2.0/application/admin\view\common\admin.html";i:1519891268;s:65:"C:\php\zaohui_2.0/application/admin\view\course\course_basic.html";i:1520905983;s:66:"C:\php\zaohui_2.0/application/admin\view\course\course_finish.html";i:1519891268;s:60:"C:\php\zaohui_2.0/application/admin\view\common\version.html";i:1519891268;}*/ ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -149,7 +149,22 @@
                 </div>
             </div>
         </div>
-
+        <div class="layui-form-item">
+            <label class="layui-form-label">证书图标*</label>
+            <div class="layui-input-block">
+                <input type="file" name="file" class="layui-upload-file">
+                <input type="hidden" value="<?php echo $course['diploma']; ?>" jq-verify="required"  name="diploma" <?php if($course['diploma']): ?>jq-verify="required"<?php endif; ?> jq-error="请上传图片" error-id="smalls-error">
+                <p class="upload-info">图片尺寸：120*120 支持格式：JPG PNG</p>
+                <p id="smalls-error" class="error" style="margin-left: 300px;"></p>
+            </div>
+            <?php if($course['face']): ?>
+            <div class="layui-input-block">
+                <div class="imgbox">
+                    <img src="<?php echo $course['diploma']; ?>"  name="diploma" alt="" class="img-thumbnail" style="width:60px;height:60px;">
+                </div>
+            </div>
+            <?php endif; ?>
+        </div>
         <div class="layui-form-item">
             <label class="layui-form-label">课程图标*</label>
             <div class="layui-input-block">

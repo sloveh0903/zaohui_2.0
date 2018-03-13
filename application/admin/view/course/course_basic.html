@@ -75,7 +75,22 @@
                 </div>
             </div>
         </div>
-
+        <div class="layui-form-item">
+            <label class="layui-form-label">证书图标*</label>
+            <div class="layui-input-block">
+                <input type="file" name="file" class="layui-upload-file">
+                <input type="hidden" value="{$course['diploma']}" jq-verify="required"  name="diploma" {if $course['diploma']}jq-verify="required"{/if} jq-error="请上传图片" error-id="smalls-error">
+                <p class="upload-info">图片尺寸：120*120 支持格式：JPG PNG</p>
+                <p id="smalls-error" class="error" style="margin-left: 300px;"></p>
+            </div>
+            {if $course.face}
+            <div class="layui-input-block">
+                <div class="imgbox">
+                    <img src="{$course['diploma']}"  name="diploma" alt="" class="img-thumbnail" style="width:60px;height:60px;">
+                </div>
+            </div>
+            {/if}
+        </div>
         <div class="layui-form-item">
             <label class="layui-form-label">课程图标*</label>
             <div class="layui-input-block">
